@@ -9,7 +9,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <name>FlightIntegration-facade</name>
+    <description>FlightIntegration-facade</description>
+    <packaging>jar</packaging>
     <artifactId>facade</artifactId>
 
 
