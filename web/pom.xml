@@ -78,9 +78,24 @@
         </dependency>
         <dependency>
             <groupId>com.github.cuittzq</groupId>
+            <artifactId>biz</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.cuittzq</groupId>
             <artifactId>dal</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.cuittzq</groupId>
+            <artifactId>integration</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.cuittzq</groupId>
+            <artifactId>facade-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.cuittzq</groupId>
+            <artifactId>facade</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
