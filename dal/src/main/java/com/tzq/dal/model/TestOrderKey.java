@@ -1,9 +1,13 @@
 package com.tzq.dal.model;
 
-public class TestOrderKey {
+import java.io.Serializable;
+
+public class TestOrderKey implements Serializable {
     private Long id;
 
     private String serialNo;
+
+    private static final long serialVersionUID = 1L;
 
     public Long getId() {
         return id;

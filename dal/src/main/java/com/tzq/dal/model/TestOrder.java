@@ -1,8 +1,9 @@
 package com.tzq.dal.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TestOrder extends TestOrderKey {
+public class TestOrder extends TestOrderKey implements Serializable {
     private String orderType;
 
     private String orderStatus;
@@ -14,6 +15,8 @@ public class TestOrder extends TestOrderKey {
     private String airlineCode;
 
     private Date updatetime;
+
+    private static final long serialVersionUID = 1L;
 
     public String getOrderType() {
         return orderType;

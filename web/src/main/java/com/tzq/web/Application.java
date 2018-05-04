@@ -2,7 +2,9 @@ package com.tzq.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
@@ -13,7 +15,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * LY.com Inc.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages="com.tzq")
 @EnableScheduling
 public class Application extends SpringBootServletInitializer {
     public static void main(String[] args) {

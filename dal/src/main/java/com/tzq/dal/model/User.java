@@ -1,13 +1,16 @@
 package com.tzq.dal.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable {
     private Integer id;
 
     private String name;
 
     private Date updatetime;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
