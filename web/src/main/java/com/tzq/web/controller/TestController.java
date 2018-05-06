@@ -1,5 +1,6 @@
 package com.tzq.web.controller;
 
+import com.tzq.dal.model.User;
 import com.tzq.dal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,14 @@ public class TestController {
     private UserService userService;
     @RequestMapping(value = "/gethello", method = RequestMethod.GET)
     public String gethello() {
-        userService.findAllUser(1,10);
+        User user = new User();
+        user.setAddress("");
+        user.setDes("");
+        user.setLevel(12312);
+        user.setName("test");
+        user.setPassword("12312");
+        user.setTel("123");
+        userService.addUser(user);
         return "hello";
     }
 }

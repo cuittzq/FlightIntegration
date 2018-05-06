@@ -3,6 +3,7 @@ package com.tzq.dal.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.tzq.dal.mapper.UserMapper;
 import com.tzq.dal.model.User;
+import com.tzq.dal.model.UserExample;
 import com.tzq.dal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,9 @@ public class UserServiceImpl implements UserService {
     public List<User> findAllUser(int pageNum, int pageSize) {
         //将参数传给这个方法就可以实现物理分页了，非常简单。
         PageHelper.startPage(pageNum, pageSize);
-        return null;
+        UserExample userExample = new UserExample();
+        userExample.setLimitStart(PageHelper.getLocalPage().getStartRow());
+        userExample.setLimitEnd(PageHelper.getLocalPage().getPageSize());
+        return userMapper.selectByExample(userExample);
     }
 }
