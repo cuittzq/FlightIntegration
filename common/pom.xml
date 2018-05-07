@@ -3,16 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.github.cuittzq</groupId>
         <artifactId>FlightIntegration</artifactId>
+        <groupId>com.github.cuittzq</groupId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <name>FlightIntegration-biz</name>
+    <name>FlightIntegration-common</name>
     <description>FlightIntegration-biz</description>
-    <artifactId>biz</artifactId>
     <packaging>jar</packaging>
+    <artifactId>common</artifactId>
     <dependencies>
         <!-- Swagger2 -->
         <dependency>
@@ -32,7 +31,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-com.tzq.common.aop</artifactId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <!-- spring-boot -->
 

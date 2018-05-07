@@ -2,6 +2,7 @@ package com.tzq.web.controller;
 
 import com.tzq.dal.model.Test;
 import com.tzq.dal.service.UserService;
+import com.tzq.web.aop.UserAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,9 +26,10 @@ public class TestController {
     private UserService userService;
 
     @RequestMapping(value = "/gethello", method = RequestMethod.GET)
+    @UserAccess(desc = "gethello")
     public String gethello() {
         Test user = new Test();
-        user.setId(100);
+        user.setId(121);
         user.setName("test");
         user.setUpdatetime(new Date());
         userService.addUser(user);

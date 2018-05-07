@@ -13,6 +13,7 @@
         <module>facade</module>
         <module>facade-impl</module>
         <module>integration</module>
+        <module>common</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -68,7 +69,7 @@
                     </exclusion>
                     <exclusion>
                         <groupId>org.springframework</groupId>
-                        <artifactId>spring-aop</artifactId>
+                        <artifactId>spring-com.tzq.common.aop</artifactId>
                     </exclusion>
                     <exclusion>
                         <groupId>org.springframework</groupId>
@@ -124,7 +125,7 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-aop</artifactId>
+                <artifactId>spring-boot-starter-com.tzq.common.aop</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
             <dependency>
@@ -355,6 +356,11 @@
             <dependency>
                 <groupId>com.github.cuittzq</groupId>
                 <artifactId>facade-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.cuittzq</groupId>
+                <artifactId>common</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
