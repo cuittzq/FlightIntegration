@@ -1,9 +1,9 @@
 package com.tzq.dal.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.tzq.dal.mapper.UserMapper;
-import com.tzq.dal.model.User;
-import com.tzq.dal.model.UserExample;
+import com.tzq.dal.mapper.TestMapper;
+import com.tzq.dal.model.Test;
+import com.tzq.dal.model.TestExample;
 import com.tzq.dal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,11 +22,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserMapper userMapper;
+    private TestMapper testMapper;
 
     @Override
-    public int addUser(User user) {
-        return userMapper.insert(user);
+    public int addUser(Test user) {
+        return testMapper.insert(user);
     }
 
     /*
@@ -36,12 +36,12 @@ public class UserServiceImpl implements UserService {
     * pageSize 每页显示的数据条数
     * */
     @Override
-    public List<User> findAllUser(int pageNum, int pageSize) {
+    public List<Test> findAllUser(int pageNum, int pageSize) {
         //将参数传给这个方法就可以实现物理分页了，非常简单。
         PageHelper.startPage(pageNum, pageSize);
-        UserExample userExample = new UserExample();
+        TestExample userExample = new TestExample();
         userExample.setLimitStart(PageHelper.getLocalPage().getStartRow());
         userExample.setLimitEnd(PageHelper.getLocalPage().getPageSize());
-        return userMapper.selectByExample(userExample);
+        return testMapper.selectByExample(userExample);
     }
 }

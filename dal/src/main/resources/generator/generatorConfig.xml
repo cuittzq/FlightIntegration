@@ -14,15 +14,15 @@
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
-        <!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"-->
-                        <!--connectionURL="jdbc:mysql://10.100.159.49:3500/TCFlyOfficialSales"-->
-                        <!--userId="TCFlyOfficialSales" password="VWEoeVTwwt2jhQrO91hp">-->
-        <!--</jdbcConnection>-->
-
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://192.168.10.105:3306/SpiderDB"
-                        userId="root" password="123456">
+                        connectionURL="jdbc:mysql://10.100.159.49:3500/TCFlyOfficialSales"
+                        userId="TCFlyOfficialSales" password="VWEoeVTwwt2jhQrO91hp">
         </jdbcConnection>
+
+        <!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"-->
+                        <!--connectionURL="jdbc:mysql://192.168.10.105:3306/SpiderDB"-->
+                        <!--userId="root" password="123456">-->
+        <!--</jdbcConnection>-->
 
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
@@ -41,7 +41,7 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
-        <table tableName="b_user" domainObjectName="User" ></table>
-        <table tableName="b_blog" domainObjectName="Blog" ></table>
+        <table tableName="test" domainObjectName="Test" ></table>
+        <table tableName="test_order" domainObjectName="TestOrder" ></table>
     </context>
 </generatorConfiguration>

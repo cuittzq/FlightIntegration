@@ -1,11 +1,13 @@
 package com.tzq.web.controller;
 
-import com.tzq.dal.model.User;
+import com.tzq.dal.model.Test;
 import com.tzq.dal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
 
 /**
  * 功能描述
@@ -21,15 +23,13 @@ public class TestController {
 
     @Autowired
     private UserService userService;
+
     @RequestMapping(value = "/gethello", method = RequestMethod.GET)
     public String gethello() {
-        User user = new User();
-        user.setAddress("");
-        user.setDes("");
-        user.setLevel(12312);
+        Test user = new Test();
+        user.setId(100);
         user.setName("test");
-        user.setPassword("12312");
-        user.setTel("123");
+        user.setUpdatetime(new Date());
         userService.addUser(user);
         return "hello";
     }

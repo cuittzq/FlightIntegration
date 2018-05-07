@@ -1,6 +1,6 @@
 package com.tzq.dal.service;
 
-import com.tzq.dal.model.User;
+import com.tzq.dal.model.Test;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
 public interface UserService {
-    int addUser(User user);
+    int addUser(Test user);
 
-    List<User> findAllUser(int pageNum, int pageSize);
+    List<Test> findAllUser(int pageNum, int pageSize);
 }
