@@ -15,6 +15,11 @@ public class LccConstant {
     public static final String LCCDOMAIN = "http://api.travelcc.net";
 
     /**
+     * 接口CIDB
+     */
+    public static final String CID = "TEST";
+
+    /**
      * 查询接口地址
      */
     public static final String SEARCH_FLIGHT = "search";
