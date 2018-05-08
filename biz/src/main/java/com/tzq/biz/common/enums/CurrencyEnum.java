@@ -1,4 +1,4 @@
-package com.tzq.integration.common.enums;
+package com.tzq.biz.common.enums;
 
 import org.apache.commons.lang3.StringUtils;
 

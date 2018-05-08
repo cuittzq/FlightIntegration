@@ -1,40 +1,28 @@
-package com.tzq.integration.common.enums;
+package com.tzq.biz.common.enums;
 
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * 航段类型
- *
+ * 国内国际区分
  * @Author tzq24955
  * @Created on 2018/5/8
  * LY.com Inc.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
-public enum SegmentTypeEnum {
+public enum AreaTypeEnum {
+    /** 国内 */
+    DOMESTIC("10080", "国内"),
+    /** 国际 */
+    INTERNATIONAL("10081", "国际");
 
-    /**
-     * 去程
-     */
-    GO("1", "去程"),
-    /**
-     * 易宝
-     */
-    BACK("2", "返程");
-
-    /**
-     * 枚举code
-     */
+    /** 枚举编码 */
     private String code;
 
-    /**
-     * 枚举描述
-     */
+    /** 枚举描述 */
     private String desc;
 
-    /**
-     * 私有构造函数
-     */
-    private SegmentTypeEnum(String code, String desc) {
+    /** 私有构造函数 */
+    private AreaTypeEnum(String code, String desc) {
         this.code = code;
         this.desc = desc;
     }
@@ -45,11 +33,11 @@ public enum SegmentTypeEnum {
      * @param code 枚举码
      * @return
      */
-    public static SegmentTypeEnum getEnumBycode(String code) {
+    public static AreaTypeEnum getEnumByCode(String code) {
         if (StringUtils.isEmpty(code)) {
             return null;
         }
-        for (SegmentTypeEnum e : SegmentTypeEnum.values()) {
+        for (AreaTypeEnum e : AreaTypeEnum.values()) {
             if (code.equals(e.getCode())) {
                 return e;
             }
@@ -58,7 +46,7 @@ public enum SegmentTypeEnum {
     }
 
     /**
-     * 获取枚举code
+     * 获取枚举编码
      *
      * @return
      */
@@ -74,5 +62,4 @@ public enum SegmentTypeEnum {
     public String getDesc() {
         return desc;
     }
-
 }

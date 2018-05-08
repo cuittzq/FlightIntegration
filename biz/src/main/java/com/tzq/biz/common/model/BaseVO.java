@@ -1,6 +1,5 @@
-package com.tzq.integration.common.model;
+package com.tzq.biz.common.model;
 
-import java.io.PrintStream;
 import java.io.Serializable;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;

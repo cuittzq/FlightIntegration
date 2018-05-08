@@ -1,5 +1,6 @@
 package com.tzq.integration.service.intl.lcc.impl;
 
+import com.tzq.integration.service.core.AbstractBaseClient;
 import com.tzq.integration.service.intl.lcc.LccClient;
 import com.tzq.integration.service.intl.lcc.model.BaseParam;
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightReq;
@@ -13,7 +14,7 @@ import com.tzq.integration.service.intl.lcc.model.search.SearchFlightRes;
  * LY.com Inc.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
-public class LccClientImpl implements LccClient {
+public class LccClientImpl extends AbstractBaseClient implements LccClient {
     /**
      * 查询航班
      *

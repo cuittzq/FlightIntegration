@@ -1,11 +1,11 @@
-package com.tzq.integration.common.model.integration;
+package com.tzq.biz.common.model.integration;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.tzq.integration.common.enums.SegmentTypeEnum;
-import com.tzq.integration.common.enums.StatusEnum;
-import com.tzq.integration.common.model.BaseVO;
-import com.tzq.integration.common.model.Money;
+import com.tzq.biz.common.enums.SegmentTypeEnum;
+import com.tzq.biz.common.enums.StatusEnum;
+import com.tzq.biz.common.model.BaseVO;
+import com.tzq.biz.common.model.Money;
 import org.apache.commons.collections.MapUtils;
 
 import java.util.Date;

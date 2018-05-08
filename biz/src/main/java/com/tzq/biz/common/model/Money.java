@@ -1,4 +1,4 @@
-package com.tzq.integration.common.model;
+package com.tzq.biz.common.model;
 
 /**
  * 功能描述

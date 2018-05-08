@@ -1,24 +1,28 @@
-package com.tzq.integration.common.enums;
+package com.tzq.biz.common.enums;
 
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * 舱位可销售数量枚举
+ * 航段类型
  *
  * @Author tzq24955
  * @Created on 2018/5/8
  * LY.com Inc.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
-public enum InventoryEnum {
+public enum SegmentTypeEnum {
 
     /**
-     * >=10
+     * 去程
      */
-    A("A", ">=10"); /** >=10 */
+    GO("1", "去程"),
+    /**
+     * 易宝
+     */
+    BACK("2", "返程");
 
     /**
-     * 枚举编码
+     * 枚举code
      */
     private String code;
 
@@ -30,7 +34,7 @@ public enum InventoryEnum {
     /**
      * 私有构造函数
      */
-    private InventoryEnum(String code, String desc) {
+    private SegmentTypeEnum(String code, String desc) {
         this.code = code;
         this.desc = desc;
     }
@@ -41,11 +45,11 @@ public enum InventoryEnum {
      * @param code 枚举码
      * @return
      */
-    public static InventoryEnum getEnumByCode(String code) {
+    public static SegmentTypeEnum getEnumBycode(String code) {
         if (StringUtils.isEmpty(code)) {
             return null;
         }
-        for (InventoryEnum e : InventoryEnum.values()) {
+        for (SegmentTypeEnum e : SegmentTypeEnum.values()) {
             if (code.equals(e.getCode())) {
                 return e;
             }
@@ -54,7 +58,7 @@ public enum InventoryEnum {
     }
 
     /**
-     * 获取枚举编码
+     * 获取枚举code
      *
      * @return
      */

@@ -2,7 +2,7 @@
  * LY.com Inc.
  * Copyright (c) 2004-2016 All Rights Reserved.
  */
-package com.tzq.integration.common.model.context;
+package com.tzq.biz.common.model.context;
 
 import java.util.HashMap;
 import java.util.Map;

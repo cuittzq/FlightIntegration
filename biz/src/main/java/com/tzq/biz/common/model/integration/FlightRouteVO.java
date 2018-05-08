@@ -1,10 +1,10 @@
-package com.tzq.integration.common.model.integration;
+package com.tzq.biz.common.model.integration;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.tzq.integration.common.enums.AreaTypeEnum;
-import com.tzq.integration.common.enums.TripTypeEnum;
-import com.tzq.integration.common.model.BaseVO;
+import com.tzq.biz.common.enums.AreaTypeEnum;
+import com.tzq.biz.common.enums.TripTypeEnum;
+import com.tzq.biz.common.model.BaseVO;
 import org.apache.commons.collections.MapUtils;
 
 import java.util.Date;

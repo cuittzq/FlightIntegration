@@ -1,4 +1,4 @@
-package com.tzq.integration.common.enums;
+package com.tzq.biz.common.enums;
 
 /**
  * 功能描述

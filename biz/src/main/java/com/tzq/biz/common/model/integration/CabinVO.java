@@ -1,9 +1,9 @@
-package com.tzq.integration.common.model.integration;
+package com.tzq.biz.common.model.integration;
 
 import com.google.common.collect.Maps;
-import com.tzq.integration.common.enums.InventoryEnum;
-import com.tzq.integration.common.enums.StatusEnum;
-import com.tzq.integration.common.model.Money;
+import com.tzq.biz.common.enums.InventoryEnum;
+import com.tzq.biz.common.enums.StatusEnum;
+import com.tzq.biz.common.model.Money;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 

@@ -1,7 +1,7 @@
-package com.tzq.integration.common.model.integration;
+package com.tzq.biz.common.model.integration;
 
-import com.tzq.integration.common.enums.TripTypeEnum;
-import com.tzq.integration.common.model.BaseVO;
+import com.tzq.biz.common.enums.TripTypeEnum;
+import com.tzq.biz.common.model.BaseVO;
 
 import java.util.Date;
 

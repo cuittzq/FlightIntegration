@@ -1,8 +1,8 @@
-package com.tzq.integration.service.core;
+package com.tzq.biz.service.core;
 
-import com.tzq.integration.common.model.context.RouteContext;
-import com.tzq.integration.common.model.integration.FlightRouteVO;
-import com.tzq.integration.common.model.integration.SearchVO;
+import com.tzq.biz.common.model.context.RouteContext;
+import com.tzq.biz.common.model.integration.FlightRouteVO;
+import com.tzq.biz.common.model.integration.SearchVO;
 
 /**
  * 功能描述

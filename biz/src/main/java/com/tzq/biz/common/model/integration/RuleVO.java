@@ -1,4 +1,4 @@
-package com.tzq.integration.common.model.integration;
+package com.tzq.biz.common.model.integration;
 
 import java.io.Serializable;
 

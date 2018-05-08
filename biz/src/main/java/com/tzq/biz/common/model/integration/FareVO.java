@@ -2,12 +2,12 @@
  * LY.com Inc.
  * Copyright (c) 2004-2016 All Rights Reserved.
  */
-package com.tzq.integration.common.model.integration;
+package com.tzq.biz.common.model.integration;
 
 import com.google.common.collect.Maps;
-import com.tzq.integration.common.enums.CurrencyEnum;
-import com.tzq.integration.common.enums.PassengerTypeEnum;
-import com.tzq.integration.common.model.Money;
+import com.tzq.biz.common.enums.CurrencyEnum;
+import com.tzq.biz.common.enums.PassengerTypeEnum;
+import com.tzq.biz.common.model.Money;
 import org.apache.commons.collections.MapUtils;
 
 import java.io.Serializable;

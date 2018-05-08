@@ -1,5 +1,5 @@
 
-package com.tzq.integration.common.model.context;
+package com.tzq.biz.common.model.context;
 
 import java.io.Serializable;
 
