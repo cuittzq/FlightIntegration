@@ -32,7 +32,7 @@
         <aspectjweaver.version>1.8.10</aspectjweaver.version>
         <jedis.version>2.1.0</jedis.version>
         <slf4j-api.version>1.7.25</slf4j-api.version>
-        <httpclient.version>4.0</httpclient.version>
+        <httpclient.version>4.5.4</httpclient.version>
         <spring-boot.version>1.5.1.RELEASE</spring-boot.version>
         <spring.version>4.3.6.RELEASE</spring.version>
         <snakeyaml.version>1.19</snakeyaml.version>
@@ -122,6 +122,21 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>${spring-boot.version}</version>
+                <exclusions><!-- 去掉默认配置 -->
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-aop</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency> <!-- 引入log4j2依赖 -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-log4j2</artifactId>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -279,6 +294,13 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/commons-collections/commons-collections -->
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>3.2.1</version>
+            </dependency>
+
             <dependency>
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
@@ -379,6 +401,18 @@
                 <artifactId>javax.servlet-api</artifactId>
                 <version>4.0.0</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>20.0</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/net.jcip/jcip-annotations -->
+            <dependency>
+                <groupId>net.jcip</groupId>
+                <artifactId>jcip-annotations</artifactId>
+                <version>1.0</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -395,8 +429,6 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
         </dependency>
-
-
     </dependencies>
     <build>
         <defaultGoal>compile</defaultGoal>

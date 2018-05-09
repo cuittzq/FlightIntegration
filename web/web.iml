@@ -26,7 +26,7 @@
     <orderEntry type="library" name="Maven: io.springfox:springfox-schema:2.2.2" level="project" />
     <orderEntry type="library" name="Maven: io.springfox:springfox-swagger-common:2.2.2" level="project" />
     <orderEntry type="library" name="Maven: io.springfox:springfox-spring-web:2.2.2" level="project" />
-    <orderEntry type="library" name="Maven: com.google.guava:guava:18.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:20.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml:classmate:1.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjrt:1.8.6" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.8.6" level="project" />
@@ -38,12 +38,6 @@
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:1.5.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:1.5.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:1.5.1.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-logging:1.5.1.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: ch.qos.logback:logback-classic:1.1.9" level="project" />
-    <orderEntry type="library" name="Maven: ch.qos.logback:logback-core:1.1.9" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.7.22" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:jul-to-slf4j:1.7.22" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:log4j-over-slf4j:1.7.22" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-tomcat:1.5.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-core:8.5.11" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-el:8.5.11" level="project" />
@@ -64,9 +58,9 @@
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-configuration-processor:1.5.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.19" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.0.1" level="project" />
-    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.7" level="project" />
+    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.cxf:cxf-rt-frontend-jaxws:3.1.10" level="project" />
     <orderEntry type="library" name="Maven: xml-resolver:xml-resolver:1.2" level="project" />
     <orderEntry type="library" name="Maven: org.ow2.asm:asm:5.0.4" level="project" />
@@ -95,6 +89,7 @@
     <orderEntry type="library" name="Maven: com.github.kevinsawicki:http-request:6.0" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.31" level="project" />
     <orderEntry type="module" module-name="biz" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-com.tzq.common.aop:1.5.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.8.7" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.8.7" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.7" level="project" />
@@ -111,7 +106,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.alibaba:jconsole:1.8.0">
         <CLASSES>
-          <root url="jar://C:/Program Files/Java/jdk1.8.0_121/lib/jconsole.jar!/" />
+          <root url="jar://C:/Program Files/Java/jdk1.8.0_91/lib/jconsole.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -120,7 +115,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.alibaba:tools:1.8.0">
         <CLASSES>
-          <root url="jar://C:/Program Files/Java/jdk1.8.0_121/lib/tools.jar!/" />
+          <root url="jar://C:/Program Files/Java/jdk1.8.0_91/lib/tools.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -153,6 +148,8 @@
     <orderEntry type="library" name="Maven: com.github.cuittzq:MysqlPaginationPlugin:1.0.1" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:4.0.0" level="project" />
     <orderEntry type="module" module-name="integration" />
+    <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: net.jcip:jcip-annotations:1.0" level="project" />
     <orderEntry type="module" module-name="facade-impl" />
     <orderEntry type="module" module-name="facade" />
     <orderEntry type="module" module-name="common" />
