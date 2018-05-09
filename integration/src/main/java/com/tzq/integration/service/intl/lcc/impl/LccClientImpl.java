@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.tzq.integration.service.core.AbstractBaseClient;
 import com.tzq.integration.service.intl.lcc.LccClient;
 import com.tzq.integration.service.intl.lcc.constants.LccConstant;
-import com.tzq.integration.service.intl.lcc.model.BaseParam;
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightReq;
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightRes;
 import com.tzq.integration.utils.HttpClientUtil;
