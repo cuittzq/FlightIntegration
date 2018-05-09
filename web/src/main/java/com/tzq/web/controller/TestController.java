@@ -50,8 +50,8 @@ public class TestController {
     @UserAccess(desc = "searchFlight")
     public String searchFlight() {
         SearchVO searchVO = new SearchVO();
-        searchVO.setDepAirportCode("PEK");
-        searchVO.setArrAirportCode("CTU");
+        searchVO.setDepAirportCode("CAN");
+        searchVO.setArrAirportCode("SIN");
         searchVO.setTripType(TripTypeEnum.OW);
         try {
             searchVO.setDepDate(DateUtils.parseDateNoTime("20180825"));

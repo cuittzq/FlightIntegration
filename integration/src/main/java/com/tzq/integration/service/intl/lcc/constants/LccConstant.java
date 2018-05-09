@@ -17,7 +17,11 @@ public class LccConstant {
     /**
      * 接口CIDB
      */
-    public static final String CID = "TEST";
+    public static final String CID = "cdchangxin";
+    /**
+     * 接口CIDB
+     */
+    public static final String CIDPWD = "YVpEgd3m";
 
     /**
      * 查询接口地址

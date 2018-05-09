@@ -39,10 +39,11 @@ public class LccClientImpl extends AbstractBaseClient implements LccClient {
     @Override
     public SearchFlightRes searchFlight(SearchFlightReq req) {
         String url = String.format("%s/%s/%s", LccConstant.LCCDOMAIN, LccConstant.CID, LccConstant.SEARCH_FLIGHT);
-        String postData = JSON.toJSONString(req);
-        Map<String, String> header = getDefaultHeader();
-        String response;
-        SearchFlightRes searchFlightRes = null;
+        req.setCid(LccConstant.CID + ":" + LccConstant.CIDPWD);
+        String              postData        = JSON.toJSONString(req);
+        Map<String, String> header          = getDefaultHeader();
+        String              response;
+        SearchFlightRes     searchFlightRes = null;
         try {
             logger.info("调用LCC{}接口,入参{}", LccConstant.SEARCH_FLIGHT, postData);
             response = HttpClientUtil.sendPostDataByJson(url, postData, header, ENCODING);
