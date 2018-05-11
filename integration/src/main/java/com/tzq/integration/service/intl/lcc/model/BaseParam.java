@@ -16,7 +16,6 @@ public class BaseParam implements Serializable {
 
     private String cid;
 
-
     public String getCid() {
         return cid;
     }

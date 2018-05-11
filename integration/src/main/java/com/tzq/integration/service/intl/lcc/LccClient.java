@@ -2,6 +2,8 @@ package com.tzq.integration.service.intl.lcc;
 
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightReq;
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightRes;
+import com.tzq.integration.service.intl.lcc.model.verify.VerifyReq;
+import com.tzq.integration.service.intl.lcc.model.verify.VerifyRes;
 
 /**
  * 功能描述
@@ -19,4 +21,6 @@ public interface LccClient {
      * @return
      */
     public SearchFlightRes searchFlight(SearchFlightReq req);
+
+    VerifyRes verifyCabinPrice(VerifyReq req);
 }

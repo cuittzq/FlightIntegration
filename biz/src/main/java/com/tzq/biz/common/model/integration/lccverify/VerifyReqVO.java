@@ -1,41 +1,45 @@
-package com.tzq.integration.service.intl.lcc.model.verify;
+package com.tzq.biz.common.model.integration.lccverify;
 
-import com.tzq.integration.service.intl.lcc.model.BaseParam;
-import com.tzq.integration.service.intl.lcc.model.search.FlightSegment;
+import com.tzq.biz.common.enums.SegmentTypeEnum;
+import com.tzq.biz.common.model.integration.SegmentVO;
 
 import java.util.List;
 
 /**
  * Created by cl24957 on 2018/5/11.
  */
-public class VerifyReq extends BaseParam{
+public class VerifyReqVO  {
     /**
-     * 行程类型: 1.单程 2.往返
+     * 行程类型
      */
-    private String tripType;
+    private SegmentTypeEnum tripType;
 
-    private VerifyRouting routing;
+    /**
+     * 验舱验价routing类
+     */
+    private VerifyReqVORouting routing;
 
-    public String getTripType() {
+    public SegmentTypeEnum getTripType() {
         return tripType;
     }
 
-    public void setTripType(String tripType) {
+    public void setTripType(SegmentTypeEnum tripType) {
         this.tripType = tripType;
     }
 
-    public VerifyRouting getRouting() {
+    public VerifyReqVORouting getRouting() {
         return routing;
     }
 
-    public void setRouting(VerifyRouting routing) {
+    public void setRouting(VerifyReqVORouting routing) {
         this.routing = routing;
     }
 
-    public static class VerifyRouting{
+    public static class VerifyReqVORouting
+    {
         private String data;
-        private List<FlightSegment> fromSegments;
-        private List<FlightSegment> retSegments;
+        private List<SegmentVO> fromSegments;
+        private List<SegmentVO> retSegments;
         private String refData;
 
         public String getData() {
@@ -46,19 +50,19 @@ public class VerifyReq extends BaseParam{
             this.data = data;
         }
 
-        public List<FlightSegment> getFromSegments() {
+        public List<SegmentVO> getFromSegments() {
             return fromSegments;
         }
 
-        public void setFromSegments(List<FlightSegment> fromSegments) {
+        public void setFromSegments(List<SegmentVO> fromSegments) {
             this.fromSegments = fromSegments;
         }
 
-        public List<FlightSegment> getRetSegments() {
+        public List<SegmentVO> getRetSegments() {
             return retSegments;
         }
 
-        public void setRetSegments(List<FlightSegment> retSegments) {
+        public void setRetSegments(List<SegmentVO> retSegments) {
             this.retSegments = retSegments;
         }
 

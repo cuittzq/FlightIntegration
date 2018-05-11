@@ -6,6 +6,8 @@ import com.tzq.integration.service.intl.lcc.LccClient;
 import com.tzq.integration.service.intl.lcc.constants.LccConstant;
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightReq;
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightRes;
+import com.tzq.integration.service.intl.lcc.model.verify.VerifyReq;
+import com.tzq.integration.service.intl.lcc.model.verify.VerifyRes;
 import com.tzq.integration.utils.HttpClientUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +26,6 @@ import java.util.Map;
  */
 @Service("lccClient")
 public class LccClientImpl extends AbstractBaseClient implements LccClient {
-
     /**
      *
      */
@@ -52,6 +53,31 @@ public class LccClientImpl extends AbstractBaseClient implements LccClient {
         } catch (IOException e) {
             logger.error("调用LCC接口失败", e);
         }
+        return searchFlightRes;
+    }
+
+    /**
+     * 验舱验价
+     * @param req
+     * @return
+     */
+    @Override
+    public VerifyRes verifyCabinPrice(VerifyReq req) {
+        String url = String.format("%s/%s/%s", LccConstant.LCCDOMAIN, LccConstant.CID, LccConstant.VERIFY);
+        req.setCid(LccConstant.CID + ":" + LccConstant.CIDPWD);
+        String              postData        = JSON.toJSONString(req);
+        Map<String, String> header          = getDefaultHeader();
+        String              response;
+        VerifyRes     searchFlightRes = null;
+        try {
+            logger.info("调用LCC{}接口,入参{}", LccConstant.VERIFY, postData);
+            response = HttpClientUtil.sendPostDataByJson(url, postData, header, ENCODING);
+            logger.info("调用LCC{}接口,返回{}", LccConstant.VERIFY, response);
+            searchFlightRes = JSON.parseObject(response, VerifyRes.class);
+        } catch (IOException e) {
+            logger.error("调用LCC验舱验价接口失败", e);
+        }
+
         return searchFlightRes;
     }
 
