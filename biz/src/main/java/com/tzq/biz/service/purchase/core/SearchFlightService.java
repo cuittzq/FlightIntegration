@@ -1,4 +1,4 @@
-package com.tzq.biz.service.core;
+package com.tzq.biz.service.purchase.core;
 
 import com.tzq.biz.common.model.context.RouteContext;
 import com.tzq.biz.common.model.integration.FlightRouteVO;

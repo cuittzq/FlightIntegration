@@ -3,7 +3,7 @@ package com.tzq.web.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.tzq.biz.common.model.integration.lccverify.VerifyReqVO;
 import com.tzq.biz.common.model.integration.lccverify.VerifyResVO;
-import com.tzq.biz.service.core.LccBusiService;
+import com.tzq.biz.service.purchase.core.LccBusiService;
 import com.tzq.web.aop.UserAccess;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

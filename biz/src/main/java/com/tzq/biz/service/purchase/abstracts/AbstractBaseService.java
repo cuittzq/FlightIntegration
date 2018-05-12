@@ -1,4 +1,4 @@
-package com.tzq.biz.service.abstracts;
+package com.tzq.biz.service.purchase.abstracts;
 
 public abstract class AbstractBaseService {
     // 统一日志记录

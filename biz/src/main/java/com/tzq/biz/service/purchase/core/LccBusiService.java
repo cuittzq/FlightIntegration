@@ -1,4 +1,4 @@
-package com.tzq.biz.service.core;
+package com.tzq.biz.service.purchase.core;
 
 import com.tzq.biz.common.model.integration.lccverify.VerifyReqVO;
 import com.tzq.biz.common.model.integration.lccverify.VerifyResVO;

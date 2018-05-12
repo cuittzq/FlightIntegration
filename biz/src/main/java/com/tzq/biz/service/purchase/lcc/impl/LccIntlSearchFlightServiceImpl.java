@@ -1,10 +1,10 @@
-package com.tzq.biz.service.intl.lcc.impl;
+package com.tzq.biz.service.purchase.lcc.impl;
 
 import com.tzq.biz.common.enums.TripTypeEnum;
 import com.tzq.biz.common.model.context.RouteContext;
 import com.tzq.biz.common.model.integration.FlightRouteVO;
 import com.tzq.biz.common.model.integration.SearchVO;
-import com.tzq.biz.service.abstracts.AbstractSearchFlightService;
+import com.tzq.biz.service.purchase.abstracts.AbstractSearchFlightService;
 import com.tzq.commons.utils.DateUtils;
 import com.tzq.integration.service.intl.lcc.LccClient;
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightReq;

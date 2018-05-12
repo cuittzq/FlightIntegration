@@ -1,9 +1,7 @@
-package com.tzq.biz.service.mapper;
+package com.tzq.biz.service.purchase.mapper;
 
 import com.tzq.biz.common.enums.StatusEnum;
-import com.tzq.biz.common.model.Money;
 import com.tzq.biz.common.model.integration.CabinVO;
-import com.tzq.biz.common.model.integration.FlightUnitVO;
 import com.tzq.biz.common.model.integration.SegmentVO;
 import com.tzq.biz.common.model.integration.lccverify.VerifyReqVO;
 import com.tzq.biz.common.model.integration.lccverify.VerifyResVO;

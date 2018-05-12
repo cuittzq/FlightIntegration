@@ -1,9 +1,9 @@
-package com.tzq.biz.service.intl.lcc.impl;
+package com.tzq.biz.service.purchase.lcc.impl;
 
 import com.tzq.biz.common.model.integration.lccverify.VerifyReqVO;
 import com.tzq.biz.common.model.integration.lccverify.VerifyResVO;
-import com.tzq.biz.service.abstracts.AbstractLccBusiService;
-import com.tzq.biz.service.mapper.LccBusiMapper;
+import com.tzq.biz.service.purchase.abstracts.AbstractLccBusiService;
+import com.tzq.biz.service.purchase.mapper.LccBusiMapper;
 import com.tzq.integration.service.intl.lcc.LccClient;
 import com.tzq.integration.service.intl.lcc.model.verify.VerifyReq;
 import org.springframework.stereotype.Service;
