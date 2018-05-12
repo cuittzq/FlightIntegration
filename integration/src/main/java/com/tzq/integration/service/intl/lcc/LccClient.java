@@ -1,5 +1,7 @@
 package com.tzq.integration.service.intl.lcc;
 
+import com.tzq.integration.service.intl.lcc.model.order.OrderReq;
+import com.tzq.integration.service.intl.lcc.model.order.OrderRes;
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightReq;
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightRes;
 import com.tzq.integration.service.intl.lcc.model.verify.VerifyReq;
@@ -23,4 +25,6 @@ public interface LccClient {
     public SearchFlightRes searchFlight(SearchFlightReq req);
 
     VerifyRes verifyCabinPrice(VerifyReq req);
+
+    OrderRes createOrder(OrderReq req);
 }

@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.tzq.integration.service.core.AbstractBaseClient;
 import com.tzq.integration.service.intl.lcc.LccClient;
 import com.tzq.integration.service.intl.lcc.constants.LccConstant;
+import com.tzq.integration.service.intl.lcc.model.order.OrderReq;
+import com.tzq.integration.service.intl.lcc.model.order.OrderRes;
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightReq;
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightRes;
 import com.tzq.integration.service.intl.lcc.model.verify.VerifyReq;
@@ -68,17 +70,48 @@ public class LccClientImpl extends AbstractBaseClient implements LccClient {
         String              postData        = JSON.toJSONString(req);
         Map<String, String> header          = getDefaultHeader();
         String              response;
-        VerifyRes     searchFlightRes = null;
+        VerifyRes     verifyRes = null;
         try {
             logger.info("调用LCC{}接口,入参{}", LccConstant.VERIFY, postData);
             response = HttpClientUtil.sendPostDataByJson(url, postData, header, ENCODING);
             logger.info("调用LCC{}接口,返回{}", LccConstant.VERIFY, response);
-            searchFlightRes = JSON.parseObject(response, VerifyRes.class);
+            verifyRes = JSON.parseObject(response, VerifyRes.class);
         } catch (IOException e) {
             logger.error("调用LCC验舱验价接口失败", e);
         }
+        finally {
+            // TODO 记录接口访问日志
+        }
 
-        return searchFlightRes;
+        return verifyRes;
+    }
+
+    @Override
+    public OrderRes createOrder(OrderReq req) {
+        String url = String.format("%s/%s/%s", LccConstant.LCCDOMAIN, LccConstant.CID, LccConstant.CREATE_ORDER);
+        req.setCid(LccConstant.CID + ":" + LccConstant.CIDPWD);
+        String              postData        = JSON.toJSONString(req);
+        Map<String, String> header          = getDefaultHeader();
+        String              response;
+        OrderRes     orderRes = null;
+        try
+        {
+            logger.info("调用LCC{}接口,入参{}", LccConstant.CREATE_ORDER, postData);
+            response = HttpClientUtil.sendPostDataByJson(url, postData, header, ENCODING);
+            logger.info("调用LCC{}接口,返回{}", LccConstant.CREATE_ORDER, response);
+
+            // TODO:解密
+
+        }
+        catch (IOException e)
+        {
+            logger.error("调用LCC创单接口失败", e);
+        }
+        finally {
+            // TODO 记录接口访问日志
+        }
+
+        return orderRes;
     }
 
 }

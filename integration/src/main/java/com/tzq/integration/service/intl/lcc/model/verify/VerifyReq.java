@@ -9,20 +9,8 @@ import java.util.List;
  * Created by cl24957 on 2018/5/11.
  */
 public class VerifyReq extends BaseParam{
-    /**
-     * 行程类型: 1.单程 2.往返
-     */
-    private String tripType;
 
     private VerifyRouting routing;
-
-    public String getTripType() {
-        return tripType;
-    }
-
-    public void setTripType(String tripType) {
-        this.tripType = tripType;
-    }
 
     public VerifyRouting getRouting() {
         return routing;

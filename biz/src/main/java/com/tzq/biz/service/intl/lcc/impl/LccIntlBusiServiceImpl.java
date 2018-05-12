@@ -25,7 +25,6 @@ public class LccIntlBusiServiceImpl extends AbstractLccBusiService {
         VerifyReq req = LccBusiMapper.vo2io(vo);
         resVO =  LccBusiMapper.io2vo( lccClient.verifyCabinPrice(req));
 
-
-        return null;
+        return resVO;
     }
 }

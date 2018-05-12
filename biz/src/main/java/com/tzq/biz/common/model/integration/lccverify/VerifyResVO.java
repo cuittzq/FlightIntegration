@@ -134,5 +134,108 @@ public class VerifyResVO implements Serializable {
          */
         private List<SegmentVO> retSegments;
 
+        public String getData() {
+            return data;
+        }
+
+        public void setData(String data) {
+            this.data = data;
+        }
+
+        public int getAdultPrice() {
+            return adultPrice;
+        }
+
+        public void setAdultPrice(int adultPrice) {
+            this.adultPrice = adultPrice;
+        }
+
+        public int getAdultTax() {
+            return adultTax;
+        }
+
+        public void setAdultTax(int adultTax) {
+            this.adultTax = adultTax;
+        }
+
+        public int getChildPrice() {
+            return childPrice;
+        }
+
+        public void setChildPrice(int childPrice) {
+            this.childPrice = childPrice;
+        }
+
+        public int getChildTax() {
+            return childTax;
+        }
+
+        public void setChildTax(int childTax) {
+            this.childTax = childTax;
+        }
+
+        public int getPriceType() {
+            return priceType;
+        }
+
+        public void setPriceType(int priceType) {
+            this.priceType = priceType;
+        }
+
+        public int getApplyType() {
+            return applyType;
+        }
+
+        public void setApplyType(int applyType) {
+            this.applyType = applyType;
+        }
+
+        public int getAdultTaxType() {
+            return adultTaxType;
+        }
+
+        public void setAdultTaxType(int adultTaxType) {
+            this.adultTaxType = adultTaxType;
+        }
+
+        public int getChildTaxType() {
+            return childTaxType;
+        }
+
+        public void setChildTaxType(int childTaxType) {
+            this.childTaxType = childTaxType;
+        }
+
+        public Rules getRule() {
+            return rule;
+        }
+
+        public void setRule(Rules rule) {
+            this.rule = rule;
+        }
+
+        public String getRefData() {
+            return refData;
+        }
+
+        public void setRefData(String refData) {
+            this.refData = refData;
+        }
+
+        public List<SegmentVO> getFromSegments() {
+            return fromSegments;
+        }
+
+        public void setFromSegments(List<SegmentVO> fromSegments) {
+            this.fromSegments = fromSegments;
+        }
+
+        public List<SegmentVO> getRetSegments() {
+            return retSegments;
+        }
+
+        public void setRetSegments(List<SegmentVO> retSegments) {
+            this.retSegments = retSegments;
+        }
     }
 }

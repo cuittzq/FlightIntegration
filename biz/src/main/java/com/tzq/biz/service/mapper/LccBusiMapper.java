@@ -2,6 +2,7 @@ package com.tzq.biz.service.mapper;
 
 import com.tzq.biz.common.enums.StatusEnum;
 import com.tzq.biz.common.model.Money;
+import com.tzq.biz.common.model.integration.CabinVO;
 import com.tzq.biz.common.model.integration.FlightUnitVO;
 import com.tzq.biz.common.model.integration.SegmentVO;
 import com.tzq.biz.common.model.integration.lccverify.VerifyReqVO;
@@ -13,6 +14,7 @@ import com.tzq.integration.service.intl.lcc.model.verify.VerifyReq;
 import com.tzq.integration.service.intl.lcc.model.verify.VerifyRes;
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,21 +92,70 @@ public class LccBusiMapper {
         return vo;
     }
 
-    private static FlightUnitVO io2vo(FlightRoutings routing) {
+    private static VerifyResVO.VerifyResRouting io2vo(FlightRoutings routing) {
         if(routing == null)
         {
             return null;
         }
 
-        FlightUnitVO vo = new FlightUnitVO();
-        vo.setAdultTotalPrice(new Money(routing.getAdultPrice()) );
-        vo.setAdultTotalTax(new Money(routing.getAdultTax()));
-        vo.setCabinCodeGroup(StringUtils.EMPTY); //TODO 暂时不管这个仓位组怎么来
-        vo.setChildTotalPrice(new Money(routing.getChildPrice()));
-        vo.setChildTotalTax(new Money(routing.getChildTax()));
-        vo.setFlightNoGroup(StringUtils.EMPTY);// TODO 同上
-        vo.setInfantTotalPrice(new Money(0)); // TODO 返回没有婴儿价格
-        vo.set
+        VerifyResVO.VerifyResRouting vo = new VerifyResVO.VerifyResRouting();
+        vo.setAdultPrice(routing.getAdultPrice());
+        vo.setAdultTax(routing.getAdultTax());
+        vo.setAdultTaxType(routing.getAdultTaxType());
+        vo.setApplyType(routing.getApplyType());
+        vo.setChildPrice(routing.getChildPrice());
+        vo.setChildTax(routing.getChildTax());
+        vo.setChildTaxType(routing.getChildTaxType());
+        vo.setData(routing.getData());
 
+        List<SegmentVO> fromSegs = new ArrayList<>();
+        for(FlightSegment seg : routing.getFromSegments())
+        {
+            fromSegs.add(io2vo(seg));
+        }
+        vo.setFromSegments(fromSegs);
+
+        List<SegmentVO> setSegs = new ArrayList<>();
+        for(FlightSegment seg : routing.getRetSegments())
+        {
+            setSegs.add(io2vo(seg));
+        }
+        vo.setRetSegments(fromSegs);
+
+        return vo;
+    }
+
+    private static SegmentVO io2vo(FlightSegment seg) {
+        if(seg == null)
+        {
+            return  null;
+        }
+
+        SegmentVO vo = new SegmentVO();
+        vo.setAircraftStyle(seg.getAircraftCode());
+        vo.setAirlineCode(seg.getAircraftCode());
+        vo.setArrAirportCode(seg.getArrAirport());
+        vo.setArrAirportName(StringUtils.EMPTY); // TODO
+        vo.setArrAirportTerm(seg.getArrivingTerminal());
+        try {
+            vo.setArrDatetime(DateConvert.getDateFromStrByFormat( seg.getArrTime(),DateConvert.LCC_VERIFY_DATE_FORMAT));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        CabinVO cabinVO = new CabinVO();// TODO
+        cabinVO.setBaseCabinCode(seg.getCabin());
+        vo.setCabin(cabinVO);
+        vo.setCodeShare(seg.isCodeShare()?StatusEnum.TRUE:StatusEnum.FALSE);
+        vo.setDepAirportCode(seg.getDepAirport());
+        vo.setDepAirportName(StringUtils.EMPTY);
+        vo.setDepAirportTerm(seg.getDepartureTerminal());
+        try {
+            vo.setDepDatetime(DateConvert.getDateFromStrByFormat( seg.getDepTime(),DateConvert.LCC_VERIFY_DATE_FORMAT));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return vo;
     }
 }
