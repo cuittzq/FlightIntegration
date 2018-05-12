@@ -13,7 +13,7 @@
         <module>facade</module>
         <module>facade-impl</module>
         <module>integration</module>
-        <module>common</module>
+        <module>commons</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -382,7 +382,7 @@
             </dependency>
             <dependency>
                 <groupId>com.github.cuittzq</groupId>
-                <artifactId>common</artifactId>
+                <artifactId>commons</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

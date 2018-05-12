@@ -1,4 +1,4 @@
-package com.tzq.integration.utils;
+package com.tzq.commons.utils;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;

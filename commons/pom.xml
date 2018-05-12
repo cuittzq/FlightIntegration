@@ -9,10 +9,11 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <name>FlightIntegration-integration</name>
-    <description>FlightIntegration-integration</description>
+    <name>FlightIntegration-commons</name>
+    <description>FlightIntegration-commons</description>
     <packaging>jar</packaging>
-    <artifactId>integration</artifactId>
+    <artifactId>commons</artifactId>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -46,10 +47,5 @@
             <groupId>net.jcip</groupId>
             <artifactId>jcip-annotations</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.github.cuittzq</groupId>
-            <artifactId>commons</artifactId>
-        </dependency>
-
     </dependencies>
 </project>

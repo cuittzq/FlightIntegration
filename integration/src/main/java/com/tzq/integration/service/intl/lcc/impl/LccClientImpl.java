@@ -1,6 +1,7 @@
 package com.tzq.integration.service.intl.lcc.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.tzq.commons.utils.HttpClientUtil;
 import com.tzq.integration.service.core.AbstractBaseClient;
 import com.tzq.integration.service.intl.lcc.LccClient;
 import com.tzq.integration.service.intl.lcc.constants.LccConstant;
@@ -10,7 +11,6 @@ import com.tzq.integration.service.intl.lcc.model.search.SearchFlightReq;
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightRes;
 import com.tzq.integration.service.intl.lcc.model.verify.VerifyReq;
 import com.tzq.integration.service.intl.lcc.model.verify.VerifyRes;
-import com.tzq.integration.utils.HttpClientUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

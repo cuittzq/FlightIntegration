@@ -1,4 +1,4 @@
-package com.tzq.integration.utils;
+package com.tzq.commons.utils;
 
 
 import org.apache.http.HttpStatus;

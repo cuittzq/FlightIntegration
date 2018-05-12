@@ -5,10 +5,10 @@ import com.tzq.biz.common.model.context.RouteContext;
 import com.tzq.biz.common.model.integration.FlightRouteVO;
 import com.tzq.biz.common.model.integration.SearchVO;
 import com.tzq.biz.service.abstracts.AbstractSearchFlightService;
+import com.tzq.commons.utils.DateUtils;
 import com.tzq.integration.service.intl.lcc.LccClient;
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightReq;
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightRes;
-import com.tzq.integration.utils.DateUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

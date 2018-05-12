@@ -108,7 +108,7 @@
         </dependency>
         <dependency>
             <groupId>com.github.cuittzq</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>commons</artifactId>
         </dependency>
     </dependencies>
 
