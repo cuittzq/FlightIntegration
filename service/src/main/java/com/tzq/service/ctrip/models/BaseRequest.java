@@ -1,4 +1,4 @@
-package com.tzq.facade.ctrip.models;
+package com.tzq.service.ctrip.models;
 
 public class BaseRequest {
     /**

@@ -1,8 +1,8 @@
-package com.tzq.facade.ctrip.models.search;
+package com.tzq.service.ctrip.models.search;
 
 
-import com.tzq.facade.ctrip.models.BaseRequest;
-import com.tzq.facade.ctrip.models.enums.ChannelEnum;
+import com.tzq.service.ctrip.models.BaseRequest;
+import com.tzq.service.ctrip.models.enums.ChannelEnum;
 
 public class SearchFlightReq extends BaseRequest {
 

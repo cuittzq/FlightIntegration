@@ -1,7 +1,8 @@
-package com.tzq.facade.ctrip.models.search;
+package com.tzq.service.ctrip.models.search;
 
 
-import com.tzq.facade.ctrip.models.BaseResponse;
+
+import com.tzq.service.ctrip.models.BaseResponse;
 
 import java.util.List;
 

@@ -10,10 +10,9 @@
         <module>dal</module>
         <module>biz</module>
         <module>web</module>
-        <module>facade</module>
-        <module>facade-impl</module>
         <module>integration</module>
         <module>commons</module>
+        <module>service</module>
 
     </modules>
     <packaging>pom</packaging>
@@ -371,16 +370,9 @@
                 <artifactId>integration</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.github.cuittzq</groupId>
-                <artifactId>facade</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.cuittzq</groupId>
-                <artifactId>facade-impl</artifactId>
+                <artifactId>service</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

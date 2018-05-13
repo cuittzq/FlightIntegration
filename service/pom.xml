@@ -9,10 +9,11 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <name>FlightIntegration-facade</name>
-    <description>FlightIntegration-facade</description>
+    <name>FlightIntegration-service</name>
+    <description>FlightIntegration-service</description>
     <packaging>jar</packaging>
-    <artifactId>facade</artifactId>
+
+    <artifactId>service</artifactId>
     <dependencies>
         <!-- spring-boot -->
         <dependency>
@@ -66,4 +67,5 @@
             <artifactId>jackson-jaxrs-json-provider</artifactId>
         </dependency>
     </dependencies>
+
 </project>

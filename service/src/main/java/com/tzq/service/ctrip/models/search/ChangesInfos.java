@@ -1,4 +1,4 @@
-package com.tzq.facade.ctrip.models.search;
+package com.tzq.service.ctrip.models.search;
 
 public class ChangesInfos {
     /**

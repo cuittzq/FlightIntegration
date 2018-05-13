@@ -1,4 +1,4 @@
-package com.tzq.facade.core;
+package com.tzq.service.core;
 
 public interface OtaSearchFlightService {
 

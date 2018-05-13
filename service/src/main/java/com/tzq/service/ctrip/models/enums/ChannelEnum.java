@@ -1,4 +1,4 @@
-package com.tzq.facade.ctrip.models.enums;
+package com.tzq.service.ctrip.models.enums;
 
 import org.apache.commons.lang3.StringUtils;
 
