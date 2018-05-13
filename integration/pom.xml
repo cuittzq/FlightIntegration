@@ -47,7 +47,7 @@
             <artifactId>jcip-annotations</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.cuittzq</groupId>
+            <groupId>com.cuittzq.u</groupId>
             <artifactId>commons</artifactId>
         </dependency>
 
