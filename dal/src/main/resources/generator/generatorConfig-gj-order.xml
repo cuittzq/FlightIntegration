@@ -15,20 +15,15 @@
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://10.100.159.49:3500/TCFlyOfficialSales"
-                        userId="TCFlyOfficialSales" password="VWEoeVTwwt2jhQrO91hp">
+                        connectionURL="jdbc:mysql://123.56.139.13:3306/gj_order"
+                        userId="root" password="1989513bs">
         </jdbcConnection>
-
-        <!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"-->
-                        <!--connectionURL="jdbc:mysql://192.168.10.105:3306/SpiderDB"-->
-                        <!--userId="root" password="123456">-->
-        <!--</jdbcConnection>-->
 
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
         <!-- 生成模型的包名和位置-->
-        <javaModelGenerator targetPackage="com.tzq.dal.model" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.tzq.dal.model.order" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
@@ -37,11 +32,15 @@
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!-- 生成DAO的包名和位置-->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.tzq.dal.mapper" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.tzq.dal.mapper.order" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
-        <table tableName="test" domainObjectName="Test" ></table>
-        <table tableName="test_order" domainObjectName="TestOrder" ></table>
+        <table tableName="orders" domainObjectName="OrderInfo">
+            <columnOverride column="ExtendValue" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>
+        <table tableName="passengers" domainObjectName="PassengerInfo">
+            <columnOverride column="ExtendValue" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>
     </context>
 </generatorConfiguration>

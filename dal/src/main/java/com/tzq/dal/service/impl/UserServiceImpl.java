@@ -1,5 +1,6 @@
 package com.tzq.dal.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.tzq.dal.mapper.TestMapper;
 import com.tzq.dal.model.Test;
@@ -42,6 +43,9 @@ public class UserServiceImpl implements UserService {
         TestExample userExample = new TestExample();
         userExample.setLimitStart(PageHelper.getLocalPage().getStartRow());
         userExample.setLimitEnd(PageHelper.getLocalPage().getPageSize());
+        TestExample.Criteria criteria = userExample.createCriteria();
+        criteria.andIdEqualTo(100);
+        userExample.setOrderByClause("LAST_UPD_TM DESC");//根据LAST_UPD_TM排序
         return testMapper.selectByExample(userExample);
     }
 }

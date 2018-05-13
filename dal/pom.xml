@@ -121,7 +121,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <configurationFile>${basedir}/src/main/resources/generator/generatorConfig.xml</configurationFile>
+                    <configurationFile>src/main/resources/generator/generatorConfig-gj-order.xml</configurationFile>
                     <overwrite>true</overwrite>
                     <verbose>true</verbose>
                 </configuration>
