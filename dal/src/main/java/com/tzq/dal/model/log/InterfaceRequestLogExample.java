@@ -912,6 +912,66 @@ public class InterfaceRequestLogExample {
             return (Criteria) this;
         }
 
+        public Criteria andVoyagetypeIsNull() {
+            addCriterion("VoyageType is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoyagetypeIsNotNull() {
+            addCriterion("VoyageType is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoyagetypeEqualTo(Byte value) {
+            addCriterion("VoyageType =", value, "voyagetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoyagetypeNotEqualTo(Byte value) {
+            addCriterion("VoyageType <>", value, "voyagetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoyagetypeGreaterThan(Byte value) {
+            addCriterion("VoyageType >", value, "voyagetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoyagetypeGreaterThanOrEqualTo(Byte value) {
+            addCriterion("VoyageType >=", value, "voyagetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoyagetypeLessThan(Byte value) {
+            addCriterion("VoyageType <", value, "voyagetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoyagetypeLessThanOrEqualTo(Byte value) {
+            addCriterion("VoyageType <=", value, "voyagetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoyagetypeIn(List<Byte> values) {
+            addCriterion("VoyageType in", values, "voyagetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoyagetypeNotIn(List<Byte> values) {
+            addCriterion("VoyageType not in", values, "voyagetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoyagetypeBetween(Byte value1, Byte value2) {
+            addCriterion("VoyageType between", value1, value2, "voyagetype");
+            return (Criteria) this;
+        }
+
+        public Criteria andVoyagetypeNotBetween(Byte value1, Byte value2) {
+            addCriterion("VoyageType not between", value1, value2, "voyagetype");
+            return (Criteria) this;
+        }
+
         public Criteria andSalesplatrequesttimeIsNull() {
             addCriterion("SalesPlatRequestTime is null");
             return (Criteria) this;

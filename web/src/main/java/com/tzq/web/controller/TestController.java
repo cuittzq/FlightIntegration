@@ -5,8 +5,6 @@ import com.tzq.commons.enums.TripTypeEnum;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.ctrip.FlightRouteVO;
 import com.tzq.commons.model.ctrip.SearchVO;
-import com.tzq.dal.model.Test;
-import com.tzq.dal.service.UserService;
 import com.tzq.web.aop.UserAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +25,7 @@ import java.util.Date;
 @RequestMapping(value = "/demo")
 public class TestController {
 
-    @Autowired
-    private UserService userService;
+
 
     @Autowired
     private SearchFlightService lccIntlSearchFlightService;
@@ -36,11 +33,7 @@ public class TestController {
     @RequestMapping(value = "/gethello", method = RequestMethod.GET)
     @UserAccess(desc = "gethello")
     public String gethello() {
-        Test user = new Test();
-        user.setId(121);
-        user.setName("test");
-        user.setUpdatetime(new Date());
-        userService.addUser(user);
+
         return "hello";
     }
 

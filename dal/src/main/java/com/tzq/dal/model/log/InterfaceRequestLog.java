@@ -27,6 +27,8 @@ public class InterfaceRequestLog {
 
     private Date backdate;
 
+    private Byte voyagetype;
+
     private Date salesplatrequesttime;
 
     private Date salesplatresponsetime;
@@ -147,6 +149,14 @@ public class InterfaceRequestLog {
 
     public void setBackdate(Date backdate) {
         this.backdate = backdate;
+    }
+
+    public Byte getVoyagetype() {
+        return voyagetype;
+    }
+
+    public void setVoyagetype(Byte voyagetype) {
+        this.voyagetype = voyagetype;
     }
 
     public Date getSalesplatrequesttime() {
