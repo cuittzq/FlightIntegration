@@ -16,6 +16,29 @@ public class BaseParam implements Serializable {
 
     private String cid;
 
+    /**
+     * 行程类型: 1.单程 2.往返
+     */
+    private String tripType;
+
+    private String sessionId;
+
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public String getTripType() {
+        return tripType;
+    }
+
+    public void setTripType(String tripType) {
+        this.tripType = tripType;
+    }
 
     public String getCid() {
         return cid;

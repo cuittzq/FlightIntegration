@@ -180,4 +180,25 @@ public class FlightSegment {
     public void setSeatCount(int seatCount) {
         this.seatCount = seatCount;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("            \"carrier\":\"").append(carrier).append('\"');
+        sb.append(",             \"flightNumber\":\"").append(flightNumber).append('\"');
+        sb.append(",             \"depAirport\":\"").append(depAirport).append('\"');
+        sb.append(",             \"depTime\":\"").append(depTime).append('\"');
+        sb.append(",             \"arrAirport\":\"").append(arrAirport).append('\"');
+        sb.append(",             \"arrTime\":\"").append(arrTime).append('\"');
+        sb.append(",             \"stopCities\":\"").append(stopCities).append('\"');
+        sb.append(",             \"codeShare\":").append(codeShare);
+        sb.append(",             \"sharingFlightNumber\":\"").append(sharingFlightNumber).append('\"');
+        sb.append(",             \"departureTerminal\":\"").append(departureTerminal).append('\"');
+        sb.append(",             \"arrivingTerminal\":\"").append(arrivingTerminal).append('\"');
+        sb.append(",             \"cabin\":\"").append(cabin).append('\"');
+        sb.append(",             \"aircraftCode\":\"").append(aircraftCode).append('\"');
+        sb.append(",             \"seatCount\":").append(seatCount);
+        sb.append('}');
+        return sb.toString();
+    }
 }

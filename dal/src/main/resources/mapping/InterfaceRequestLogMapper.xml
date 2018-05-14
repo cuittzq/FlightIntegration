@@ -1,0 +1,3427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tzq.dal.mapper.log.InterfaceRequestLogMapper">
+  <resultMap id="BaseResultMap" type="com.tzq.dal.model.log.InterfaceRequestLog">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="SalesPlatform" jdbcType="INTEGER" property="salesplatform" />
+    <result column="PurchasePlatform" jdbcType="INTEGER" property="purchaseplatform" />
+    <result column="RequestDate" jdbcType="DATE" property="requestdate" />
+    <result column="RequestType" jdbcType="VARCHAR" property="requesttype" />
+    <result column="RequestResult" jdbcType="TINYINT" property="requestresult" />
+    <result column="InterfaceResult" jdbcType="TINYINT" property="interfaceresult" />
+    <result column="Carrier" jdbcType="VARCHAR" property="carrier" />
+    <result column="DepCode" jdbcType="VARCHAR" property="depcode" />
+    <result column="ArrCode" jdbcType="VARCHAR" property="arrcode" />
+    <result column="DepDate" jdbcType="DATE" property="depdate" />
+    <result column="BackDate" jdbcType="DATE" property="backdate" />
+    <result column="SalesPlatRequestTime" jdbcType="TIMESTAMP" property="salesplatrequesttime" />
+    <result column="SalesPlatResponseTime" jdbcType="TIMESTAMP" property="salesplatresponsetime" />
+    <result column="PurchasePlatRequestTime" jdbcType="TIMESTAMP" property="purchaseplatrequesttime" />
+    <result column="PurchasePlatResponseTime" jdbcType="TIMESTAMP" property="purchaseplatresponsetime" />
+    <result column="SalesPlatRequestIP" jdbcType="VARCHAR" property="salesplatrequestip" />
+    <result column="PurchasePlatRequestIP" jdbcType="VARCHAR" property="purchaseplatrequestip" />
+    <result column="SalesPlatRequestTipMessage" jdbcType="VARCHAR" property="salesplatrequesttipmessage" />
+    <result column="PurchasePlatRequestTipMessage" jdbcType="VARCHAR" property="purchaseplatrequesttipmessage" />
+    <result column="SalesPlatLogDetail" jdbcType="VARCHAR" property="salesplatlogdetail" />
+    <result column="PurchasePlatLogDetail" jdbcType="VARCHAR" property="purchaseplatlogdetail" />
+    <result column="OrderNo" jdbcType="VARCHAR" property="orderno" />
+    <result column="PNR" jdbcType="VARCHAR" property="pnr" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, SalesPlatform, PurchasePlatform, RequestDate, RequestType, RequestResult, InterfaceResult, 
+    Carrier, DepCode, ArrCode, DepDate, BackDate, SalesPlatRequestTime, SalesPlatResponseTime, 
+    PurchasePlatRequestTime, PurchasePlatResponseTime, SalesPlatRequestIP, PurchasePlatRequestIP, 
+    SalesPlatRequestTipMessage, PurchasePlatRequestTipMessage, SalesPlatLogDetail, PurchasePlatLogDetail, 
+    OrderNo, PNR, ModifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.tzq.dal.model.log.InterfaceRequestLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart&gt;=0">
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from interfacerequestlog
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from interfacerequestlog
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tzq.dal.model.log.InterfaceRequestLogExample">
+    delete from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tzq.dal.model.log.InterfaceRequestLog">
+    insert into interfacerequestlog (ID, SalesPlatform, PurchasePlatform, 
+      RequestDate, RequestType, RequestResult, 
+      InterfaceResult, Carrier, DepCode, 
+      ArrCode, DepDate, BackDate, 
+      SalesPlatRequestTime, SalesPlatResponseTime, 
+      PurchasePlatRequestTime, PurchasePlatResponseTime, 
+      SalesPlatRequestIP, PurchasePlatRequestIP, 
+      SalesPlatRequestTipMessage, PurchasePlatRequestTipMessage, 
+      SalesPlatLogDetail, PurchasePlatLogDetail, 
+      OrderNo, PNR, ModifyTime
+      )
+    values (#{id,jdbcType=INTEGER}, #{salesplatform,jdbcType=INTEGER}, #{purchaseplatform,jdbcType=INTEGER}, 
+      #{requestdate,jdbcType=DATE}, #{requesttype,jdbcType=VARCHAR}, #{requestresult,jdbcType=TINYINT}, 
+      #{interfaceresult,jdbcType=TINYINT}, #{carrier,jdbcType=VARCHAR}, #{depcode,jdbcType=VARCHAR}, 
+      #{arrcode,jdbcType=VARCHAR}, #{depdate,jdbcType=DATE}, #{backdate,jdbcType=DATE}, 
+      #{salesplatrequesttime,jdbcType=TIMESTAMP}, #{salesplatresponsetime,jdbcType=TIMESTAMP}, 
+      #{purchaseplatrequesttime,jdbcType=TIMESTAMP}, #{purchaseplatresponsetime,jdbcType=TIMESTAMP}, 
+      #{salesplatrequestip,jdbcType=VARCHAR}, #{purchaseplatrequestip,jdbcType=VARCHAR}, 
+      #{salesplatrequesttipmessage,jdbcType=VARCHAR}, #{purchaseplatrequesttipmessage,jdbcType=VARCHAR}, 
+      #{salesplatlogdetail,jdbcType=VARCHAR}, #{purchaseplatlogdetail,jdbcType=VARCHAR}, 
+      #{orderno,jdbcType=VARCHAR}, #{pnr,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tzq.dal.model.log.InterfaceRequestLog">
+    insert into interfacerequestlog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="salesplatform != null">
+        SalesPlatform,
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform,
+      </if>
+      <if test="requestdate != null">
+        RequestDate,
+      </if>
+      <if test="requesttype != null">
+        RequestType,
+      </if>
+      <if test="requestresult != null">
+        RequestResult,
+      </if>
+      <if test="interfaceresult != null">
+        InterfaceResult,
+      </if>
+      <if test="carrier != null">
+        Carrier,
+      </if>
+      <if test="depcode != null">
+        DepCode,
+      </if>
+      <if test="arrcode != null">
+        ArrCode,
+      </if>
+      <if test="depdate != null">
+        DepDate,
+      </if>
+      <if test="backdate != null">
+        BackDate,
+      </if>
+      <if test="salesplatrequesttime != null">
+        SalesPlatRequestTime,
+      </if>
+      <if test="salesplatresponsetime != null">
+        SalesPlatResponseTime,
+      </if>
+      <if test="purchaseplatrequesttime != null">
+        PurchasePlatRequestTime,
+      </if>
+      <if test="purchaseplatresponsetime != null">
+        PurchasePlatResponseTime,
+      </if>
+      <if test="salesplatrequestip != null">
+        SalesPlatRequestIP,
+      </if>
+      <if test="purchaseplatrequestip != null">
+        PurchasePlatRequestIP,
+      </if>
+      <if test="salesplatrequesttipmessage != null">
+        SalesPlatRequestTipMessage,
+      </if>
+      <if test="purchaseplatrequesttipmessage != null">
+        PurchasePlatRequestTipMessage,
+      </if>
+      <if test="salesplatlogdetail != null">
+        SalesPlatLogDetail,
+      </if>
+      <if test="purchaseplatlogdetail != null">
+        PurchasePlatLogDetail,
+      </if>
+      <if test="orderno != null">
+        OrderNo,
+      </if>
+      <if test="pnr != null">
+        PNR,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="salesplatform != null">
+        #{salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseplatform != null">
+        #{purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="requestdate != null">
+        #{requestdate,jdbcType=DATE},
+      </if>
+      <if test="requesttype != null">
+        #{requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="requestresult != null">
+        #{requestresult,jdbcType=TINYINT},
+      </if>
+      <if test="interfaceresult != null">
+        #{interfaceresult,jdbcType=TINYINT},
+      </if>
+      <if test="carrier != null">
+        #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="depcode != null">
+        #{depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="arrcode != null">
+        #{arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        #{depdate,jdbcType=DATE},
+      </if>
+      <if test="backdate != null">
+        #{backdate,jdbcType=DATE},
+      </if>
+      <if test="salesplatrequesttime != null">
+        #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatresponsetime != null">
+        #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatrequesttime != null">
+        #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatresponsetime != null">
+        #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatrequestip != null">
+        #{salesplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequestip != null">
+        #{purchaseplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatrequesttipmessage != null">
+        #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequesttipmessage != null">
+        #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatlogdetail != null">
+        #{salesplatlogdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatlogdetail != null">
+        #{purchaseplatlogdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="orderno != null">
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="pnr != null">
+        #{pnr,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tzq.dal.model.log.InterfaceRequestLogExample" resultType="java.lang.Long">
+    select count(*) from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update interfacerequestlog
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesplatform != null">
+        SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="record.purchaseplatform != null">
+        PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="record.requestdate != null">
+        RequestDate = #{record.requestdate,jdbcType=DATE},
+      </if>
+      <if test="record.requesttype != null">
+        RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestresult != null">
+        RequestResult = #{record.requestresult,jdbcType=TINYINT},
+      </if>
+      <if test="record.interfaceresult != null">
+        InterfaceResult = #{record.interfaceresult,jdbcType=TINYINT},
+      </if>
+      <if test="record.carrier != null">
+        Carrier = #{record.carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depcode != null">
+        DepCode = #{record.depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrcode != null">
+        ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depdate != null">
+        DepDate = #{record.depdate,jdbcType=DATE},
+      </if>
+      <if test="record.backdate != null">
+        BackDate = #{record.backdate,jdbcType=DATE},
+      </if>
+      <if test="record.salesplatrequesttime != null">
+        SalesPlatRequestTime = #{record.salesplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesplatresponsetime != null">
+        SalesPlatResponseTime = #{record.salesplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.purchaseplatrequesttime != null">
+        PurchasePlatRequestTime = #{record.purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.purchaseplatresponsetime != null">
+        PurchasePlatResponseTime = #{record.purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesplatrequestip != null">
+        SalesPlatRequestIP = #{record.salesplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseplatrequestip != null">
+        PurchasePlatRequestIP = #{record.purchaseplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesplatrequesttipmessage != null">
+        SalesPlatRequestTipMessage = #{record.salesplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseplatrequesttipmessage != null">
+        PurchasePlatRequestTipMessage = #{record.purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesplatlogdetail != null">
+        SalesPlatLogDetail = #{record.salesplatlogdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseplatlogdetail != null">
+        PurchasePlatLogDetail = #{record.purchaseplatlogdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderno != null">
+        OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pnr != null">
+        PNR = #{record.pnr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null">
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update interfacerequestlog
+    set ID = #{record.id,jdbcType=INTEGER},
+      SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{record.requestdate,jdbcType=DATE},
+      RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      RequestResult = #{record.requestresult,jdbcType=TINYINT},
+      InterfaceResult = #{record.interfaceresult,jdbcType=TINYINT},
+      Carrier = #{record.carrier,jdbcType=VARCHAR},
+      DepCode = #{record.depcode,jdbcType=VARCHAR},
+      ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      DepDate = #{record.depdate,jdbcType=DATE},
+      BackDate = #{record.backdate,jdbcType=DATE},
+      SalesPlatRequestTime = #{record.salesplatrequesttime,jdbcType=TIMESTAMP},
+      SalesPlatResponseTime = #{record.salesplatresponsetime,jdbcType=TIMESTAMP},
+      PurchasePlatRequestTime = #{record.purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      PurchasePlatResponseTime = #{record.purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      SalesPlatRequestIP = #{record.salesplatrequestip,jdbcType=VARCHAR},
+      PurchasePlatRequestIP = #{record.purchaseplatrequestip,jdbcType=VARCHAR},
+      SalesPlatRequestTipMessage = #{record.salesplatrequesttipmessage,jdbcType=VARCHAR},
+      PurchasePlatRequestTipMessage = #{record.purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      SalesPlatLogDetail = #{record.salesplatlogdetail,jdbcType=VARCHAR},
+      PurchasePlatLogDetail = #{record.purchaseplatlogdetail,jdbcType=VARCHAR},
+      OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      PNR = #{record.pnr,jdbcType=VARCHAR},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tzq.dal.model.log.InterfaceRequestLog">
+    update interfacerequestlog
+    <set>
+      <if test="salesplatform != null">
+        SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="requestdate != null">
+        RequestDate = #{requestdate,jdbcType=DATE},
+      </if>
+      <if test="requesttype != null">
+        RequestType = #{requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="requestresult != null">
+        RequestResult = #{requestresult,jdbcType=TINYINT},
+      </if>
+      <if test="interfaceresult != null">
+        InterfaceResult = #{interfaceresult,jdbcType=TINYINT},
+      </if>
+      <if test="carrier != null">
+        Carrier = #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="depcode != null">
+        DepCode = #{depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="arrcode != null">
+        ArrCode = #{arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        DepDate = #{depdate,jdbcType=DATE},
+      </if>
+      <if test="backdate != null">
+        BackDate = #{backdate,jdbcType=DATE},
+      </if>
+      <if test="salesplatrequesttime != null">
+        SalesPlatRequestTime = #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatresponsetime != null">
+        SalesPlatResponseTime = #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatrequesttime != null">
+        PurchasePlatRequestTime = #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatresponsetime != null">
+        PurchasePlatResponseTime = #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatrequestip != null">
+        SalesPlatRequestIP = #{salesplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequestip != null">
+        PurchasePlatRequestIP = #{purchaseplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatrequesttipmessage != null">
+        SalesPlatRequestTipMessage = #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequesttipmessage != null">
+        PurchasePlatRequestTipMessage = #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatlogdetail != null">
+        SalesPlatLogDetail = #{salesplatlogdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatlogdetail != null">
+        PurchasePlatLogDetail = #{purchaseplatlogdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="orderno != null">
+        OrderNo = #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="pnr != null">
+        PNR = #{pnr,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tzq.dal.model.log.InterfaceRequestLog">
+    update interfacerequestlog
+    set SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{requestdate,jdbcType=DATE},
+      RequestType = #{requesttype,jdbcType=VARCHAR},
+      RequestResult = #{requestresult,jdbcType=TINYINT},
+      InterfaceResult = #{interfaceresult,jdbcType=TINYINT},
+      Carrier = #{carrier,jdbcType=VARCHAR},
+      DepCode = #{depcode,jdbcType=VARCHAR},
+      ArrCode = #{arrcode,jdbcType=VARCHAR},
+      DepDate = #{depdate,jdbcType=DATE},
+      BackDate = #{backdate,jdbcType=DATE},
+      SalesPlatRequestTime = #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      SalesPlatResponseTime = #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      PurchasePlatRequestTime = #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      PurchasePlatResponseTime = #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      SalesPlatRequestIP = #{salesplatrequestip,jdbcType=VARCHAR},
+      PurchasePlatRequestIP = #{purchaseplatrequestip,jdbcType=VARCHAR},
+      SalesPlatRequestTipMessage = #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      PurchasePlatRequestTipMessage = #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      SalesPlatLogDetail = #{salesplatlogdetail,jdbcType=VARCHAR},
+      PurchasePlatLogDetail = #{purchaseplatlogdetail,jdbcType=VARCHAR},
+      OrderNo = #{orderno,jdbcType=VARCHAR},
+      PNR = #{pnr,jdbcType=VARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.tzq.dal.model.log.InterfaceRequestLog">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="SalesPlatform" jdbcType="INTEGER" property="salesplatform" />
+    <result column="PurchasePlatform" jdbcType="INTEGER" property="purchaseplatform" />
+    <result column="RequestDate" jdbcType="DATE" property="requestdate" />
+    <result column="RequestType" jdbcType="VARCHAR" property="requesttype" />
+    <result column="RequestResult" jdbcType="TINYINT" property="requestresult" />
+    <result column="InterfaceResult" jdbcType="TINYINT" property="interfaceresult" />
+    <result column="Carrier" jdbcType="VARCHAR" property="carrier" />
+    <result column="DepCode" jdbcType="VARCHAR" property="depcode" />
+    <result column="ArrCode" jdbcType="VARCHAR" property="arrcode" />
+    <result column="DepDate" jdbcType="DATE" property="depdate" />
+    <result column="BackDate" jdbcType="DATE" property="backdate" />
+    <result column="SalesPlatRequestTime" jdbcType="TIMESTAMP" property="salesplatrequesttime" />
+    <result column="SalesPlatResponseTime" jdbcType="TIMESTAMP" property="salesplatresponsetime" />
+    <result column="PurchasePlatRequestTime" jdbcType="TIMESTAMP" property="purchaseplatrequesttime" />
+    <result column="PurchasePlatResponseTime" jdbcType="TIMESTAMP" property="purchaseplatresponsetime" />
+    <result column="SalesPlatRequestIP" jdbcType="VARCHAR" property="salesplatrequestip" />
+    <result column="PurchasePlatRequestIP" jdbcType="VARCHAR" property="purchaseplatrequestip" />
+    <result column="SalesPlatRequestTipMessage" jdbcType="VARCHAR" property="salesplatrequesttipmessage" />
+    <result column="PurchasePlatRequestTipMessage" jdbcType="VARCHAR" property="purchaseplatrequesttipmessage" />
+    <result column="SalesPlatLogDetail" jdbcType="VARCHAR" property="salesplatlogdetail" />
+    <result column="PurchasePlatLogDetail" jdbcType="VARCHAR" property="purchaseplatlogdetail" />
+    <result column="OrderNo" jdbcType="VARCHAR" property="orderno" />
+    <result column="PNR" jdbcType="VARCHAR" property="pnr" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, SalesPlatform, PurchasePlatform, RequestDate, RequestType, RequestResult, InterfaceResult, 
+    Carrier, DepCode, ArrCode, DepDate, BackDate, SalesPlatRequestTime, SalesPlatResponseTime, 
+    PurchasePlatRequestTime, PurchasePlatResponseTime, SalesPlatRequestIP, PurchasePlatRequestIP, 
+    SalesPlatRequestTipMessage, PurchasePlatRequestTipMessage, SalesPlatLogDetail, PurchasePlatLogDetail, 
+    OrderNo, PNR, ModifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.tzq.dal.model.log.InterfaceRequestLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart&gt;=0">
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from interfacerequestlog
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from interfacerequestlog
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tzq.dal.model.log.InterfaceRequestLogExample">
+    delete from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tzq.dal.model.log.InterfaceRequestLog">
+    insert into interfacerequestlog (ID, SalesPlatform, PurchasePlatform, 
+      RequestDate, RequestType, RequestResult, 
+      InterfaceResult, Carrier, DepCode, 
+      ArrCode, DepDate, BackDate, 
+      SalesPlatRequestTime, SalesPlatResponseTime, 
+      PurchasePlatRequestTime, PurchasePlatResponseTime, 
+      SalesPlatRequestIP, PurchasePlatRequestIP, 
+      SalesPlatRequestTipMessage, PurchasePlatRequestTipMessage, 
+      SalesPlatLogDetail, PurchasePlatLogDetail, 
+      OrderNo, PNR, ModifyTime
+      )
+    values (#{id,jdbcType=INTEGER}, #{salesplatform,jdbcType=INTEGER}, #{purchaseplatform,jdbcType=INTEGER}, 
+      #{requestdate,jdbcType=DATE}, #{requesttype,jdbcType=VARCHAR}, #{requestresult,jdbcType=TINYINT}, 
+      #{interfaceresult,jdbcType=TINYINT}, #{carrier,jdbcType=VARCHAR}, #{depcode,jdbcType=VARCHAR}, 
+      #{arrcode,jdbcType=VARCHAR}, #{depdate,jdbcType=DATE}, #{backdate,jdbcType=DATE}, 
+      #{salesplatrequesttime,jdbcType=TIMESTAMP}, #{salesplatresponsetime,jdbcType=TIMESTAMP}, 
+      #{purchaseplatrequesttime,jdbcType=TIMESTAMP}, #{purchaseplatresponsetime,jdbcType=TIMESTAMP}, 
+      #{salesplatrequestip,jdbcType=VARCHAR}, #{purchaseplatrequestip,jdbcType=VARCHAR}, 
+      #{salesplatrequesttipmessage,jdbcType=VARCHAR}, #{purchaseplatrequesttipmessage,jdbcType=VARCHAR}, 
+      #{salesplatlogdetail,jdbcType=VARCHAR}, #{purchaseplatlogdetail,jdbcType=VARCHAR}, 
+      #{orderno,jdbcType=VARCHAR}, #{pnr,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tzq.dal.model.log.InterfaceRequestLog">
+    insert into interfacerequestlog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="salesplatform != null">
+        SalesPlatform,
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform,
+      </if>
+      <if test="requestdate != null">
+        RequestDate,
+      </if>
+      <if test="requesttype != null">
+        RequestType,
+      </if>
+      <if test="requestresult != null">
+        RequestResult,
+      </if>
+      <if test="interfaceresult != null">
+        InterfaceResult,
+      </if>
+      <if test="carrier != null">
+        Carrier,
+      </if>
+      <if test="depcode != null">
+        DepCode,
+      </if>
+      <if test="arrcode != null">
+        ArrCode,
+      </if>
+      <if test="depdate != null">
+        DepDate,
+      </if>
+      <if test="backdate != null">
+        BackDate,
+      </if>
+      <if test="salesplatrequesttime != null">
+        SalesPlatRequestTime,
+      </if>
+      <if test="salesplatresponsetime != null">
+        SalesPlatResponseTime,
+      </if>
+      <if test="purchaseplatrequesttime != null">
+        PurchasePlatRequestTime,
+      </if>
+      <if test="purchaseplatresponsetime != null">
+        PurchasePlatResponseTime,
+      </if>
+      <if test="salesplatrequestip != null">
+        SalesPlatRequestIP,
+      </if>
+      <if test="purchaseplatrequestip != null">
+        PurchasePlatRequestIP,
+      </if>
+      <if test="salesplatrequesttipmessage != null">
+        SalesPlatRequestTipMessage,
+      </if>
+      <if test="purchaseplatrequesttipmessage != null">
+        PurchasePlatRequestTipMessage,
+      </if>
+      <if test="salesplatlogdetail != null">
+        SalesPlatLogDetail,
+      </if>
+      <if test="purchaseplatlogdetail != null">
+        PurchasePlatLogDetail,
+      </if>
+      <if test="orderno != null">
+        OrderNo,
+      </if>
+      <if test="pnr != null">
+        PNR,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="salesplatform != null">
+        #{salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseplatform != null">
+        #{purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="requestdate != null">
+        #{requestdate,jdbcType=DATE},
+      </if>
+      <if test="requesttype != null">
+        #{requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="requestresult != null">
+        #{requestresult,jdbcType=TINYINT},
+      </if>
+      <if test="interfaceresult != null">
+        #{interfaceresult,jdbcType=TINYINT},
+      </if>
+      <if test="carrier != null">
+        #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="depcode != null">
+        #{depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="arrcode != null">
+        #{arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        #{depdate,jdbcType=DATE},
+      </if>
+      <if test="backdate != null">
+        #{backdate,jdbcType=DATE},
+      </if>
+      <if test="salesplatrequesttime != null">
+        #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatresponsetime != null">
+        #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatrequesttime != null">
+        #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatresponsetime != null">
+        #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatrequestip != null">
+        #{salesplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequestip != null">
+        #{purchaseplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatrequesttipmessage != null">
+        #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequesttipmessage != null">
+        #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatlogdetail != null">
+        #{salesplatlogdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatlogdetail != null">
+        #{purchaseplatlogdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="orderno != null">
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="pnr != null">
+        #{pnr,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tzq.dal.model.log.InterfaceRequestLogExample" resultType="java.lang.Long">
+    select count(*) from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update interfacerequestlog
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesplatform != null">
+        SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="record.purchaseplatform != null">
+        PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="record.requestdate != null">
+        RequestDate = #{record.requestdate,jdbcType=DATE},
+      </if>
+      <if test="record.requesttype != null">
+        RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestresult != null">
+        RequestResult = #{record.requestresult,jdbcType=TINYINT},
+      </if>
+      <if test="record.interfaceresult != null">
+        InterfaceResult = #{record.interfaceresult,jdbcType=TINYINT},
+      </if>
+      <if test="record.carrier != null">
+        Carrier = #{record.carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depcode != null">
+        DepCode = #{record.depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrcode != null">
+        ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depdate != null">
+        DepDate = #{record.depdate,jdbcType=DATE},
+      </if>
+      <if test="record.backdate != null">
+        BackDate = #{record.backdate,jdbcType=DATE},
+      </if>
+      <if test="record.salesplatrequesttime != null">
+        SalesPlatRequestTime = #{record.salesplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesplatresponsetime != null">
+        SalesPlatResponseTime = #{record.salesplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.purchaseplatrequesttime != null">
+        PurchasePlatRequestTime = #{record.purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.purchaseplatresponsetime != null">
+        PurchasePlatResponseTime = #{record.purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesplatrequestip != null">
+        SalesPlatRequestIP = #{record.salesplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseplatrequestip != null">
+        PurchasePlatRequestIP = #{record.purchaseplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesplatrequesttipmessage != null">
+        SalesPlatRequestTipMessage = #{record.salesplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseplatrequesttipmessage != null">
+        PurchasePlatRequestTipMessage = #{record.purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesplatlogdetail != null">
+        SalesPlatLogDetail = #{record.salesplatlogdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseplatlogdetail != null">
+        PurchasePlatLogDetail = #{record.purchaseplatlogdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderno != null">
+        OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pnr != null">
+        PNR = #{record.pnr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null">
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update interfacerequestlog
+    set ID = #{record.id,jdbcType=INTEGER},
+      SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{record.requestdate,jdbcType=DATE},
+      RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      RequestResult = #{record.requestresult,jdbcType=TINYINT},
+      InterfaceResult = #{record.interfaceresult,jdbcType=TINYINT},
+      Carrier = #{record.carrier,jdbcType=VARCHAR},
+      DepCode = #{record.depcode,jdbcType=VARCHAR},
+      ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      DepDate = #{record.depdate,jdbcType=DATE},
+      BackDate = #{record.backdate,jdbcType=DATE},
+      SalesPlatRequestTime = #{record.salesplatrequesttime,jdbcType=TIMESTAMP},
+      SalesPlatResponseTime = #{record.salesplatresponsetime,jdbcType=TIMESTAMP},
+      PurchasePlatRequestTime = #{record.purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      PurchasePlatResponseTime = #{record.purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      SalesPlatRequestIP = #{record.salesplatrequestip,jdbcType=VARCHAR},
+      PurchasePlatRequestIP = #{record.purchaseplatrequestip,jdbcType=VARCHAR},
+      SalesPlatRequestTipMessage = #{record.salesplatrequesttipmessage,jdbcType=VARCHAR},
+      PurchasePlatRequestTipMessage = #{record.purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      SalesPlatLogDetail = #{record.salesplatlogdetail,jdbcType=VARCHAR},
+      PurchasePlatLogDetail = #{record.purchaseplatlogdetail,jdbcType=VARCHAR},
+      OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      PNR = #{record.pnr,jdbcType=VARCHAR},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tzq.dal.model.log.InterfaceRequestLog">
+    update interfacerequestlog
+    <set>
+      <if test="salesplatform != null">
+        SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="requestdate != null">
+        RequestDate = #{requestdate,jdbcType=DATE},
+      </if>
+      <if test="requesttype != null">
+        RequestType = #{requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="requestresult != null">
+        RequestResult = #{requestresult,jdbcType=TINYINT},
+      </if>
+      <if test="interfaceresult != null">
+        InterfaceResult = #{interfaceresult,jdbcType=TINYINT},
+      </if>
+      <if test="carrier != null">
+        Carrier = #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="depcode != null">
+        DepCode = #{depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="arrcode != null">
+        ArrCode = #{arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        DepDate = #{depdate,jdbcType=DATE},
+      </if>
+      <if test="backdate != null">
+        BackDate = #{backdate,jdbcType=DATE},
+      </if>
+      <if test="salesplatrequesttime != null">
+        SalesPlatRequestTime = #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatresponsetime != null">
+        SalesPlatResponseTime = #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatrequesttime != null">
+        PurchasePlatRequestTime = #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatresponsetime != null">
+        PurchasePlatResponseTime = #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatrequestip != null">
+        SalesPlatRequestIP = #{salesplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequestip != null">
+        PurchasePlatRequestIP = #{purchaseplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatrequesttipmessage != null">
+        SalesPlatRequestTipMessage = #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequesttipmessage != null">
+        PurchasePlatRequestTipMessage = #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatlogdetail != null">
+        SalesPlatLogDetail = #{salesplatlogdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatlogdetail != null">
+        PurchasePlatLogDetail = #{purchaseplatlogdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="orderno != null">
+        OrderNo = #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="pnr != null">
+        PNR = #{pnr,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tzq.dal.model.log.InterfaceRequestLog">
+    update interfacerequestlog
+    set SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{requestdate,jdbcType=DATE},
+      RequestType = #{requesttype,jdbcType=VARCHAR},
+      RequestResult = #{requestresult,jdbcType=TINYINT},
+      InterfaceResult = #{interfaceresult,jdbcType=TINYINT},
+      Carrier = #{carrier,jdbcType=VARCHAR},
+      DepCode = #{depcode,jdbcType=VARCHAR},
+      ArrCode = #{arrcode,jdbcType=VARCHAR},
+      DepDate = #{depdate,jdbcType=DATE},
+      BackDate = #{backdate,jdbcType=DATE},
+      SalesPlatRequestTime = #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      SalesPlatResponseTime = #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      PurchasePlatRequestTime = #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      PurchasePlatResponseTime = #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      SalesPlatRequestIP = #{salesplatrequestip,jdbcType=VARCHAR},
+      PurchasePlatRequestIP = #{purchaseplatrequestip,jdbcType=VARCHAR},
+      SalesPlatRequestTipMessage = #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      PurchasePlatRequestTipMessage = #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      SalesPlatLogDetail = #{salesplatlogdetail,jdbcType=VARCHAR},
+      PurchasePlatLogDetail = #{purchaseplatlogdetail,jdbcType=VARCHAR},
+      OrderNo = #{orderno,jdbcType=VARCHAR},
+      PNR = #{pnr,jdbcType=VARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.tzq.dal.model.log.InterfaceRequestLog">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="SalesPlatform" jdbcType="INTEGER" property="salesplatform" />
+    <result column="PurchasePlatform" jdbcType="INTEGER" property="purchaseplatform" />
+    <result column="RequestDate" jdbcType="DATE" property="requestdate" />
+    <result column="RequestType" jdbcType="VARCHAR" property="requesttype" />
+    <result column="RequestResult" jdbcType="TINYINT" property="requestresult" />
+    <result column="InterfaceResult" jdbcType="TINYINT" property="interfaceresult" />
+    <result column="Carrier" jdbcType="VARCHAR" property="carrier" />
+    <result column="DepCode" jdbcType="VARCHAR" property="depcode" />
+    <result column="ArrCode" jdbcType="VARCHAR" property="arrcode" />
+    <result column="DepDate" jdbcType="DATE" property="depdate" />
+    <result column="BackDate" jdbcType="DATE" property="backdate" />
+    <result column="SalesPlatRequestTime" jdbcType="TIMESTAMP" property="salesplatrequesttime" />
+    <result column="SalesPlatResponseTime" jdbcType="TIMESTAMP" property="salesplatresponsetime" />
+    <result column="PurchasePlatRequestTime" jdbcType="TIMESTAMP" property="purchaseplatrequesttime" />
+    <result column="PurchasePlatResponseTime" jdbcType="TIMESTAMP" property="purchaseplatresponsetime" />
+    <result column="SalesPlatRequestIP" jdbcType="VARCHAR" property="salesplatrequestip" />
+    <result column="PurchasePlatRequestIP" jdbcType="VARCHAR" property="purchaseplatrequestip" />
+    <result column="SalesPlatRequestTipMessage" jdbcType="VARCHAR" property="salesplatrequesttipmessage" />
+    <result column="PurchasePlatRequestTipMessage" jdbcType="VARCHAR" property="purchaseplatrequesttipmessage" />
+    <result column="SalesPlatLogDetail" jdbcType="VARCHAR" property="salesplatlogdetail" />
+    <result column="PurchasePlatLogDetail" jdbcType="VARCHAR" property="purchaseplatlogdetail" />
+    <result column="OrderNo" jdbcType="VARCHAR" property="orderno" />
+    <result column="PNR" jdbcType="VARCHAR" property="pnr" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, SalesPlatform, PurchasePlatform, RequestDate, RequestType, RequestResult, InterfaceResult, 
+    Carrier, DepCode, ArrCode, DepDate, BackDate, SalesPlatRequestTime, SalesPlatResponseTime, 
+    PurchasePlatRequestTime, PurchasePlatResponseTime, SalesPlatRequestIP, PurchasePlatRequestIP, 
+    SalesPlatRequestTipMessage, PurchasePlatRequestTipMessage, SalesPlatLogDetail, PurchasePlatLogDetail, 
+    OrderNo, PNR, ModifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.tzq.dal.model.log.InterfaceRequestLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart&gt;=0">
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from interfacerequestlog
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from interfacerequestlog
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tzq.dal.model.log.InterfaceRequestLogExample">
+    delete from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tzq.dal.model.log.InterfaceRequestLog">
+    insert into interfacerequestlog (ID, SalesPlatform, PurchasePlatform, 
+      RequestDate, RequestType, RequestResult, 
+      InterfaceResult, Carrier, DepCode, 
+      ArrCode, DepDate, BackDate, 
+      SalesPlatRequestTime, SalesPlatResponseTime, 
+      PurchasePlatRequestTime, PurchasePlatResponseTime, 
+      SalesPlatRequestIP, PurchasePlatRequestIP, 
+      SalesPlatRequestTipMessage, PurchasePlatRequestTipMessage, 
+      SalesPlatLogDetail, PurchasePlatLogDetail, 
+      OrderNo, PNR, ModifyTime
+      )
+    values (#{id,jdbcType=INTEGER}, #{salesplatform,jdbcType=INTEGER}, #{purchaseplatform,jdbcType=INTEGER}, 
+      #{requestdate,jdbcType=DATE}, #{requesttype,jdbcType=VARCHAR}, #{requestresult,jdbcType=TINYINT}, 
+      #{interfaceresult,jdbcType=TINYINT}, #{carrier,jdbcType=VARCHAR}, #{depcode,jdbcType=VARCHAR}, 
+      #{arrcode,jdbcType=VARCHAR}, #{depdate,jdbcType=DATE}, #{backdate,jdbcType=DATE}, 
+      #{salesplatrequesttime,jdbcType=TIMESTAMP}, #{salesplatresponsetime,jdbcType=TIMESTAMP}, 
+      #{purchaseplatrequesttime,jdbcType=TIMESTAMP}, #{purchaseplatresponsetime,jdbcType=TIMESTAMP}, 
+      #{salesplatrequestip,jdbcType=VARCHAR}, #{purchaseplatrequestip,jdbcType=VARCHAR}, 
+      #{salesplatrequesttipmessage,jdbcType=VARCHAR}, #{purchaseplatrequesttipmessage,jdbcType=VARCHAR}, 
+      #{salesplatlogdetail,jdbcType=VARCHAR}, #{purchaseplatlogdetail,jdbcType=VARCHAR}, 
+      #{orderno,jdbcType=VARCHAR}, #{pnr,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tzq.dal.model.log.InterfaceRequestLog">
+    insert into interfacerequestlog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="salesplatform != null">
+        SalesPlatform,
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform,
+      </if>
+      <if test="requestdate != null">
+        RequestDate,
+      </if>
+      <if test="requesttype != null">
+        RequestType,
+      </if>
+      <if test="requestresult != null">
+        RequestResult,
+      </if>
+      <if test="interfaceresult != null">
+        InterfaceResult,
+      </if>
+      <if test="carrier != null">
+        Carrier,
+      </if>
+      <if test="depcode != null">
+        DepCode,
+      </if>
+      <if test="arrcode != null">
+        ArrCode,
+      </if>
+      <if test="depdate != null">
+        DepDate,
+      </if>
+      <if test="backdate != null">
+        BackDate,
+      </if>
+      <if test="salesplatrequesttime != null">
+        SalesPlatRequestTime,
+      </if>
+      <if test="salesplatresponsetime != null">
+        SalesPlatResponseTime,
+      </if>
+      <if test="purchaseplatrequesttime != null">
+        PurchasePlatRequestTime,
+      </if>
+      <if test="purchaseplatresponsetime != null">
+        PurchasePlatResponseTime,
+      </if>
+      <if test="salesplatrequestip != null">
+        SalesPlatRequestIP,
+      </if>
+      <if test="purchaseplatrequestip != null">
+        PurchasePlatRequestIP,
+      </if>
+      <if test="salesplatrequesttipmessage != null">
+        SalesPlatRequestTipMessage,
+      </if>
+      <if test="purchaseplatrequesttipmessage != null">
+        PurchasePlatRequestTipMessage,
+      </if>
+      <if test="salesplatlogdetail != null">
+        SalesPlatLogDetail,
+      </if>
+      <if test="purchaseplatlogdetail != null">
+        PurchasePlatLogDetail,
+      </if>
+      <if test="orderno != null">
+        OrderNo,
+      </if>
+      <if test="pnr != null">
+        PNR,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="salesplatform != null">
+        #{salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseplatform != null">
+        #{purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="requestdate != null">
+        #{requestdate,jdbcType=DATE},
+      </if>
+      <if test="requesttype != null">
+        #{requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="requestresult != null">
+        #{requestresult,jdbcType=TINYINT},
+      </if>
+      <if test="interfaceresult != null">
+        #{interfaceresult,jdbcType=TINYINT},
+      </if>
+      <if test="carrier != null">
+        #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="depcode != null">
+        #{depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="arrcode != null">
+        #{arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        #{depdate,jdbcType=DATE},
+      </if>
+      <if test="backdate != null">
+        #{backdate,jdbcType=DATE},
+      </if>
+      <if test="salesplatrequesttime != null">
+        #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatresponsetime != null">
+        #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatrequesttime != null">
+        #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatresponsetime != null">
+        #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatrequestip != null">
+        #{salesplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequestip != null">
+        #{purchaseplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatrequesttipmessage != null">
+        #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequesttipmessage != null">
+        #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatlogdetail != null">
+        #{salesplatlogdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatlogdetail != null">
+        #{purchaseplatlogdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="orderno != null">
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="pnr != null">
+        #{pnr,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tzq.dal.model.log.InterfaceRequestLogExample" resultType="java.lang.Long">
+    select count(*) from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update interfacerequestlog
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesplatform != null">
+        SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="record.purchaseplatform != null">
+        PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="record.requestdate != null">
+        RequestDate = #{record.requestdate,jdbcType=DATE},
+      </if>
+      <if test="record.requesttype != null">
+        RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestresult != null">
+        RequestResult = #{record.requestresult,jdbcType=TINYINT},
+      </if>
+      <if test="record.interfaceresult != null">
+        InterfaceResult = #{record.interfaceresult,jdbcType=TINYINT},
+      </if>
+      <if test="record.carrier != null">
+        Carrier = #{record.carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depcode != null">
+        DepCode = #{record.depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrcode != null">
+        ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depdate != null">
+        DepDate = #{record.depdate,jdbcType=DATE},
+      </if>
+      <if test="record.backdate != null">
+        BackDate = #{record.backdate,jdbcType=DATE},
+      </if>
+      <if test="record.salesplatrequesttime != null">
+        SalesPlatRequestTime = #{record.salesplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesplatresponsetime != null">
+        SalesPlatResponseTime = #{record.salesplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.purchaseplatrequesttime != null">
+        PurchasePlatRequestTime = #{record.purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.purchaseplatresponsetime != null">
+        PurchasePlatResponseTime = #{record.purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesplatrequestip != null">
+        SalesPlatRequestIP = #{record.salesplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseplatrequestip != null">
+        PurchasePlatRequestIP = #{record.purchaseplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesplatrequesttipmessage != null">
+        SalesPlatRequestTipMessage = #{record.salesplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseplatrequesttipmessage != null">
+        PurchasePlatRequestTipMessage = #{record.purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesplatlogdetail != null">
+        SalesPlatLogDetail = #{record.salesplatlogdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseplatlogdetail != null">
+        PurchasePlatLogDetail = #{record.purchaseplatlogdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderno != null">
+        OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pnr != null">
+        PNR = #{record.pnr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null">
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update interfacerequestlog
+    set ID = #{record.id,jdbcType=INTEGER},
+      SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{record.requestdate,jdbcType=DATE},
+      RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      RequestResult = #{record.requestresult,jdbcType=TINYINT},
+      InterfaceResult = #{record.interfaceresult,jdbcType=TINYINT},
+      Carrier = #{record.carrier,jdbcType=VARCHAR},
+      DepCode = #{record.depcode,jdbcType=VARCHAR},
+      ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      DepDate = #{record.depdate,jdbcType=DATE},
+      BackDate = #{record.backdate,jdbcType=DATE},
+      SalesPlatRequestTime = #{record.salesplatrequesttime,jdbcType=TIMESTAMP},
+      SalesPlatResponseTime = #{record.salesplatresponsetime,jdbcType=TIMESTAMP},
+      PurchasePlatRequestTime = #{record.purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      PurchasePlatResponseTime = #{record.purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      SalesPlatRequestIP = #{record.salesplatrequestip,jdbcType=VARCHAR},
+      PurchasePlatRequestIP = #{record.purchaseplatrequestip,jdbcType=VARCHAR},
+      SalesPlatRequestTipMessage = #{record.salesplatrequesttipmessage,jdbcType=VARCHAR},
+      PurchasePlatRequestTipMessage = #{record.purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      SalesPlatLogDetail = #{record.salesplatlogdetail,jdbcType=VARCHAR},
+      PurchasePlatLogDetail = #{record.purchaseplatlogdetail,jdbcType=VARCHAR},
+      OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      PNR = #{record.pnr,jdbcType=VARCHAR},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tzq.dal.model.log.InterfaceRequestLog">
+    update interfacerequestlog
+    <set>
+      <if test="salesplatform != null">
+        SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="requestdate != null">
+        RequestDate = #{requestdate,jdbcType=DATE},
+      </if>
+      <if test="requesttype != null">
+        RequestType = #{requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="requestresult != null">
+        RequestResult = #{requestresult,jdbcType=TINYINT},
+      </if>
+      <if test="interfaceresult != null">
+        InterfaceResult = #{interfaceresult,jdbcType=TINYINT},
+      </if>
+      <if test="carrier != null">
+        Carrier = #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="depcode != null">
+        DepCode = #{depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="arrcode != null">
+        ArrCode = #{arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        DepDate = #{depdate,jdbcType=DATE},
+      </if>
+      <if test="backdate != null">
+        BackDate = #{backdate,jdbcType=DATE},
+      </if>
+      <if test="salesplatrequesttime != null">
+        SalesPlatRequestTime = #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatresponsetime != null">
+        SalesPlatResponseTime = #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatrequesttime != null">
+        PurchasePlatRequestTime = #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatresponsetime != null">
+        PurchasePlatResponseTime = #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatrequestip != null">
+        SalesPlatRequestIP = #{salesplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequestip != null">
+        PurchasePlatRequestIP = #{purchaseplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatrequesttipmessage != null">
+        SalesPlatRequestTipMessage = #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequesttipmessage != null">
+        PurchasePlatRequestTipMessage = #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatlogdetail != null">
+        SalesPlatLogDetail = #{salesplatlogdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatlogdetail != null">
+        PurchasePlatLogDetail = #{purchaseplatlogdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="orderno != null">
+        OrderNo = #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="pnr != null">
+        PNR = #{pnr,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tzq.dal.model.log.InterfaceRequestLog">
+    update interfacerequestlog
+    set SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{requestdate,jdbcType=DATE},
+      RequestType = #{requesttype,jdbcType=VARCHAR},
+      RequestResult = #{requestresult,jdbcType=TINYINT},
+      InterfaceResult = #{interfaceresult,jdbcType=TINYINT},
+      Carrier = #{carrier,jdbcType=VARCHAR},
+      DepCode = #{depcode,jdbcType=VARCHAR},
+      ArrCode = #{arrcode,jdbcType=VARCHAR},
+      DepDate = #{depdate,jdbcType=DATE},
+      BackDate = #{backdate,jdbcType=DATE},
+      SalesPlatRequestTime = #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      SalesPlatResponseTime = #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      PurchasePlatRequestTime = #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      PurchasePlatResponseTime = #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      SalesPlatRequestIP = #{salesplatrequestip,jdbcType=VARCHAR},
+      PurchasePlatRequestIP = #{purchaseplatrequestip,jdbcType=VARCHAR},
+      SalesPlatRequestTipMessage = #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      PurchasePlatRequestTipMessage = #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      SalesPlatLogDetail = #{salesplatlogdetail,jdbcType=VARCHAR},
+      PurchasePlatLogDetail = #{purchaseplatlogdetail,jdbcType=VARCHAR},
+      OrderNo = #{orderno,jdbcType=VARCHAR},
+      PNR = #{pnr,jdbcType=VARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.tzq.dal.model.log.InterfaceRequestLog">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="SalesPlatform" jdbcType="INTEGER" property="salesplatform" />
+    <result column="PurchasePlatform" jdbcType="INTEGER" property="purchaseplatform" />
+    <result column="RequestDate" jdbcType="DATE" property="requestdate" />
+    <result column="RequestType" jdbcType="VARCHAR" property="requesttype" />
+    <result column="RequestResult" jdbcType="TINYINT" property="requestresult" />
+    <result column="InterfaceResult" jdbcType="TINYINT" property="interfaceresult" />
+    <result column="Carrier" jdbcType="VARCHAR" property="carrier" />
+    <result column="DepCode" jdbcType="VARCHAR" property="depcode" />
+    <result column="ArrCode" jdbcType="VARCHAR" property="arrcode" />
+    <result column="DepDate" jdbcType="DATE" property="depdate" />
+    <result column="BackDate" jdbcType="DATE" property="backdate" />
+    <result column="SalesPlatRequestTime" jdbcType="TIMESTAMP" property="salesplatrequesttime" />
+    <result column="SalesPlatResponseTime" jdbcType="TIMESTAMP" property="salesplatresponsetime" />
+    <result column="PurchasePlatRequestTime" jdbcType="TIMESTAMP" property="purchaseplatrequesttime" />
+    <result column="PurchasePlatResponseTime" jdbcType="TIMESTAMP" property="purchaseplatresponsetime" />
+    <result column="SalesPlatRequestIP" jdbcType="VARCHAR" property="salesplatrequestip" />
+    <result column="PurchasePlatRequestIP" jdbcType="VARCHAR" property="purchaseplatrequestip" />
+    <result column="SalesPlatRequestTipMessage" jdbcType="VARCHAR" property="salesplatrequesttipmessage" />
+    <result column="PurchasePlatRequestTipMessage" jdbcType="VARCHAR" property="purchaseplatrequesttipmessage" />
+    <result column="OrderNo" jdbcType="VARCHAR" property="orderno" />
+    <result column="PNR" jdbcType="VARCHAR" property="pnr" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.tzq.dal.model.log.InterfaceRequestLogWithBLOBs">
+    <result column="SalesPlatLogDetail" jdbcType="LONGVARCHAR" property="salesplatlogdetail" />
+    <result column="PurchasePlatLogDetail" jdbcType="LONGVARCHAR" property="purchaseplatlogdetail" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, SalesPlatform, PurchasePlatform, RequestDate, RequestType, RequestResult, InterfaceResult, 
+    Carrier, DepCode, ArrCode, DepDate, BackDate, SalesPlatRequestTime, SalesPlatResponseTime, 
+    PurchasePlatRequestTime, PurchasePlatResponseTime, SalesPlatRequestIP, PurchasePlatRequestIP, 
+    SalesPlatRequestTipMessage, PurchasePlatRequestTipMessage, OrderNo, PNR, ModifyTime
+  </sql>
+  <sql id="Blob_Column_List">
+    SalesPlatLogDetail, PurchasePlatLogDetail
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.tzq.dal.model.log.InterfaceRequestLogExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.tzq.dal.model.log.InterfaceRequestLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart&gt;=0">
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from interfacerequestlog
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from interfacerequestlog
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tzq.dal.model.log.InterfaceRequestLogExample">
+    delete from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tzq.dal.model.log.InterfaceRequestLogWithBLOBs">
+    insert into interfacerequestlog (ID, SalesPlatform, PurchasePlatform, 
+      RequestDate, RequestType, RequestResult, 
+      InterfaceResult, Carrier, DepCode, 
+      ArrCode, DepDate, BackDate, 
+      SalesPlatRequestTime, SalesPlatResponseTime, 
+      PurchasePlatRequestTime, PurchasePlatResponseTime, 
+      SalesPlatRequestIP, PurchasePlatRequestIP, 
+      SalesPlatRequestTipMessage, PurchasePlatRequestTipMessage, 
+      OrderNo, PNR, ModifyTime, 
+      SalesPlatLogDetail, PurchasePlatLogDetail
+      )
+    values (#{id,jdbcType=INTEGER}, #{salesplatform,jdbcType=INTEGER}, #{purchaseplatform,jdbcType=INTEGER}, 
+      #{requestdate,jdbcType=DATE}, #{requesttype,jdbcType=VARCHAR}, #{requestresult,jdbcType=TINYINT}, 
+      #{interfaceresult,jdbcType=TINYINT}, #{carrier,jdbcType=VARCHAR}, #{depcode,jdbcType=VARCHAR}, 
+      #{arrcode,jdbcType=VARCHAR}, #{depdate,jdbcType=DATE}, #{backdate,jdbcType=DATE}, 
+      #{salesplatrequesttime,jdbcType=TIMESTAMP}, #{salesplatresponsetime,jdbcType=TIMESTAMP}, 
+      #{purchaseplatrequesttime,jdbcType=TIMESTAMP}, #{purchaseplatresponsetime,jdbcType=TIMESTAMP}, 
+      #{salesplatrequestip,jdbcType=VARCHAR}, #{purchaseplatrequestip,jdbcType=VARCHAR}, 
+      #{salesplatrequesttipmessage,jdbcType=VARCHAR}, #{purchaseplatrequesttipmessage,jdbcType=VARCHAR}, 
+      #{orderno,jdbcType=VARCHAR}, #{pnr,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP}, 
+      #{salesplatlogdetail,jdbcType=LONGVARCHAR}, #{purchaseplatlogdetail,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tzq.dal.model.log.InterfaceRequestLogWithBLOBs">
+    insert into interfacerequestlog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="salesplatform != null">
+        SalesPlatform,
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform,
+      </if>
+      <if test="requestdate != null">
+        RequestDate,
+      </if>
+      <if test="requesttype != null">
+        RequestType,
+      </if>
+      <if test="requestresult != null">
+        RequestResult,
+      </if>
+      <if test="interfaceresult != null">
+        InterfaceResult,
+      </if>
+      <if test="carrier != null">
+        Carrier,
+      </if>
+      <if test="depcode != null">
+        DepCode,
+      </if>
+      <if test="arrcode != null">
+        ArrCode,
+      </if>
+      <if test="depdate != null">
+        DepDate,
+      </if>
+      <if test="backdate != null">
+        BackDate,
+      </if>
+      <if test="salesplatrequesttime != null">
+        SalesPlatRequestTime,
+      </if>
+      <if test="salesplatresponsetime != null">
+        SalesPlatResponseTime,
+      </if>
+      <if test="purchaseplatrequesttime != null">
+        PurchasePlatRequestTime,
+      </if>
+      <if test="purchaseplatresponsetime != null">
+        PurchasePlatResponseTime,
+      </if>
+      <if test="salesplatrequestip != null">
+        SalesPlatRequestIP,
+      </if>
+      <if test="purchaseplatrequestip != null">
+        PurchasePlatRequestIP,
+      </if>
+      <if test="salesplatrequesttipmessage != null">
+        SalesPlatRequestTipMessage,
+      </if>
+      <if test="purchaseplatrequesttipmessage != null">
+        PurchasePlatRequestTipMessage,
+      </if>
+      <if test="orderno != null">
+        OrderNo,
+      </if>
+      <if test="pnr != null">
+        PNR,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+      <if test="salesplatlogdetail != null">
+        SalesPlatLogDetail,
+      </if>
+      <if test="purchaseplatlogdetail != null">
+        PurchasePlatLogDetail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="salesplatform != null">
+        #{salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseplatform != null">
+        #{purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="requestdate != null">
+        #{requestdate,jdbcType=DATE},
+      </if>
+      <if test="requesttype != null">
+        #{requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="requestresult != null">
+        #{requestresult,jdbcType=TINYINT},
+      </if>
+      <if test="interfaceresult != null">
+        #{interfaceresult,jdbcType=TINYINT},
+      </if>
+      <if test="carrier != null">
+        #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="depcode != null">
+        #{depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="arrcode != null">
+        #{arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        #{depdate,jdbcType=DATE},
+      </if>
+      <if test="backdate != null">
+        #{backdate,jdbcType=DATE},
+      </if>
+      <if test="salesplatrequesttime != null">
+        #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatresponsetime != null">
+        #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatrequesttime != null">
+        #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatresponsetime != null">
+        #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatrequestip != null">
+        #{salesplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequestip != null">
+        #{purchaseplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatrequesttipmessage != null">
+        #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequesttipmessage != null">
+        #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="orderno != null">
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="pnr != null">
+        #{pnr,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatlogdetail != null">
+        #{salesplatlogdetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="purchaseplatlogdetail != null">
+        #{purchaseplatlogdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tzq.dal.model.log.InterfaceRequestLogExample" resultType="java.lang.Long">
+    select count(*) from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update interfacerequestlog
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesplatform != null">
+        SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="record.purchaseplatform != null">
+        PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="record.requestdate != null">
+        RequestDate = #{record.requestdate,jdbcType=DATE},
+      </if>
+      <if test="record.requesttype != null">
+        RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestresult != null">
+        RequestResult = #{record.requestresult,jdbcType=TINYINT},
+      </if>
+      <if test="record.interfaceresult != null">
+        InterfaceResult = #{record.interfaceresult,jdbcType=TINYINT},
+      </if>
+      <if test="record.carrier != null">
+        Carrier = #{record.carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depcode != null">
+        DepCode = #{record.depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrcode != null">
+        ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depdate != null">
+        DepDate = #{record.depdate,jdbcType=DATE},
+      </if>
+      <if test="record.backdate != null">
+        BackDate = #{record.backdate,jdbcType=DATE},
+      </if>
+      <if test="record.salesplatrequesttime != null">
+        SalesPlatRequestTime = #{record.salesplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesplatresponsetime != null">
+        SalesPlatResponseTime = #{record.salesplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.purchaseplatrequesttime != null">
+        PurchasePlatRequestTime = #{record.purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.purchaseplatresponsetime != null">
+        PurchasePlatResponseTime = #{record.purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesplatrequestip != null">
+        SalesPlatRequestIP = #{record.salesplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseplatrequestip != null">
+        PurchasePlatRequestIP = #{record.purchaseplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesplatrequesttipmessage != null">
+        SalesPlatRequestTipMessage = #{record.salesplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseplatrequesttipmessage != null">
+        PurchasePlatRequestTipMessage = #{record.purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderno != null">
+        OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pnr != null">
+        PNR = #{record.pnr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null">
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesplatlogdetail != null">
+        SalesPlatLogDetail = #{record.salesplatlogdetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.purchaseplatlogdetail != null">
+        PurchasePlatLogDetail = #{record.purchaseplatlogdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update interfacerequestlog
+    set ID = #{record.id,jdbcType=INTEGER},
+      SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{record.requestdate,jdbcType=DATE},
+      RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      RequestResult = #{record.requestresult,jdbcType=TINYINT},
+      InterfaceResult = #{record.interfaceresult,jdbcType=TINYINT},
+      Carrier = #{record.carrier,jdbcType=VARCHAR},
+      DepCode = #{record.depcode,jdbcType=VARCHAR},
+      ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      DepDate = #{record.depdate,jdbcType=DATE},
+      BackDate = #{record.backdate,jdbcType=DATE},
+      SalesPlatRequestTime = #{record.salesplatrequesttime,jdbcType=TIMESTAMP},
+      SalesPlatResponseTime = #{record.salesplatresponsetime,jdbcType=TIMESTAMP},
+      PurchasePlatRequestTime = #{record.purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      PurchasePlatResponseTime = #{record.purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      SalesPlatRequestIP = #{record.salesplatrequestip,jdbcType=VARCHAR},
+      PurchasePlatRequestIP = #{record.purchaseplatrequestip,jdbcType=VARCHAR},
+      SalesPlatRequestTipMessage = #{record.salesplatrequesttipmessage,jdbcType=VARCHAR},
+      PurchasePlatRequestTipMessage = #{record.purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      PNR = #{record.pnr,jdbcType=VARCHAR},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      SalesPlatLogDetail = #{record.salesplatlogdetail,jdbcType=LONGVARCHAR},
+      PurchasePlatLogDetail = #{record.purchaseplatlogdetail,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update interfacerequestlog
+    set ID = #{record.id,jdbcType=INTEGER},
+      SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{record.requestdate,jdbcType=DATE},
+      RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      RequestResult = #{record.requestresult,jdbcType=TINYINT},
+      InterfaceResult = #{record.interfaceresult,jdbcType=TINYINT},
+      Carrier = #{record.carrier,jdbcType=VARCHAR},
+      DepCode = #{record.depcode,jdbcType=VARCHAR},
+      ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      DepDate = #{record.depdate,jdbcType=DATE},
+      BackDate = #{record.backdate,jdbcType=DATE},
+      SalesPlatRequestTime = #{record.salesplatrequesttime,jdbcType=TIMESTAMP},
+      SalesPlatResponseTime = #{record.salesplatresponsetime,jdbcType=TIMESTAMP},
+      PurchasePlatRequestTime = #{record.purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      PurchasePlatResponseTime = #{record.purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      SalesPlatRequestIP = #{record.salesplatrequestip,jdbcType=VARCHAR},
+      PurchasePlatRequestIP = #{record.purchaseplatrequestip,jdbcType=VARCHAR},
+      SalesPlatRequestTipMessage = #{record.salesplatrequesttipmessage,jdbcType=VARCHAR},
+      PurchasePlatRequestTipMessage = #{record.purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      PNR = #{record.pnr,jdbcType=VARCHAR},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tzq.dal.model.log.InterfaceRequestLogWithBLOBs">
+    update interfacerequestlog
+    <set>
+      <if test="salesplatform != null">
+        SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="requestdate != null">
+        RequestDate = #{requestdate,jdbcType=DATE},
+      </if>
+      <if test="requesttype != null">
+        RequestType = #{requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="requestresult != null">
+        RequestResult = #{requestresult,jdbcType=TINYINT},
+      </if>
+      <if test="interfaceresult != null">
+        InterfaceResult = #{interfaceresult,jdbcType=TINYINT},
+      </if>
+      <if test="carrier != null">
+        Carrier = #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="depcode != null">
+        DepCode = #{depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="arrcode != null">
+        ArrCode = #{arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        DepDate = #{depdate,jdbcType=DATE},
+      </if>
+      <if test="backdate != null">
+        BackDate = #{backdate,jdbcType=DATE},
+      </if>
+      <if test="salesplatrequesttime != null">
+        SalesPlatRequestTime = #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatresponsetime != null">
+        SalesPlatResponseTime = #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatrequesttime != null">
+        PurchasePlatRequestTime = #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatresponsetime != null">
+        PurchasePlatResponseTime = #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatrequestip != null">
+        SalesPlatRequestIP = #{salesplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequestip != null">
+        PurchasePlatRequestIP = #{purchaseplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatrequesttipmessage != null">
+        SalesPlatRequestTipMessage = #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequesttipmessage != null">
+        PurchasePlatRequestTipMessage = #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="orderno != null">
+        OrderNo = #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="pnr != null">
+        PNR = #{pnr,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatlogdetail != null">
+        SalesPlatLogDetail = #{salesplatlogdetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="purchaseplatlogdetail != null">
+        PurchasePlatLogDetail = #{purchaseplatlogdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tzq.dal.model.log.InterfaceRequestLogWithBLOBs">
+    update interfacerequestlog
+    set SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{requestdate,jdbcType=DATE},
+      RequestType = #{requesttype,jdbcType=VARCHAR},
+      RequestResult = #{requestresult,jdbcType=TINYINT},
+      InterfaceResult = #{interfaceresult,jdbcType=TINYINT},
+      Carrier = #{carrier,jdbcType=VARCHAR},
+      DepCode = #{depcode,jdbcType=VARCHAR},
+      ArrCode = #{arrcode,jdbcType=VARCHAR},
+      DepDate = #{depdate,jdbcType=DATE},
+      BackDate = #{backdate,jdbcType=DATE},
+      SalesPlatRequestTime = #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      SalesPlatResponseTime = #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      PurchasePlatRequestTime = #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      PurchasePlatResponseTime = #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      SalesPlatRequestIP = #{salesplatrequestip,jdbcType=VARCHAR},
+      PurchasePlatRequestIP = #{purchaseplatrequestip,jdbcType=VARCHAR},
+      SalesPlatRequestTipMessage = #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      PurchasePlatRequestTipMessage = #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      OrderNo = #{orderno,jdbcType=VARCHAR},
+      PNR = #{pnr,jdbcType=VARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      SalesPlatLogDetail = #{salesplatlogdetail,jdbcType=LONGVARCHAR},
+      PurchasePlatLogDetail = #{purchaseplatlogdetail,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tzq.dal.model.log.InterfaceRequestLog">
+    update interfacerequestlog
+    set SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{requestdate,jdbcType=DATE},
+      RequestType = #{requesttype,jdbcType=VARCHAR},
+      RequestResult = #{requestresult,jdbcType=TINYINT},
+      InterfaceResult = #{interfaceresult,jdbcType=TINYINT},
+      Carrier = #{carrier,jdbcType=VARCHAR},
+      DepCode = #{depcode,jdbcType=VARCHAR},
+      ArrCode = #{arrcode,jdbcType=VARCHAR},
+      DepDate = #{depdate,jdbcType=DATE},
+      BackDate = #{backdate,jdbcType=DATE},
+      SalesPlatRequestTime = #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      SalesPlatResponseTime = #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      PurchasePlatRequestTime = #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      PurchasePlatResponseTime = #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      SalesPlatRequestIP = #{salesplatrequestip,jdbcType=VARCHAR},
+      PurchasePlatRequestIP = #{purchaseplatrequestip,jdbcType=VARCHAR},
+      SalesPlatRequestTipMessage = #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      PurchasePlatRequestTipMessage = #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      OrderNo = #{orderno,jdbcType=VARCHAR},
+      PNR = #{pnr,jdbcType=VARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.tzq.dal.model.InterfaceRequestLog">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="SalesPlatform" jdbcType="INTEGER" property="salesplatform" />
+    <result column="PurchasePlatform" jdbcType="INTEGER" property="purchaseplatform" />
+    <result column="RequestDate" jdbcType="DATE" property="requestdate" />
+    <result column="RequestType" jdbcType="VARCHAR" property="requesttype" />
+    <result column="RequestResult" jdbcType="TINYINT" property="requestresult" />
+    <result column="InterfaceResult" jdbcType="TINYINT" property="interfaceresult" />
+    <result column="Carrier" jdbcType="VARCHAR" property="carrier" />
+    <result column="DepCode" jdbcType="VARCHAR" property="depcode" />
+    <result column="ArrCode" jdbcType="VARCHAR" property="arrcode" />
+    <result column="DepDate" jdbcType="DATE" property="depdate" />
+    <result column="BackDate" jdbcType="DATE" property="backdate" />
+    <result column="SalesPlatRequestTime" jdbcType="TIMESTAMP" property="salesplatrequesttime" />
+    <result column="SalesPlatResponseTime" jdbcType="TIMESTAMP" property="salesplatresponsetime" />
+    <result column="PurchasePlatRequestTime" jdbcType="TIMESTAMP" property="purchaseplatrequesttime" />
+    <result column="PurchasePlatResponseTime" jdbcType="TIMESTAMP" property="purchaseplatresponsetime" />
+    <result column="SalesPlatRequestIP" jdbcType="VARCHAR" property="salesplatrequestip" />
+    <result column="PurchasePlatRequestIP" jdbcType="VARCHAR" property="purchaseplatrequestip" />
+    <result column="SalesPlatRequestTipMessage" jdbcType="VARCHAR" property="salesplatrequesttipmessage" />
+    <result column="PurchasePlatRequestTipMessage" jdbcType="VARCHAR" property="purchaseplatrequesttipmessage" />
+    <result column="OrderNo" jdbcType="VARCHAR" property="orderno" />
+    <result column="PNR" jdbcType="VARCHAR" property="pnr" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.tzq.dal.model.InterfaceRequestLogWithBLOBs">
+    <result column="SalesPlatLogDetail" jdbcType="LONGVARCHAR" property="salesplatlogdetail" />
+    <result column="PurchasePlatLogDetail" jdbcType="LONGVARCHAR" property="purchaseplatlogdetail" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, SalesPlatform, PurchasePlatform, RequestDate, RequestType, RequestResult, InterfaceResult, 
+    Carrier, DepCode, ArrCode, DepDate, BackDate, SalesPlatRequestTime, SalesPlatResponseTime, 
+    PurchasePlatRequestTime, PurchasePlatResponseTime, SalesPlatRequestIP, PurchasePlatRequestIP, 
+    SalesPlatRequestTipMessage, PurchasePlatRequestTipMessage, OrderNo, PNR, ModifyTime
+  </sql>
+  <sql id="Blob_Column_List">
+    SalesPlatLogDetail, PurchasePlatLogDetail
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.tzq.dal.model.InterfaceRequestLogExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.tzq.dal.model.InterfaceRequestLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart&gt;=0">
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from interfacerequestlog
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from interfacerequestlog
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tzq.dal.model.InterfaceRequestLogExample">
+    delete from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tzq.dal.model.InterfaceRequestLogWithBLOBs">
+    insert into interfacerequestlog (ID, SalesPlatform, PurchasePlatform, 
+      RequestDate, RequestType, RequestResult, 
+      InterfaceResult, Carrier, DepCode, 
+      ArrCode, DepDate, BackDate, 
+      SalesPlatRequestTime, SalesPlatResponseTime, 
+      PurchasePlatRequestTime, PurchasePlatResponseTime, 
+      SalesPlatRequestIP, PurchasePlatRequestIP, 
+      SalesPlatRequestTipMessage, PurchasePlatRequestTipMessage, 
+      OrderNo, PNR, ModifyTime, 
+      SalesPlatLogDetail, PurchasePlatLogDetail
+      )
+    values (#{id,jdbcType=INTEGER}, #{salesplatform,jdbcType=INTEGER}, #{purchaseplatform,jdbcType=INTEGER}, 
+      #{requestdate,jdbcType=DATE}, #{requesttype,jdbcType=VARCHAR}, #{requestresult,jdbcType=TINYINT}, 
+      #{interfaceresult,jdbcType=TINYINT}, #{carrier,jdbcType=VARCHAR}, #{depcode,jdbcType=VARCHAR}, 
+      #{arrcode,jdbcType=VARCHAR}, #{depdate,jdbcType=DATE}, #{backdate,jdbcType=DATE}, 
+      #{salesplatrequesttime,jdbcType=TIMESTAMP}, #{salesplatresponsetime,jdbcType=TIMESTAMP}, 
+      #{purchaseplatrequesttime,jdbcType=TIMESTAMP}, #{purchaseplatresponsetime,jdbcType=TIMESTAMP}, 
+      #{salesplatrequestip,jdbcType=VARCHAR}, #{purchaseplatrequestip,jdbcType=VARCHAR}, 
+      #{salesplatrequesttipmessage,jdbcType=VARCHAR}, #{purchaseplatrequesttipmessage,jdbcType=VARCHAR}, 
+      #{orderno,jdbcType=VARCHAR}, #{pnr,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP}, 
+      #{salesplatlogdetail,jdbcType=LONGVARCHAR}, #{purchaseplatlogdetail,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tzq.dal.model.InterfaceRequestLogWithBLOBs">
+    insert into interfacerequestlog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="salesplatform != null">
+        SalesPlatform,
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform,
+      </if>
+      <if test="requestdate != null">
+        RequestDate,
+      </if>
+      <if test="requesttype != null">
+        RequestType,
+      </if>
+      <if test="requestresult != null">
+        RequestResult,
+      </if>
+      <if test="interfaceresult != null">
+        InterfaceResult,
+      </if>
+      <if test="carrier != null">
+        Carrier,
+      </if>
+      <if test="depcode != null">
+        DepCode,
+      </if>
+      <if test="arrcode != null">
+        ArrCode,
+      </if>
+      <if test="depdate != null">
+        DepDate,
+      </if>
+      <if test="backdate != null">
+        BackDate,
+      </if>
+      <if test="salesplatrequesttime != null">
+        SalesPlatRequestTime,
+      </if>
+      <if test="salesplatresponsetime != null">
+        SalesPlatResponseTime,
+      </if>
+      <if test="purchaseplatrequesttime != null">
+        PurchasePlatRequestTime,
+      </if>
+      <if test="purchaseplatresponsetime != null">
+        PurchasePlatResponseTime,
+      </if>
+      <if test="salesplatrequestip != null">
+        SalesPlatRequestIP,
+      </if>
+      <if test="purchaseplatrequestip != null">
+        PurchasePlatRequestIP,
+      </if>
+      <if test="salesplatrequesttipmessage != null">
+        SalesPlatRequestTipMessage,
+      </if>
+      <if test="purchaseplatrequesttipmessage != null">
+        PurchasePlatRequestTipMessage,
+      </if>
+      <if test="orderno != null">
+        OrderNo,
+      </if>
+      <if test="pnr != null">
+        PNR,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+      <if test="salesplatlogdetail != null">
+        SalesPlatLogDetail,
+      </if>
+      <if test="purchaseplatlogdetail != null">
+        PurchasePlatLogDetail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="salesplatform != null">
+        #{salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseplatform != null">
+        #{purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="requestdate != null">
+        #{requestdate,jdbcType=DATE},
+      </if>
+      <if test="requesttype != null">
+        #{requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="requestresult != null">
+        #{requestresult,jdbcType=TINYINT},
+      </if>
+      <if test="interfaceresult != null">
+        #{interfaceresult,jdbcType=TINYINT},
+      </if>
+      <if test="carrier != null">
+        #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="depcode != null">
+        #{depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="arrcode != null">
+        #{arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        #{depdate,jdbcType=DATE},
+      </if>
+      <if test="backdate != null">
+        #{backdate,jdbcType=DATE},
+      </if>
+      <if test="salesplatrequesttime != null">
+        #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatresponsetime != null">
+        #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatrequesttime != null">
+        #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatresponsetime != null">
+        #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatrequestip != null">
+        #{salesplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequestip != null">
+        #{purchaseplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatrequesttipmessage != null">
+        #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequesttipmessage != null">
+        #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="orderno != null">
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="pnr != null">
+        #{pnr,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatlogdetail != null">
+        #{salesplatlogdetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="purchaseplatlogdetail != null">
+        #{purchaseplatlogdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tzq.dal.model.InterfaceRequestLogExample" resultType="java.lang.Long">
+    select count(*) from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update interfacerequestlog
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesplatform != null">
+        SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="record.purchaseplatform != null">
+        PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="record.requestdate != null">
+        RequestDate = #{record.requestdate,jdbcType=DATE},
+      </if>
+      <if test="record.requesttype != null">
+        RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestresult != null">
+        RequestResult = #{record.requestresult,jdbcType=TINYINT},
+      </if>
+      <if test="record.interfaceresult != null">
+        InterfaceResult = #{record.interfaceresult,jdbcType=TINYINT},
+      </if>
+      <if test="record.carrier != null">
+        Carrier = #{record.carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depcode != null">
+        DepCode = #{record.depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrcode != null">
+        ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depdate != null">
+        DepDate = #{record.depdate,jdbcType=DATE},
+      </if>
+      <if test="record.backdate != null">
+        BackDate = #{record.backdate,jdbcType=DATE},
+      </if>
+      <if test="record.salesplatrequesttime != null">
+        SalesPlatRequestTime = #{record.salesplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesplatresponsetime != null">
+        SalesPlatResponseTime = #{record.salesplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.purchaseplatrequesttime != null">
+        PurchasePlatRequestTime = #{record.purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.purchaseplatresponsetime != null">
+        PurchasePlatResponseTime = #{record.purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesplatrequestip != null">
+        SalesPlatRequestIP = #{record.salesplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseplatrequestip != null">
+        PurchasePlatRequestIP = #{record.purchaseplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesplatrequesttipmessage != null">
+        SalesPlatRequestTipMessage = #{record.salesplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseplatrequesttipmessage != null">
+        PurchasePlatRequestTipMessage = #{record.purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderno != null">
+        OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pnr != null">
+        PNR = #{record.pnr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null">
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesplatlogdetail != null">
+        SalesPlatLogDetail = #{record.salesplatlogdetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.purchaseplatlogdetail != null">
+        PurchasePlatLogDetail = #{record.purchaseplatlogdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update interfacerequestlog
+    set ID = #{record.id,jdbcType=INTEGER},
+      SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{record.requestdate,jdbcType=DATE},
+      RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      RequestResult = #{record.requestresult,jdbcType=TINYINT},
+      InterfaceResult = #{record.interfaceresult,jdbcType=TINYINT},
+      Carrier = #{record.carrier,jdbcType=VARCHAR},
+      DepCode = #{record.depcode,jdbcType=VARCHAR},
+      ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      DepDate = #{record.depdate,jdbcType=DATE},
+      BackDate = #{record.backdate,jdbcType=DATE},
+      SalesPlatRequestTime = #{record.salesplatrequesttime,jdbcType=TIMESTAMP},
+      SalesPlatResponseTime = #{record.salesplatresponsetime,jdbcType=TIMESTAMP},
+      PurchasePlatRequestTime = #{record.purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      PurchasePlatResponseTime = #{record.purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      SalesPlatRequestIP = #{record.salesplatrequestip,jdbcType=VARCHAR},
+      PurchasePlatRequestIP = #{record.purchaseplatrequestip,jdbcType=VARCHAR},
+      SalesPlatRequestTipMessage = #{record.salesplatrequesttipmessage,jdbcType=VARCHAR},
+      PurchasePlatRequestTipMessage = #{record.purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      PNR = #{record.pnr,jdbcType=VARCHAR},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      SalesPlatLogDetail = #{record.salesplatlogdetail,jdbcType=LONGVARCHAR},
+      PurchasePlatLogDetail = #{record.purchaseplatlogdetail,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update interfacerequestlog
+    set ID = #{record.id,jdbcType=INTEGER},
+      SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{record.requestdate,jdbcType=DATE},
+      RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      RequestResult = #{record.requestresult,jdbcType=TINYINT},
+      InterfaceResult = #{record.interfaceresult,jdbcType=TINYINT},
+      Carrier = #{record.carrier,jdbcType=VARCHAR},
+      DepCode = #{record.depcode,jdbcType=VARCHAR},
+      ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      DepDate = #{record.depdate,jdbcType=DATE},
+      BackDate = #{record.backdate,jdbcType=DATE},
+      SalesPlatRequestTime = #{record.salesplatrequesttime,jdbcType=TIMESTAMP},
+      SalesPlatResponseTime = #{record.salesplatresponsetime,jdbcType=TIMESTAMP},
+      PurchasePlatRequestTime = #{record.purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      PurchasePlatResponseTime = #{record.purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      SalesPlatRequestIP = #{record.salesplatrequestip,jdbcType=VARCHAR},
+      PurchasePlatRequestIP = #{record.purchaseplatrequestip,jdbcType=VARCHAR},
+      SalesPlatRequestTipMessage = #{record.salesplatrequesttipmessage,jdbcType=VARCHAR},
+      PurchasePlatRequestTipMessage = #{record.purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      PNR = #{record.pnr,jdbcType=VARCHAR},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tzq.dal.model.InterfaceRequestLogWithBLOBs">
+    update interfacerequestlog
+    <set>
+      <if test="salesplatform != null">
+        SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="requestdate != null">
+        RequestDate = #{requestdate,jdbcType=DATE},
+      </if>
+      <if test="requesttype != null">
+        RequestType = #{requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="requestresult != null">
+        RequestResult = #{requestresult,jdbcType=TINYINT},
+      </if>
+      <if test="interfaceresult != null">
+        InterfaceResult = #{interfaceresult,jdbcType=TINYINT},
+      </if>
+      <if test="carrier != null">
+        Carrier = #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="depcode != null">
+        DepCode = #{depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="arrcode != null">
+        ArrCode = #{arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        DepDate = #{depdate,jdbcType=DATE},
+      </if>
+      <if test="backdate != null">
+        BackDate = #{backdate,jdbcType=DATE},
+      </if>
+      <if test="salesplatrequesttime != null">
+        SalesPlatRequestTime = #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatresponsetime != null">
+        SalesPlatResponseTime = #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatrequesttime != null">
+        PurchasePlatRequestTime = #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatresponsetime != null">
+        PurchasePlatResponseTime = #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatrequestip != null">
+        SalesPlatRequestIP = #{salesplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequestip != null">
+        PurchasePlatRequestIP = #{purchaseplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatrequesttipmessage != null">
+        SalesPlatRequestTipMessage = #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequesttipmessage != null">
+        PurchasePlatRequestTipMessage = #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="orderno != null">
+        OrderNo = #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="pnr != null">
+        PNR = #{pnr,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatlogdetail != null">
+        SalesPlatLogDetail = #{salesplatlogdetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="purchaseplatlogdetail != null">
+        PurchasePlatLogDetail = #{purchaseplatlogdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tzq.dal.model.InterfaceRequestLogWithBLOBs">
+    update interfacerequestlog
+    set SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{requestdate,jdbcType=DATE},
+      RequestType = #{requesttype,jdbcType=VARCHAR},
+      RequestResult = #{requestresult,jdbcType=TINYINT},
+      InterfaceResult = #{interfaceresult,jdbcType=TINYINT},
+      Carrier = #{carrier,jdbcType=VARCHAR},
+      DepCode = #{depcode,jdbcType=VARCHAR},
+      ArrCode = #{arrcode,jdbcType=VARCHAR},
+      DepDate = #{depdate,jdbcType=DATE},
+      BackDate = #{backdate,jdbcType=DATE},
+      SalesPlatRequestTime = #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      SalesPlatResponseTime = #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      PurchasePlatRequestTime = #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      PurchasePlatResponseTime = #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      SalesPlatRequestIP = #{salesplatrequestip,jdbcType=VARCHAR},
+      PurchasePlatRequestIP = #{purchaseplatrequestip,jdbcType=VARCHAR},
+      SalesPlatRequestTipMessage = #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      PurchasePlatRequestTipMessage = #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      OrderNo = #{orderno,jdbcType=VARCHAR},
+      PNR = #{pnr,jdbcType=VARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      SalesPlatLogDetail = #{salesplatlogdetail,jdbcType=LONGVARCHAR},
+      PurchasePlatLogDetail = #{purchaseplatlogdetail,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tzq.dal.model.InterfaceRequestLog">
+    update interfacerequestlog
+    set SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{requestdate,jdbcType=DATE},
+      RequestType = #{requesttype,jdbcType=VARCHAR},
+      RequestResult = #{requestresult,jdbcType=TINYINT},
+      InterfaceResult = #{interfaceresult,jdbcType=TINYINT},
+      Carrier = #{carrier,jdbcType=VARCHAR},
+      DepCode = #{depcode,jdbcType=VARCHAR},
+      ArrCode = #{arrcode,jdbcType=VARCHAR},
+      DepDate = #{depdate,jdbcType=DATE},
+      BackDate = #{backdate,jdbcType=DATE},
+      SalesPlatRequestTime = #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      SalesPlatResponseTime = #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      PurchasePlatRequestTime = #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      PurchasePlatResponseTime = #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      SalesPlatRequestIP = #{salesplatrequestip,jdbcType=VARCHAR},
+      PurchasePlatRequestIP = #{purchaseplatrequestip,jdbcType=VARCHAR},
+      SalesPlatRequestTipMessage = #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      PurchasePlatRequestTipMessage = #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      OrderNo = #{orderno,jdbcType=VARCHAR},
+      PNR = #{pnr,jdbcType=VARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.tzq.dal.model.InterfaceRequestLog">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="SalesPlatform" jdbcType="INTEGER" property="salesplatform" />
+    <result column="PurchasePlatform" jdbcType="INTEGER" property="purchaseplatform" />
+    <result column="RequestDate" jdbcType="DATE" property="requestdate" />
+    <result column="RequestType" jdbcType="VARCHAR" property="requesttype" />
+    <result column="RequestResult" jdbcType="TINYINT" property="requestresult" />
+    <result column="InterfaceResult" jdbcType="TINYINT" property="interfaceresult" />
+    <result column="Carrier" jdbcType="VARCHAR" property="carrier" />
+    <result column="DepCode" jdbcType="VARCHAR" property="depcode" />
+    <result column="ArrCode" jdbcType="VARCHAR" property="arrcode" />
+    <result column="DepDate" jdbcType="DATE" property="depdate" />
+    <result column="BackDate" jdbcType="DATE" property="backdate" />
+    <result column="SalesPlatRequestTime" jdbcType="TIMESTAMP" property="salesplatrequesttime" />
+    <result column="SalesPlatResponseTime" jdbcType="TIMESTAMP" property="salesplatresponsetime" />
+    <result column="PurchasePlatRequestTime" jdbcType="TIMESTAMP" property="purchaseplatrequesttime" />
+    <result column="PurchasePlatResponseTime" jdbcType="TIMESTAMP" property="purchaseplatresponsetime" />
+    <result column="SalesPlatRequestIP" jdbcType="VARCHAR" property="salesplatrequestip" />
+    <result column="PurchasePlatRequestIP" jdbcType="VARCHAR" property="purchaseplatrequestip" />
+    <result column="SalesPlatRequestTipMessage" jdbcType="VARCHAR" property="salesplatrequesttipmessage" />
+    <result column="PurchasePlatRequestTipMessage" jdbcType="VARCHAR" property="purchaseplatrequesttipmessage" />
+    <result column="OrderNo" jdbcType="VARCHAR" property="orderno" />
+    <result column="PNR" jdbcType="VARCHAR" property="pnr" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.tzq.dal.model.InterfaceRequestLogWithBLOBs">
+    <result column="SalesPlatLogDetail" jdbcType="LONGVARCHAR" property="salesplatlogdetail" />
+    <result column="PurchasePlatLogDetail" jdbcType="LONGVARCHAR" property="purchaseplatlogdetail" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, SalesPlatform, PurchasePlatform, RequestDate, RequestType, RequestResult, InterfaceResult, 
+    Carrier, DepCode, ArrCode, DepDate, BackDate, SalesPlatRequestTime, SalesPlatResponseTime, 
+    PurchasePlatRequestTime, PurchasePlatResponseTime, SalesPlatRequestIP, PurchasePlatRequestIP, 
+    SalesPlatRequestTipMessage, PurchasePlatRequestTipMessage, OrderNo, PNR, ModifyTime
+  </sql>
+  <sql id="Blob_Column_List">
+    SalesPlatLogDetail, PurchasePlatLogDetail
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.tzq.dal.model.InterfaceRequestLogExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.tzq.dal.model.InterfaceRequestLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart&gt;=0">
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from interfacerequestlog
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from interfacerequestlog
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tzq.dal.model.InterfaceRequestLogExample">
+    delete from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tzq.dal.model.InterfaceRequestLogWithBLOBs">
+    insert into interfacerequestlog (ID, SalesPlatform, PurchasePlatform, 
+      RequestDate, RequestType, RequestResult, 
+      InterfaceResult, Carrier, DepCode, 
+      ArrCode, DepDate, BackDate, 
+      SalesPlatRequestTime, SalesPlatResponseTime, 
+      PurchasePlatRequestTime, PurchasePlatResponseTime, 
+      SalesPlatRequestIP, PurchasePlatRequestIP, 
+      SalesPlatRequestTipMessage, PurchasePlatRequestTipMessage, 
+      OrderNo, PNR, ModifyTime, 
+      SalesPlatLogDetail, PurchasePlatLogDetail
+      )
+    values (#{id,jdbcType=INTEGER}, #{salesplatform,jdbcType=INTEGER}, #{purchaseplatform,jdbcType=INTEGER}, 
+      #{requestdate,jdbcType=DATE}, #{requesttype,jdbcType=VARCHAR}, #{requestresult,jdbcType=TINYINT}, 
+      #{interfaceresult,jdbcType=TINYINT}, #{carrier,jdbcType=VARCHAR}, #{depcode,jdbcType=VARCHAR}, 
+      #{arrcode,jdbcType=VARCHAR}, #{depdate,jdbcType=DATE}, #{backdate,jdbcType=DATE}, 
+      #{salesplatrequesttime,jdbcType=TIMESTAMP}, #{salesplatresponsetime,jdbcType=TIMESTAMP}, 
+      #{purchaseplatrequesttime,jdbcType=TIMESTAMP}, #{purchaseplatresponsetime,jdbcType=TIMESTAMP}, 
+      #{salesplatrequestip,jdbcType=VARCHAR}, #{purchaseplatrequestip,jdbcType=VARCHAR}, 
+      #{salesplatrequesttipmessage,jdbcType=VARCHAR}, #{purchaseplatrequesttipmessage,jdbcType=VARCHAR}, 
+      #{orderno,jdbcType=VARCHAR}, #{pnr,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP}, 
+      #{salesplatlogdetail,jdbcType=LONGVARCHAR}, #{purchaseplatlogdetail,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tzq.dal.model.InterfaceRequestLogWithBLOBs">
+    insert into interfacerequestlog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="salesplatform != null">
+        SalesPlatform,
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform,
+      </if>
+      <if test="requestdate != null">
+        RequestDate,
+      </if>
+      <if test="requesttype != null">
+        RequestType,
+      </if>
+      <if test="requestresult != null">
+        RequestResult,
+      </if>
+      <if test="interfaceresult != null">
+        InterfaceResult,
+      </if>
+      <if test="carrier != null">
+        Carrier,
+      </if>
+      <if test="depcode != null">
+        DepCode,
+      </if>
+      <if test="arrcode != null">
+        ArrCode,
+      </if>
+      <if test="depdate != null">
+        DepDate,
+      </if>
+      <if test="backdate != null">
+        BackDate,
+      </if>
+      <if test="salesplatrequesttime != null">
+        SalesPlatRequestTime,
+      </if>
+      <if test="salesplatresponsetime != null">
+        SalesPlatResponseTime,
+      </if>
+      <if test="purchaseplatrequesttime != null">
+        PurchasePlatRequestTime,
+      </if>
+      <if test="purchaseplatresponsetime != null">
+        PurchasePlatResponseTime,
+      </if>
+      <if test="salesplatrequestip != null">
+        SalesPlatRequestIP,
+      </if>
+      <if test="purchaseplatrequestip != null">
+        PurchasePlatRequestIP,
+      </if>
+      <if test="salesplatrequesttipmessage != null">
+        SalesPlatRequestTipMessage,
+      </if>
+      <if test="purchaseplatrequesttipmessage != null">
+        PurchasePlatRequestTipMessage,
+      </if>
+      <if test="orderno != null">
+        OrderNo,
+      </if>
+      <if test="pnr != null">
+        PNR,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+      <if test="salesplatlogdetail != null">
+        SalesPlatLogDetail,
+      </if>
+      <if test="purchaseplatlogdetail != null">
+        PurchasePlatLogDetail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="salesplatform != null">
+        #{salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseplatform != null">
+        #{purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="requestdate != null">
+        #{requestdate,jdbcType=DATE},
+      </if>
+      <if test="requesttype != null">
+        #{requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="requestresult != null">
+        #{requestresult,jdbcType=TINYINT},
+      </if>
+      <if test="interfaceresult != null">
+        #{interfaceresult,jdbcType=TINYINT},
+      </if>
+      <if test="carrier != null">
+        #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="depcode != null">
+        #{depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="arrcode != null">
+        #{arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        #{depdate,jdbcType=DATE},
+      </if>
+      <if test="backdate != null">
+        #{backdate,jdbcType=DATE},
+      </if>
+      <if test="salesplatrequesttime != null">
+        #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatresponsetime != null">
+        #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatrequesttime != null">
+        #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatresponsetime != null">
+        #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatrequestip != null">
+        #{salesplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequestip != null">
+        #{purchaseplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatrequesttipmessage != null">
+        #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequesttipmessage != null">
+        #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="orderno != null">
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="pnr != null">
+        #{pnr,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatlogdetail != null">
+        #{salesplatlogdetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="purchaseplatlogdetail != null">
+        #{purchaseplatlogdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tzq.dal.model.InterfaceRequestLogExample" resultType="java.lang.Long">
+    select count(*) from interfacerequestlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update interfacerequestlog
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesplatform != null">
+        SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="record.purchaseplatform != null">
+        PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="record.requestdate != null">
+        RequestDate = #{record.requestdate,jdbcType=DATE},
+      </if>
+      <if test="record.requesttype != null">
+        RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestresult != null">
+        RequestResult = #{record.requestresult,jdbcType=TINYINT},
+      </if>
+      <if test="record.interfaceresult != null">
+        InterfaceResult = #{record.interfaceresult,jdbcType=TINYINT},
+      </if>
+      <if test="record.carrier != null">
+        Carrier = #{record.carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depcode != null">
+        DepCode = #{record.depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrcode != null">
+        ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depdate != null">
+        DepDate = #{record.depdate,jdbcType=DATE},
+      </if>
+      <if test="record.backdate != null">
+        BackDate = #{record.backdate,jdbcType=DATE},
+      </if>
+      <if test="record.salesplatrequesttime != null">
+        SalesPlatRequestTime = #{record.salesplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesplatresponsetime != null">
+        SalesPlatResponseTime = #{record.salesplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.purchaseplatrequesttime != null">
+        PurchasePlatRequestTime = #{record.purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.purchaseplatresponsetime != null">
+        PurchasePlatResponseTime = #{record.purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesplatrequestip != null">
+        SalesPlatRequestIP = #{record.salesplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseplatrequestip != null">
+        PurchasePlatRequestIP = #{record.purchaseplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesplatrequesttipmessage != null">
+        SalesPlatRequestTipMessage = #{record.salesplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseplatrequesttipmessage != null">
+        PurchasePlatRequestTipMessage = #{record.purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderno != null">
+        OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pnr != null">
+        PNR = #{record.pnr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null">
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.salesplatlogdetail != null">
+        SalesPlatLogDetail = #{record.salesplatlogdetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.purchaseplatlogdetail != null">
+        PurchasePlatLogDetail = #{record.purchaseplatlogdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update interfacerequestlog
+    set ID = #{record.id,jdbcType=INTEGER},
+      SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{record.requestdate,jdbcType=DATE},
+      RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      RequestResult = #{record.requestresult,jdbcType=TINYINT},
+      InterfaceResult = #{record.interfaceresult,jdbcType=TINYINT},
+      Carrier = #{record.carrier,jdbcType=VARCHAR},
+      DepCode = #{record.depcode,jdbcType=VARCHAR},
+      ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      DepDate = #{record.depdate,jdbcType=DATE},
+      BackDate = #{record.backdate,jdbcType=DATE},
+      SalesPlatRequestTime = #{record.salesplatrequesttime,jdbcType=TIMESTAMP},
+      SalesPlatResponseTime = #{record.salesplatresponsetime,jdbcType=TIMESTAMP},
+      PurchasePlatRequestTime = #{record.purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      PurchasePlatResponseTime = #{record.purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      SalesPlatRequestIP = #{record.salesplatrequestip,jdbcType=VARCHAR},
+      PurchasePlatRequestIP = #{record.purchaseplatrequestip,jdbcType=VARCHAR},
+      SalesPlatRequestTipMessage = #{record.salesplatrequesttipmessage,jdbcType=VARCHAR},
+      PurchasePlatRequestTipMessage = #{record.purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      PNR = #{record.pnr,jdbcType=VARCHAR},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      SalesPlatLogDetail = #{record.salesplatlogdetail,jdbcType=LONGVARCHAR},
+      PurchasePlatLogDetail = #{record.purchaseplatlogdetail,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update interfacerequestlog
+    set ID = #{record.id,jdbcType=INTEGER},
+      SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{record.requestdate,jdbcType=DATE},
+      RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      RequestResult = #{record.requestresult,jdbcType=TINYINT},
+      InterfaceResult = #{record.interfaceresult,jdbcType=TINYINT},
+      Carrier = #{record.carrier,jdbcType=VARCHAR},
+      DepCode = #{record.depcode,jdbcType=VARCHAR},
+      ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      DepDate = #{record.depdate,jdbcType=DATE},
+      BackDate = #{record.backdate,jdbcType=DATE},
+      SalesPlatRequestTime = #{record.salesplatrequesttime,jdbcType=TIMESTAMP},
+      SalesPlatResponseTime = #{record.salesplatresponsetime,jdbcType=TIMESTAMP},
+      PurchasePlatRequestTime = #{record.purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      PurchasePlatResponseTime = #{record.purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      SalesPlatRequestIP = #{record.salesplatrequestip,jdbcType=VARCHAR},
+      PurchasePlatRequestIP = #{record.purchaseplatrequestip,jdbcType=VARCHAR},
+      SalesPlatRequestTipMessage = #{record.salesplatrequesttipmessage,jdbcType=VARCHAR},
+      PurchasePlatRequestTipMessage = #{record.purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      PNR = #{record.pnr,jdbcType=VARCHAR},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tzq.dal.model.InterfaceRequestLogWithBLOBs">
+    update interfacerequestlog
+    <set>
+      <if test="salesplatform != null">
+        SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="requestdate != null">
+        RequestDate = #{requestdate,jdbcType=DATE},
+      </if>
+      <if test="requesttype != null">
+        RequestType = #{requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="requestresult != null">
+        RequestResult = #{requestresult,jdbcType=TINYINT},
+      </if>
+      <if test="interfaceresult != null">
+        InterfaceResult = #{interfaceresult,jdbcType=TINYINT},
+      </if>
+      <if test="carrier != null">
+        Carrier = #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="depcode != null">
+        DepCode = #{depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="arrcode != null">
+        ArrCode = #{arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        DepDate = #{depdate,jdbcType=DATE},
+      </if>
+      <if test="backdate != null">
+        BackDate = #{backdate,jdbcType=DATE},
+      </if>
+      <if test="salesplatrequesttime != null">
+        SalesPlatRequestTime = #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatresponsetime != null">
+        SalesPlatResponseTime = #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatrequesttime != null">
+        PurchasePlatRequestTime = #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseplatresponsetime != null">
+        PurchasePlatResponseTime = #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatrequestip != null">
+        SalesPlatRequestIP = #{salesplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequestip != null">
+        PurchasePlatRequestIP = #{purchaseplatrequestip,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatrequesttipmessage != null">
+        SalesPlatRequestTipMessage = #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatrequesttipmessage != null">
+        PurchasePlatRequestTipMessage = #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      </if>
+      <if test="orderno != null">
+        OrderNo = #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="pnr != null">
+        PNR = #{pnr,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salesplatlogdetail != null">
+        SalesPlatLogDetail = #{salesplatlogdetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="purchaseplatlogdetail != null">
+        PurchasePlatLogDetail = #{purchaseplatlogdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tzq.dal.model.InterfaceRequestLogWithBLOBs">
+    update interfacerequestlog
+    set SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{requestdate,jdbcType=DATE},
+      RequestType = #{requesttype,jdbcType=VARCHAR},
+      RequestResult = #{requestresult,jdbcType=TINYINT},
+      InterfaceResult = #{interfaceresult,jdbcType=TINYINT},
+      Carrier = #{carrier,jdbcType=VARCHAR},
+      DepCode = #{depcode,jdbcType=VARCHAR},
+      ArrCode = #{arrcode,jdbcType=VARCHAR},
+      DepDate = #{depdate,jdbcType=DATE},
+      BackDate = #{backdate,jdbcType=DATE},
+      SalesPlatRequestTime = #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      SalesPlatResponseTime = #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      PurchasePlatRequestTime = #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      PurchasePlatResponseTime = #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      SalesPlatRequestIP = #{salesplatrequestip,jdbcType=VARCHAR},
+      PurchasePlatRequestIP = #{purchaseplatrequestip,jdbcType=VARCHAR},
+      SalesPlatRequestTipMessage = #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      PurchasePlatRequestTipMessage = #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      OrderNo = #{orderno,jdbcType=VARCHAR},
+      PNR = #{pnr,jdbcType=VARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      SalesPlatLogDetail = #{salesplatlogdetail,jdbcType=LONGVARCHAR},
+      PurchasePlatLogDetail = #{purchaseplatlogdetail,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tzq.dal.model.InterfaceRequestLog">
+    update interfacerequestlog
+    set SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{requestdate,jdbcType=DATE},
+      RequestType = #{requesttype,jdbcType=VARCHAR},
+      RequestResult = #{requestresult,jdbcType=TINYINT},
+      InterfaceResult = #{interfaceresult,jdbcType=TINYINT},
+      Carrier = #{carrier,jdbcType=VARCHAR},
+      DepCode = #{depcode,jdbcType=VARCHAR},
+      ArrCode = #{arrcode,jdbcType=VARCHAR},
+      DepDate = #{depdate,jdbcType=DATE},
+      BackDate = #{backdate,jdbcType=DATE},
+      SalesPlatRequestTime = #{salesplatrequesttime,jdbcType=TIMESTAMP},
+      SalesPlatResponseTime = #{salesplatresponsetime,jdbcType=TIMESTAMP},
+      PurchasePlatRequestTime = #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
+      PurchasePlatResponseTime = #{purchaseplatresponsetime,jdbcType=TIMESTAMP},
+      SalesPlatRequestIP = #{salesplatrequestip,jdbcType=VARCHAR},
+      PurchasePlatRequestIP = #{purchaseplatrequestip,jdbcType=VARCHAR},
+      SalesPlatRequestTipMessage = #{salesplatrequesttipmessage,jdbcType=VARCHAR},
+      PurchasePlatRequestTipMessage = #{purchaseplatrequesttipmessage,jdbcType=VARCHAR},
+      OrderNo = #{orderno,jdbcType=VARCHAR},
+      PNR = #{pnr,jdbcType=VARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

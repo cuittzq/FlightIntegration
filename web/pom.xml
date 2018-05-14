@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.github.cuittzq</groupId>
         <artifactId>FlightIntegration</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0.1.Release</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -100,15 +100,7 @@
         </dependency>
         <dependency>
             <groupId>com.github.cuittzq</groupId>
-            <artifactId>facade-impl</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.cuittzq</groupId>
-            <artifactId>facade</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.cuittzq</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>commons</artifactId>
         </dependency>
     </dependencies>
 
