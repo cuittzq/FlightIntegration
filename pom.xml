@@ -13,6 +13,7 @@
         <module>integration</module>
         <module>commons</module>
         <module>service</module>
+        <module>mapper</module>
 
     </modules>
     <packaging>pom</packaging>
@@ -383,6 +384,11 @@
             <dependency>
                 <groupId>com.github.cuittzq</groupId>
                 <artifactId>web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.cuittzq</groupId>
+                <artifactId>mapper</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

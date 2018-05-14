@@ -1,11 +1,10 @@
 package com.tzq.web.controller;
 
-import com.tzq.biz.common.enums.TripTypeEnum;
-import com.tzq.biz.common.model.context.RouteContext;
-import com.tzq.biz.common.model.integration.FlightRouteVO;
-import com.tzq.biz.common.model.integration.SearchVO;
 import com.tzq.biz.service.purchase.core.SearchFlightService;
-import com.tzq.commons.utils.DateUtils;
+import com.tzq.commons.enums.TripTypeEnum;
+import com.tzq.commons.model.context.RouteContext;
+import com.tzq.commons.model.ctrip.FlightRouteVO;
+import com.tzq.commons.model.ctrip.SearchVO;
 import com.tzq.dal.model.Test;
 import com.tzq.dal.service.UserService;
 import com.tzq.web.aop.UserAccess;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -53,17 +51,12 @@ public class TestController {
         searchVO.setDepAirportCode("CAN");
         searchVO.setArrAirportCode("SIN");
         searchVO.setTripType(TripTypeEnum.OW);
-        try {
-            searchVO.setDepDate(DateUtils.parseDateNoTime("20180825"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        String areaType = "1";
-        String airlineCode = "LCC";
-        String sourceId = "10001";
-        RouteContext<SearchVO> context = new RouteContext<>(searchVO, areaType, airlineCode, sourceId);
-        FlightRouteVO flightRouteVO = lccIntlSearchFlightService.searchFlight(context);
+        searchVO.setDepDate("20180825");
+        String                 areaType      = "1";
+        String                 airlineCode   = "LCC";
+        String                 sourceId      = "10001";
+        RouteContext<SearchVO> context       = new RouteContext<>(searchVO, areaType, airlineCode, sourceId);
+        FlightRouteVO          flightRouteVO = lccIntlSearchFlightService.searchFlight(context);
         return "hello";
     }
 }

@@ -1,9 +1,9 @@
 package com.tzq.biz.service.purchase.abstracts;
 
-import com.tzq.biz.common.model.context.RouteContext;
-import com.tzq.biz.common.model.integration.FlightRouteVO;
-import com.tzq.biz.common.model.integration.SearchVO;
 import com.tzq.biz.service.purchase.core.SearchFlightService;
+import com.tzq.commons.model.ctrip.FlightRouteVO;
+import com.tzq.commons.model.ctrip.SearchVO;
+import com.tzq.commons.model.context.RouteContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

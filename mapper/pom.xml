@@ -9,12 +9,12 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <name>FlightIntegration-biz</name>
-    <description>FlightIntegration-biz</description>
-    <artifactId>biz</artifactId>
+    <name>FlightIntegration-mapper</name>
+    <description>FlightIntegration-mapper</description>
     <packaging>jar</packaging>
+
+    <artifactId>mapper</artifactId>
     <dependencies>
-        <!-- Swagger2 -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -83,7 +83,7 @@
         </dependency>
         <dependency>
             <groupId>com.github.cuittzq</groupId>
-            <artifactId>mapper</artifactId>
+            <artifactId>service</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.cuittzq</groupId>
