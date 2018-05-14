@@ -121,7 +121,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <configurationFile>src/main/resources/generator/generatorConfig-gj-log.xml</configurationFile>
+                    <configurationFile>src/main/resources/generator/generatorConfig-gj-order.xml</configurationFile>
                     <overwrite>true</overwrite>
                     <verbose>true</verbose>
                 </configuration>
