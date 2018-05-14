@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Mapper(componentModel = "spring", uses = {AreaTypeEnumConverter.class, CurrencyEnumConverter.class,
         InventoryEnumConverter.class, PassengerTypeEnumConverter.class, SegmentTypeEnumConverter.class,
-        StatusEnumConverter.class, TripTypeEnumConverter.class})
+        StatusEnumConverter.class, TripTypeEnumConverter.class, FullDateConverter.class})
 public interface VerifyVOMapper {
 
     VerifyResVO VerifyResdto2vo(VerifyRes verifyRes);

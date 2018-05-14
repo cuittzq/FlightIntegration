@@ -89,6 +89,10 @@
             <groupId>com.github.cuittzq</groupId>
             <artifactId>integration</artifactId>
         </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
