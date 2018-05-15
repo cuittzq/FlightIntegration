@@ -54,7 +54,7 @@ public class LccConstant {
     public static final String CONFIRM = "confirm";
 
     /**
-     * 验舱验价的data数据
+     * aeskey的秘钥
      */
-    public static final String VERIFY_DATA = "GnyaJaYZ7wuQvG1DsFEY7tc8GB0lrrEJNYtQF9ssRaGODSrL0clm98MFkZ+z1Jy+xM1mq20oxvuwj6+o1Q+/1MmaQv0yE7WBBdHZHSbXB82Epl82Of0UAj4Xzf+6T69G7wZ06ev7vXC0I2iq8YGoSmgClLQhEG1LSOKpZ+brzAQ0qpu9YVEQgVB7lSt8hof6oMkQ1SNnMbJ1wlap7aEk9cdP8ptajDkGBf067WqwW4xry31vZxLB5yyDQvKbuvqnySWdYtc9wOs3kK9pC41P2A==";
+    public static final String AES_KEY = "";
 }

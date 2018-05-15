@@ -1,21 +1,20 @@
-package com.tzq.integration.service.intl.lcc.model.issueticket;
+package com.tzq.commons.model.integration.lcc.order;
 
-import com.tzq.integration.service.intl.lcc.model.BaseRes;
-import com.tzq.integration.service.intl.lcc.model.search.FlightRoutings;
+import com.tzq.commons.model.integration.lcc.BaseResVO;
+import com.tzq.commons.model.integration.lcc.search.FlightRoutingsVO;
 
 import java.io.Serializable;
 
 /**
- * Created by cl24957 on 2018/5/13.
+ * Created by cl24957 on 2018/5/15.
  */
-public class IssueTicketRes extends BaseRes implements Serializable {
-    private static final long serialVersionUID = 5624691797417990316L;
+public class OrderResVO extends BaseResVO implements Serializable {
 
+    private static final long serialVersionUID = 7484409694190418088L;
     private String orderNo;
     private String pnrCode;
-    private Integer orderState;
-
-    private FlightRoutings routings;
+    private Integer maxSeats;
+    private FlightRoutingsVO routings;
 
     public String getOrderNo() {
         return orderNo;
@@ -33,20 +32,20 @@ public class IssueTicketRes extends BaseRes implements Serializable {
         this.pnrCode = pnrCode;
     }
 
-    public FlightRoutings getRoutings() {
+    public Integer getMaxSeats() {
+        return maxSeats;
+    }
+
+    public void setMaxSeats(Integer maxSeats) {
+        this.maxSeats = maxSeats;
+    }
+
+    public FlightRoutingsVO getRoutings() {
         return routings;
     }
 
-    public void setRoutings(FlightRoutings routings) {
+    public void setRoutings(FlightRoutingsVO routings) {
         this.routings = routings;
-    }
-
-    public Integer getOrderState() {
-        return orderState;
-    }
-
-    public void setOrderState(Integer orderState) {
-        this.orderState = orderState;
     }
 
     @Override
@@ -54,7 +53,7 @@ public class IssueTicketRes extends BaseRes implements Serializable {
         final StringBuilder sb = new StringBuilder("{");
         sb.append("            \"orderNo\":\"").append(orderNo).append('\"');
         sb.append(",             \"pnrCode\":\"").append(pnrCode).append('\"');
-        sb.append(",             \"orderState\":").append(orderState);
+        sb.append(",             \"maxSeats\":").append(maxSeats);
         sb.append(",             \"routings\":").append(routings);
         sb.append('}');
         sb.append(super.toString());
