@@ -59,8 +59,9 @@ public class DaoConfigurationBase {
 
     protected DataSource dataSource() {
         return DataSourceBuilder.create().url(url).username(username)
-                .password(password).driverClassName(driverClassName).build();
+                .password(password).driverClassName(driverClassName).type(com.alibaba.druid.pool.DruidDataSource.class).build();
     }
+
 
     protected SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();

@@ -31,12 +31,8 @@ orderdb:
 
 
 spring:
-    profiles:
-        active: dev
-
     datasource:
         name: test
-        # 使用druid数据源
         type: com.alibaba.druid.pool.DruidDataSource
         filters: stat
         maxActive: 20
