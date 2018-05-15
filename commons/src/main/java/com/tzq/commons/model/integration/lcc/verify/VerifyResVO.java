@@ -1,5 +1,6 @@
 package com.tzq.commons.model.integration.lcc.verify;
 
+import com.tzq.commons.model.integration.lcc.BaseResVO;
 import com.tzq.commons.model.integration.lcc.search.FlightRoutingsVO;
 
 import java.io.Serializable;
@@ -7,21 +8,8 @@ import java.io.Serializable;
 /**
  * Created by cl24957 on 2018/5/11.
  */
-public class VerifyResVO implements Serializable {
+public class VerifyResVO extends BaseResVO implements Serializable {
     private static final long serialVersionUID = -3500211036487819181L;
-    /**
-     * 结果类型: 0 成功 / 其他 失败
-     */
-    private int    status;
-    /**
-     * 提示信息，长度小于64个字符
-     */
-    private String msg;
-
-    /**
-     * sessionId
-     */
-    private String sessionId;
 
     /**
      * 最大舱位数
@@ -32,30 +20,6 @@ public class VerifyResVO implements Serializable {
      * 航线价格信息
      */
     private FlightRoutingsVO routing;
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
 
     public Integer getMaxSeats() {
         return maxSeats;
@@ -71,5 +35,15 @@ public class VerifyResVO implements Serializable {
 
     public void setRouting(FlightRoutingsVO routing) {
         this.routing = routing;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("            \"maxSeats\":").append(maxSeats);
+        sb.append(",             \"routing\":").append(routing);
+        sb.append('}');
+        sb.append(super.toString());
+        return sb.toString();
     }
 }

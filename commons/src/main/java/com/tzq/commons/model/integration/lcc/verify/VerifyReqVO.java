@@ -21,4 +21,13 @@ public class VerifyReqVO extends BaseParamVO {
     public void setRouting(FlightRoutingsVO routing) {
         this.routing = routing;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("            \"routing\":").append(routing);
+        sb.append('}');
+        sb.append(super.toString());
+        return sb.toString();
+    }
 }

@@ -55,6 +55,11 @@ public class FlightRoutingsVO {
      * 参考信息，对查询请求的简化描述
      */
     private String                refData;
+
+    /**
+     * 币种
+     */
+    private String                priceCurrency;
     /**
      * 去程航段按顺序
      */

@@ -17,10 +17,6 @@ public class OrderRes extends BaseRes implements Serializable{
     private String pnrCode;
     private Integer maxSeats;
     private FlightRoutings routings;
-    private List<FlightSegment> fromSegments;
-    private List<FlightSegment> retSegments;
-    private String refData;
-    private String priceCurrency;
 
     public String getOrderNo() {
         return orderNo;
@@ -54,38 +50,6 @@ public class OrderRes extends BaseRes implements Serializable{
         this.routings = routings;
     }
 
-    public List<FlightSegment> getFromSegments() {
-        return fromSegments;
-    }
-
-    public void setFromSegments(List<FlightSegment> fromSegments) {
-        this.fromSegments = fromSegments;
-    }
-
-    public List<FlightSegment> getRetSegments() {
-        return retSegments;
-    }
-
-    public void setRetSegments(List<FlightSegment> retSegments) {
-        this.retSegments = retSegments;
-    }
-
-    public String getRefData() {
-        return refData;
-    }
-
-    public void setRefData(String refData) {
-        this.refData = refData;
-    }
-
-    public String getPriceCurrency() {
-        return priceCurrency;
-    }
-
-    public void setPriceCurrency(String priceCurrency) {
-        this.priceCurrency = priceCurrency;
-    }
-
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("{");
@@ -93,10 +57,6 @@ public class OrderRes extends BaseRes implements Serializable{
         sb.append(",             \"pnrCode\":\"").append(pnrCode).append('\"');
         sb.append(",             \"maxSeats\":").append(maxSeats);
         sb.append(",             \"routings\":").append(routings);
-        sb.append(",             \"fromSegments\":").append(fromSegments);
-        sb.append(",             \"retSegments\":").append(retSegments);
-        sb.append(",             \"refData\":\"").append(refData).append('\"');
-        sb.append(",             \"priceCurrency\":\"").append(priceCurrency).append('\"');
         sb.append('}');
         sb.append(super.toString());
         return sb.toString();

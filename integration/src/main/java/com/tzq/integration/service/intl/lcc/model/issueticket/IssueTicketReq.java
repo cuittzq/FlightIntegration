@@ -13,6 +13,7 @@ public class IssueTicketReq extends BaseParam implements Serializable {
     private static final long serialVersionUID = 5623220208054898876L;
     private String orderNo;
     private String pnrCode;
+
     private OrderReq.OrderReqRouting reqRouting;
 
     public String getOrderNo() {

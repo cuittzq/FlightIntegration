@@ -1,6 +1,7 @@
 package com.tzq.integration.service.intl.lcc.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.tzq.commons.utils.AESUtil;
 import com.tzq.commons.utils.HttpClientUtil;
 import com.tzq.integration.service.core.AbstractBaseClient;
 import com.tzq.integration.service.intl.lcc.LccClient;
@@ -100,14 +101,24 @@ public class LccClientImpl extends AbstractBaseClient implements LccClient {
         OrderRes orderRes = null;
         try {
             logger.info("调用LCC{}接口,入参{}", LccConstant.CREATE_ORDER, postData);
+
+            // 字符串加密
+            postData = AESUtil.Encrypt(postData,LccConstant.AES_KEY);
+
             response = HttpClientUtil.sendPostDataByJson(url, postData, header, ENCODING);
             logger.info("调用LCC{}接口,返回{}", LccConstant.CREATE_ORDER, response);
+            response = AESUtil.Encrypt(response,LccConstant.AES_KEY);
 
-            // TODO:解密
+            // 解密
+            orderRes = JSON.parseObject(response, OrderRes.class);
 
         } catch (IOException e) {
             logger.error("调用LCC创单接口失败", e);
-        } finally {
+        }catch (Exception e)
+        {
+            logger.error("调用LCC创单接口失败", e);
+        }
+        finally {
             // TODO 记录接口访问日志
         }
 
@@ -125,14 +136,24 @@ public class LccClientImpl extends AbstractBaseClient implements LccClient {
         IssueTicketRes res = null;
         try {
             logger.info("调用LCC{}接口,入参{}", LccConstant.ISSUETICKET, postData);
+            // 字符串加密
+            postData = AESUtil.Encrypt(postData,LccConstant.AES_KEY);
+
             response = HttpClientUtil.sendPostDataByJson(url, postData, header, ENCODING);
             logger.info("调用LCC{}接口,返回{}", LccConstant.ISSUETICKET, response);
 
-            // TODO:解密
+            // 解密
+            response = AESUtil.Encrypt(response,LccConstant.AES_KEY);
+
+            // 解密
+            res = JSON.parseObject(response, IssueTicketRes.class);
 
         } catch (IOException e) {
             logger.error("调用LCC创单接口失败", e);
-        } finally {
+        } catch (Exception e)
+        {
+            logger.error("调用LCC创单接口失败", e);
+        }finally {
             // TODO 记录接口访问日志
         }
 
