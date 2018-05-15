@@ -9,22 +9,11 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <name>FlightIntegration-biz</name>
-    <description>FlightIntegration-biz</description>
-    <artifactId>biz</artifactId>
+    <name>FlightIntegration-service-impl</name>
+    <description>FlightIntegration-service-impl</description>
     <packaging>jar</packaging>
+    <artifactId>service-impl</artifactId>
     <dependencies>
-        <!-- Swagger2 -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-        </dependency>
-        <!-- Swagger2 -->
-
         <!-- spring-boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -40,7 +29,14 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxws</artifactId>
@@ -58,14 +54,6 @@
             <artifactId>cxf-rt-rs-client</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.github.kevinsawicki</groupId>
             <artifactId>http-request</artifactId>
         </dependency>
@@ -77,9 +65,14 @@
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.github.cuittzq</groupId>
-            <artifactId>mapper</artifactId>
+            <artifactId>biz</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.cuittzq</groupId>
+            <artifactId>service</artifactId>
         </dependency>
     </dependencies>
 
