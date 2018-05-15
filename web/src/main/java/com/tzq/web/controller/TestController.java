@@ -11,8 +11,6 @@ import com.tzq.commons.model.integration.search.FlightSegmentVO;
 import com.tzq.commons.model.integration.verify.VerifyReqVO;
 import com.tzq.commons.model.integration.verify.VerifyResVO;
 import com.tzq.commons.model.integration.verify.VerifyRoutingVO;
-import com.tzq.dal.model.Test;
-import com.tzq.dal.service.UserService;
 import com.tzq.web.aop.UserAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,9 +34,6 @@ import java.util.List;
 @RequestMapping(value = "/demo")
 public class TestController {
 
-    @Autowired
-    private UserService userService;
-
     @Resource
     private LccBusiService lccBusiService;
 
@@ -48,12 +43,6 @@ public class TestController {
     @RequestMapping(value = "/gethello", method = RequestMethod.GET)
     @UserAccess(desc = "gethello")
     public String gethello() {
-
-        Test user = new Test();
-        user.setId(121);
-        user.setName("test");
-        user.setUpdatetime(new Date());
-        userService.addUser(user);
         return "hello";
     }
 
