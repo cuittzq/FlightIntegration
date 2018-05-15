@@ -1,4 +1,4 @@
-package com.tzq.commons.model.ctrip;
+package com.tzq.commons.model.ctrip.search;
 
 import com.tzq.commons.model.BaseVO;
 
@@ -27,7 +27,7 @@ public class FlightRouteVO extends BaseVO<Long> {
     /**
      * 行程类型
      */
-    private String tripType;
+    private Integer tripType;
 
     /**
      * 出发三字码
@@ -97,11 +97,11 @@ public class FlightRouteVO extends BaseVO<Long> {
         this.routekey = routekey;
     }
 
-    public String getTripType() {
+    public Integer getTripType() {
         return tripType;
     }
 
-    public void setTripType(String tripType) {
+    public void setTripType(Integer tripType) {
         this.tripType = tripType;
     }
 

@@ -5,8 +5,8 @@ import com.tzq.biz.service.purchase.core.LccBusiService;
 import com.tzq.biz.service.purchase.core.SearchFlightService;
 import com.tzq.commons.enums.TripTypeEnum;
 import com.tzq.commons.model.context.RouteContext;
-import com.tzq.commons.model.ctrip.FlightRouteVO;
-import com.tzq.commons.model.ctrip.SearchVO;
+import com.tzq.commons.model.ctrip.search.FlightRouteVO;
+import com.tzq.commons.model.ctrip.search.SearchVO;
 import com.tzq.commons.model.integration.lcc.search.FlightRoutingsVO;
 import com.tzq.commons.model.integration.lcc.search.FlightSegmentVO;
 import com.tzq.commons.model.integration.lcc.verify.VerifyReqVO;
@@ -76,7 +76,7 @@ public class TestController {
     {
         VerifyReqVO verifyReqVO  = new VerifyReqVO();
 
-        verifyReqVO.setTripType("1");
+        verifyReqVO.setTripType(1);
         FlightRoutingsVO vo = new FlightRoutingsVO();
         List<FlightSegmentVO> fromSegments = new ArrayList<>();
         FlightSegmentVO flightSegmentVO = new FlightSegmentVO();

@@ -1,4 +1,4 @@
-package com.tzq.commons.model.ctrip;
+package com.tzq.commons.model.ctrip.search;
 
 import com.tzq.commons.enums.TripTypeEnum;
 import com.tzq.commons.model.BaseVO;

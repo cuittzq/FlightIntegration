@@ -1,8 +1,8 @@
 package com.tzq.biz.service.purchase.core;
 
 
-import com.tzq.commons.model.ctrip.FlightRouteVO;
-import com.tzq.commons.model.ctrip.SearchVO;
+import com.tzq.commons.model.ctrip.search.FlightRouteVO;
+import com.tzq.commons.model.ctrip.search.SearchVO;
 import com.tzq.commons.model.context.RouteContext;
 
 /**

@@ -1,4 +1,4 @@
-package com.tzq.commons.model.ctrip;
+package com.tzq.commons.model.ctrip.search;
 
 public class FormatBaggagesVO {
     /**

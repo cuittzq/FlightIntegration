@@ -2,8 +2,8 @@ package com.tzq.biz.service.purchase.lcc.impl;
 
 import com.tzq.commons.enums.TripTypeEnum;
 import com.tzq.biz.service.purchase.abstracts.AbstractSearchFlightService;
-import com.tzq.commons.model.ctrip.FlightRouteVO;
-import com.tzq.commons.model.ctrip.SearchVO;
+import com.tzq.commons.model.ctrip.search.FlightRouteVO;
+import com.tzq.commons.model.ctrip.search.SearchVO;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.integration.service.intl.lcc.LccClient;
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightReq;
@@ -27,7 +27,7 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
     public FlightRouteVO searchFlight(RouteContext<SearchVO> context) {
         FlightRouteVO flightRouteVO = null;
         try {
-            SearchFlightReq searchFlightReq      = request(context);
+            SearchFlightReq searchFlightReq = request(context);
             SearchFlightRes searchFlightResponse = lccClient.searchFlight(searchFlightReq);
             flightRouteVO = response(searchFlightResponse, context);
         } catch (Exception e) {
@@ -57,12 +57,12 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
      */
     @Override
     protected <T> T request(RouteContext<SearchVO> context) {
-        SearchVO        searchVO        = context.getT();
+        SearchVO searchVO = context.getT();
         SearchFlightReq searchFlightReq = new SearchFlightReq();
         searchFlightReq.setFromCity(searchVO.getDepAirportCode());
         searchFlightReq.setFromDate(searchVO.getDepDate());
         searchFlightReq.setToCity(searchVO.getArrAirportCode());
-        searchFlightReq.setTripType(searchVO.getTripType().getCode().equals(TripTypeEnum.OW.getCode()) ? "1" : "2");
+        searchFlightReq.setTripType(searchVO.getTripType().getCode().equals(TripTypeEnum.OW.getCode()) ? 1 : 2);
         if (searchVO.getTripType().getCode().equals(TripTypeEnum.RT.getCode())) {
             searchFlightReq.setRetDate(searchVO.getArrDate());
         }

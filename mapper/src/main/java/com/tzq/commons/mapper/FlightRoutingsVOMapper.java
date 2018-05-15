@@ -1,7 +1,7 @@
 package com.tzq.commons.mapper;
 
 import com.tzq.commons.converter.*;
-import com.tzq.commons.model.ctrip.*;
+import com.tzq.commons.model.ctrip.search.*;
 import com.tzq.service.ctrip.models.search.*;
 import org.mapstruct.Mapper;
 

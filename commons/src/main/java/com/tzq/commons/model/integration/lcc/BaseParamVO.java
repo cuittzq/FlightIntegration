@@ -19,7 +19,7 @@ public class BaseParamVO implements Serializable {
     /**
      * 行程类型: 1.单程 2.往返
      */
-    private String tripType;
+    private Integer tripType;
 
     private String sessionId;
 
@@ -31,11 +31,11 @@ public class BaseParamVO implements Serializable {
         this.cid = cid;
     }
 
-    public String getTripType() {
+    public Integer getTripType() {
         return tripType;
     }
 
-    public void setTripType(String tripType) {
+    public void setTripType(Integer tripType) {
         this.tripType = tripType;
     }
 

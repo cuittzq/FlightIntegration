@@ -14,7 +14,7 @@ public class SearchFlightReq extends BaseParam {
     /**
      * 行程类型: 1.单程 2.往返
      */
-    private String tripType;
+    private Integer tripType;
     /**
      * 出发地城市或机场IATA三字码代码
      */
@@ -32,11 +32,12 @@ public class SearchFlightReq extends BaseParam {
      */
     private String retDate;
 
-    public String getTripType() {
+    @Override
+    public Integer getTripType() {
         return tripType;
     }
 
-    public void setTripType(String tripType) {
+    public void setTripType(Integer tripType) {
         this.tripType = tripType;
     }
 

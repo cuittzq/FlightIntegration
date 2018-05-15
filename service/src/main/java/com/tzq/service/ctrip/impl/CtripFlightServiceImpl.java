@@ -1,12 +1,14 @@
 package com.tzq.service.ctrip.impl;
 
-import com.tzq.service.ctrip.SearchFlightService;
+import com.tzq.service.ctrip.CtripFlightService;
+import com.tzq.service.ctrip.models.order.CreateOrderReq;
+import com.tzq.service.ctrip.models.order.CreateOrderRes;
 import com.tzq.service.ctrip.models.search.SearchFlightReq;
 import com.tzq.service.ctrip.models.search.SearchFlightRes;
+import com.tzq.service.ctrip.models.verify.VerifyReq;
+import com.tzq.service.ctrip.models.verify.VerifyRes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 
 /**
  * 功能描述
@@ -16,7 +18,7 @@ import java.io.IOException;
  * LY.com Inc.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
-public class SearchFlightServiceImpl implements SearchFlightService {
+public class CtripFlightServiceImpl implements CtripFlightService {
 
     /**
      *
@@ -40,5 +42,27 @@ public class SearchFlightServiceImpl implements SearchFlightService {
 
 
         return searchFlightRes;
+    }
+
+    /**
+     * 查询航班
+     *
+     * @param req
+     * @return
+     */
+    @Override
+    public VerifyRes verifyFlight(VerifyReq req) {
+        return null;
+    }
+
+    /**
+     * 生单
+     *
+     * @param req
+     * @return
+     */
+    @Override
+    public CreateOrderRes createOrder(CreateOrderReq req) {
+        return null;
     }
 }

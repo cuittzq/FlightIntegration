@@ -5,8 +5,8 @@ import com.tzq.biz.service.purchase.core.LccBusiService;
 import com.tzq.biz.service.purchase.core.SearchFlightService;
 import com.tzq.commons.enums.TripTypeEnum;
 import com.tzq.commons.model.context.RouteContext;
-import com.tzq.commons.model.ctrip.FlightRouteVO;
-import com.tzq.commons.model.ctrip.SearchVO;
+import com.tzq.commons.model.ctrip.search.FlightRouteVO;
+import com.tzq.commons.model.ctrip.search.SearchVO;
 <<<<<<< HEAD
 import com.tzq.commons.model.integration.lcc.search.FlightRoutingsVO;
 import com.tzq.commons.model.integration.lcc.search.FlightSegmentVO;
