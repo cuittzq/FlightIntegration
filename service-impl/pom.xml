@@ -70,10 +70,6 @@
             <groupId>com.github.cuittzq</groupId>
             <artifactId>biz</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.github.cuittzq</groupId>
-            <artifactId>service</artifactId>
-        </dependency>
     </dependencies>
 
 </project>

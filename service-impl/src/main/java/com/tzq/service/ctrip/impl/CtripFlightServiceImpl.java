@@ -16,6 +16,7 @@ import com.tzq.service.ctrip.models.verify.VerifyReq;
 import com.tzq.service.ctrip.models.verify.VerifyRes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
@@ -27,6 +28,7 @@ import javax.annotation.Resource;
  * LY.com Inc.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
+@Service("ctripFlightService")
 public class CtripFlightServiceImpl implements CtripFlightService {
 
     @Resource
