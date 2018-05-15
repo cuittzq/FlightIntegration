@@ -1,7 +1,4 @@
-package com.tzq.commons.model.integration.verify;
-
-import com.tzq.commons.model.integration.search.FlightSegmentVO;
-import com.tzq.commons.model.integration.search.RulesVO;
+package com.tzq.commons.model.integration.lcc.search;
 
 import java.util.List;
 
@@ -9,23 +6,23 @@ import java.util.List;
  * 功能描述
  *
  * @Author tzq24955
- * @Created on 2018/5/14
+ * @Created on 2018/5/8
  * LY.com Inc.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
-public class VerifyRoutingVO {
+public class FlightRoutingsVO {
     /**
      * 可保存必要信息，之后生单按原值回转。最大 1000 个字符
      */
-    private String                data;
+    private String              data;
     /**
      * 成人单价（以元为单位）
      */
-    private int                   adultPrice;
+    private int                 adultPrice;
     /**
      * 成人税费（以元为单位）
      */
-    private int                   adultTax;
+    private int                 adultTax;
     /**
      * 儿童单价（以元为单位）
      */
@@ -67,37 +64,12 @@ public class VerifyRoutingVO {
      */
     private List<FlightSegmentVO> retSegments;
 
-
     public String getData() {
         return data;
     }
 
     public void setData(String data) {
         this.data = data;
-    }
-
-    public List<FlightSegmentVO> getFromSegments() {
-        return fromSegments;
-    }
-
-    public void setFromSegments(List<FlightSegmentVO> fromSegments) {
-        this.fromSegments = fromSegments;
-    }
-
-    public List<FlightSegmentVO> getRetSegments() {
-        return retSegments;
-    }
-
-    public void setRetSegments(List<FlightSegmentVO> retSegments) {
-        this.retSegments = retSegments;
-    }
-
-    public String getRefData() {
-        return refData;
-    }
-
-    public void setRefData(String refData) {
-        this.refData = refData;
     }
 
     public int getAdultPrice() {
@@ -172,13 +144,46 @@ public class VerifyRoutingVO {
         this.rule = rule;
     }
 
+    public String getRefData() {
+        return refData;
+    }
+
+    public void setRefData(String refData) {
+        this.refData = refData;
+    }
+
+    public List<FlightSegmentVO> getFromSegments() {
+        return fromSegments;
+    }
+
+    public void setFromSegments(List<FlightSegmentVO> fromSegments) {
+        this.fromSegments = fromSegments;
+    }
+
+    public List<FlightSegmentVO> getRetSegments() {
+        return retSegments;
+    }
+
+    public void setRetSegments(List<FlightSegmentVO> retSegments) {
+        this.retSegments = retSegments;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("{");
         sb.append("            \"data\":\"").append(data).append('\"');
+        sb.append(",             \"adultPrice\":").append(adultPrice);
+        sb.append(",             \"adultTax\":").append(adultTax);
+        sb.append(",             \"childPrice\":").append(childPrice);
+        sb.append(",             \"childTax\":").append(childTax);
+        sb.append(",             \"priceType\":").append(priceType);
+        sb.append(",             \"applyType\":").append(applyType);
+        sb.append(",             \"adultTaxType\":").append(adultTaxType);
+        sb.append(",             \"childTaxType\":").append(childTaxType);
+        sb.append(",             \"rule\":").append(rule);
+        sb.append(",             \"refData\":\"").append(refData).append('\"');
         sb.append(",             \"fromSegments\":").append(fromSegments);
         sb.append(",             \"retSegments\":").append(retSegments);
-        sb.append(",             \"refData\":\"").append(refData).append('\"');
         sb.append('}');
         return sb.toString();
     }

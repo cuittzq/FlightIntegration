@@ -8,10 +8,10 @@ import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.ctrip.FlightRouteVO;
 import com.tzq.commons.model.ctrip.SearchVO;
 <<<<<<< HEAD
-import com.tzq.commons.model.integration.search.FlightSegmentVO;
-import com.tzq.commons.model.integration.verify.VerifyReqVO;
-import com.tzq.commons.model.integration.verify.VerifyResVO;
-import com.tzq.commons.model.integration.verify.VerifyRoutingVO;
+import com.tzq.commons.model.integration.lcc.search.FlightSegmentVO;
+import com.tzq.commons.model.integration.lcc.verify.VerifyReqVO;
+import com.tzq.commons.model.integration.lcc.verify.VerifyResVO;
+import com.tzq.commons.model.integration.lcc.verify.VerifyRoutingVO;
 import com.tzq.dal.model.Test;
 import com.tzq.dal.service.UserService;
 =======

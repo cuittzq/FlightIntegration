@@ -1,4 +1,6 @@
-package com.tzq.commons.model.integration.verify;
+package com.tzq.commons.model.integration.lcc.verify;
+
+import com.tzq.commons.model.integration.lcc.search.FlightRoutingsVO;
 
 import java.io.Serializable;
 
@@ -29,7 +31,7 @@ public class VerifyResVO implements Serializable {
     /**
      * 航线价格信息
      */
-    private VerifyRoutingVO routing;
+    private FlightRoutingsVO routing;
 
     public int getStatus() {
         return status;
@@ -63,11 +65,11 @@ public class VerifyResVO implements Serializable {
         this.maxSeats = maxSeats;
     }
 
-    public VerifyRoutingVO getRouting() {
+    public FlightRoutingsVO getRouting() {
         return routing;
     }
 
-    public void setRouting(VerifyRoutingVO routing) {
+    public void setRouting(FlightRoutingsVO routing) {
         this.routing = routing;
     }
 }

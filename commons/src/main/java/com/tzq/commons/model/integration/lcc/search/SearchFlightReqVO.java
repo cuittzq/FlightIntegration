@@ -1,7 +1,7 @@
-package com.tzq.commons.model.integration.search;
+package com.tzq.commons.model.integration.lcc.search;
 
 
-import com.tzq.commons.model.integration.BaseParamVO;
+import com.tzq.commons.model.integration.lcc.BaseParamVO;
 
 /**
  * 功能描述

@@ -1,4 +1,4 @@
-package com.tzq.commons.model.integration;
+package com.tzq.commons.model.integration.lcc;
 
 import java.io.Serializable;
 

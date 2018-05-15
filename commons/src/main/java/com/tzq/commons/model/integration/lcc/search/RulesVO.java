@@ -1,4 +1,4 @@
-package com.tzq.commons.model.integration.search;
+package com.tzq.commons.model.integration.lcc.search;
 
 /**
  * 功能描述

@@ -19,6 +19,7 @@ public class LCCDataGuavaCache {
     private static LCCDataGuavaCache guavaCache;
 
     private LCCDataGuavaCache() {
+        CACHE.asMap().put("CANSIN20181125","GnyaJaYZ7wuQvG1DsFEY7tc8GB0lrrEJNYtQF9ssRaGODSrL0clm98MFkZ+z1Jy+xM1mq20oxvuwj6+o1Q+/1MmaQv0yE7WBBdHZHSbXB82Epl82Of0UAj4Xzf+6T69G7wZ06ev7vXC0I2iq8YGoSmgClLQhEG1LSOKpZ+brzAQ0qpu9YVEQgVB7lSt8hof6oMkQ1SNnMbJ1wlap7aEk9cdP8ptajDkGBf067WqwW4xry31vZxLB5yyDQvKbuvqnySWdYtc9wOs3kK9pC41P2A==");
     }
 
     /**
@@ -26,9 +27,9 @@ public class LCCDataGuavaCache {
      *
      * @return
      */
-    public LCCDataGuavaCache instance() {
+    public static LCCDataGuavaCache instance() {
         if (guavaCache == null) {
-            synchronized (this) {
+            synchronized (LCCDataGuavaCache.class) {
                 if (guavaCache == null) {
                     guavaCache = new LCCDataGuavaCache();
                 }
@@ -38,14 +39,14 @@ public class LCCDataGuavaCache {
         return guavaCache;
     }
 
-    public void put(String key, String value) {
+        public void put(String key, String value) {
         CACHE.put(key, value);
     }
 
     public String get(String key) {
         try {
-            return CACHE.get(key, null);
-        } catch (ExecutionException e) {
+            return CACHE.asMap().get(key);
+        } catch (Exception e) {
             e.printStackTrace();
             return StringUtils.EMPTY;
         }

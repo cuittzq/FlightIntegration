@@ -1,6 +1,6 @@
-package com.tzq.commons.model.integration.verify.search;
+package com.tzq.commons.model.integration.lcc.verify.search;
 
-import com.tzq.commons.model.integration.search.FlightRoutingsVO;
+import com.tzq.commons.model.integration.lcc.search.FlightRoutingsVO;
 
 import java.util.List;
 
