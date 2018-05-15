@@ -1,8 +1,8 @@
 package com.tzq.commons.model.ctrip;
 
-import com.google.common.collect.Lists;
 import com.tzq.commons.model.BaseVO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -77,7 +77,7 @@ public class FlightRouteVO extends BaseVO<Long> {
     /**
      * 航班组列表
      */
-    private List<FlightRoutingsVO> lightRouteList = Lists.newArrayList();
+    private List<FlightRoutingsVO> lightRouteList = new ArrayList<>();
 
     @Override
     public Long getId() {

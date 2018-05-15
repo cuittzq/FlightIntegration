@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
     <name>FlightIntegration-web</name>
     <description>FlightIntegration-web</description>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <artifactId>web</artifactId>
 
     <dependencies>
@@ -144,15 +144,8 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
-            </plugin>
-            <!-- 编码和编译 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <mainClass>com.tzq.web.Application</mainClass>
                 </configuration>
             </plugin>
         </plugins>

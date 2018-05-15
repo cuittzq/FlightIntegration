@@ -11,21 +11,29 @@ pagehelper:
     supportMethodsArguments: true
     params: count=countSql
 
-mybatis:
-    mapperLocations: classpath:mapping/*.xml
+
+
+logdb:
+  datasource:
+    driver-class-name:  com.mysql.jdbc.Driver
+    url: jdbc:mysql://123.56.139.13:3306/gj_monitorlog
+    username: root
+    password: 1989513bs
+    mappinglocation: classpath*:mapping/log/*.xml
+
+orderdb:
+  datasource:
+    driver-class-name:  com.mysql.jdbc.Driver
+    url: jdbc:mysql://123.56.139.13:3306/gj_order
+    username: root
+    password: 1989513bs
+    mappinglocation: classpath*:mapping/order/*.xml
+
 
 spring:
-    profiles:
-        active: dev
-
     datasource:
         name: test
-        url: jdbc:mysql://10.100.159.49:3500/TCFlyOfficialSales
-        username: TCFlyOfficialSales
-        password: VWEoeVTwwt2jhQrO91hp
-        # 使用druid数据源
         type: com.alibaba.druid.pool.DruidDataSource
-        driver-class-name: com.mysql.jdbc.Driver
         filters: stat
         maxActive: 20
         initialSize: 1
