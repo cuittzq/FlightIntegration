@@ -56,5 +56,5 @@ public class LccConstant {
     /**
      * 验舱验价的data数据
      */
-    public static final String VERIFY_DATA = "GnyaJaYZ7wuQvG1DsFEY7tc8GB0lrrEJNYtQF9ssRaEe+pkbMOy5V0oflkPGsD7CiyVlvRVC4s4Y04vwtlHlAK3TXFPjFsPvvlIWmX5rE9d0KmStuFXJo0+LWgYfj+gWwZVM8R+Y2MXnVoDFe63Df9WV9h4xKP7TFLvswFBa5weFbcaFoiRiwoMK1EhwLrhCSiOyIS0BICof1+QSLzk6PA==";
+    public static final String VERIFY_DATA = "GnyaJaYZ7wuQvG1DsFEY7tc8GB0lrrEJNYtQF9ssRaGODSrL0clm98MFkZ+z1Jy+xM1mq20oxvuwj6+o1Q+/1MmaQv0yE7WBBdHZHSbXB82Epl82Of0UAj4Xzf+6T69G7wZ06ev7vXC0I2iq8YGoSmgClLQhEG1LSOKpZ+brzAQ0qpu9YVEQgVB7lSt8hof6oMkQ1SNnMbJ1wlap7aEk9cdP8ptajDkGBf067WqwW4xry31vZxLB5yyDQvKbuvqnySWdYtc9wOs3kK9pC41P2A==";
 }
