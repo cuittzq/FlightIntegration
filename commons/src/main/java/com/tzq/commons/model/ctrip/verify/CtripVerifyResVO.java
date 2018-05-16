@@ -3,7 +3,7 @@ package com.tzq.commons.model.ctrip.verify;
 import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
 import com.tzq.commons.model.ctrip.search.RulesVO;
 
-public class VerifyResVO {
+public class CtripVerifyResVO {
     /**
      * 会话标识：标记服务接口调用的唯一标识；
      * 数字或字母，长度小于 20个字符 。

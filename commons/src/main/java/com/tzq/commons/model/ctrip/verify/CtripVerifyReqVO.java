@@ -3,7 +3,7 @@ package com.tzq.commons.model.ctrip.verify;
 import com.tzq.commons.enums.TripTypeEnum;
 import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
 
-public class VerifyReqVO {
+public class CtripVerifyReqVO {
     /**
      * 携程关联ID；携程用来查问题用的。
      */
