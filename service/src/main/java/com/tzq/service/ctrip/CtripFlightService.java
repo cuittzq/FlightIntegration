@@ -4,8 +4,8 @@ import com.tzq.service.ctrip.models.order.CreateOrderReq;
 import com.tzq.service.ctrip.models.order.CreateOrderRes;
 import com.tzq.service.ctrip.models.search.SearchFlightReq;
 import com.tzq.service.ctrip.models.search.SearchFlightRes;
-import com.tzq.service.ctrip.models.verify.VerifyReq;
-import com.tzq.service.ctrip.models.verify.VerifyRes;
+import com.tzq.service.ctrip.models.verify.CtripVerifyReq;
+import com.tzq.service.ctrip.models.verify.CtripVerifyRes;
 
 /**
  * 功能描述
@@ -30,7 +30,7 @@ public interface CtripFlightService {
      * @param req
      * @return
      */
-    VerifyRes verifyFlight(VerifyReq req);
+    CtripVerifyRes verifyFlight(CtripVerifyReq req);
 
     /**
      * 生单

@@ -3,23 +3,28 @@ package com.tzq.web.service;
 import com.alibaba.fastjson.JSON;
 import com.tzq.biz.core.OtaIssueTicketService;
 import com.tzq.biz.core.OtaSearchFlightService;
+import com.tzq.biz.core.OtaVerifyFlightService;
 import com.tzq.commons.enums.AreaTypeEnum;
 import com.tzq.commons.enums.OTAEnum;
 import com.tzq.commons.enums.TripTypeEnum;
+import com.tzq.commons.mapper.CtripVerifyVOMapper;
+import com.tzq.commons.mapper.FlightRoutingsVOMapper;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.context.SingleResult;
 import com.tzq.commons.model.ctrip.search.FlightRouteVO;
 import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
 import com.tzq.commons.model.ctrip.search.SearchVO;
-import com.tzq.commons.model.ctrip.verify.VerifyReqVO;
+import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
+import com.tzq.commons.model.ctrip.verify.CtripVerifyResVO;
 import com.tzq.service.ctrip.CtripFlightService;
 import com.tzq.service.ctrip.models.enums.MethodEnum;
+import com.tzq.service.ctrip.models.enums.StatusEnum;
 import com.tzq.service.ctrip.models.order.CreateOrderReq;
 import com.tzq.service.ctrip.models.order.CreateOrderRes;
 import com.tzq.service.ctrip.models.search.SearchFlightReq;
 import com.tzq.service.ctrip.models.search.SearchFlightRes;
-import com.tzq.service.ctrip.models.verify.VerifyReq;
-import com.tzq.service.ctrip.models.verify.VerifyRes;
+import com.tzq.service.ctrip.models.verify.CtripVerifyReq;
+import com.tzq.service.ctrip.models.verify.CtripVerifyRes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -43,6 +48,16 @@ public class CtripFlightServiceImpl implements CtripFlightService {
 
     @Resource
     private OtaIssueTicketService otaIssueTicketService;
+
+    @Resource
+    private OtaVerifyFlightService otaVerifyFlightService;
+
+    @Resource
+    FlightRoutingsVOMapper flightRoutingsVOMapper;
+
+
+    @Resource
+    CtripVerifyVOMapper ctripVerifyVOMapper;
     /**
      *
      */
@@ -67,11 +82,21 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         searchVO.setChildCnt(req.getChildNumber());
         searchVO.setTripType(req.getTripType().equals(1) ? TripTypeEnum.OW : TripTypeEnum.RT);
         context.setT(searchVO);
-        SearchFlightRes searchFlightRes = null;
+        SearchFlightRes searchFlightRes = new SearchFlightRes();
         logger.info("调用LCC{}接口,入参{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(context));
         SingleResult<FlightRouteVO> response = otaSearchFlightService.searchFlight(context);
         logger.info("调用LCC{}接口,返回{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(response));
 
+        if (!response.isSuccess()) {
+            searchFlightRes.setMsg(response.getErrorMessage());
+            searchFlightRes.setStatus(StatusEnum.INNER_ERROR.getCode());
+            return searchFlightRes;
+        }
+
+        searchFlightRes.setMsg(response.getErrorMessage());
+        searchFlightRes.setStatus(StatusEnum.SUCCEED.getCode());
+        FlightRouteVO flightRouteVO = response.getData();
+        searchFlightRes.setRoutings(flightRoutingsVOMapper.flightRoutingsVO2DTOs(flightRouteVO.getLightRouteList()));
         return searchFlightRes;
     }
 
@@ -82,11 +107,17 @@ public class CtripFlightServiceImpl implements CtripFlightService {
      * @return
      */
     @Override
-    public VerifyRes verifyFlight(VerifyReq req)
-    {
-        RouteContext<SearchVO> context = new RouteContext();
+    public CtripVerifyRes verifyFlight(CtripVerifyReq req) {
+        RouteContext<CtripVerifyReqVO> context = new RouteContext();
+        setDefaultCont(context);
         setDefaultCont(context);
 
+        CtripVerifyRes response = new CtripVerifyRes();
+        if (!ctripVerifyResult.isSuccess()) {
+            response.setMsg(ctripVerifyResult.getErrorMessage());
+            response.setStatus(StatusEnum.INNER_ERROR.getCode());
+            return response;
+        }
         VerifyReqVO verifyReqVO = new VerifyReqVO();
         verifyReqVO.setAdultNumber(req.getAdultNumber());
         verifyReqVO.setChildNumber(req.getChildNumber());
@@ -95,7 +126,10 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         verifyReqVO.setRequesttype(req.getRequesttype());
         verifyReqVO.setTripType(req.getTripType().intValue()==1?TripTypeEnum.OW:TripTypeEnum.RT);
 
-        return null;
+        response.setMsg(ctripVerifyResult.getErrorMessage());
+        response.setStatus(StatusEnum.SUCCEED.getCode());
+        CtripVerifyResVO ctripVerifyResVO = ctripVerifyResult.getData();
+        return ctripVerifyVOMapper.CtripVerifyResvO2dto(ctripVerifyResVO);
     }
 
     /**

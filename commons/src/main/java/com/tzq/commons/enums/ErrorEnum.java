@@ -4,27 +4,22 @@ package com.tzq.commons.enums;
  * 功能描述
  *
  * @Author tzq24955
- * @Created on 2018/5/8
+ * @Created on 2018/5/16
  * LY.com Inc.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
+public enum ErrorEnum {
+    SUCCEED(0, "成功"),
+    NOT_ENOUGH(1, "舱位不足"),
+    OTHERS(3, "其他失败原因"),
+    PARAM_ERROR(4, "请求参数错误"),
+    INNER_ERROR(5, "程序异常"),
+    NET_ERROR(-1, "网络异常"),
+    DATA_ERROR(-2, "response数据异常");
 
-/**
- * 行程类型枚举
- */
-public enum TripTypeEnum {
-
-    /**
-     * 单程
-     */
-    OW(1, "单程"),
-    /**
-     * 往返
-     */
-    RT(2, "往返");
 
     /**
-     * 枚举code
+     * 枚举编码
      */
     private Integer code;
 
@@ -36,7 +31,7 @@ public enum TripTypeEnum {
     /**
      * 私有构造函数
      */
-    private TripTypeEnum(Integer code, String desc) {
+    private ErrorEnum(Integer code, String desc) {
         this.code = code;
         this.desc = desc;
     }
@@ -47,11 +42,11 @@ public enum TripTypeEnum {
      * @param code 枚举码
      * @return
      */
-    public static TripTypeEnum getEnumBycode(Integer code) {
-        if (1 != code && 2 != code) {
+    public static ErrorEnum getEnumByCode(Integer code) {
+        if (code == null) {
             return null;
         }
-        for (TripTypeEnum e : TripTypeEnum.values()) {
+        for (ErrorEnum e : ErrorEnum.values()) {
             if (code.equals(e.getCode())) {
                 return e;
             }
@@ -60,7 +55,7 @@ public enum TripTypeEnum {
     }
 
     /**
-     * 获取枚举code
+     * 获取枚举编码
      *
      * @return
      */

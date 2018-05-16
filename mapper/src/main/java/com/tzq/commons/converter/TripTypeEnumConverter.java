@@ -13,14 +13,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class TripTypeEnumConverter {
-    public String asString(TripTypeEnum tripTypeEnum) {
+    public Integer asString(TripTypeEnum tripTypeEnum) {
         if (tripTypeEnum != null) {
             return tripTypeEnum.getCode();
         }
         return null;
     }
 
-    public TripTypeEnum asSegmentTypeEnum(String statusType) {
+    public TripTypeEnum asSegmentTypeEnum(Integer statusType) {
         return TripTypeEnum.getEnumBycode(statusType);
     }
 }

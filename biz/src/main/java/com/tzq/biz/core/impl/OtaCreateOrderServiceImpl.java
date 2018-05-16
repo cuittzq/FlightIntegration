@@ -2,6 +2,7 @@ package com.tzq.biz.core.impl;
 
 import com.tzq.biz.core.OtaCreateOrderService;
 import com.tzq.commons.model.context.RouteContext;
+import com.tzq.commons.model.context.SingleResult;
 import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
 import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
      * @return
      */
     @Override
-    public CreateOrderResVO createOrder(RouteContext<CreateOrderReqVO> req) {
+    public SingleResult<CreateOrderResVO> createOrder(RouteContext<CreateOrderReqVO> req) {
         return null;
     }
 }

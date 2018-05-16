@@ -6,8 +6,8 @@ import com.tzq.service.ctrip.models.order.CreateOrderReq;
 import com.tzq.service.ctrip.models.order.CreateOrderRes;
 import com.tzq.service.ctrip.models.search.SearchFlightReq;
 import com.tzq.service.ctrip.models.search.SearchFlightRes;
-import com.tzq.service.ctrip.models.verify.VerifyReq;
-import com.tzq.service.ctrip.models.verify.VerifyRes;
+import com.tzq.service.ctrip.models.verify.CtripVerifyReq;
+import com.tzq.service.ctrip.models.verify.CtripVerifyRes;
 import com.tzq.web.aop.UserAccess;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/ctrip")
@@ -45,9 +44,9 @@ public class CtripServiceController {
 
     @RequestMapping(value = "/verify", method = RequestMethod.POST)
     @UserAccess(desc = "verify")
-    public VerifyRes Verify(@RequestBody VerifyReq verifyReq, BindingResult bindingResult) {
+    public CtripVerifyRes Verify(@RequestBody CtripVerifyReq verifyReq, BindingResult bindingResult) {
 
-        VerifyRes verifyRes = new VerifyRes();
+        CtripVerifyRes verifyRes = new CtripVerifyRes();
         if (bindingResult.hasErrors()) {
             verifyRes.setStatus(StatusEnum.PARAM_ERROR.getCode());
             verifyRes.setMsg(bindingResult.getFieldError().getDefaultMessage());

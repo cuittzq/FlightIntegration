@@ -1,9 +1,9 @@
-package com.tzq.commons.model.ctrip.verify;
+package com.tzq.service.ctrip.models.verify;
 
-import com.tzq.commons.enums.TripTypeEnum;
-import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
+import com.tzq.service.ctrip.models.BaseRequest;
+import com.tzq.service.ctrip.models.search.FlightRoutingsDTO;
 
-public class VerifyReqVO {
+public class CtripVerifyReq extends BaseRequest {
     /**
      * 携程关联ID；携程用来查问题用的。
      */
@@ -11,7 +11,7 @@ public class VerifyReqVO {
     /**
      * 行程类型，1：单程；2：往返；3：多程。
      */
-    private TripTypeEnum tripType;
+    private Integer tripType;
     /**
      * 请求类型，全部为1：验价
      */
@@ -32,7 +32,7 @@ public class VerifyReqVO {
      * 报价信息，参考搜索返回结果中的 Routing Elements。 1）只含航班信息,航班信息不含经停城市/机场，机型；
      * 2）不含价格信息、退改签信息、行李额信息等。
      */
-    private FlightRoutingsVO routing;
+    private FlightRoutingsDTO routing;
 
     public String getReferenceId() {
         return referenceId;
@@ -42,11 +42,11 @@ public class VerifyReqVO {
         this.referenceId = referenceId;
     }
 
-    public TripTypeEnum getTripType() {
+    public Integer getTripType() {
         return tripType;
     }
 
-    public void setTripType(TripTypeEnum tripType) {
+    public void setTripType(Integer tripType) {
         this.tripType = tripType;
     }
 
@@ -82,11 +82,11 @@ public class VerifyReqVO {
         this.infantNumber = infantNumber;
     }
 
-    public FlightRoutingsVO getRouting() {
+    public FlightRoutingsDTO getRouting() {
         return routing;
     }
 
-    public void setRouting(FlightRoutingsVO routing) {
+    public void setRouting(FlightRoutingsDTO routing) {
         this.routing = routing;
     }
 }

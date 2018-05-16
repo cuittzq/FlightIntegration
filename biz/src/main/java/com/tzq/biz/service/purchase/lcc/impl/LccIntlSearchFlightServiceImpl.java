@@ -1,15 +1,13 @@
 package com.tzq.biz.service.purchase.lcc.impl;
 
-import com.sun.xml.bind.v2.TODO;
 import com.tzq.biz.annotation.Route;
+import com.tzq.biz.service.purchase.abstracts.AbstractSearchFlightService;
 import com.tzq.commons.enums.AreaTypeEnum;
 import com.tzq.commons.enums.PurchaseEnum;
 import com.tzq.commons.enums.TripTypeEnum;
-import com.tzq.biz.service.purchase.abstracts.AbstractSearchFlightService;
-import com.tzq.commons.model.context.SingleResult;
+import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.ctrip.search.FlightRouteVO;
 import com.tzq.commons.model.ctrip.search.SearchVO;
-import com.tzq.commons.model.context.RouteContext;
 import com.tzq.integration.service.intl.lcc.LccClient;
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightReq;
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightRes;
@@ -48,8 +46,7 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
     protected <T> FlightRouteVO response(T t, RouteContext<SearchVO> context) {
         SearchFlightRes searchFlightResponse = (SearchFlightRes) t;
         FlightRouteVO   flightRouteVO        = new FlightRouteVO();
-
-        // TODO 响应解析
+        // TODO SearchFlightRes->FlightRouteVO
         return flightRouteVO;
     }
 

@@ -2,7 +2,11 @@ package com.tzq.commons.mapper;
 
 import com.tzq.commons.converter.*;
 import com.tzq.commons.model.ctrip.search.*;
+import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
+import com.tzq.commons.model.ctrip.verify.CtripVerifyResVO;
 import com.tzq.service.ctrip.models.search.*;
+import com.tzq.service.ctrip.models.verify.CtripVerifyReq;
+import com.tzq.service.ctrip.models.verify.CtripVerifyRes;
 import org.mapstruct.Mapper;
 
 import java.util.List;
@@ -11,14 +15,24 @@ import java.util.List;
  * 功能描述
  *
  * @Author tzq24955
- * @Created on 2018/5/14
+ * @Created on 2018/5/16
  * LY.com Inc.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
 @Mapper(componentModel = "spring", uses = {AreaTypeEnumConverter.class, CurrencyEnumConverter.class,
         InventoryEnumConverter.class, PassengerTypeEnumConverter.class, SegmentTypeEnumConverter.class,
-        StatusEnumConverter.class, TripTypeEnumConverter.class})
-public interface FlightRoutingsVOMapper {
+        StatusEnumConverter.class, TripTypeEnumConverter.class, FullDateConverter.class})
+public interface CtripVerifyVOMapper {
+    CtripVerifyResVO CtripVerifyResdto2vo(CtripVerifyRes verifyRes);
+
+    CtripVerifyRes CtripVerifyResvO2dto(CtripVerifyResVO verifyResVO);
+
+
+
+    CtripVerifyReqVO CtripVerifyReqdto2vo(CtripVerifyReq verifyRes);
+
+    CtripVerifyReq CtripVerifyReqvO2dto(CtripVerifyReqVO verifyResVO);
+
 
     List<FlightRoutingsDTO> flightRoutingsVO2DTOs(List<FlightRoutingsVO> flightRoutingsVO);
 
