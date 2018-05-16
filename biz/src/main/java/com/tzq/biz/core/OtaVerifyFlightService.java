@@ -1,6 +1,7 @@
 package com.tzq.biz.core;
 
 import com.tzq.commons.model.context.RouteContext;
+import com.tzq.commons.model.context.SingleResult;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyResVO;
 
@@ -11,5 +12,5 @@ public interface OtaVerifyFlightService {
      * @param req
      * @return
      */
-    CtripVerifyResVO verifyFlight(RouteContext<CtripVerifyReqVO> req);
+    SingleResult<CtripVerifyResVO> verifyFlight(RouteContext<CtripVerifyReqVO> req);
 }

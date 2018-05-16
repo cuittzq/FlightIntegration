@@ -1,6 +1,7 @@
 package com.tzq.biz.core;
 
 import com.tzq.commons.model.context.RouteContext;
+import com.tzq.commons.model.context.SingleResult;
 import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
 import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
 
@@ -11,5 +12,5 @@ public interface OtaCreateOrderService {
      * @param req
      * @return
      */
-    CreateOrderResVO createOrder(RouteContext<CreateOrderReqVO> req);
+    SingleResult<CreateOrderResVO> createOrder(RouteContext<CreateOrderReqVO> req);
 }

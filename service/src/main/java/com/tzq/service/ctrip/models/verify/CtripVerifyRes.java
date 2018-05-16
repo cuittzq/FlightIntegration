@@ -4,7 +4,7 @@ import com.tzq.service.ctrip.models.BaseResponse;
 import com.tzq.service.ctrip.models.search.FlightRoutingsDTO;
 import com.tzq.service.ctrip.models.search.RulesDTO;
 
-public class VerifyRes extends BaseResponse {
+public class CtripVerifyRes extends BaseResponse {
     /**
      * 会话标识：标记服务接口调用的唯一标识；
      * 数字或字母，长度小于 20个字符 。

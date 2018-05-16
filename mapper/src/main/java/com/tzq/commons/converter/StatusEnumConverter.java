@@ -1,6 +1,6 @@
 package com.tzq.commons.converter;
 
-import com.tzq.commons.enums.StatusEnum;
+import com.tzq.service.ctrip.models.enums.StatusEnum;
 import org.springframework.stereotype.Component;
 
 /**

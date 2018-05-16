@@ -4,6 +4,7 @@ import com.tzq.biz.core.OtaVerifyFlightService;
 import com.tzq.biz.proxy.PurchaseProxy;
 import com.tzq.commons.enums.PurchaseEnum;
 import com.tzq.commons.model.context.RouteContext;
+import com.tzq.commons.model.context.SingleResult;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyResVO;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class OtaVerifyFlightServiceImpl implements OtaVerifyFlightService {
      * @return
      */
     @Override
-    public CtripVerifyResVO verifyFlight(RouteContext<CtripVerifyReqVO> context) {
+    public SingleResult<CtripVerifyResVO> verifyFlight(RouteContext<CtripVerifyReqVO> context) {
         Assert.notNull(context, "RouteContext can not be null ,searchFlight failure");
         // 根据OTA配置的销售策略决定调用供应商接口数据(查询平台规则)
         List<PurchaseEnum> ota2Purchases = new ArrayList<>();

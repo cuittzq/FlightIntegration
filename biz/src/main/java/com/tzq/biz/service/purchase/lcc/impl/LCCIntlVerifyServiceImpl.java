@@ -54,7 +54,7 @@ public class LCCIntlVerifyServiceImpl extends AbstractVerifyService {
     @Override
     protected <T> CtripVerifyResVO response(T t, RouteContext<CtripVerifyReqVO> context) {
         VerifyRes verifyRes = (VerifyRes) t;
-        // TODO VerifyRes -> CtripVerifyResVO
+        // TODO CtripVerifyRes -> CtripVerifyResVO
         CtripVerifyResVO verifyResVO = new CtripVerifyResVO();
         return verifyResVO;
     }
@@ -68,7 +68,7 @@ public class LCCIntlVerifyServiceImpl extends AbstractVerifyService {
     @Override
     protected <T> T request(RouteContext<CtripVerifyReqVO> context) {
         CtripVerifyReqVO ctripVerifyReqVO = context.getT();
-        // TODO CtripVerifyReqVO -> VerifyReq
+        // TODO CtripVerifyReqVO -> CtripVerifyReq
         VerifyReq verifyReq = new VerifyReq();
         return (T) verifyReq;
     }

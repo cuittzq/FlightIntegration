@@ -3,7 +3,7 @@ package com.tzq.service.ctrip.models.verify;
 import com.tzq.service.ctrip.models.BaseRequest;
 import com.tzq.service.ctrip.models.search.FlightRoutingsDTO;
 
-public class VerifyReq extends BaseRequest {
+public class CtripVerifyReq extends BaseRequest {
     /**
      * 携程关联ID；携程用来查问题用的。
      */
