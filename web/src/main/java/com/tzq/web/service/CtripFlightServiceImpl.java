@@ -54,7 +54,6 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         SingleResult<FlightRouteVO> response = otaSearchFlightService.searchFlight(context);
         logger.info("调用LCC{}接口,返回{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(response));
 
-
         return searchFlightRes;
     }
 
