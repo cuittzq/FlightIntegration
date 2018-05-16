@@ -1,7 +1,10 @@
 package com.tzq.biz.service.purchase.lcc.impl;
 
+import com.tzq.biz.annotation.Route;
 import com.tzq.biz.service.purchase.abstracts.AbstractLccBusiService;
 import com.tzq.commons.cache.LCCDataGuavaCache;
+import com.tzq.commons.enums.AreaTypeEnum;
+import com.tzq.commons.enums.PurchaseEnum;
 import com.tzq.commons.mapper.OrderVOMapper;
 import com.tzq.commons.mapper.VerifyVOMapper;
 import com.tzq.commons.model.integration.lcc.issueticket.IssueTicketReqVO;
@@ -21,6 +24,7 @@ import javax.annotation.Resource;
  * Created by cl24957 on 2018/5/11.
  */
 @Service
+@Route(area = AreaTypeEnum.INTERNATIONAL,purchase = PurchaseEnum.LCC)
 public class LccIntlBusiServiceImpl extends AbstractLccBusiService {
     @Resource
     private LccClient lccClient;

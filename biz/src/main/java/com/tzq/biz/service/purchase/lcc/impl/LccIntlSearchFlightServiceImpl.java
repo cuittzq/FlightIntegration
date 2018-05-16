@@ -1,7 +1,11 @@
 package com.tzq.biz.service.purchase.lcc.impl;
 
+import com.tzq.biz.annotation.Route;
+import com.tzq.commons.enums.AreaTypeEnum;
+import com.tzq.commons.enums.PurchaseEnum;
 import com.tzq.commons.enums.TripTypeEnum;
 import com.tzq.biz.service.purchase.abstracts.AbstractSearchFlightService;
+import com.tzq.commons.model.context.SingleResult;
 import com.tzq.commons.model.ctrip.search.FlightRouteVO;
 import com.tzq.commons.model.ctrip.search.SearchVO;
 import com.tzq.commons.model.context.RouteContext;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 @Service("lccIntlSearchFlightService")
+@Route(area = AreaTypeEnum.INTERNATIONAL, purchase = PurchaseEnum.LCC)
 public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService {
 
     @Resource
@@ -25,14 +30,9 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
      */
     @Override
     public FlightRouteVO searchFlight(RouteContext<SearchVO> context) {
-        FlightRouteVO flightRouteVO = null;
-        try {
-            SearchFlightReq searchFlightReq = request(context);
-            SearchFlightRes searchFlightResponse = lccClient.searchFlight(searchFlightReq);
-            flightRouteVO = response(searchFlightResponse, context);
-        } catch (Exception e) {
-            logger.error("航班查询异常", e);
-        }
+        SearchFlightReq searchFlightReq      = request(context);
+        SearchFlightRes searchFlightResponse = lccClient.searchFlight(searchFlightReq);
+        FlightRouteVO   flightRouteVO        = response(searchFlightResponse, context);
         return flightRouteVO;
     }
 
@@ -57,7 +57,7 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
      */
     @Override
     protected <T> T request(RouteContext<SearchVO> context) {
-        SearchVO searchVO = context.getT();
+        SearchVO        searchVO        = context.getT();
         SearchFlightReq searchFlightReq = new SearchFlightReq();
         searchFlightReq.setFromCity(searchVO.getDepAirportCode());
         searchFlightReq.setFromDate(searchVO.getDepDate());

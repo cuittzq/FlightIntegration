@@ -41,7 +41,6 @@ public class RouteContext<T> extends BaseContext implements Cloneable {
     }
 
 
-
     /**
      * Getter method for property <tt>t</tt>.
      *
@@ -142,7 +141,6 @@ public class RouteContext<T> extends BaseContext implements Cloneable {
         RouteContext<K> t = new RouteContext<>();
         t.areaType = context.getAreaType();
         t.airlineCode = context.getAirlineCode();
-        t.sourceId = context.getSourceId();
         t.version = context.getVersion();
         t.traceId = context.getTraceId();
         t.memberId = context.getMemberId();
@@ -159,8 +157,8 @@ public class RouteContext<T> extends BaseContext implements Cloneable {
      */
     @Override
     public String toString() {
-        return "RouteContext [areaType=" + getAreaType() + ", airlineCode=" + getAirlineCode() + ", sourceId=" + getSourceId() + ", version=" + getVersion() + ", memberId="
-                + getMemberId() + ", memberName=" + getMemberName() + ", traceId=" + getTraceId() + "]" + (t == null ? "" : t.toString());
+        return "RouteContext [areaType=" + getAreaType() + ", airlineCode=" + getAirlineCode() + "version = " + getVersion()
+                + ", memberName=" + getMemberName() + ", traceId=" + getTraceId() + "]" + (t == null ? "" : t.toString());
     }
 
     /**
@@ -174,6 +172,7 @@ public class RouteContext<T> extends BaseContext implements Cloneable {
         this.areaType = AreaTypeEnum.getEnumByCode(areaType);
         return this;
     }
+
     @Override
     @SuppressWarnings({"unchecked"})
     public RouteContext<T> clone() {

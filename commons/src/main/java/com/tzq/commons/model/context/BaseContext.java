@@ -3,6 +3,7 @@ package com.tzq.commons.model.context;
 
 import com.tzq.commons.enums.AreaTypeEnum;
 import com.tzq.commons.enums.OTAEnum;
+import com.tzq.commons.enums.PurchaseEnum;
 
 import java.io.Serializable;
 
@@ -35,9 +36,9 @@ public class BaseContext implements Serializable {
 
 
     /**
-     * 航司或者供应商ID
+     * 供应商
      */
-    protected String sourceId;
+    protected PurchaseEnum purchaseEnum;
 
     /**
      * 接口版本
@@ -83,12 +84,12 @@ public class BaseContext implements Serializable {
         this.ota = ota;
     }
 
-    public String getSourceId() {
-        return sourceId;
+    public PurchaseEnum getPurchaseEnum() {
+        return purchaseEnum;
     }
 
-    public void setSourceId(String sourceId) {
-        this.sourceId = sourceId;
+    public void setPurchaseEnum(PurchaseEnum purchaseEnum) {
+        this.purchaseEnum = purchaseEnum;
     }
 
     public String getVersion() {

@@ -1,6 +1,7 @@
 package com.tzq.biz.service.purchase.core;
 
 
+import com.tzq.commons.model.context.SingleResult;
 import com.tzq.commons.model.ctrip.search.FlightRouteVO;
 import com.tzq.commons.model.ctrip.search.SearchVO;
 import com.tzq.commons.model.context.RouteContext;
@@ -16,7 +17,8 @@ import com.tzq.commons.model.context.RouteContext;
 public interface SearchFlightService {
     /**
      * 查询
+     *
      * @param context
      */
-    public FlightRouteVO searchFlight(RouteContext<SearchVO> context);
+    FlightRouteVO searchFlight(RouteContext<SearchVO> context);
 }
