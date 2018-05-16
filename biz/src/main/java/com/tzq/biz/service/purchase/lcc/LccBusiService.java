@@ -1,4 +1,4 @@
-package com.tzq.biz.service.purchase.core;
+package com.tzq.biz.service.purchase.lcc;
 
 
 import com.tzq.commons.model.integration.lcc.issueticket.IssueTicketReqVO;
