@@ -1,5 +1,6 @@
 package com.tzq.biz.service.purchase.lcc.impl;
 
+import com.sun.xml.bind.v2.TODO;
 import com.tzq.biz.annotation.Route;
 import com.tzq.commons.enums.AreaTypeEnum;
 import com.tzq.commons.enums.PurchaseEnum;
@@ -45,8 +46,11 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
      */
     @Override
     protected <T> FlightRouteVO response(T t, RouteContext<SearchVO> context) {
+        SearchFlightRes searchFlightResponse = (SearchFlightRes) t;
+        FlightRouteVO   flightRouteVO        = new FlightRouteVO();
 
-        return null;
+        // TODO 响应解析
+        return flightRouteVO;
     }
 
     /**
