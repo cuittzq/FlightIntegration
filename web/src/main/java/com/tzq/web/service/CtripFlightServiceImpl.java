@@ -2,6 +2,8 @@ package com.tzq.web.service;
 
 import com.alibaba.fastjson.JSON;
 import com.tzq.biz.core.OtaSearchFlightService;
+import com.tzq.commons.enums.AreaTypeEnum;
+import com.tzq.commons.enums.OTAEnum;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.context.SingleResult;
 import com.tzq.commons.model.ctrip.search.FlightRouteVO;
@@ -47,8 +49,8 @@ public class CtripFlightServiceImpl implements CtripFlightService {
     @Override
     public SearchFlightRes searchFlight(SearchFlightReq req) {
         RouteContext<SearchVO> context = new RouteContext();
-
-        context.setAreaType("1");
+        context.setAreaType(AreaTypeEnum.INTERNATIONAL);
+        context.setOta(OTAEnum.CTRIP);
         SearchFlightRes searchFlightRes = null;
         logger.info("调用LCC{}接口,入参{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(context));
         SingleResult<FlightRouteVO> response = otaSearchFlightService.searchFlight(context);

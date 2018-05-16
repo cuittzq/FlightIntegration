@@ -4,6 +4,8 @@
  */
 package com.tzq.commons.model.context;
 
+import com.tzq.commons.enums.AreaTypeEnum;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,37 +40,7 @@ public class RouteContext<T> extends BaseContext implements Cloneable {
 
     }
 
-    /**
-     * Instantiates a new Route context.
-     *
-     * @param t           the t
-     * @param areaType    the area type
-     * @param airlineCode the airline code
-     * @param sourceId    the source id
-     * @param version     the version
-     */
-    public RouteContext(T t, String areaType, String airlineCode, String sourceId, String version) {
-        this.t = t;
-        this.areaType = areaType;
-        this.airlineCode = airlineCode;
-        this.sourceId = sourceId;
-        this.version = version;
-    }
 
-    /**
-     * Instantiates a new Route context.
-     *
-     * @param t           the t
-     * @param areaType    the area type
-     * @param airlineCode the airline code
-     * @param sourceId    the source id
-     */
-    public RouteContext(T t, String areaType, String airlineCode, String sourceId) {
-        this.t = t;
-        this.areaType = areaType;
-        this.airlineCode = airlineCode;
-        this.sourceId = sourceId;
-    }
 
     /**
      * Getter method for property <tt>t</tt>.
@@ -199,70 +171,9 @@ public class RouteContext<T> extends BaseContext implements Cloneable {
      */
     @SuppressWarnings("rawtypes")
     public RouteContext setAreaType(String areaType) {
-        this.areaType = areaType;
+        this.areaType = AreaTypeEnum.getEnumByCode(areaType);
         return this;
     }
-
-    /**
-     * Sets airline code.
-     *
-     * @param airlineCode the airline code
-     * @return the airline code
-     */
-    @SuppressWarnings("rawtypes")
-    public RouteContext setAirlineCode(String airlineCode) {
-        this.airlineCode = airlineCode;
-        return this;
-    }
-
-    /**
-     * Sets source id.
-     *
-     * @param sourceId the source id
-     * @return the source id
-     */
-    @SuppressWarnings("rawtypes")
-    public RouteContext setSourceId(String sourceId) {
-        this.sourceId = sourceId;
-        return this;
-    }
-
-    /**
-     * Sets version.
-     *
-     * @param version the version
-     * @return the version
-     */
-    @SuppressWarnings("rawtypes")
-    public RouteContext setVersion(String version) {
-        this.version = version;
-        return this;
-    }
-
-    /**
-     * Sets member id.
-     *
-     * @param memberId the member id
-     * @return the member id
-     */
-    @SuppressWarnings("rawtypes")
-    public RouteContext setMemberId(String memberId) {
-        this.memberId = memberId;
-        return this;
-    }
-
-    /**
-     * Sets member name.
-     *
-     * @param memberName the member name
-     * @return the member name
-     */
-    @SuppressWarnings("rawtypes")
-    public RouteContext setMemberName(String memberName) {
-        this.memberName = memberName;
-        return this;
-    }
-
     @Override
     @SuppressWarnings({"unchecked"})
     public RouteContext<T> clone() {

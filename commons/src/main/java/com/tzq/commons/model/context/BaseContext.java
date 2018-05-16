@@ -1,6 +1,9 @@
 
 package com.tzq.commons.model.context;
 
+import com.tzq.commons.enums.AreaTypeEnum;
+import com.tzq.commons.enums.OTAEnum;
+
 import java.io.Serializable;
 
 /**
@@ -18,106 +21,105 @@ public class BaseContext implements Serializable {
     /**
      * 国内国际区分
      */
-    protected String          areaType;
+    protected AreaTypeEnum areaType;
 
     /**
      * 航司二字码
      */
-    protected String          airlineCode;
+    protected String airlineCode;
+
+    /**
+     * ota
+     */
+    protected OTAEnum ota;
+
 
     /**
      * 航司或者供应商ID
      */
-    protected String          sourceId;
+    protected String sourceId;
 
     /**
      * 接口版本
      */
-    protected String          version;
+    protected String version;
 
     /**
      * 会员Id
      */
-    protected String          memberId;
+    protected String memberId;
 
     /**
      * 会员姓名
      */
-    protected String          memberName;
-
-    /** 跟踪ID */
-    protected String          traceId;
+    protected String memberName;
 
     /**
-     * Gets area type.
-     *
-     * @return the area type
+     * 跟踪ID
      */
-    public String getAreaType() {
+    protected String traceId;
+
+    public AreaTypeEnum getAreaType() {
         return areaType;
     }
 
-    /**
-     * Gets airline code.
-     *
-     * @return the airline code
-     */
+    public void setAreaType(AreaTypeEnum areaType) {
+        this.areaType = areaType;
+    }
+
     public String getAirlineCode() {
         return airlineCode;
     }
 
-    /**
-     * Gets source id.
-     *
-     * @return the source id
-     */
+    public void setAirlineCode(String airlineCode) {
+        this.airlineCode = airlineCode;
+    }
+
+    public OTAEnum getOta() {
+        return ota;
+    }
+
+    public void setOta(OTAEnum ota) {
+        this.ota = ota;
+    }
+
     public String getSourceId() {
         return sourceId;
     }
 
-    /**
-     * Gets version.
-     *
-     * @return the version
-     */
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
+    }
+
     public String getVersion() {
         return version;
     }
 
-    /**
-     * Gets member id.
-     *
-     * @return the member id
-     */
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
     public String getMemberId() {
         return memberId;
     }
 
-    /**
-     * Gets member name.
-     *
-     * @return the member name
-     */
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
+    }
+
     public String getMemberName() {
         return memberName;
     }
 
-    /**
-     * Getter method for property <tt>traceId</tt>.
-     * 
-     * @return property value of traceId
-     */
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
+    }
+
     public String getTraceId() {
         return traceId;
     }
 
-    /**
-     * Setter method for property <tt>traceId</tt>.
-     * 
-     * @param traceId value to be assigned to property traceId
-     */
     public void setTraceId(String traceId) {
         this.traceId = traceId;
     }
-
 }
