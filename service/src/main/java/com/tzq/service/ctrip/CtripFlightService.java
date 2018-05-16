@@ -39,4 +39,13 @@ public interface CtripFlightService {
      * @return
      */
     CreateOrderRes createOrder(CreateOrderReq req);
+
+
+    /**
+     * 出票
+     *
+     * @param req
+     * @return
+     */
+    String issueTicket(String req);
 }

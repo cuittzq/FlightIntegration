@@ -1,6 +1,7 @@
 package com.tzq.web.service;
 
 import com.alibaba.fastjson.JSON;
+import com.tzq.biz.core.OtaIssueTicketService;
 import com.tzq.biz.core.OtaSearchFlightService;
 import com.tzq.commons.enums.AreaTypeEnum;
 import com.tzq.commons.enums.OTAEnum;
@@ -37,6 +38,10 @@ public class CtripFlightServiceImpl implements CtripFlightService {
 
     @Resource
     private OtaSearchFlightService otaSearchFlightService;
+
+
+    @Resource
+    private OtaIssueTicketService otaIssueTicketService;
     /**
      *
      */
@@ -51,8 +56,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
     @Override
     public SearchFlightRes searchFlight(SearchFlightReq req) {
         RouteContext<SearchVO> context = new RouteContext();
-        context.setAreaType(AreaTypeEnum.INTERNATIONAL);
-        context.setOta(OTAEnum.CTRIP);
+        setDefaultCont(context);
         SearchVO searchVO = new SearchVO();
         searchVO.setDepDate(req.getRetDate());
         searchVO.setDepAirportCode(req.getFromCity());
@@ -104,5 +108,31 @@ public class CtripFlightServiceImpl implements CtripFlightService {
     @Override
     public CreateOrderRes createOrder(CreateOrderReq req) {
         return null;
+    }
+
+    /**
+     * 出票
+     *
+     * @param req
+     * @return
+     */
+    @Override
+    public String issueTicket(String req) {
+        RouteContext<String> context = new RouteContext();
+        setDefaultCont(context);
+        context.setT(req);
+        logger.info("调用LCC{}接口,入参{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(context));
+        SingleResult<String> response = otaIssueTicketService.issueTicket(context);
+        logger.info("调用LCC{}接口,返回{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(response));
+
+        return response.getData();
+    }
+
+    /**
+     * @param routeContext
+     */
+    private void setDefaultCont(RouteContext routeContext) {
+        routeContext.setAreaType(AreaTypeEnum.INTERNATIONAL);
+        routeContext.setOta(OTAEnum.CTRIP);
     }
 }
