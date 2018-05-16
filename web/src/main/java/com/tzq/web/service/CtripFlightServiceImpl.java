@@ -50,8 +50,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
     @Override
     public SearchFlightRes searchFlight(SearchFlightReq req) {
         RouteContext<SearchVO> context = new RouteContext();
-        context.setAreaType(AreaTypeEnum.INTERNATIONAL);
-        context.setOta(OTAEnum.CTRIP);
+        setDefaultCont(context);
         SearchVO searchVO = new SearchVO();
         searchVO.setDepDate(req.getRetDate());
         searchVO.setDepAirportCode(req.getFromCity());
@@ -89,5 +88,13 @@ public class CtripFlightServiceImpl implements CtripFlightService {
     @Override
     public CreateOrderRes createOrder(CreateOrderReq req) {
         return null;
+    }
+
+    /**
+     * @param routeContext
+     */
+    private void setDefaultCont(RouteContext routeContext) {
+        routeContext.setAreaType(AreaTypeEnum.INTERNATIONAL);
+        routeContext.setOta(OTAEnum.CTRIP);
     }
 }
