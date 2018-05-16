@@ -14,7 +14,6 @@
         <module>commons</module>
         <module>service</module>
         <module>mapper</module>
-        <module>service-impl</module>
 
     </modules>
     <packaging>pom</packaging>
@@ -380,11 +379,6 @@
             <dependency>
                 <groupId>com.github.cuittzq</groupId>
                 <artifactId>service</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.cuittzq</groupId>
-                <artifactId>service-impl</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
