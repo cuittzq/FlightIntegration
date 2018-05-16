@@ -113,12 +113,8 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         setDefaultCont(context);
 
         CtripVerifyRes response = new CtripVerifyRes();
-        if (!ctripVerifyResult.isSuccess()) {
-            response.setMsg(ctripVerifyResult.getErrorMessage());
-            response.setStatus(StatusEnum.INNER_ERROR.getCode());
-            return response;
-        }
-        VerifyReqVO verifyReqVO = new VerifyReqVO();
+
+        CtripVerifyReqVO verifyReqVO = new CtripVerifyReqVO();
         verifyReqVO.setAdultNumber(req.getAdultNumber());
         verifyReqVO.setChildNumber(req.getChildNumber());
         verifyReqVO.setInfantNumber(req.getInfantNumber());
@@ -126,10 +122,20 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         verifyReqVO.setRequesttype(req.getRequesttype());
         verifyReqVO.setTripType(req.getTripType().intValue()==1?TripTypeEnum.OW:TripTypeEnum.RT);
 
-        response.setMsg(ctripVerifyResult.getErrorMessage());
+        verifyReqVO.setRouting(flightRoutingsVOMapper.flightRoutingsDTO2VO(req.getRouting()));
+        SingleResult<CtripVerifyResVO> singleResult =   otaVerifyFlightService.verifyFlight(context);
+
+        if (!singleResult.isSuccess() || singleResult.getData() == null) {
+            response.setMsg(singleResult.getErrorMessage());
+            response.setStatus(StatusEnum.INNER_ERROR.getCode());
+            return response;
+        }
         response.setStatus(StatusEnum.SUCCEED.getCode());
-        CtripVerifyResVO ctripVerifyResVO = ctripVerifyResult.getData();
-        return ctripVerifyVOMapper.CtripVerifyResvO2dto(ctripVerifyResVO);
+        response.setMaxSeats(singleResult.getData().getMaxSeats());
+        response.setRule(ctripVerifyVOMapper.rulesVO2DTO(singleResult.getData().getRule()));
+        response.setRouting(ctripVerifyVOMapper.flightRoutingsVO2DTO(singleResult.getData().getRouting()));
+
+        return response;
     }
 
     /**
