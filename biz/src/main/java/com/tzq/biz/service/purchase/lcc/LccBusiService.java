@@ -11,7 +11,7 @@ import com.tzq.commons.model.integration.lcc.verify.VerifyResVO;
 /**
  * Created by cl24957 on 2018/5/11.
  */
-public interface LccBusiService {
+public interface    LccBusiService {
     VerifyResVO verifyCabinAndPrice(VerifyReqVO vo);
 
     OrderResVO crateOrder(OrderReqVO reqVO);
