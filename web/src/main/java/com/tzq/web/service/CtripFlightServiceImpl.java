@@ -11,6 +11,7 @@ import com.tzq.commons.mapper.CtripVerifyVOMapper;
 import com.tzq.commons.mapper.FlightRoutingsVOMapper;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.context.SingleResult;
+import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
 import com.tzq.commons.model.ctrip.search.FlightRouteVO;
 import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
 import com.tzq.commons.model.ctrip.search.SearchVO;
@@ -146,6 +147,8 @@ public class CtripFlightServiceImpl implements CtripFlightService {
      */
     @Override
     public CreateOrderRes createOrder(CreateOrderReq req) {
+        RouteContext<CreateOrderReqVO> context = new RouteContext();
+        setDefaultCont(context);
         return null;
     }
 
