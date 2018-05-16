@@ -14,7 +14,7 @@ public class IssueTicketReq extends BaseParam implements Serializable {
     private String orderNo;
     private String pnrCode;
 
-    private OrderReq.OrderReqRouting reqRouting;
+    private FlightRoutings reqRouting;
 
     public String getOrderNo() {
         return orderNo;
@@ -32,11 +32,11 @@ public class IssueTicketReq extends BaseParam implements Serializable {
         this.pnrCode = pnrCode;
     }
 
-    public OrderReq.OrderReqRouting getReqRouting() {
+    public FlightRoutings getReqRouting() {
         return reqRouting;
     }
 
-    public void setReqRouting(OrderReq.OrderReqRouting reqRouting) {
+    public void setReqRouting(FlightRoutings reqRouting) {
         this.reqRouting = reqRouting;
     }
 

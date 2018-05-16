@@ -13,6 +13,7 @@ import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.context.SingleResult;
 import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
 import com.tzq.commons.model.ctrip.search.FlightRouteVO;
+import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
 import com.tzq.commons.model.ctrip.search.SearchVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyResVO;
@@ -110,8 +111,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
     public CtripVerifyRes verifyFlight(CtripVerifyReq req) {
         RouteContext<CtripVerifyReqVO> context = new RouteContext();
         setDefaultCont(context);
-        context.setT(ctripVerifyVOMapper.CtripVerifyReqdto2vo(req));
-        SingleResult<CtripVerifyResVO> ctripVerifyResult = otaVerifyFlightService.verifyFlight(context);
+        setDefaultCont(context);
 
         CtripVerifyRes response = new CtripVerifyRes();
         if (!ctripVerifyResult.isSuccess()) {
@@ -119,6 +119,13 @@ public class CtripFlightServiceImpl implements CtripFlightService {
             response.setStatus(StatusEnum.INNER_ERROR.getCode());
             return response;
         }
+        VerifyReqVO verifyReqVO = new VerifyReqVO();
+        verifyReqVO.setAdultNumber(req.getAdultNumber());
+        verifyReqVO.setChildNumber(req.getChildNumber());
+        verifyReqVO.setInfantNumber(req.getInfantNumber());
+        verifyReqVO.setReferenceId(req.getReferenceId());
+        verifyReqVO.setRequesttype(req.getRequesttype());
+        verifyReqVO.setTripType(req.getTripType().intValue()==1?TripTypeEnum.OW:TripTypeEnum.RT);
 
         response.setMsg(ctripVerifyResult.getErrorMessage());
         response.setStatus(StatusEnum.SUCCEED.getCode());
