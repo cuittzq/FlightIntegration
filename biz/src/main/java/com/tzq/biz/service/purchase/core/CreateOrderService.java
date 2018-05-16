@@ -17,5 +17,5 @@ public interface CreateOrderService {
      * 生单
      * @param context
      */
-    public CreateOrderResVO createOrder(RouteContext<CreateOrderReqVO> context);
+    CreateOrderResVO createOrder(RouteContext<CreateOrderReqVO> context);
 }
