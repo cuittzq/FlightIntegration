@@ -9,6 +9,7 @@ import com.tzq.commons.enums.TripTypeEnum;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.context.SingleResult;
 import com.tzq.commons.model.ctrip.search.FlightRouteVO;
+import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
 import com.tzq.commons.model.ctrip.search.SearchVO;
 import com.tzq.commons.model.ctrip.verify.VerifyReqVO;
 import com.tzq.service.ctrip.CtripFlightService;
@@ -84,8 +85,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
     public VerifyRes verifyFlight(VerifyReq req)
     {
         RouteContext<SearchVO> context = new RouteContext();
-        context.setAreaType(AreaTypeEnum.INTERNATIONAL);
-        context.setOta(OTAEnum.CTRIP);
+        setDefaultCont(context);
 
         VerifyReqVO verifyReqVO = new VerifyReqVO();
         verifyReqVO.setAdultNumber(req.getAdultNumber());
@@ -94,7 +94,6 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         verifyReqVO.setReferenceId(req.getReferenceId());
         verifyReqVO.setRequesttype(req.getRequesttype());
         verifyReqVO.setTripType(req.getTripType().intValue()==1?TripTypeEnum.OW:TripTypeEnum.RT);
-
 
         return null;
     }
