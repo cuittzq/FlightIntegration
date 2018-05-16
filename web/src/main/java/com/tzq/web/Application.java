@@ -24,19 +24,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
-
-        SearchFlightReq searchFlightReq = new SearchFlightReq();
-        searchFlightReq.setAdultNumber(1);
-        searchFlightReq.setChannel(ChannelEnum.FlightIntlOnline.getCode());
-        searchFlightReq.setChildNumber(0);
-        searchFlightReq.setFromCity("CTU");
-        searchFlightReq.setFromDate("20180910");
-        searchFlightReq.setAdultNumber(1);
-        searchFlightReq.setRetDate("");
-        searchFlightReq.setToCity("PEK");
-        searchFlightReq.setTripType(1);
-        searchFlightReq.setCid("12312");
-        String request = JSON.toJSONString(searchFlightReq);
         SpringApplication.run(Application.class, args);
     }
 }

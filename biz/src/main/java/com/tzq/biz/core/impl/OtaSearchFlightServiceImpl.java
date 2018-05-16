@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,8 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
     /**
      * 服务代理类
      */
-    protected PurchaseProxy purchaseProxy;
+    @Resource
+    PurchaseProxy purchaseProxy;
 
 
     @Override
@@ -40,8 +42,11 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
             resuestContext.setPurchaseEnum(purchaseEnum);
             // 分别调用配置的供应商接口数据
             FlightRouteVO flightRouteVO = purchaseProxy.searchFlight(resuestContext);
+
             // 数据汇总
-            flightRouteVOList.add(flightRouteVO);
+            if (flightRouteVO != null) {
+                flightRouteVOList.add(flightRouteVO);
+            }
         });
 
         SingleResult<FlightRouteVO> response = null;

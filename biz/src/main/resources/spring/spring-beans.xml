@@ -8,17 +8,17 @@
          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
          http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config.xsd">
 
+    <!-- 路由代理类 -->
+    <bean id="purchaseProxy"
+          class="com.tzq.biz.proxy.DefaultPurchaseProxy"
+          parent="abstractPurchaseProxy"></bean>
+
     <!-- 路由代理抽象类 -->
     <bean id="abstractPurchaseProxy"
           class="com.tzq.biz.proxy.AbstractPurchaseProxy"
           abstract="true">
         <property name="routeProxyFactory" ref="routeProxyFactory"></property>
     </bean>
-
-    <!-- 路由代理类 -->
-    <bean id="purchaseProxy"
-          class="com.tzq.biz.proxy.DefaultPurchaseProxy"
-          parent="abstractPurchaseProxy"></bean>
 
     <!-- 路由工厂类 -->
     <bean id="routeProxyFactory"
