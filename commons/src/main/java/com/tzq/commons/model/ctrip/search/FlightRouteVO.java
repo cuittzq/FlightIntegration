@@ -19,10 +19,6 @@ public class FlightRouteVO extends BaseVO<Long> {
     private static final long serialVersionUID = 2400324495088848428L;
     private Long id;
 
-    /**
-     * 航线标示
-     */
-    private String routekey;
 
     /**
      * 行程类型
@@ -55,21 +51,6 @@ public class FlightRouteVO extends BaseVO<Long> {
     private String areaType;
 
     /**
-     * 订单二字码
-     */
-    private String airlineCode;
-
-    /**
-     * 供应商Id
-     */
-    private String sourceId;
-
-    /**
-     * 会员ID
-     */
-    private String memberId;
-
-    /**
      * 扩展字段
      */
     private String extInfo;
@@ -87,14 +68,6 @@ public class FlightRouteVO extends BaseVO<Long> {
     @Override
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getRoutekey() {
-        return routekey;
-    }
-
-    public void setRoutekey(String routekey) {
-        this.routekey = routekey;
     }
 
     public Integer getTripType() {
@@ -143,30 +116,6 @@ public class FlightRouteVO extends BaseVO<Long> {
 
     public void setAreaType(String areaType) {
         this.areaType = areaType;
-    }
-
-    public String getAirlineCode() {
-        return airlineCode;
-    }
-
-    public void setAirlineCode(String airlineCode) {
-        this.airlineCode = airlineCode;
-    }
-
-    public String getSourceId() {
-        return sourceId;
-    }
-
-    public void setSourceId(String sourceId) {
-        this.sourceId = sourceId;
-    }
-
-    public String getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
     }
 
     public String getExtInfo() {

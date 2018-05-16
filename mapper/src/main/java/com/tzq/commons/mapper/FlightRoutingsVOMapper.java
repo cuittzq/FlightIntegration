@@ -19,6 +19,12 @@ import java.util.List;
         InventoryEnumConverter.class, PassengerTypeEnumConverter.class, SegmentTypeEnumConverter.class,
         StatusEnumConverter.class, TripTypeEnumConverter.class})
 public interface FlightRoutingsVOMapper {
+
+    List<FlightRoutingsDTO> flightRoutingsVO2DTOs(List<FlightRoutingsVO> flightRoutingsVO);
+
+    List<FlightRoutingsVO> flightRoutingsDTO2VOs(List<FlightRoutingsDTO> flightRoutingsVO);
+
+
     FlightRoutingsDTO flightRoutingsVO2DTO(FlightRoutingsVO flightRoutingsVO);
 
     FlightRoutingsVO flightRoutingsDTO2VO(FlightRoutingsDTO flightRoutingsVO);

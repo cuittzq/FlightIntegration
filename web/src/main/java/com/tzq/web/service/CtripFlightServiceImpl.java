@@ -6,6 +6,7 @@ import com.tzq.biz.core.OtaSearchFlightService;
 import com.tzq.commons.enums.AreaTypeEnum;
 import com.tzq.commons.enums.OTAEnum;
 import com.tzq.commons.enums.TripTypeEnum;
+import com.tzq.commons.mapper.FlightRoutingsVOMapper;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.context.SingleResult;
 import com.tzq.commons.model.ctrip.search.FlightRouteVO;
@@ -42,6 +43,9 @@ public class CtripFlightServiceImpl implements CtripFlightService {
 
     @Resource
     private OtaIssueTicketService otaIssueTicketService;
+
+    @Resource
+    FlightRoutingsVOMapper flightRoutingsVOMapper;
     /**
      *
      */
@@ -70,7 +74,11 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         logger.info("调用LCC{}接口,入参{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(context));
         SingleResult<FlightRouteVO> response = otaSearchFlightService.searchFlight(context);
         logger.info("调用LCC{}接口,返回{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(response));
-
+        if (response.getData() != null) {
+            FlightRouteVO flightRouteVO = response.getData();
+            searchFlightRes = new SearchFlightRes();
+            searchFlightRes.setRoutings(flightRoutingsVOMapper.flightRoutingsVO2DTOs(flightRouteVO.getLightRouteList()));
+        }
         return searchFlightRes;
     }
 
@@ -81,8 +89,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
      * @return
      */
     @Override
-    public VerifyRes verifyFlight(VerifyReq req)
-    {
+    public VerifyRes verifyFlight(VerifyReq req) {
         RouteContext<SearchVO> context = new RouteContext();
         context.setAreaType(AreaTypeEnum.INTERNATIONAL);
         context.setOta(OTAEnum.CTRIP);
@@ -93,7 +100,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         verifyReqVO.setInfantNumber(req.getInfantNumber());
         verifyReqVO.setReferenceId(req.getReferenceId());
         verifyReqVO.setRequesttype(req.getRequesttype());
-        verifyReqVO.setTripType(req.getTripType().intValue()==1?TripTypeEnum.OW:TripTypeEnum.RT);
+        verifyReqVO.setTripType(req.getTripType().intValue() == 1 ? TripTypeEnum.OW : TripTypeEnum.RT);
 
 
         return null;
