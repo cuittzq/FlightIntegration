@@ -56,5 +56,5 @@ public class LccConstant {
     /**
      * aeskey的秘钥
      */
-    public static final String AES_KEY = "";
+    public static final String AES_KEY = "9859832798641329";
 }
