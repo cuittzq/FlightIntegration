@@ -134,8 +134,8 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         verifyReqVO.setTripType(req.getTripType().intValue()==1?TripTypeEnum.OW:TripTypeEnum.RT);
 
         verifyReqVO.setRouting(flightRoutingsVOMapper.flightRoutingsDTO2VO(req.getRoutings()));
-        verifyReqVO.getRouting().setFromSegmentVOS(flightRoutingsVOMapper.segmentDTO2VOs(req.getRoutings().getFromSegments()));
-        verifyReqVO.getRouting().setRetSegmentVOS(flightRoutingsVOMapper.segmentDTO2VOs(req.getRoutings().getRetSegments()));
+        verifyReqVO.getRouting().setFromSegments(flightRoutingsVOMapper.segmentDTO2VOs(req.getRoutings().getFromSegments()));
+        verifyReqVO.getRouting().setRetSegments(flightRoutingsVOMapper.segmentDTO2VOs(req.getRoutings().getRetSegments()));
         context.setT(verifyReqVO);
 
         SingleResult<CtripVerifyResVO> singleResult =   otaVerifyFlightService.verifyFlight(context);
@@ -149,8 +149,8 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         response.setMaxSeats(singleResult.getData().getMaxSeats());
         response.setRule(ctripVerifyVOMapper.rulesVO2DTO(singleResult.getData().getRule()));
         response.setRouting(ctripVerifyVOMapper.flightRoutingsVO2DTO(singleResult.getData().getRouting()));
-        response.getRouting().setFromSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getFromSegmentVOS()));
-        response.getRouting().setRetSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getRetSegmentVOS()));
+        response.getRouting().setFromSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getFromSegments()));
+        response.getRouting().setRetSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getRetSegments()));
         return response;
     }
 
@@ -173,14 +173,14 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         List<ContactDTO> contactDTOS = Lists.newArrayList();
         contactDTOS.add(req.getContact());
 
-        // 联系人信息
+        // 联系人信�
         createOrderReqVO.setContact(orderVOMapper.orderCtripDTO2VO(contactDTOS));
         createOrderReqVO.setPassengerbaggages(orderVOMapper.orderCtripDTO2VO1(req.getPassengerbaggages()));
         createOrderReqVO.setPassengers(orderVOMapper.orderCtripDTO2VO2(req.getPassengers()));
         createOrderReqVO.setReferenceId(req.getReferenceId());
         createOrderReqVO.setRouting(flightRoutingsVOMapper.flightRoutingsDTO2VO(req.getRoutings()));
-        createOrderReqVO.getRouting().setFromSegmentVOS(flightRoutingsVOMapper.segmentDTO2VOs(req.getRoutings().getFromSegments()));
-        createOrderReqVO.getRouting().setRetSegmentVOS(flightRoutingsVOMapper.segmentDTO2VOs(req.getRoutings().getRetSegments()));
+        createOrderReqVO.getRouting().setFromSegments(flightRoutingsVOMapper.segmentDTO2VOs(req.getRouting().getFromSegments()));
+        createOrderReqVO.getRouting().setRetSegments(flightRoutingsVOMapper.segmentDTO2VOs(req.getRouting().getRetSegments()));
         createOrderReqVO.getRouting().setRule(flightRoutingsVOMapper.rulesDTO2VO(req.getRoutings().getRule()));
 
         logger.info("调用LCC{}接口,入参{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(context));

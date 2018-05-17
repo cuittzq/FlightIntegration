@@ -56,8 +56,8 @@ public class LCCIntlVerifyServiceImpl extends AbstractVerifyService {
     protected <T> CtripVerifyResVO response(T t, RouteContext<CtripVerifyReqVO> context) {
         VerifyRes verifyRes = (VerifyRes) t;
         CtripVerifyResVO verifyResVO = verifyVOMapper.VerifyResdto2vo(verifyRes);
-        verifyResVO.getRouting().setFromSegmentVOS(verifyVOMapper.FlightSegmentdtos2vos(verifyRes.getRouting().getFromSegments()));
-        verifyResVO.getRouting().setRetSegmentVOS(verifyVOMapper.FlightSegmentdtos2vos(verifyRes.getRouting().getRetSegments()));
+        verifyResVO.getRouting().setFromSegments(verifyVOMapper.FlightSegmentdtos2vos(verifyRes.getRouting().getFromSegments()));
+        verifyResVO.getRouting().setRetSegments(verifyVOMapper.FlightSegmentdtos2vos(verifyRes.getRouting().getRetSegments()));
         verifyResVO.getRouting().setRule(verifyVOMapper.Rulesdto2vo(verifyRes.getRouting().getRule()));
         return verifyResVO;
     }
@@ -72,8 +72,8 @@ public class LCCIntlVerifyServiceImpl extends AbstractVerifyService {
     protected <T> T request(RouteContext<CtripVerifyReqVO> context) {
         CtripVerifyReqVO ctripVerifyReqVO = context.getT();
         VerifyReq verifyReq = verifyVOMapper.VerifyReqVOvO2dto(ctripVerifyReqVO);
-        verifyReq.getRouting().setFromSegments(verifyVOMapper.FlightSegmentvos2dtos(ctripVerifyReqVO.getRouting().getFromSegmentVOS()));
-        verifyReq.getRouting().setRetSegments(verifyVOMapper.FlightSegmentvos2dtos(ctripVerifyReqVO.getRouting().getRetSegmentVOS()));
+        verifyReq.getRouting().setFromSegments(verifyVOMapper.FlightSegmentvos2dtos(ctripVerifyReqVO.getRouting().getFromSegments()));
+        verifyReq.getRouting().setRetSegments(verifyVOMapper.FlightSegmentvos2dtos(ctripVerifyReqVO.getRouting().getRetSegments()));
 
         return (T) verifyReq;
     }
