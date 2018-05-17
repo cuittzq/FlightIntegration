@@ -98,6 +98,12 @@ public class DefaultRouteProxyFactory implements RouteProxyFactory, ApplicationL
                     logger.warn(key(route));
                     CREATE_ORDER.put(key(route), CreateOrderService.class.cast(obj));
                 }
+
+                //校验服务集合初始化
+                if (VerifyService.class.isAssignableFrom(obj.getClass())) {
+                    logger.warn(key(route));
+                    VERIFY.put(key(route), VerifyService.class.cast(obj));
+                }
             }
             logger.info("[路由工厂初始化完毕]");
         }
