@@ -57,8 +57,7 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
     @Override
     protected <T> CreateOrderResVO response(T t, RouteContext<CreateOrderReqVO> context) {
         OrderRes orderRes = (OrderRes) t;
-        // todo orderRes->createOrderResVO
-        CreateOrderResVO createOrderResVO = new CreateOrderResVO();
+        CreateOrderResVO createOrderResVO = orderVOMapper.orderResIo2Vo(orderRes);
         return createOrderResVO;
     }
 
