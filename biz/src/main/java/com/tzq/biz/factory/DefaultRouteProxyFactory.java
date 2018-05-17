@@ -5,6 +5,7 @@ import com.tzq.biz.annotation.Route;
 import com.tzq.biz.constant.Symbol;
 import com.tzq.biz.service.purchase.core.CreateOrderService;
 import com.tzq.biz.service.purchase.core.SearchFlightService;
+import com.tzq.biz.service.purchase.core.VerifyService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,11 @@ public class DefaultRouteProxyFactory implements RouteProxyFactory, ApplicationL
     private Map<String, CreateOrderService> CREATE_ORDER = Maps.newHashMap();
 
     /**
+     * 验价服务集合
+     */
+    private Map<String,VerifyService> VERIFY = Maps.newHashMap();
+
+    /**
      * 取得对应服务接口类
      *
      * @param key
@@ -55,6 +61,13 @@ public class DefaultRouteProxyFactory implements RouteProxyFactory, ApplicationL
         if (CreateOrderService.class.isAssignableFrom(clazz)) {
             t = (T) CREATE_ORDER.get(key);
         }
+
+        // 获取验价服务
+        if(VerifyService.class.isAssignableFrom(clazz))
+        {
+            t = (T) VERIFY.get(key);
+        }
+
         return t;
     }
 

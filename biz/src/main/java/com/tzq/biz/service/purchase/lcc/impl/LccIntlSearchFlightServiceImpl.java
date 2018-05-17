@@ -45,6 +45,9 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
     @Override
     protected <T> FlightRouteVO response(T t, RouteContext<SearchVO> context) {
         SearchFlightRes searchFlightResponse = (SearchFlightRes) t;
+
+        //把data记录缓存，下单验价出票需要用，强强要干掉的话，自己看着办
+
         FlightRouteVO   flightRouteVO        = new FlightRouteVO();
         // TODO SearchFlightRes->FlightRouteVO
         return flightRouteVO;

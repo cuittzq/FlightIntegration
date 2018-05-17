@@ -26,8 +26,6 @@ import javax.annotation.Resource;
 @Service("lCCIntlVerifyService")
 @Route(area = AreaTypeEnum.INTERNATIONAL, purchase = PurchaseEnum.LCC)
 public class LCCIntlVerifyServiceImpl extends AbstractVerifyService {
-
-
     @Resource
     private LccClient lccClient;
 

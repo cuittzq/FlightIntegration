@@ -29,7 +29,6 @@ public interface FlightRoutingsVOMapper {
 
     FlightRoutingsVO flightRoutingsDTO2VO(FlightRoutingsDTO flightRoutingsVO);
 
-
     List<SegmentDTO> segmentVO2DTOs(List<SegmentVO> segmentVO);
 
     List<SegmentVO> segmentDTO2VOs(List<SegmentDTO> segmentDTO);

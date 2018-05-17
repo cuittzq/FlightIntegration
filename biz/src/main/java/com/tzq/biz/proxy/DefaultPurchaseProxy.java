@@ -2,6 +2,7 @@ package com.tzq.biz.proxy;
 
 import com.tzq.biz.service.purchase.core.CreateOrderService;
 import com.tzq.biz.service.purchase.core.SearchFlightService;
+import com.tzq.biz.service.purchase.core.VerifyService;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
 import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
@@ -47,7 +48,7 @@ public class DefaultPurchaseProxy extends AbstractPurchaseProxy {
      */
     @Override
     public CreateOrderResVO createOrder(RouteContext<CreateOrderReqVO> context) {
-        logger.info("[航班查询] param={}", context.toString());
+        logger.info("[订单创建] param={}", context.toString());
         CreateOrderResVO orderResVO = null;
         orderResVO = getInstance(context, CreateOrderService.class).createOrder(context);
         return orderResVO;
@@ -55,7 +56,10 @@ public class DefaultPurchaseProxy extends AbstractPurchaseProxy {
 
 
     @Override
-    public CtripVerifyResVO verifyFlight(RouteContext<CtripVerifyReqVO> req) {
-        return null;
+    public CtripVerifyResVO verifyFlight(RouteContext<CtripVerifyReqVO> context) {
+        logger.info("[验舱验价] param={}", context.toString());
+        CtripVerifyResVO routeVO = null;
+        routeVO = getInstance(context, VerifyService.class).verifyFlight(context);
+        return routeVO;
     }
 }

@@ -3,7 +3,11 @@ package com.tzq.service.ctrip.models.verify;
 import com.tzq.service.ctrip.models.BaseRequest;
 import com.tzq.service.ctrip.models.search.FlightRoutingsDTO;
 
-public class CtripVerifyReq extends BaseRequest {
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+
+public class CtripVerifyReq extends BaseRequest implements Serializable {
+    private static final long serialVersionUID = -7162051538785743662L;
     /**
      * 携程关联ID；携程用来查问题用的。
      */
@@ -32,7 +36,7 @@ public class CtripVerifyReq extends BaseRequest {
      * 报价信息，参考搜索返回结果中的 Routing Elements。 1）只含航班信息,航班信息不含经停城市/机场，机型；
      * 2）不含价格信息、退改签信息、行李额信息等。
      */
-    private FlightRoutingsDTO routing;
+    private FlightRoutingsDTO routings;
 
     public String getReferenceId() {
         return referenceId;
@@ -82,11 +86,11 @@ public class CtripVerifyReq extends BaseRequest {
         this.infantNumber = infantNumber;
     }
 
-    public FlightRoutingsDTO getRouting() {
-        return routing;
+    public FlightRoutingsDTO getRoutings() {
+        return routings;
     }
 
-    public void setRouting(FlightRoutingsDTO routing) {
-        this.routing = routing;
+    public void setRoutings(FlightRoutingsDTO routings) {
+        this.routings = routings;
     }
 }

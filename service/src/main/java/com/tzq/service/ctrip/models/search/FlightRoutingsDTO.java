@@ -1,8 +1,10 @@
 package com.tzq.service.ctrip.models.search;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class FlightRoutingsDTO {
+public class FlightRoutingsDTO implements Serializable {
+    private static final long serialVersionUID = 4648720182385388979L;
     private String data;
     private int publishPrice;
     private int adultPrice;

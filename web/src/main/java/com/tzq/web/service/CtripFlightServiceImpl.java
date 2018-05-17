@@ -122,7 +122,10 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         verifyReqVO.setRequesttype(req.getRequesttype());
         verifyReqVO.setTripType(req.getTripType().intValue()==1?TripTypeEnum.OW:TripTypeEnum.RT);
 
-        verifyReqVO.setRouting(flightRoutingsVOMapper.flightRoutingsDTO2VO(req.getRouting()));
+        verifyReqVO.setRouting(flightRoutingsVOMapper.flightRoutingsDTO2VO(req.getRoutings()));
+        verifyReqVO.getRouting().setFromSegmentVOS(flightRoutingsVOMapper.segmentDTO2VOs(req.getRoutings().getFromSegments()));
+        verifyReqVO.getRouting().setRetSegmentVOS(flightRoutingsVOMapper.segmentDTO2VOs(req.getRoutings().getRetSegments()));
+
         SingleResult<CtripVerifyResVO> singleResult =   otaVerifyFlightService.verifyFlight(context);
 
         if (!singleResult.isSuccess() || singleResult.getData() == null) {
