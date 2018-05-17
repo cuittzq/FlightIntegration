@@ -136,6 +136,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         verifyReqVO.setRouting(flightRoutingsVOMapper.flightRoutingsDTO2VO(req.getRoutings()));
         verifyReqVO.getRouting().setFromSegmentVOS(flightRoutingsVOMapper.segmentDTO2VOs(req.getRoutings().getFromSegments()));
         verifyReqVO.getRouting().setRetSegmentVOS(flightRoutingsVOMapper.segmentDTO2VOs(req.getRoutings().getRetSegments()));
+        context.setT(verifyReqVO);
 
         SingleResult<CtripVerifyResVO> singleResult =   otaVerifyFlightService.verifyFlight(context);
 
@@ -148,7 +149,8 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         response.setMaxSeats(singleResult.getData().getMaxSeats());
         response.setRule(ctripVerifyVOMapper.rulesVO2DTO(singleResult.getData().getRule()));
         response.setRouting(ctripVerifyVOMapper.flightRoutingsVO2DTO(singleResult.getData().getRouting()));
-
+        response.getRouting().setFromSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getFromSegmentVOS()));
+        response.getRouting().setRetSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getRetSegmentVOS()));
         return response;
     }
 
