@@ -1,28 +1,56 @@
 package com.tzq.commons.model.ctrip.search;
 
-public class RefundInfosVO {
-    /**
-     * passengerType : 0
-     * refundType : 0
-     * refundStatus : H
-     * refundFee : 100
-     * currency : CNY
-     * refNoshow : H
-     * refNoShowCondition : 2
-     * refNoshowFee : 200
-     * cnRefRemark :
-     * enRefRemark :
-     */
+import java.math.BigDecimal;
 
+public class RefundInfosVO {
     private int passengerType;
+    /**
+     * 退票类型
+     * 0：客票全部未使用；
+     * 1：客票部分使用【即去程已使用，在往返行程中使用，代表回程的退票信息】
+     * 【单程时0；往返时0、1都要有】
+     */
     private int refundType;
+    /**
+     * 退票标识
+     * T：不可退
+     * H：有条件退
+     * F：免费退
+     * E：按航司客规【公布运价专用】
+     */
     private String refundStatus;
-    private int refundFee;
+    /**
+     * 退票费
+     */
+    private BigDecimal refundFee;
+    /**
+     * 退票费币种
+     * 当refundStatus =H，必须赋值
+     */
     private String currency;
+    /**
+     * 是否允许NoShow退票
+     * T：不可退； H：有条件退；F：免费退；E：按航司客规为准【公布运价专用】
+     */
     private String refNoshow;
+    /**
+     * 退票时航班起飞前多久算NoShow，单位：小时
+     * 1）若无法确认此时间，请默认赋0。
+     */
     private int refNoShowCondition;
+    /**
+     * NoShow退票费用
+     * 1）当IsRefNoshow =H，必须赋值；
+     * 2）展示给客人的noshow退票费= refundFee+ refNoshowFee。
+     */
     private int refNoshowFee;
+    /**
+     * 中文退票备注
+     */
     private String cnRefRemark;
+    /**
+     * 英文退票备注
+     */
     private String enRefRemark;
 
     public int getPassengerType() {
@@ -49,11 +77,11 @@ public class RefundInfosVO {
         this.refundStatus = refundStatus;
     }
 
-    public int getRefundFee() {
+    public BigDecimal getRefundFee() {
         return refundFee;
     }
 
-    public void setRefundFee(int refundFee) {
+    public void setRefundFee(BigDecimal refundFee) {
         this.refundFee = refundFee;
     }
 

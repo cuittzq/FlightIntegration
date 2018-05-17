@@ -4,31 +4,44 @@ import java.util.List;
 
 public class RulesVO {
     /**
-     * formatBaggageInfoList : [{"segmentNo":1,"passengerType":0,"baggagePiece":1,"baggageWeight":23,"cnBaggage":"","enBaggage":""},{"segmentNo":2,"passengerType":0,"baggagePiece":1,"baggageWeight":23,"cnBaggage":"","enBaggage":""},{"segmentNo":3,"passengerType":0,"baggagePiece":1,"baggageWeight":15,"cnBaggage":"","enBaggage":""}]
-     * refundInfoList : [{"passengerType":0,"refundType":0,"refundStatus":"H","refundFee":100,"currency":"CNY","refNoshow":"H","refNoShowCondition":2,"refNoshowFee":200,"cnRefRemark":"","enRefRemark":""},{"passengerType":0,"refundType":1,"refundStatus":"T","refundFee":"","currency":"CNY","refNoshow":"T","refNoShowCondition":0,"refNoshowFee":"","cnRefRemark":"","enRefRemark":""}]
-     * changesInfoList : [{"passengerType":0,"changesType":0,"changesStatus":"T","changesFee":0,"currency":"CNY","revNoshow":"T","revNoShowCondition":2,"revNoshowFee":0,"cnRevRemark":"","enRevRemark":""},{"passengerType":0,"changesType":1,"changesStatus":"T","changesFee":0,"currency":"CNY","revNoshow":"T","revNoShowCondition":0,"revNoshowFee":0,"cnRevRemark":"","enRevRemark":""}]
-     * serviceFeeVO : {"revalidationFeeByCarrier ":100,"refundFeeByCarrier":100,"currency":"CNY"}
-     * note : 不得升舱，不得累积里程
-     * isUseCtripRule  : true
-     * tariffNo  : 001
-     * ruleNo  : WPEU
+     * 【已弃用】服务费规定
      */
-
-    private ServiceFeeVO           serviceFeeVO;
-    private String                 note;
-    private String                 isUseCtripRule;
-    private String                 tariffNo;
-    private String                 ruleNo;
+    private ServiceFeeVO serviceFee;
+    /**
+     * 备注信息，最大 300 个字符
+     */
+    private String note;
+    /**
+     * 是否要使用携程退改签：（true 使用；false 不使用）
+     */
+    private boolean isUseCtripRule;
+    /**
+     * 公布运价相关参数，地理区间见运价集群编码
+     */
+    private String tariffNo;
+    /**
+     * 公布运价相关参数
+     */
+    private String ruleNo;
+    /**
+     * 格式化行李额规定
+     */
     private List<FormatBaggagesVO> formatBaggageInfoList;
-    private List<RefundInfosVO>    refundInfoList;
-    private List<ChangesInfosVO>   changesInfoList;
+    /**
+     * 退票规定
+     */
+    private List<RefundInfosVO> refundInfoList;
+    /**
+     * 改期规定
+     */
+    private List<ChangesInfosVO> changesInfoList;
 
-    public ServiceFeeVO getServiceFeeVO() {
-        return serviceFeeVO;
+    public ServiceFeeVO getServiceFee() {
+        return serviceFee;
     }
 
-    public void setServiceFeeVO(ServiceFeeVO serviceFeeVO) {
-        this.serviceFeeVO = serviceFeeVO;
+    public void setServiceFee(ServiceFeeVO serviceFee) {
+        this.serviceFee = serviceFee;
     }
 
     public String getNote() {
@@ -39,12 +52,12 @@ public class RulesVO {
         this.note = note;
     }
 
-    public String getIsUseCtripRule() {
+    public boolean isUseCtripRule() {
         return isUseCtripRule;
     }
 
-    public void setIsUseCtripRule(String isUseCtripRule) {
-        this.isUseCtripRule = isUseCtripRule;
+    public void setUseCtripRule(boolean useCtripRule) {
+        isUseCtripRule = useCtripRule;
     }
 
     public String getTariffNo() {

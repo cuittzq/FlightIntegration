@@ -73,9 +73,9 @@ public class LccIntlBusiServiceImpl extends AbstractLccBusiService {
         OrderReq orderReq = orderVOMapper.orderReqVo2Io(reqVO);
 
         // 获取缓存的价格
-        String routDataKey = String.format("%s%s%s", reqVO.getRouting().getFromSegmentVOS().get(0).getDepAirport(),
-                reqVO.getRouting().getFromSegmentVOS().get(0).getArrAirport(),
-                reqVO.getRouting().getFromSegmentVOS().get(0).getDepTime().substring(0,8));
+        String routDataKey = String.format("%s%s%s", reqVO.getRouting().getFromSegments().get(0).getDepAirport(),
+                reqVO.getRouting().getFromSegments().get(0).getArrAirport(),
+                reqVO.getRouting().getFromSegments().get(0).getDepTime().substring(0,8));
         orderReq.getRouting().setData(LCCDataGuavaCache.instance().get(routDataKey));
 
         resVO = orderVOMapper.orderResIo2Vo(lccClient.createOrder(orderReq));
