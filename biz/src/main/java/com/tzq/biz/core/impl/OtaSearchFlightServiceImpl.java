@@ -24,7 +24,6 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
     @Resource
     PurchaseProxy purchaseProxy;
 
-
     @Override
     public SingleResult<FlightRouteVO> searchFlight(RouteContext<SearchVO> context) {
         Assert.notNull(context, "RouteContext can not be null ,searchFlight failure");
