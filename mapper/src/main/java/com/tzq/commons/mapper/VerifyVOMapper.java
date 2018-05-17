@@ -1,11 +1,11 @@
 package com.tzq.commons.mapper;
 
 import com.tzq.commons.converter.*;
+import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
+import com.tzq.commons.model.ctrip.verify.CtripVerifyResVO;
 import com.tzq.commons.model.integration.lcc.search.FlightRoutingsVO;
 import com.tzq.commons.model.integration.lcc.search.FlightSegmentVO;
 import com.tzq.commons.model.integration.lcc.search.RulesVO;
-import com.tzq.commons.model.integration.lcc.verify.VerifyReqVO;
-import com.tzq.commons.model.integration.lcc.verify.VerifyResVO;
 import com.tzq.integration.service.intl.lcc.model.search.FlightSegment;
 import com.tzq.integration.service.intl.lcc.model.search.Rules;
 import com.tzq.integration.service.intl.lcc.model.verify.VerifyReq;
@@ -28,13 +28,13 @@ import java.util.List;
         StatusEnumConverter.class, TripTypeEnumConverter.class, FullDateConverter.class})
 public interface VerifyVOMapper {
 
-    VerifyResVO VerifyResdto2vo(VerifyRes verifyRes);
+    CtripVerifyResVO VerifyResdto2vo(VerifyRes verifyRes);
 
-    VerifyRes VerifyResvO2dto(VerifyResVO verifyResVO);
+    VerifyRes VerifyResvO2dto(CtripVerifyResVO verifyResVO);
 
-    VerifyReqVO VerifyReqVOdto2vo(VerifyReq verifyRes);
+    CtripVerifyReqVO VerifyReqVOdto2vo(VerifyReq verifyRes);
 
-    VerifyReq VerifyReqVOvO2dto(VerifyReqVO verifyResVO);
+    VerifyReq VerifyReqVOvO2dto(CtripVerifyReqVO verifyResVO);
 
 
     FlightRoutingsVO VerifyRoutingdto2vo(VerifyRouting verifyRouting);

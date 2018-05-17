@@ -31,6 +31,9 @@ public class LCCIntlVerifyServiceImpl extends AbstractVerifyService {
     @Resource
     private LccClient lccClient;
 
+    @Resource
+    private VerifyVOMapper verifyVOMapper;
+
     /**
      * 验价
      *
@@ -54,8 +57,7 @@ public class LCCIntlVerifyServiceImpl extends AbstractVerifyService {
     @Override
     protected <T> CtripVerifyResVO response(T t, RouteContext<CtripVerifyReqVO> context) {
         VerifyRes verifyRes = (VerifyRes) t;
-        // TODO CtripVerifyRes -> CtripVerifyResVO
-        CtripVerifyResVO verifyResVO = new CtripVerifyResVO();
+        CtripVerifyResVO verifyResVO = verifyVOMapper.VerifyResdto2vo(verifyRes);
         return verifyResVO;
     }
 
@@ -68,8 +70,7 @@ public class LCCIntlVerifyServiceImpl extends AbstractVerifyService {
     @Override
     protected <T> T request(RouteContext<CtripVerifyReqVO> context) {
         CtripVerifyReqVO ctripVerifyReqVO = context.getT();
-        // TODO CtripVerifyReqVO -> CtripVerifyReq
-        VerifyReq verifyReq = new VerifyReq();
+        VerifyReq verifyReq = verifyVOMapper.VerifyReqVOvO2dto(ctripVerifyReqVO);
         return (T) verifyReq;
     }
 }

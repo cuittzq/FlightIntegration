@@ -2,6 +2,7 @@ package com.tzq.biz.proxy;
 
 import com.tzq.biz.service.purchase.core.CreateOrderService;
 import com.tzq.biz.service.purchase.core.SearchFlightService;
+import com.tzq.biz.service.purchase.core.VerifyService;
 
 /**
  * 功能描述
@@ -11,5 +12,5 @@ import com.tzq.biz.service.purchase.core.SearchFlightService;
  * LY.com Inc.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
-public interface PurchaseProxy extends CreateOrderService, SearchFlightService {
+public interface PurchaseProxy extends CreateOrderService, SearchFlightService, VerifyService {
 }

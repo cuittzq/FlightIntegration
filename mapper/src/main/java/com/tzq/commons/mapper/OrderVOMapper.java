@@ -8,6 +8,8 @@ import com.tzq.commons.converter.PassengerTypeEnumConverter;
 import com.tzq.commons.converter.SegmentTypeEnumConverter;
 import com.tzq.commons.converter.StatusEnumConverter;
 import com.tzq.commons.converter.TripTypeEnumConverter;
+import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
+import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
 import com.tzq.commons.model.integration.lcc.order.ContactVO;
 import com.tzq.commons.model.integration.lcc.order.OrderReqVO;
 import com.tzq.commons.model.integration.lcc.order.OrderResVO;
@@ -27,7 +29,7 @@ import org.mapstruct.Mapper;
         InventoryEnumConverter.class, PassengerTypeEnumConverter.class, SegmentTypeEnumConverter.class,
         StatusEnumConverter.class, TripTypeEnumConverter.class, FullDateConverter.class})
 public interface OrderVOMapper {
-    OrderReq orderReqVo2Io(OrderReqVO reqVO);
+    OrderReq orderReqVo2Io(CreateOrderReqVO reqVO);
 
     Passenger orderReqVo2Io(PassengerVO passengerVO);
 
@@ -35,7 +37,7 @@ public interface OrderVOMapper {
 
     FlightRoutings orderReqVo2Io(FlightRoutingsVO routingsVO);
 
-    OrderResVO orderResIo2Vo(OrderRes res);
+    CreateOrderResVO orderResIo2Vo(OrderRes res);
 
     PassengerVO orderResIo2Vo(Passenger passenger);
 

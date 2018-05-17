@@ -4,6 +4,7 @@ import com.tzq.biz.annotation.Route;
 import com.tzq.biz.service.purchase.abstracts.AbstractCreateOrderService;
 import com.tzq.commons.enums.AreaTypeEnum;
 import com.tzq.commons.enums.PurchaseEnum;
+import com.tzq.commons.mapper.OrderVOMapper;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
 import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
@@ -29,6 +30,9 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
 
     @Resource
     private LccClient lccClient;
+
+    @Resource
+    private OrderVOMapper orderVOMapper;
 
     /**
      * 生单
@@ -66,9 +70,9 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
      */
     @Override
     protected <T> T request(RouteContext<CreateOrderReqVO> context) {
-        OrderReq         orderReq         = new OrderReq();
+        OrderReq         orderReq         = null;
         CreateOrderReqVO createOrderReqVO = context.getT();
-        // todo orderReq->createOrderReqVO
+        orderReq = orderVOMapper.orderReqVo2Io(createOrderReqVO);
         return (T) orderReq;
     }
 }
