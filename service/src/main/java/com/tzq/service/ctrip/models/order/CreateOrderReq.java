@@ -23,11 +23,19 @@ public class CreateOrderReq extends BaseRequest {
     private String referenceId;
     private Integer tripType;
     private String sessionId;
-    private FlightRoutingsDTO routing;
+    private FlightRoutingsDTO routings;
     private ContactDTO contact;
     private List<PassengerDTO> passengers;
     private List<PassengerbaggagesDTO> passengerbaggages;
     private List<CtripRefRevServiceFeeDTO> ctripRefRevServiceFee;
+
+    public FlightRoutingsDTO getRoutings() {
+        return routings;
+    }
+
+    public void setRoutings(FlightRoutingsDTO routings) {
+        this.routings = routings;
+    }
 
     public CtripOrderIdDTO getCtripOrderId() {
         return ctripOrderId;
@@ -59,14 +67,6 @@ public class CreateOrderReq extends BaseRequest {
 
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
-    }
-
-    public FlightRoutingsDTO getRouting() {
-        return routing;
-    }
-
-    public void setRouting(FlightRoutingsDTO routing) {
-        this.routing = routing;
     }
 
     public ContactDTO getContact() {

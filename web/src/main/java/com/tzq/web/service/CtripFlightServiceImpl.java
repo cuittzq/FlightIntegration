@@ -173,14 +173,15 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         List<ContactDTO> contactDTOS = Lists.newArrayList();
         contactDTOS.add(req.getContact());
 
-        // 联系人信�        createOrderReqVO.setContact(orderVOMapper.orderCtripDTO2VO(contactDTOS));
+        // 联系人信�
+        createOrderReqVO.setContact(orderVOMapper.orderCtripDTO2VO(contactDTOS));
         createOrderReqVO.setPassengerbaggages(orderVOMapper.orderCtripDTO2VO1(req.getPassengerbaggages()));
         createOrderReqVO.setPassengers(orderVOMapper.orderCtripDTO2VO2(req.getPassengers()));
         createOrderReqVO.setReferenceId(req.getReferenceId());
-        createOrderReqVO.setRouting(flightRoutingsVOMapper.flightRoutingsDTO2VO(req.getRouting()));
+        createOrderReqVO.setRouting(flightRoutingsVOMapper.flightRoutingsDTO2VO(req.getRoutings()));
         createOrderReqVO.getRouting().setFromSegments(flightRoutingsVOMapper.segmentDTO2VOs(req.getRouting().getFromSegments()));
         createOrderReqVO.getRouting().setRetSegments(flightRoutingsVOMapper.segmentDTO2VOs(req.getRouting().getRetSegments()));
-        createOrderReqVO.getRouting().setRule(flightRoutingsVOMapper.rulesDTO2VO(req.getRouting().getRule()));
+        createOrderReqVO.getRouting().setRule(flightRoutingsVOMapper.rulesDTO2VO(req.getRoutings().getRule()));
 
         logger.info("调用LCC{}接口,入参{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(context));
         SingleResult<CreateOrderResVO>  singleResult= otaCreateOrderService.createOrder(context);

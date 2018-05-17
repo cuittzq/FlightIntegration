@@ -17,11 +17,14 @@ import com.tzq.commons.model.ctrip.order.CtripRefRevServiceFeeVO;
 import com.tzq.commons.model.ctrip.order.PassengerVO;
 import com.tzq.commons.model.ctrip.order.PassengerbaggagesVO;
 import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
+import com.tzq.commons.model.ctrip.search.SegmentVO;
+import com.tzq.commons.model.integration.lcc.search.FlightSegmentVO;
 import com.tzq.integration.service.intl.lcc.model.order.Contact;
 import com.tzq.integration.service.intl.lcc.model.order.OrderReq;
 import com.tzq.integration.service.intl.lcc.model.order.OrderRes;
 import com.tzq.integration.service.intl.lcc.model.order.Passenger;
 import com.tzq.integration.service.intl.lcc.model.search.FlightRoutings;
+import com.tzq.integration.service.intl.lcc.model.search.FlightSegment;
 import com.tzq.service.ctrip.models.order.ContactDTO;
 import com.tzq.service.ctrip.models.order.CtripOrderIdDTO;
 import com.tzq.service.ctrip.models.order.CtripRefRevServiceFeeDTO;
@@ -46,6 +49,7 @@ public interface OrderVOMapper {
 
     FlightRoutings orderReqVo2Io(FlightRoutingsVO routingsVO);
 
+    FlightSegment orderReqVo2Io(FlightSegmentVO flightSegmentVO);
 
 
     CreateOrderResVO orderResIo2Vo(OrderRes res);
@@ -64,4 +68,6 @@ public interface OrderVOMapper {
 
     ContactDTO orderCtripVO2DTO(ContactVO vo);
     List<PassengerbaggagesDTO> orderCtripVO2DTO(List<PassengerbaggagesVO> vos);
+
+    List<FlightSegment> orderCtripDTO2VO4(List<SegmentVO> fromSegmentVOS);
 }
