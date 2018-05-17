@@ -63,17 +63,15 @@ public interface FlightRoutingsVOMapper {
 
     ChangesInfosVO changesInfosDTO2VO(ChangesInfosDTO dto);
 
-    //
     RefundInfosDTO refundInfosVO2DTO(RefundInfosVO vo);
 
     RefundInfosVO refundInfosDTO2VO(RefundInfosDTO dto);
 
-    //
+
     RulesDTO rulesVO2DTO(RulesVO vo);
 
     RulesVO rulesDTO2VO(RulesDTO dto);
 
-    //
     AirlineAncillariesDTO airlineAncillariesVO2DTO(AirlineAncillariesVO vo);
 
     AirlineAncillariesVO airlineAncillariesDTO2VO(AirlineAncillariesDTO dto);
