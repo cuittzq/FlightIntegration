@@ -1,11 +1,12 @@
 package com.tzq.commons.mapper;
 
 import com.tzq.commons.converter.*;
+import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
+import com.tzq.commons.model.ctrip.search.RulesVO;
+import com.tzq.commons.model.ctrip.search.SegmentVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyResVO;
-import com.tzq.commons.model.integration.lcc.search.FlightRoutingsVO;
-import com.tzq.commons.model.integration.lcc.search.FlightSegmentVO;
-import com.tzq.commons.model.integration.lcc.search.RulesVO;
+
 import com.tzq.integration.service.intl.lcc.model.search.FlightSegment;
 import com.tzq.integration.service.intl.lcc.model.search.Rules;
 import com.tzq.integration.service.intl.lcc.model.verify.VerifyReq;
@@ -42,16 +43,16 @@ public interface VerifyVOMapper {
     VerifyRouting VerifyRoutingvO2dto(FlightRoutingsVO verifyRoutingVO);
 
 
-    List<FlightSegmentVO> FlightSegmentdtos2vos(List<FlightSegment> flightSegments);
+    List<SegmentVO> FlightSegmentdtos2vos(List<FlightSegment> flightSegments);
 
-    List<FlightSegment> FlightSegmentvos2dtos(List<FlightSegmentVO> flightSegmentVOS);
+    List<FlightSegment> FlightSegmentvos2dtos(List<SegmentVO> flightSegmentVOS);
 
 
     RulesVO Rulesdto2vo(Rules rules);
 
     Rules Rulesvo2dto(RulesVO rules);
 
-    FlightSegmentVO FlightSegmentdto2vo(FlightSegment flightSegment);
+    SegmentVO FlightSegmentdto2vo(FlightSegment flightSegment);
 
-    FlightSegment FlightSegmentvo2dto(FlightSegmentVO flightSegmentVO);
+    FlightSegment FlightSegmentvo2dto(SegmentVO flightSegmentVO);
 }

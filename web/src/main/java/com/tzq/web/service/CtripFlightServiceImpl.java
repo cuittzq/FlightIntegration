@@ -13,7 +13,6 @@ import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.context.SingleResult;
 import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
 import com.tzq.commons.model.ctrip.search.FlightRouteVO;
-import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
 import com.tzq.commons.model.ctrip.search.SearchVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyResVO;

@@ -7,6 +7,10 @@ import com.tzq.commons.enums.AreaTypeEnum;
 import com.tzq.commons.enums.PurchaseEnum;
 import com.tzq.commons.mapper.OrderVOMapper;
 import com.tzq.commons.mapper.VerifyVOMapper;
+import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
+import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
+import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
+import com.tzq.commons.model.ctrip.verify.CtripVerifyResVO;
 import com.tzq.commons.model.integration.lcc.issueticket.IssueTicketReqVO;
 import com.tzq.commons.model.integration.lcc.issueticket.IssueTicketResVO;
 import com.tzq.commons.model.integration.lcc.order.OrderReqVO;
@@ -41,8 +45,8 @@ public class LccIntlBusiServiceImpl extends AbstractLccBusiService {
      * @return
      */
     @Override
-    public VerifyResVO verifyCabinAndPrice(VerifyReqVO vo) {
-        VerifyResVO resVO = null;
+    public CtripVerifyResVO verifyCabinAndPrice(CtripVerifyReqVO vo) {
+        CtripVerifyResVO resVO = null;
 
         VerifyReq req = verifyVOMapper.VerifyReqVOvO2dto(vo);
 
@@ -62,16 +66,16 @@ public class LccIntlBusiServiceImpl extends AbstractLccBusiService {
      * @param reqVO
      * @return
      */
-    public OrderResVO crateOrder(OrderReqVO reqVO)
+    public CreateOrderResVO crateOrder(CreateOrderReqVO reqVO)
     {
-        OrderResVO resVO = null;
+        CreateOrderResVO resVO = null;
 
         OrderReq orderReq = orderVOMapper.orderReqVo2Io(reqVO);
 
         // 获取缓存的价格
-        String routDataKey = String.format("%s%s%s", reqVO.getRouting().getFromSegments().get(0).getDepAirport(),
-                reqVO.getRouting().getFromSegments().get(0).getArrAirport(),
-                reqVO.getRouting().getFromSegments().get(0).getDepTime().substring(0,8));
+        String routDataKey = String.format("%s%s%s", reqVO.getRouting().getFromSegmentVOS().get(0).getDepAirport(),
+                reqVO.getRouting().getFromSegmentVOS().get(0).getArrAirport(),
+                reqVO.getRouting().getFromSegmentVOS().get(0).getDepTime().substring(0,8));
         orderReq.getRouting().setData(LCCDataGuavaCache.instance().get(routDataKey));
 
         resVO = orderVOMapper.orderResIo2Vo(lccClient.createOrder(orderReq));

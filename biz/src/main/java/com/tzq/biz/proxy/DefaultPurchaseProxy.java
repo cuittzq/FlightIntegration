@@ -7,6 +7,8 @@ import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
 import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
 import com.tzq.commons.model.ctrip.search.FlightRouteVO;
 import com.tzq.commons.model.ctrip.search.SearchVO;
+import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
+import com.tzq.commons.model.ctrip.verify.CtripVerifyResVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,5 +51,11 @@ public class DefaultPurchaseProxy extends AbstractPurchaseProxy {
         CreateOrderResVO orderResVO = null;
         orderResVO = getInstance(context, CreateOrderService.class).createOrder(context);
         return orderResVO;
+    }
+
+
+    @Override
+    public CtripVerifyResVO verifyFlight(RouteContext<CtripVerifyReqVO> req) {
+        return null;
     }
 }

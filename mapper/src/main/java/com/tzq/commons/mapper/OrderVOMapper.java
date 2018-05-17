@@ -8,13 +8,12 @@ import com.tzq.commons.converter.PassengerTypeEnumConverter;
 import com.tzq.commons.converter.SegmentTypeEnumConverter;
 import com.tzq.commons.converter.StatusEnumConverter;
 import com.tzq.commons.converter.TripTypeEnumConverter;
+import com.tzq.commons.model.ctrip.order.ContactVO;
 import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
 import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
-import com.tzq.commons.model.integration.lcc.order.ContactVO;
-import com.tzq.commons.model.integration.lcc.order.OrderReqVO;
-import com.tzq.commons.model.integration.lcc.order.OrderResVO;
-import com.tzq.commons.model.integration.lcc.order.PassengerVO;
-import com.tzq.commons.model.integration.lcc.search.FlightRoutingsVO;
+
+import com.tzq.commons.model.ctrip.order.PassengerVO;
+import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
 import com.tzq.integration.service.intl.lcc.model.order.Contact;
 import com.tzq.integration.service.intl.lcc.model.order.OrderReq;
 import com.tzq.integration.service.intl.lcc.model.order.OrderRes;
@@ -36,6 +35,8 @@ public interface OrderVOMapper {
     Contact orderReqVo2Io(ContactVO contactVO);
 
     FlightRoutings orderReqVo2Io(FlightRoutingsVO routingsVO);
+
+
 
     CreateOrderResVO orderResIo2Vo(OrderRes res);
 

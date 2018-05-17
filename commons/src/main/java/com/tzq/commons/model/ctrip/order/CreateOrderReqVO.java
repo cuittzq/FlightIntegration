@@ -23,7 +23,7 @@ public class CreateOrderReqVO {
     private Integer tripType;
     private String sessionId;
     private FlightRoutingsVO routing;
-    private ContactVO contact;
+    private List<ContactVO> contact;
     private List<PassengerVO> passengers;
     private List<PassengerbaggagesVO> passengerbaggages;
     private List<CtripRefRevServiceFeeVO> ctripRefRevServiceFee;
@@ -68,11 +68,11 @@ public class CreateOrderReqVO {
         this.routing = routing;
     }
 
-    public ContactVO getContact() {
+    public List<ContactVO> getContact() {
         return contact;
     }
 
-    public void setContact(ContactVO contact) {
+    public void setContact(List<ContactVO> contact) {
         this.contact = contact;
     }
 
