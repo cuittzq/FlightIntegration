@@ -149,8 +149,8 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         response.setMaxSeats(singleResult.getData().getMaxSeats());
         response.setRule(ctripVerifyVOMapper.rulesVO2DTO(singleResult.getData().getRule()));
         response.setRouting(ctripVerifyVOMapper.flightRoutingsVO2DTO(singleResult.getData().getRouting()));
-        response.getRouting().setFromSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getFromSegmentVOS()));
-        response.getRouting().setRetSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getRetSegmentVOS()));
+        response.getRouting().setFromSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getFromSegments()));
+        response.getRouting().setRetSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getRetSegments()));
         return response;
     }
 
@@ -173,7 +173,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         List<ContactDTO> contactDTOS = Lists.newArrayList();
         contactDTOS.add(req.getContact());
 
-        // 联系人信�        createOrderReqVO.setContact(orderVOMapper.orderCtripDTO2VO(contactDTOS));
+        // 联系人信�        createOrderReqVO.setContact(orderVOMapper.orderCtripDTO2VO(contactDTOS));
         createOrderReqVO.setPassengerbaggages(orderVOMapper.orderCtripDTO2VO1(req.getPassengerbaggages()));
         createOrderReqVO.setPassengers(orderVOMapper.orderCtripDTO2VO2(req.getPassengers()));
         createOrderReqVO.setReferenceId(req.getReferenceId());
