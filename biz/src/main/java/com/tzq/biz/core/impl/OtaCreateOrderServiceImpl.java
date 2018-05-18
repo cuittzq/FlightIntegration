@@ -2,6 +2,9 @@ package com.tzq.biz.core.impl;
 
 import com.tzq.biz.core.OtaCreateOrderService;
 import com.tzq.biz.proxy.PurchaseProxy;
+import com.tzq.commons.Exception.CommonExcetpionConstant;
+import com.tzq.commons.Exception.ServiceAbstractException;
+import com.tzq.commons.Exception.ServiceErrorMsg;
 import com.tzq.commons.enums.PurchaseEnum;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.context.SingleResult;
@@ -42,42 +45,45 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
         }
 
         List<CreateOrderResVO> resVOS = null;
-        ota2Purchases.forEach(purchaseEnum -> {
-            RouteContext<CreateOrderReqVO> resuestContext = context.clone();
-            resuestContext.setPurchaseEnum(purchaseEnum);
-            // 分别调用配置的供应商接口数据
-            CreateOrderResVO verifyResVO = purchaseProxy.createOrder(resuestContext);
-
-            // 数据汇总
-            if (verifyResVO != null) {
-                resVOS.add(verifyResVO);
-            }
-        });
-
         SingleResult<CreateOrderResVO> response = null;
         try {
+            ota2Purchases.forEach(purchaseEnum -> {
+                RouteContext<CreateOrderReqVO> resuestContext = context.clone();
+                resuestContext.setPurchaseEnum(purchaseEnum);
+                // 分别调用配置的供应商接口数据
+                CreateOrderResVO verifyResVO = purchaseProxy.createOrder(resuestContext);
+
+                // 数据汇总
+                if (verifyResVO != null) {
+                    resVOS.add(verifyResVO);
+                }
+            });
+
             // 数据调控
             CreateOrderResVO createOrderResVO = flightRegulation(resVOS);
             if (createOrderResVO == null) {
-                response = new SingleResult<>(createOrderResVO, false, "0001", "无数据");
+                response = new SingleResult<>(createOrderResVO, false, CommonExcetpionConstant.SYSTEM_EXCEPTION_CODE, "无数据");
                 return response;
             }
             // 返回OTA查询数据
-            response = new SingleResult<>(createOrderResVO, true, "", "");
+            response = new SingleResult<>(createOrderResVO, true, CommonExcetpionConstant.SUCCESS, "");
         } catch (Exception ex) {
-            response = new SingleResult<>(null, false, "0001", ex.getMessage());
-            return response;
+            if(ex instanceof ServiceAbstractException)
+            {
+                response = new SingleResult<>(null, false, ((ServiceAbstractException) ex).getErrorCode(), ex.getMessage());
+            }
+            else {
+                response = new SingleResult<>(null, false, CommonExcetpionConstant.SYSTEM_EXCEPTION_CODE, ex.getMessage());
+            }
         }
+
         return response;
     }
 
     private CreateOrderResVO flightRegulation(List<CreateOrderResVO> resVOS) {
-        if(null == resVOS || resVOS.size() == 0)
-        {
-            return  null;
-        }
-        else
-        {
+        if (null == resVOS || resVOS.size() == 0) {
+            return null;
+        } else {
             return resVOS.get(0);
         }
     }

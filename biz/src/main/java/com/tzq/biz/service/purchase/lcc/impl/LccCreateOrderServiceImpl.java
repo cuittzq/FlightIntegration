@@ -2,6 +2,9 @@ package com.tzq.biz.service.purchase.lcc.impl;
 
 import com.tzq.biz.annotation.Route;
 import com.tzq.biz.service.purchase.abstracts.AbstractCreateOrderService;
+import com.tzq.commons.Exception.CommonExcetpionConstant;
+import com.tzq.commons.Exception.ServiceAbstractException;
+import com.tzq.commons.Exception.ServiceErrorMsg;
 import com.tzq.commons.enums.AreaTypeEnum;
 import com.tzq.commons.enums.PurchaseEnum;
 import com.tzq.commons.mapper.OrderVOMapper;
@@ -12,6 +15,7 @@ import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
 import com.tzq.integration.service.intl.lcc.LccClient;
 import com.tzq.integration.service.intl.lcc.model.order.OrderReq;
 import com.tzq.integration.service.intl.lcc.model.order.OrderRes;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -42,8 +46,8 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
      */
     @Override
     public CreateOrderResVO createOrder(RouteContext<CreateOrderReqVO> context) {
-        OrderReq         orderReq   = request(context);
-        OrderRes         order      = lccClient.createOrder(orderReq);
+        OrderReq orderReq = request(context);
+        OrderRes order = lccClient.createOrder(orderReq);
         CreateOrderResVO orderResVO = response(order, context);
         return orderResVO;
     }
@@ -58,7 +62,20 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
     @Override
     protected <T> CreateOrderResVO response(T t, RouteContext<CreateOrderReqVO> context) {
         OrderRes orderRes = (OrderRes) t;
-        CreateOrderResVO createOrderResVO = orderVOMapper.orderResIo2Vo(orderRes);
+
+        CreateOrderResVO createOrderResVO  = new CreateOrderResVO();
+
+        if (orderRes == null) {
+            throw new ServiceAbstractException(ServiceErrorMsg.Builder.newInstance().setErrorMsg("第三方接口返回空").setErrorCode(CommonExcetpionConstant.INTERFACE_INVOKE_ERROR_CODE).build());
+        }
+        else if(!StringUtils.isBlank(orderRes.getMsg()))
+        {
+            throw new ServiceAbstractException(ServiceErrorMsg.Builder.newInstance().setErrorMsg(orderRes.getMsg()).setErrorCode(CommonExcetpionConstant.INTERFACE_INVOKE_ERROR_CODE).build());
+        }
+        else {
+             createOrderResVO = orderVOMapper.orderResIo2Vo(orderRes);
+        }
+
         return createOrderResVO;
     }
 
@@ -70,11 +87,13 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
      */
     @Override
     protected <T> T request(RouteContext<CreateOrderReqVO> context) {
-        OrderReq         orderReq         = null;
+        OrderReq orderReq = null;
         CreateOrderReqVO createOrderReqVO = context.getT();
         orderReq = orderVOMapper.orderReqVo2Io(createOrderReqVO);
+
         orderReq.getRouting().setFromSegments(orderVOMapper.orderCtripDTO2VO4(createOrderReqVO.getRouting().getFromSegments()));
         orderReq.getRouting().setRetSegments(orderVOMapper.orderCtripDTO2VO4(createOrderReqVO.getRouting().getRetSegments()));
+
         return (T) orderReq;
     }
 }

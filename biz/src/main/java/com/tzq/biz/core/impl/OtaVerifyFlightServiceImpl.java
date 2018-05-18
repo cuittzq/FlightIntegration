@@ -2,6 +2,8 @@ package com.tzq.biz.core.impl;
 
 import com.tzq.biz.core.OtaVerifyFlightService;
 import com.tzq.biz.proxy.PurchaseProxy;
+import com.tzq.commons.Exception.CommonExcetpionConstant;
+import com.tzq.commons.Exception.ServiceAbstractException;
 import com.tzq.commons.enums.PurchaseEnum;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.context.SingleResult;
@@ -43,22 +45,23 @@ public class OtaVerifyFlightServiceImpl implements OtaVerifyFlightService {
         }
 
         List<CtripVerifyResVO> resVOS = new ArrayList<>();
-
-        // 分别调用配置的供应商接口数据
-        ota2Purchases.forEach(purchaseEnum -> {
-            RouteContext<CtripVerifyReqVO> resuestContext = context.clone();
-            resuestContext.setPurchaseEnum(purchaseEnum);
-            // 分别调用配置的供应商接口数据
-            CtripVerifyResVO verifyResVO = purchaseProxy.verifyFlight(resuestContext);
-
-            // 数据汇总
-            if (verifyResVO != null) {
-                resVOS.add(verifyResVO);
-            }
-        });
-
         SingleResult<CtripVerifyResVO> response = null;
+
         try {
+            // 分别调用配置的供应商接口数据
+            ota2Purchases.forEach(purchaseEnum -> {
+                RouteContext<CtripVerifyReqVO> resuestContext = context.clone();
+                resuestContext.setPurchaseEnum(purchaseEnum);
+                // 分别调用配置的供应商接口数据
+                CtripVerifyResVO verifyResVO = purchaseProxy.verifyFlight(resuestContext);
+
+                // 数据汇总
+                if (verifyResVO != null) {
+                    resVOS.add(verifyResVO);
+                }
+            });
+
+
             // 数据调控
             CtripVerifyResVO verifyResVO = flightRegulation(resVOS);
             if (verifyResVO == null) {
@@ -69,8 +72,11 @@ public class OtaVerifyFlightServiceImpl implements OtaVerifyFlightService {
             // 返回OTA查询数据
             response = new SingleResult<>(verifyResVO, true, "", "");
         } catch (Exception ex) {
-            response = new SingleResult<>(null, false, "0001", ex.getMessage());
-            return response;
+            if (ex instanceof ServiceAbstractException) {
+                response = new SingleResult<>(null, false, ((ServiceAbstractException) ex).getErrorCode(), ex.getMessage());
+            } else {
+                response = new SingleResult<>(null, false, CommonExcetpionConstant.SYSTEM_EXCEPTION_CODE, ex.getMessage());
+            }
         }
 
         return response;
@@ -82,12 +88,11 @@ public class OtaVerifyFlightServiceImpl implements OtaVerifyFlightService {
      * @param resVOS
      * @return
      */
+
     private CtripVerifyResVO flightRegulation(List<CtripVerifyResVO> resVOS) {
-        if(null != resVOS && resVOS.size()>0) {
+        if (null != resVOS && resVOS.size() > 0) {
             return resVOS.get(0);
-        }
-        else
-        {
+        } else {
             return null;
         }
     }

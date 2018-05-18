@@ -69,7 +69,7 @@ public class FlightRoutingsVO implements Serializable {
     /**
      * 【公布运价强校验】汇率
      */
-    private BigDecimal exchange;
+    private String exchange;
     /**
      * 适用年龄区间【如要使用此字段请提前通知我们，盲目使用会影响价格展示】
      * 1）使用“-”表示“至”，例如*-12，表示12岁及以下；
@@ -304,11 +304,11 @@ public class FlightRoutingsVO implements Serializable {
         this.applyType = applyType;
     }
 
-    public BigDecimal getExchange() {
+    public String getExchange() {
         return exchange;
     }
 
-    public void setExchange(BigDecimal exchange) {
+    public void setExchange(String exchange) {
         this.exchange = exchange;
     }
 
