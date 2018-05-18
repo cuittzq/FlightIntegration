@@ -2,41 +2,18 @@ package com.tzq.commons.enums;
 
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * 订座系统
- */
-public enum ReservationTypeEnum {
-    /**
-     * TravelSky
-     */
-    TravelSky("1E", "TravelSky"),
+public enum EligibilityEnum {
 
-    /**
-     * Amadeus
-     */
-    Amadeus("1A", "Amadeus"),
+    NOR("NOR", "普通成人"),
+    LAB("LAB", "劳务人员"),
 
-    /**
-     * Abacus
-     */
-    Abacus("1B", "Abacus"),
+    SEA("SEA", "海员"),
 
-    /**
-     * Abacus
-     */
-    Sabre("1S", "Sabre"),
+    STU("SEA", "学生"),
 
-    /**
-     * Abacus
-     */
-    WorldSpan("1P", "WorldSpan"),
+    YOU("SEA", "青年"),
 
-    /**
-     * Abacus
-     */
-    Galileo("1G", "Galileo"),
-
-    OT("OT", "OT");
+    SNR("SNR", "老年人");
 
     /**
      * 枚举编码
@@ -51,7 +28,7 @@ public enum ReservationTypeEnum {
     /**
      * 私有构造函数
      */
-    private ReservationTypeEnum(String code, String desc) {
+    private EligibilityEnum(String code, String desc) {
         this.code = code;
         this.desc = desc;
     }
@@ -62,11 +39,11 @@ public enum ReservationTypeEnum {
      * @param code 枚举码
      * @return
      */
-    public static ReservationTypeEnum getEnumByCode(String code) {
+    public static EligibilityEnum getEnumByCode(String code) {
         if (StringUtils.isEmpty(code)) {
             return null;
         }
-        for (ReservationTypeEnum e : ReservationTypeEnum.values()) {
+        for (EligibilityEnum e : EligibilityEnum.values()) {
             if (code.equals(e.getCode())) {
                 return e;
             }

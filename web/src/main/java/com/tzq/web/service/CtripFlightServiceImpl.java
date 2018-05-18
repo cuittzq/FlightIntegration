@@ -173,7 +173,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         List<ContactDTO> contactDTOS = Lists.newArrayList();
         contactDTOS.add(req.getContact());
 
-        // 联系人信�
+        // 联系人信�
         createOrderReqVO.setContact(orderVOMapper.orderCtripDTO2VO(contactDTOS));
         createOrderReqVO.setPassengerbaggages(orderVOMapper.orderCtripDTO2VO1(req.getPassengerbaggages()));
         createOrderReqVO.setPassengers(orderVOMapper.orderCtripDTO2VO2(req.getPassengers()));
