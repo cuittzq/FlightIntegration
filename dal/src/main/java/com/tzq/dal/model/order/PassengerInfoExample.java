@@ -162,52 +162,52 @@ public class PassengerInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Integer value) {
+        public Criteria andIdEqualTo(Long value) {
             addCriterion("ID =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Integer value) {
+        public Criteria andIdNotEqualTo(Long value) {
             addCriterion("ID <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Integer value) {
+        public Criteria andIdGreaterThan(Long value) {
             addCriterion("ID >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andIdGreaterThanOrEqualTo(Long value) {
             addCriterion("ID >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Integer value) {
+        public Criteria andIdLessThan(Long value) {
             addCriterion("ID <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Integer value) {
+        public Criteria andIdLessThanOrEqualTo(Long value) {
             addCriterion("ID <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Integer> values) {
+        public Criteria andIdIn(List<Long> values) {
             addCriterion("ID in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Integer> values) {
+        public Criteria andIdNotIn(List<Long> values) {
             addCriterion("ID not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Integer value1, Integer value2) {
+        public Criteria andIdBetween(Long value1, Long value2) {
             addCriterion("ID between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andIdNotBetween(Long value1, Long value2) {
             addCriterion("ID not between", value1, value2, "id");
             return (Criteria) this;
         }
@@ -702,52 +702,52 @@ public class PassengerInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceEqualTo(Byte value) {
+        public Criteria andCardissueplaceEqualTo(Integer value) {
             addCriterion("CardIssuePlace =", value, "cardissueplace");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceNotEqualTo(Byte value) {
+        public Criteria andCardissueplaceNotEqualTo(Integer value) {
             addCriterion("CardIssuePlace <>", value, "cardissueplace");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceGreaterThan(Byte value) {
+        public Criteria andCardissueplaceGreaterThan(Integer value) {
             addCriterion("CardIssuePlace >", value, "cardissueplace");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceGreaterThanOrEqualTo(Byte value) {
+        public Criteria andCardissueplaceGreaterThanOrEqualTo(Integer value) {
             addCriterion("CardIssuePlace >=", value, "cardissueplace");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceLessThan(Byte value) {
+        public Criteria andCardissueplaceLessThan(Integer value) {
             addCriterion("CardIssuePlace <", value, "cardissueplace");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceLessThanOrEqualTo(Byte value) {
+        public Criteria andCardissueplaceLessThanOrEqualTo(Integer value) {
             addCriterion("CardIssuePlace <=", value, "cardissueplace");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceIn(List<Byte> values) {
+        public Criteria andCardissueplaceIn(List<Integer> values) {
             addCriterion("CardIssuePlace in", values, "cardissueplace");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceNotIn(List<Byte> values) {
+        public Criteria andCardissueplaceNotIn(List<Integer> values) {
             addCriterion("CardIssuePlace not in", values, "cardissueplace");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceBetween(Byte value1, Byte value2) {
+        public Criteria andCardissueplaceBetween(Integer value1, Integer value2) {
             addCriterion("CardIssuePlace between", value1, value2, "cardissueplace");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceNotBetween(Byte value1, Byte value2) {
+        public Criteria andCardissueplaceNotBetween(Integer value1, Integer value2) {
             addCriterion("CardIssuePlace not between", value1, value2, "cardissueplace");
             return (Criteria) this;
         }

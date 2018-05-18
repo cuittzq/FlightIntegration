@@ -1,6 +1,12 @@
 package com.tzq.dal.model.log;
 
-public class OrderexLogWithBLOBs extends OrderexLog {
+import java.util.Date;
+
+public class OrderLog {
+    private Long id;
+
+    private String orderno;
+
     private String flightinfo;
 
     private String linkinfo;
@@ -16,6 +22,24 @@ public class OrderexLogWithBLOBs extends OrderexLog {
     private String flightchangeinfo;
 
     private String otherinfo;
+
+    private Date modifytime;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getOrderno() {
+        return orderno;
+    }
+
+    public void setOrderno(String orderno) {
+        this.orderno = orderno == null ? null : orderno.trim();
+    }
 
     public String getFlightinfo() {
         return flightinfo;
@@ -79,5 +103,13 @@ public class OrderexLogWithBLOBs extends OrderexLog {
 
     public void setOtherinfo(String otherinfo) {
         this.otherinfo = otherinfo == null ? null : otherinfo.trim();
+    }
+
+    public Date getModifytime() {
+        return modifytime;
+    }
+
+    public void setModifytime(Date modifytime) {
+        this.modifytime = modifytime;
     }
 }

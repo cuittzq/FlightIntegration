@@ -3,8 +3,7 @@ package com.tzq.dal.model.log;
 import java.util.Date;
 
 public class InterfaceRequestLog {
-
-    private Integer id;
+    private Long id;
 
     /**
      * 销售平台
@@ -29,12 +28,12 @@ public class InterfaceRequestLog {
     /**
      * 请求结果（接口请求的结果）(0-成功 / 1-失败)
      */
-    private Byte requestresult;
+    private Integer requestresult;
 
     /**
      * 接口结果（接口返回结果）(0-成功 / 1-失败 / 2-CID错误 / 3-非法IP / 4-操作失败 / 5-请求参数错误 / 6-程序异常 / 7-航线管控 / 8-航司过滤 / 9-配置未找到 / 10-访问超时 / 11-访问频繁 / 12-不在销售时间范围内 / 13-不在工作时间范围内 / 14-价格变动 / 15-无座 / 16-不可预订)
      */
-    private Byte interfaceresult;
+    private Integer interfaceresult;
 
     /**
      * 航司
@@ -64,7 +63,7 @@ public class InterfaceRequestLog {
     /**
      * 航程类型：0-单程，1-往返
      */
-    private Byte voyagetype;
+    private Integer voyagetype;
 
     /**
      * 销售平台请求时间
@@ -131,11 +130,11 @@ public class InterfaceRequestLog {
      */
     private Date modifytime;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -171,19 +170,19 @@ public class InterfaceRequestLog {
         this.requesttype = requesttype == null ? null : requesttype.trim();
     }
 
-    public Byte getRequestresult() {
+    public Integer getRequestresult() {
         return requestresult;
     }
 
-    public void setRequestresult(Byte requestresult) {
+    public void setRequestresult(Integer requestresult) {
         this.requestresult = requestresult;
     }
 
-    public Byte getInterfaceresult() {
+    public Integer getInterfaceresult() {
         return interfaceresult;
     }
 
-    public void setInterfaceresult(Byte interfaceresult) {
+    public void setInterfaceresult(Integer interfaceresult) {
         this.interfaceresult = interfaceresult;
     }
 
@@ -227,11 +226,11 @@ public class InterfaceRequestLog {
         this.backdate = backdate;
     }
 
-    public Byte getVoyagetype() {
+    public Integer getVoyagetype() {
         return voyagetype;
     }
 
-    public void setVoyagetype(Byte voyagetype) {
+    public void setVoyagetype(Integer voyagetype) {
         this.voyagetype = voyagetype;
     }
 

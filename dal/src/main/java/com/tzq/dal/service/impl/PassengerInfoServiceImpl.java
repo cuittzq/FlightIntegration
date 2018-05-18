@@ -26,7 +26,7 @@ public class PassengerInfoServiceImpl implements PassengerInfoService {
     }
 
     @Override
-    public int deleteByPrimaryKey(Integer id) {
+    public int deleteByPrimaryKey(Long id) {
         return passengerInfoMapper.deleteByPrimaryKey(id);
     }
 
@@ -46,7 +46,7 @@ public class PassengerInfoServiceImpl implements PassengerInfoService {
     }
 
     @Override
-    public PassengerInfo selectByPrimaryKey(Integer id) {
+    public PassengerInfo selectByPrimaryKey(Long id) {
         return passengerInfoMapper.selectByPrimaryKey(id);
     }
 

@@ -10,7 +10,7 @@ public interface InterfaceRequestLogMapper {
 
     int deleteByExample(InterfaceRequestLogExample example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(InterfaceRequestLog record);
 
@@ -18,7 +18,7 @@ public interface InterfaceRequestLogMapper {
 
     List<InterfaceRequestLog> selectByExample(InterfaceRequestLogExample example);
 
-    InterfaceRequestLog selectByPrimaryKey(Integer id);
+    InterfaceRequestLog selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") InterfaceRequestLog record, @Param("example") InterfaceRequestLogExample example);
 

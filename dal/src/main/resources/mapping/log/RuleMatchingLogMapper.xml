@@ -2,6 +2,940 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tzq.dal.mapper.log.RuleMatchingLogMapper">
   <resultMap id="BaseResultMap" type="com.tzq.dal.model.log.RuleMatchingLog">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="SalesPlatform" jdbcType="INTEGER" property="salesplatform" />
+    <result column="PurchasePlatform" jdbcType="INTEGER" property="purchaseplatform" />
+    <result column="RequestDate" jdbcType="DATE" property="requestdate" />
+    <result column="RequestType" jdbcType="VARCHAR" property="requesttype" />
+    <result column="Carrier" jdbcType="VARCHAR" property="carrier" />
+    <result column="DepCode" jdbcType="VARCHAR" property="depcode" />
+    <result column="ArrCode" jdbcType="VARCHAR" property="arrcode" />
+    <result column="DepDate" jdbcType="DATE" property="depdate" />
+    <result column="BackDate" jdbcType="DATE" property="backdate" />
+    <result column="PlatRuleIDArray" jdbcType="VARCHAR" property="platruleidarray" />
+    <result column="PlatRuleValue" jdbcType="VARCHAR" property="platrulevalue" />
+    <result column="SupplierRuleIDArray" jdbcType="VARCHAR" property="supplierruleidarray" />
+    <result column="SupplierRuleValue" jdbcType="VARCHAR" property="supplierrulevalue" />
+    <result column="CurrencySalesRuleIDArray" jdbcType="VARCHAR" property="currencysalesruleidarray" />
+    <result column="CurrencySalesRuleValue" jdbcType="VARCHAR" property="currencysalesrulevalue" />
+    <result column="ExactSalesRuleIDArray" jdbcType="VARCHAR" property="exactsalesruleidarray" />
+    <result column="ExactSalesRuleValue" jdbcType="VARCHAR" property="exactsalesrulevalue" />
+    <result column="RefundRuleIDArray" jdbcType="VARCHAR" property="refundruleidarray" />
+    <result column="RefundRuleValue" jdbcType="VARCHAR" property="refundrulevalue" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, SalesPlatform, PurchasePlatform, RequestDate, RequestType, Carrier, DepCode, 
+    ArrCode, DepDate, BackDate, PlatRuleIDArray, PlatRuleValue, SupplierRuleIDArray, 
+    SupplierRuleValue, CurrencySalesRuleIDArray, CurrencySalesRuleValue, ExactSalesRuleIDArray, 
+    ExactSalesRuleValue, RefundRuleIDArray, RefundRuleValue, ModifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.tzq.dal.model.log.RuleMatchingLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rulematchinglog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart&gt;=0">
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rulematchinglog
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from rulematchinglog
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tzq.dal.model.log.RuleMatchingLogExample">
+    delete from rulematchinglog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tzq.dal.model.log.RuleMatchingLog">
+    insert into rulematchinglog (ID, SalesPlatform, PurchasePlatform, 
+      RequestDate, RequestType, Carrier, 
+      DepCode, ArrCode, DepDate, 
+      BackDate, PlatRuleIDArray, PlatRuleValue, 
+      SupplierRuleIDArray, SupplierRuleValue, 
+      CurrencySalesRuleIDArray, CurrencySalesRuleValue, 
+      ExactSalesRuleIDArray, ExactSalesRuleValue, 
+      RefundRuleIDArray, RefundRuleValue, ModifyTime
+      )
+    values (#{id,jdbcType=BIGINT}, #{salesplatform,jdbcType=INTEGER}, #{purchaseplatform,jdbcType=INTEGER}, 
+      #{requestdate,jdbcType=DATE}, #{requesttype,jdbcType=VARCHAR}, #{carrier,jdbcType=VARCHAR}, 
+      #{depcode,jdbcType=VARCHAR}, #{arrcode,jdbcType=VARCHAR}, #{depdate,jdbcType=DATE}, 
+      #{backdate,jdbcType=DATE}, #{platruleidarray,jdbcType=VARCHAR}, #{platrulevalue,jdbcType=VARCHAR}, 
+      #{supplierruleidarray,jdbcType=VARCHAR}, #{supplierrulevalue,jdbcType=VARCHAR}, 
+      #{currencysalesruleidarray,jdbcType=VARCHAR}, #{currencysalesrulevalue,jdbcType=VARCHAR}, 
+      #{exactsalesruleidarray,jdbcType=VARCHAR}, #{exactsalesrulevalue,jdbcType=VARCHAR}, 
+      #{refundruleidarray,jdbcType=VARCHAR}, #{refundrulevalue,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tzq.dal.model.log.RuleMatchingLog">
+    insert into rulematchinglog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="salesplatform != null">
+        SalesPlatform,
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform,
+      </if>
+      <if test="requestdate != null">
+        RequestDate,
+      </if>
+      <if test="requesttype != null">
+        RequestType,
+      </if>
+      <if test="carrier != null">
+        Carrier,
+      </if>
+      <if test="depcode != null">
+        DepCode,
+      </if>
+      <if test="arrcode != null">
+        ArrCode,
+      </if>
+      <if test="depdate != null">
+        DepDate,
+      </if>
+      <if test="backdate != null">
+        BackDate,
+      </if>
+      <if test="platruleidarray != null">
+        PlatRuleIDArray,
+      </if>
+      <if test="platrulevalue != null">
+        PlatRuleValue,
+      </if>
+      <if test="supplierruleidarray != null">
+        SupplierRuleIDArray,
+      </if>
+      <if test="supplierrulevalue != null">
+        SupplierRuleValue,
+      </if>
+      <if test="currencysalesruleidarray != null">
+        CurrencySalesRuleIDArray,
+      </if>
+      <if test="currencysalesrulevalue != null">
+        CurrencySalesRuleValue,
+      </if>
+      <if test="exactsalesruleidarray != null">
+        ExactSalesRuleIDArray,
+      </if>
+      <if test="exactsalesrulevalue != null">
+        ExactSalesRuleValue,
+      </if>
+      <if test="refundruleidarray != null">
+        RefundRuleIDArray,
+      </if>
+      <if test="refundrulevalue != null">
+        RefundRuleValue,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="salesplatform != null">
+        #{salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseplatform != null">
+        #{purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="requestdate != null">
+        #{requestdate,jdbcType=DATE},
+      </if>
+      <if test="requesttype != null">
+        #{requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="carrier != null">
+        #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="depcode != null">
+        #{depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="arrcode != null">
+        #{arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        #{depdate,jdbcType=DATE},
+      </if>
+      <if test="backdate != null">
+        #{backdate,jdbcType=DATE},
+      </if>
+      <if test="platruleidarray != null">
+        #{platruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="platrulevalue != null">
+        #{platrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierruleidarray != null">
+        #{supplierruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierrulevalue != null">
+        #{supplierrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="currencysalesruleidarray != null">
+        #{currencysalesruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="currencysalesrulevalue != null">
+        #{currencysalesrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="exactsalesruleidarray != null">
+        #{exactsalesruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="exactsalesrulevalue != null">
+        #{exactsalesrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="refundruleidarray != null">
+        #{refundruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="refundrulevalue != null">
+        #{refundrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tzq.dal.model.log.RuleMatchingLogExample" resultType="java.lang.Long">
+    select count(*) from rulematchinglog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update rulematchinglog
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.salesplatform != null">
+        SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="record.purchaseplatform != null">
+        PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="record.requestdate != null">
+        RequestDate = #{record.requestdate,jdbcType=DATE},
+      </if>
+      <if test="record.requesttype != null">
+        RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carrier != null">
+        Carrier = #{record.carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depcode != null">
+        DepCode = #{record.depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrcode != null">
+        ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depdate != null">
+        DepDate = #{record.depdate,jdbcType=DATE},
+      </if>
+      <if test="record.backdate != null">
+        BackDate = #{record.backdate,jdbcType=DATE},
+      </if>
+      <if test="record.platruleidarray != null">
+        PlatRuleIDArray = #{record.platruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="record.platrulevalue != null">
+        PlatRuleValue = #{record.platrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplierruleidarray != null">
+        SupplierRuleIDArray = #{record.supplierruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplierrulevalue != null">
+        SupplierRuleValue = #{record.supplierrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currencysalesruleidarray != null">
+        CurrencySalesRuleIDArray = #{record.currencysalesruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currencysalesrulevalue != null">
+        CurrencySalesRuleValue = #{record.currencysalesrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exactsalesruleidarray != null">
+        ExactSalesRuleIDArray = #{record.exactsalesruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exactsalesrulevalue != null">
+        ExactSalesRuleValue = #{record.exactsalesrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundruleidarray != null">
+        RefundRuleIDArray = #{record.refundruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundrulevalue != null">
+        RefundRuleValue = #{record.refundrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null">
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update rulematchinglog
+    set ID = #{record.id,jdbcType=BIGINT},
+      SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{record.requestdate,jdbcType=DATE},
+      RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      Carrier = #{record.carrier,jdbcType=VARCHAR},
+      DepCode = #{record.depcode,jdbcType=VARCHAR},
+      ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      DepDate = #{record.depdate,jdbcType=DATE},
+      BackDate = #{record.backdate,jdbcType=DATE},
+      PlatRuleIDArray = #{record.platruleidarray,jdbcType=VARCHAR},
+      PlatRuleValue = #{record.platrulevalue,jdbcType=VARCHAR},
+      SupplierRuleIDArray = #{record.supplierruleidarray,jdbcType=VARCHAR},
+      SupplierRuleValue = #{record.supplierrulevalue,jdbcType=VARCHAR},
+      CurrencySalesRuleIDArray = #{record.currencysalesruleidarray,jdbcType=VARCHAR},
+      CurrencySalesRuleValue = #{record.currencysalesrulevalue,jdbcType=VARCHAR},
+      ExactSalesRuleIDArray = #{record.exactsalesruleidarray,jdbcType=VARCHAR},
+      ExactSalesRuleValue = #{record.exactsalesrulevalue,jdbcType=VARCHAR},
+      RefundRuleIDArray = #{record.refundruleidarray,jdbcType=VARCHAR},
+      RefundRuleValue = #{record.refundrulevalue,jdbcType=VARCHAR},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tzq.dal.model.log.RuleMatchingLog">
+    update rulematchinglog
+    <set>
+      <if test="salesplatform != null">
+        SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="requestdate != null">
+        RequestDate = #{requestdate,jdbcType=DATE},
+      </if>
+      <if test="requesttype != null">
+        RequestType = #{requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="carrier != null">
+        Carrier = #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="depcode != null">
+        DepCode = #{depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="arrcode != null">
+        ArrCode = #{arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        DepDate = #{depdate,jdbcType=DATE},
+      </if>
+      <if test="backdate != null">
+        BackDate = #{backdate,jdbcType=DATE},
+      </if>
+      <if test="platruleidarray != null">
+        PlatRuleIDArray = #{platruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="platrulevalue != null">
+        PlatRuleValue = #{platrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierruleidarray != null">
+        SupplierRuleIDArray = #{supplierruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierrulevalue != null">
+        SupplierRuleValue = #{supplierrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="currencysalesruleidarray != null">
+        CurrencySalesRuleIDArray = #{currencysalesruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="currencysalesrulevalue != null">
+        CurrencySalesRuleValue = #{currencysalesrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="exactsalesruleidarray != null">
+        ExactSalesRuleIDArray = #{exactsalesruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="exactsalesrulevalue != null">
+        ExactSalesRuleValue = #{exactsalesrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="refundruleidarray != null">
+        RefundRuleIDArray = #{refundruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="refundrulevalue != null">
+        RefundRuleValue = #{refundrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tzq.dal.model.log.RuleMatchingLog">
+    update rulematchinglog
+    set SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{requestdate,jdbcType=DATE},
+      RequestType = #{requesttype,jdbcType=VARCHAR},
+      Carrier = #{carrier,jdbcType=VARCHAR},
+      DepCode = #{depcode,jdbcType=VARCHAR},
+      ArrCode = #{arrcode,jdbcType=VARCHAR},
+      DepDate = #{depdate,jdbcType=DATE},
+      BackDate = #{backdate,jdbcType=DATE},
+      PlatRuleIDArray = #{platruleidarray,jdbcType=VARCHAR},
+      PlatRuleValue = #{platrulevalue,jdbcType=VARCHAR},
+      SupplierRuleIDArray = #{supplierruleidarray,jdbcType=VARCHAR},
+      SupplierRuleValue = #{supplierrulevalue,jdbcType=VARCHAR},
+      CurrencySalesRuleIDArray = #{currencysalesruleidarray,jdbcType=VARCHAR},
+      CurrencySalesRuleValue = #{currencysalesrulevalue,jdbcType=VARCHAR},
+      ExactSalesRuleIDArray = #{exactsalesruleidarray,jdbcType=VARCHAR},
+      ExactSalesRuleValue = #{exactsalesrulevalue,jdbcType=VARCHAR},
+      RefundRuleIDArray = #{refundruleidarray,jdbcType=VARCHAR},
+      RefundRuleValue = #{refundrulevalue,jdbcType=VARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.tzq.dal.model.log.RuleMatchingLog">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="SalesPlatform" jdbcType="INTEGER" property="salesplatform" />
+    <result column="PurchasePlatform" jdbcType="INTEGER" property="purchaseplatform" />
+    <result column="RequestDate" jdbcType="DATE" property="requestdate" />
+    <result column="RequestType" jdbcType="VARCHAR" property="requesttype" />
+    <result column="Carrier" jdbcType="VARCHAR" property="carrier" />
+    <result column="DepCode" jdbcType="VARCHAR" property="depcode" />
+    <result column="ArrCode" jdbcType="VARCHAR" property="arrcode" />
+    <result column="DepDate" jdbcType="DATE" property="depdate" />
+    <result column="BackDate" jdbcType="DATE" property="backdate" />
+    <result column="PlatRuleIDArray" jdbcType="VARCHAR" property="platruleidarray" />
+    <result column="PlatRuleValue" jdbcType="VARCHAR" property="platrulevalue" />
+    <result column="SupplierRuleIDArray" jdbcType="VARCHAR" property="supplierruleidarray" />
+    <result column="SupplierRuleValue" jdbcType="VARCHAR" property="supplierrulevalue" />
+    <result column="CurrencySalesRuleIDArray" jdbcType="VARCHAR" property="currencysalesruleidarray" />
+    <result column="CurrencySalesRuleValue" jdbcType="VARCHAR" property="currencysalesrulevalue" />
+    <result column="ExactSalesRuleIDArray" jdbcType="VARCHAR" property="exactsalesruleidarray" />
+    <result column="ExactSalesRuleValue" jdbcType="VARCHAR" property="exactsalesrulevalue" />
+    <result column="RefundRuleIDArray" jdbcType="VARCHAR" property="refundruleidarray" />
+    <result column="RefundRuleValue" jdbcType="VARCHAR" property="refundrulevalue" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, SalesPlatform, PurchasePlatform, RequestDate, RequestType, Carrier, DepCode, 
+    ArrCode, DepDate, BackDate, PlatRuleIDArray, PlatRuleValue, SupplierRuleIDArray, 
+    SupplierRuleValue, CurrencySalesRuleIDArray, CurrencySalesRuleValue, ExactSalesRuleIDArray, 
+    ExactSalesRuleValue, RefundRuleIDArray, RefundRuleValue, ModifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.tzq.dal.model.log.RuleMatchingLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rulematchinglog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart&gt;=0">
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rulematchinglog
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from rulematchinglog
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tzq.dal.model.log.RuleMatchingLogExample">
+    delete from rulematchinglog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tzq.dal.model.log.RuleMatchingLog">
+    insert into rulematchinglog (ID, SalesPlatform, PurchasePlatform, 
+      RequestDate, RequestType, Carrier, 
+      DepCode, ArrCode, DepDate, 
+      BackDate, PlatRuleIDArray, PlatRuleValue, 
+      SupplierRuleIDArray, SupplierRuleValue, 
+      CurrencySalesRuleIDArray, CurrencySalesRuleValue, 
+      ExactSalesRuleIDArray, ExactSalesRuleValue, 
+      RefundRuleIDArray, RefundRuleValue, ModifyTime
+      )
+    values (#{id,jdbcType=BIGINT}, #{salesplatform,jdbcType=INTEGER}, #{purchaseplatform,jdbcType=INTEGER}, 
+      #{requestdate,jdbcType=DATE}, #{requesttype,jdbcType=VARCHAR}, #{carrier,jdbcType=VARCHAR}, 
+      #{depcode,jdbcType=VARCHAR}, #{arrcode,jdbcType=VARCHAR}, #{depdate,jdbcType=DATE}, 
+      #{backdate,jdbcType=DATE}, #{platruleidarray,jdbcType=VARCHAR}, #{platrulevalue,jdbcType=VARCHAR}, 
+      #{supplierruleidarray,jdbcType=VARCHAR}, #{supplierrulevalue,jdbcType=VARCHAR}, 
+      #{currencysalesruleidarray,jdbcType=VARCHAR}, #{currencysalesrulevalue,jdbcType=VARCHAR}, 
+      #{exactsalesruleidarray,jdbcType=VARCHAR}, #{exactsalesrulevalue,jdbcType=VARCHAR}, 
+      #{refundruleidarray,jdbcType=VARCHAR}, #{refundrulevalue,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tzq.dal.model.log.RuleMatchingLog">
+    insert into rulematchinglog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="salesplatform != null">
+        SalesPlatform,
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform,
+      </if>
+      <if test="requestdate != null">
+        RequestDate,
+      </if>
+      <if test="requesttype != null">
+        RequestType,
+      </if>
+      <if test="carrier != null">
+        Carrier,
+      </if>
+      <if test="depcode != null">
+        DepCode,
+      </if>
+      <if test="arrcode != null">
+        ArrCode,
+      </if>
+      <if test="depdate != null">
+        DepDate,
+      </if>
+      <if test="backdate != null">
+        BackDate,
+      </if>
+      <if test="platruleidarray != null">
+        PlatRuleIDArray,
+      </if>
+      <if test="platrulevalue != null">
+        PlatRuleValue,
+      </if>
+      <if test="supplierruleidarray != null">
+        SupplierRuleIDArray,
+      </if>
+      <if test="supplierrulevalue != null">
+        SupplierRuleValue,
+      </if>
+      <if test="currencysalesruleidarray != null">
+        CurrencySalesRuleIDArray,
+      </if>
+      <if test="currencysalesrulevalue != null">
+        CurrencySalesRuleValue,
+      </if>
+      <if test="exactsalesruleidarray != null">
+        ExactSalesRuleIDArray,
+      </if>
+      <if test="exactsalesrulevalue != null">
+        ExactSalesRuleValue,
+      </if>
+      <if test="refundruleidarray != null">
+        RefundRuleIDArray,
+      </if>
+      <if test="refundrulevalue != null">
+        RefundRuleValue,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="salesplatform != null">
+        #{salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseplatform != null">
+        #{purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="requestdate != null">
+        #{requestdate,jdbcType=DATE},
+      </if>
+      <if test="requesttype != null">
+        #{requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="carrier != null">
+        #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="depcode != null">
+        #{depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="arrcode != null">
+        #{arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        #{depdate,jdbcType=DATE},
+      </if>
+      <if test="backdate != null">
+        #{backdate,jdbcType=DATE},
+      </if>
+      <if test="platruleidarray != null">
+        #{platruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="platrulevalue != null">
+        #{platrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierruleidarray != null">
+        #{supplierruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierrulevalue != null">
+        #{supplierrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="currencysalesruleidarray != null">
+        #{currencysalesruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="currencysalesrulevalue != null">
+        #{currencysalesrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="exactsalesruleidarray != null">
+        #{exactsalesruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="exactsalesrulevalue != null">
+        #{exactsalesrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="refundruleidarray != null">
+        #{refundruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="refundrulevalue != null">
+        #{refundrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tzq.dal.model.log.RuleMatchingLogExample" resultType="java.lang.Long">
+    select count(*) from rulematchinglog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update rulematchinglog
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.salesplatform != null">
+        SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="record.purchaseplatform != null">
+        PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="record.requestdate != null">
+        RequestDate = #{record.requestdate,jdbcType=DATE},
+      </if>
+      <if test="record.requesttype != null">
+        RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carrier != null">
+        Carrier = #{record.carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depcode != null">
+        DepCode = #{record.depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrcode != null">
+        ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depdate != null">
+        DepDate = #{record.depdate,jdbcType=DATE},
+      </if>
+      <if test="record.backdate != null">
+        BackDate = #{record.backdate,jdbcType=DATE},
+      </if>
+      <if test="record.platruleidarray != null">
+        PlatRuleIDArray = #{record.platruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="record.platrulevalue != null">
+        PlatRuleValue = #{record.platrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplierruleidarray != null">
+        SupplierRuleIDArray = #{record.supplierruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplierrulevalue != null">
+        SupplierRuleValue = #{record.supplierrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currencysalesruleidarray != null">
+        CurrencySalesRuleIDArray = #{record.currencysalesruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currencysalesrulevalue != null">
+        CurrencySalesRuleValue = #{record.currencysalesrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exactsalesruleidarray != null">
+        ExactSalesRuleIDArray = #{record.exactsalesruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exactsalesrulevalue != null">
+        ExactSalesRuleValue = #{record.exactsalesrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundruleidarray != null">
+        RefundRuleIDArray = #{record.refundruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundrulevalue != null">
+        RefundRuleValue = #{record.refundrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null">
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update rulematchinglog
+    set ID = #{record.id,jdbcType=BIGINT},
+      SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{record.requestdate,jdbcType=DATE},
+      RequestType = #{record.requesttype,jdbcType=VARCHAR},
+      Carrier = #{record.carrier,jdbcType=VARCHAR},
+      DepCode = #{record.depcode,jdbcType=VARCHAR},
+      ArrCode = #{record.arrcode,jdbcType=VARCHAR},
+      DepDate = #{record.depdate,jdbcType=DATE},
+      BackDate = #{record.backdate,jdbcType=DATE},
+      PlatRuleIDArray = #{record.platruleidarray,jdbcType=VARCHAR},
+      PlatRuleValue = #{record.platrulevalue,jdbcType=VARCHAR},
+      SupplierRuleIDArray = #{record.supplierruleidarray,jdbcType=VARCHAR},
+      SupplierRuleValue = #{record.supplierrulevalue,jdbcType=VARCHAR},
+      CurrencySalesRuleIDArray = #{record.currencysalesruleidarray,jdbcType=VARCHAR},
+      CurrencySalesRuleValue = #{record.currencysalesrulevalue,jdbcType=VARCHAR},
+      ExactSalesRuleIDArray = #{record.exactsalesruleidarray,jdbcType=VARCHAR},
+      ExactSalesRuleValue = #{record.exactsalesrulevalue,jdbcType=VARCHAR},
+      RefundRuleIDArray = #{record.refundruleidarray,jdbcType=VARCHAR},
+      RefundRuleValue = #{record.refundrulevalue,jdbcType=VARCHAR},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tzq.dal.model.log.RuleMatchingLog">
+    update rulematchinglog
+    <set>
+      <if test="salesplatform != null">
+        SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      </if>
+      <if test="requestdate != null">
+        RequestDate = #{requestdate,jdbcType=DATE},
+      </if>
+      <if test="requesttype != null">
+        RequestType = #{requesttype,jdbcType=VARCHAR},
+      </if>
+      <if test="carrier != null">
+        Carrier = #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="depcode != null">
+        DepCode = #{depcode,jdbcType=VARCHAR},
+      </if>
+      <if test="arrcode != null">
+        ArrCode = #{arrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        DepDate = #{depdate,jdbcType=DATE},
+      </if>
+      <if test="backdate != null">
+        BackDate = #{backdate,jdbcType=DATE},
+      </if>
+      <if test="platruleidarray != null">
+        PlatRuleIDArray = #{platruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="platrulevalue != null">
+        PlatRuleValue = #{platrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierruleidarray != null">
+        SupplierRuleIDArray = #{supplierruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierrulevalue != null">
+        SupplierRuleValue = #{supplierrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="currencysalesruleidarray != null">
+        CurrencySalesRuleIDArray = #{currencysalesruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="currencysalesrulevalue != null">
+        CurrencySalesRuleValue = #{currencysalesrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="exactsalesruleidarray != null">
+        ExactSalesRuleIDArray = #{exactsalesruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="exactsalesrulevalue != null">
+        ExactSalesRuleValue = #{exactsalesrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="refundruleidarray != null">
+        RefundRuleIDArray = #{refundruleidarray,jdbcType=VARCHAR},
+      </if>
+      <if test="refundrulevalue != null">
+        RefundRuleValue = #{refundrulevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tzq.dal.model.log.RuleMatchingLog">
+    update rulematchinglog
+    set SalesPlatform = #{salesplatform,jdbcType=INTEGER},
+      PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
+      RequestDate = #{requestdate,jdbcType=DATE},
+      RequestType = #{requesttype,jdbcType=VARCHAR},
+      Carrier = #{carrier,jdbcType=VARCHAR},
+      DepCode = #{depcode,jdbcType=VARCHAR},
+      ArrCode = #{arrcode,jdbcType=VARCHAR},
+      DepDate = #{depdate,jdbcType=DATE},
+      BackDate = #{backdate,jdbcType=DATE},
+      PlatRuleIDArray = #{platruleidarray,jdbcType=VARCHAR},
+      PlatRuleValue = #{platrulevalue,jdbcType=VARCHAR},
+      SupplierRuleIDArray = #{supplierruleidarray,jdbcType=VARCHAR},
+      SupplierRuleValue = #{supplierrulevalue,jdbcType=VARCHAR},
+      CurrencySalesRuleIDArray = #{currencysalesruleidarray,jdbcType=VARCHAR},
+      CurrencySalesRuleValue = #{currencysalesrulevalue,jdbcType=VARCHAR},
+      ExactSalesRuleIDArray = #{exactsalesruleidarray,jdbcType=VARCHAR},
+      ExactSalesRuleValue = #{exactsalesrulevalue,jdbcType=VARCHAR},
+      RefundRuleIDArray = #{refundruleidarray,jdbcType=VARCHAR},
+      RefundRuleValue = #{refundrulevalue,jdbcType=VARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.tzq.dal.model.log.RuleMatchingLog">
     <id column="ID" jdbcType="INTEGER" property="id" />
     <result column="SalesPlatform" jdbcType="INTEGER" property="salesplatform" />
     <result column="PurchasePlatform" jdbcType="INTEGER" property="purchaseplatform" />
@@ -101,7 +1035,7 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
-    <if test="limitStart != null and limitStart>=0">
+    <if test="limitStart != null and limitStart&gt;=0">
       limit #{limitStart} , #{limitEnd}
     </if>
   </select>

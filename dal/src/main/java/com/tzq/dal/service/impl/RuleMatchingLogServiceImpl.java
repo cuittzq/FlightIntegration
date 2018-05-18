@@ -26,7 +26,7 @@ public class RuleMatchingLogServiceImpl implements RuleMatchingLogService {
     }
 
     @Override
-    public int deleteByPrimaryKey(Integer id) {
+    public int deleteByPrimaryKey(Long id) {
         return ruleMatchingLogMapper.deleteByPrimaryKey(id);
     }
 
@@ -46,7 +46,7 @@ public class RuleMatchingLogServiceImpl implements RuleMatchingLogService {
     }
 
     @Override
-    public RuleMatchingLog selectByPrimaryKey(Integer id) {
+    public RuleMatchingLog selectByPrimaryKey(Long id) {
         return ruleMatchingLogMapper.selectByPrimaryKey(id);
     }
 

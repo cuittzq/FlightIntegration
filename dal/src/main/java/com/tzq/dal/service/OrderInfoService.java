@@ -10,7 +10,7 @@ public interface OrderInfoService {
 
     int deleteByExample(OrderInfoExample example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(OrderInfo record);
 
@@ -18,7 +18,7 @@ public interface OrderInfoService {
 
     List<OrderInfo> selectByExample(OrderInfoExample example);
 
-    OrderInfo selectByPrimaryKey(Integer id);
+    OrderInfo selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(OrderInfo record, OrderInfoExample example);
 

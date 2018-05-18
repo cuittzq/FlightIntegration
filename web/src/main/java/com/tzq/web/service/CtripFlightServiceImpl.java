@@ -7,6 +7,7 @@ import com.tzq.biz.core.OtaIssueTicketService;
 import com.tzq.biz.core.OtaSearchFlightService;
 import com.tzq.biz.core.OtaVerifyFlightService;
 import com.tzq.commons.enums.AreaTypeEnum;
+import com.tzq.commons.enums.MethodEnum;
 import com.tzq.commons.enums.OTAEnum;
 import com.tzq.commons.enums.TripTypeEnum;
 import com.tzq.commons.mapper.CtripVerifyVOMapper;
@@ -21,7 +22,6 @@ import com.tzq.commons.model.ctrip.search.SearchVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyResVO;
 import com.tzq.service.ctrip.CtripFlightService;
-import com.tzq.service.ctrip.models.enums.MethodEnum;
 import com.tzq.service.ctrip.models.enums.StatusEnum;
 import com.tzq.service.ctrip.models.order.ContactDTO;
 import com.tzq.service.ctrip.models.order.CreateOrderReq;
@@ -173,7 +173,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         List<ContactDTO> contactDTOS = Lists.newArrayList();
         contactDTOS.add(req.getContact());
 
-        // 联系人信�
+        // 联系人信�
         createOrderReqVO.setContact(orderVOMapper.orderCtripDTO2VO(contactDTOS));
         createOrderReqVO.setPassengerbaggages(orderVOMapper.orderCtripDTO2VO1(req.getPassengerbaggages()));
         createOrderReqVO.setPassengers(orderVOMapper.orderCtripDTO2VO2(req.getPassengers()));

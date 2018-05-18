@@ -14,6 +14,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.Arrays;
 
 /**
@@ -47,13 +48,7 @@ public class SearchFlightLogAspect {
         ServletRequestAttributes attributes          = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest       request             = attributes.getRequest();
         RouteContext<SearchVO>   paramin             = (RouteContext<SearchVO>) joinPoint.getArgs()[0];
-        InterfaceRequestLog      interfaceRequestLog = new InterfaceRequestLog();
-        interfaceRequestLog.setArrcode(paramin.getT().getArrAirportCode());
-        interfaceRequestLog.setDepcode(paramin.getT().getDepAirportCode());
-        interfaceRequestLog.setDepdate(DateUtils.parseDateNoTime(paramin.getT().getDepDate(), "YYYYMMDD"));
-        interfaceRequestLog.setBackdate(DateUtils.parseDateNoTime(paramin.getT().getArrDate(), "YYYYMMDD"));
-        interfaceRequestLog.setCarrier("");
-        //  interfaceRequestLog.setInterfaceresult();
+        InterfaceRequestLog      interfaceRequestLog = buildLogs(paramin);
         interfaceRequestLogService.insert(interfaceRequestLog);
         // 记录下请求内容
         System.out.println("URL : " + request.getRequestURL().toString());
@@ -81,5 +76,17 @@ public class SearchFlightLogAspect {
     @After("interfacelog()")
     public void after(JoinPoint jp) {
         System.out.println("方法最后执行.....");
+    }
+
+
+    private InterfaceRequestLog buildLogs(RouteContext<SearchVO> paramin) throws ParseException {
+        InterfaceRequestLog interfaceRequestLog = new InterfaceRequestLog();
+        interfaceRequestLog.setArrcode(paramin.getT().getArrAirportCode());
+        interfaceRequestLog.setDepcode(paramin.getT().getDepAirportCode());
+        interfaceRequestLog.setDepdate(DateUtils.parseDateNoTime(paramin.getT().getDepDate(), "YYYYMMDD"));
+        interfaceRequestLog.setBackdate(DateUtils.parseDateNoTime(paramin.getT().getArrDate(), "YYYYMMDD"));
+        interfaceRequestLog.setCarrier("");
+        return interfaceRequestLog;
+
     }
 }
