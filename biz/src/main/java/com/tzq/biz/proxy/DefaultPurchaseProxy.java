@@ -1,5 +1,6 @@
 package com.tzq.biz.proxy;
 
+import com.tzq.biz.aop.InterfaceAccess;
 import com.tzq.biz.service.purchase.core.CreateOrderService;
 import com.tzq.biz.service.purchase.core.SearchFlightService;
 import com.tzq.biz.service.purchase.core.VerifyService;
@@ -34,6 +35,7 @@ public class DefaultPurchaseProxy extends AbstractPurchaseProxy {
      * @param context
      */
     @Override
+    @InterfaceAccess(desc = "searchFlight")
     public FlightRouteVO searchFlight(RouteContext<SearchVO> context) {
         logger.info("[航班查询] param={}", context.toString());
         FlightRouteVO routeVO = null;

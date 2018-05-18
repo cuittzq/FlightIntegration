@@ -67,7 +67,6 @@ public class SearchFlightLogAspect {
     //后置最终通知,final增强，不管是抛出异常或者正常退出都会执行
     @After("interfacelog()")
     public void after(JoinPoint joinPoint) {
-        // 接收到请求，记录请求内容
         try {
             ServletRequestAttributes attributes          = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
             HttpServletRequest       request             = attributes.getRequest();
