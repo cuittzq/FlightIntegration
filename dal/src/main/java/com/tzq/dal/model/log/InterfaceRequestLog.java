@@ -3,56 +3,132 @@ package com.tzq.dal.model.log;
 import java.util.Date;
 
 public class InterfaceRequestLog {
+
     private Integer id;
 
+    /**
+     * 销售平台
+     */
     private Integer salesplatform;
 
+    /**
+     * 采购平台
+     */
     private Integer purchaseplatform;
 
+    /**
+     * 请求日期
+     */
     private Date requestdate;
 
+    /**
+     * 请求类型(Search-查询 / Verify-校验 / Order-创单 / PayCheck-支付校验 / OutTicket-出票)
+     */
     private String requesttype;
 
+    /**
+     * 请求结果（接口请求的结果）(0-成功 / 1-失败)
+     */
     private Byte requestresult;
 
+    /**
+     * 接口结果（接口返回结果）(0-成功 / 1-失败 / 2-CID错误 / 3-非法IP / 4-操作失败 / 5-请求参数错误 / 6-程序异常 / 7-航线管控 / 8-航司过滤 / 9-配置未找到 / 10-访问超时 / 11-访问频繁 / 12-不在销售时间范围内 / 13-不在工作时间范围内 / 14-价格变动 / 15-无座 / 16-不可预订)
+     */
     private Byte interfaceresult;
 
+    /**
+     * 航司
+     */
     private String carrier;
 
+    /**
+     * 出发地
+     */
     private String depcode;
 
+    /**
+     * 到达地
+     */
     private String arrcode;
 
+    /**
+     * 出发日期
+     */
     private Date depdate;
 
+    /**
+     * 返程日期
+     */
     private Date backdate;
 
+    /**
+     * 航程类型：0-单程，1-往返
+     */
     private Byte voyagetype;
 
+    /**
+     * 销售平台请求时间
+     */
     private Date salesplatrequesttime;
 
+    /**
+     * 销售平台响应时间
+     */
     private Date salesplatresponsetime;
 
+    /**
+     * 采购平台请求时间
+     */
     private Date purchaseplatrequesttime;
 
+    /**
+     * 采购平响应时间
+     */
     private Date purchaseplatresponsetime;
 
+    /**
+     * 销售平台请求IP
+     */
     private String salesplatrequestip;
 
+    /**
+     * 采购平台请求IP
+     */
     private String purchaseplatrequestip;
 
+    /**
+     * 销售平台请求提示消息
+     */
     private String salesplatrequesttipmessage;
 
+    /**
+     * 采购平台请求提示消息
+     */
     private String purchaseplatrequesttipmessage;
 
+    /**
+     * 销售平台日志详细（JSON）
+     */
     private String salesplatlogdetail;
 
+    /**
+     * 采购平台日志详细（JSON）(查询不记录)
+     */
     private String purchaseplatlogdetail;
 
+    /**
+     * 订单号（创单有）(什么时候有什么时候记录)
+     */
     private String orderno;
 
+    /**
+     * PNR(什么时候有什么时候记录)
+     */
     private String pnr;
 
+    /**
+     * 时间戳
+     */
     private Date modifytime;
 
     public Integer getId() {

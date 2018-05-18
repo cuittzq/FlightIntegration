@@ -35,7 +35,7 @@ public class SearchVO extends BaseVO<Long> {
     private String arrAirportCode;
 
     /**
-     * 出发日期
+     * 出发日期格式为YYYYMMDD
      */
     private String depDate;
 

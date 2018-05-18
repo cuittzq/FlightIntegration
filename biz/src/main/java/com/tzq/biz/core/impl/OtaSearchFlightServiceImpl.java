@@ -1,5 +1,6 @@
 package com.tzq.biz.core.impl;
 
+import com.tzq.biz.aop.InterfaceAccess;
 import com.tzq.biz.core.OtaSearchFlightService;
 import com.tzq.biz.proxy.PurchaseProxy;
 import com.tzq.commons.enums.PurchaseEnum;
@@ -25,6 +26,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
     PurchaseProxy purchaseProxy;
 
     @Override
+    @InterfaceAccess(desc = "searchFlight")
     public SingleResult<FlightRouteVO> searchFlight(RouteContext<SearchVO> context) {
         Assert.notNull(context, "RouteContext can not be null ,searchFlight failure");
         // 根据OTA配置的销售策略决定调用供应商接口数据(查询平台规则)
