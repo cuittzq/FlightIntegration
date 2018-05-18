@@ -60,7 +60,6 @@ public class CtripServiceController {
     @RequestMapping(value = "/createorder", method = RequestMethod.POST)
     @UserAccess(desc = "createorder")
     public CreateOrderRes CreateOrder(@RequestBody CreateOrderReq createOrderReq, BindingResult bindingResult) {
-
         CreateOrderRes createOrderRes = new CreateOrderRes();
         if (bindingResult.hasErrors()) {
             createOrderRes.setStatus(StatusEnum.PARAM_ERROR.getCode());
