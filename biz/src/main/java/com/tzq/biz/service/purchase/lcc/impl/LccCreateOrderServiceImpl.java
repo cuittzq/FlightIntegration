@@ -73,8 +73,8 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         OrderReq         orderReq         = null;
         CreateOrderReqVO createOrderReqVO = context.getT();
         orderReq = orderVOMapper.orderReqVo2Io(createOrderReqVO);
-        orderReq.getRouting().setFromSegments(orderVOMapper.orderCtripDTO2VO4(createOrderReqVO.getRouting().getFromSegmentVOS()));
-        orderReq.getRouting().setRetSegments(orderVOMapper.orderCtripDTO2VO4(createOrderReqVO.getRouting().getRetSegmentVOS()));
+        orderReq.getRouting().setFromSegments(orderVOMapper.orderCtripDTO2VO4(createOrderReqVO.getRouting().getFromSegments()));
+        orderReq.getRouting().setRetSegments(orderVOMapper.orderCtripDTO2VO4(createOrderReqVO.getRouting().getRetSegments()));
         return (T) orderReq;
     }
 }
