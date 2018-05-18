@@ -2,6 +2,7 @@ package com.tzq.biz.service.purchase.lcc.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.tzq.biz.annotation.Route;
+import com.tzq.biz.aop.InterfaceAccess;
 import com.tzq.biz.constant.OtaConstants;
 import com.tzq.biz.service.purchase.abstracts.AbstractSearchFlightService;
 import com.tzq.commons.enums.*;
@@ -34,9 +35,9 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
      */
     @Override
     public FlightRouteVO searchFlight(RouteContext<SearchVO> context) {
-        SearchFlightReq searchFlightReq      = request(context);
+        SearchFlightReq searchFlightReq = request(context);
         SearchFlightRes searchFlightResponse = lccClient.searchFlight(searchFlightReq);
-        FlightRouteVO   flightRouteVO        = response(searchFlightResponse, context);
+        FlightRouteVO flightRouteVO = response(searchFlightResponse, context);
         return flightRouteVO;
     }
 
@@ -52,16 +53,18 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
         SearchFlightRes searchFlightResponse = (SearchFlightRes) t;
         //把data记录缓存，下单验价出票需要用，强强要干掉的话，自己看着办
         FlightRouteVO flightRouteVO = new FlightRouteVO();
+        flightRouteVO.setStatus(searchFlightResponse.getStatus());
+        flightRouteVO.setMsg(searchFlightResponse.getMsg());
         flightRouteVO.setAreaType(context.getAreaType().getCode());
         flightRouteVO.setDepAirportCode(context.getT().getDepAirportCode());
         flightRouteVO.setArrAirportCode(context.getT().getArrAirportCode());
         flightRouteVO.setDepDate(context.getT().getDepDate());
         flightRouteVO.setTripType(context.getT().getTripType().getCode());
-        flightRouteVO.setLightRouteList(new ArrayList<>());
+        flightRouteVO.setFlightRouteList(new ArrayList<>());
         searchFlightResponse.getRoutings().forEach(flightRoutings -> {
             FlightRoutingsVO flightRoutingsVO = flightRouteDto2FlightRouteVO(flightRoutings);
             if (flightRoutingsVO != null) {
-                flightRouteVO.getLightRouteList().add(flightRoutingsVO);
+                flightRouteVO.getFlightRouteList().add(flightRoutingsVO);
             }
         });
         return flightRouteVO;
@@ -75,7 +78,7 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
      */
     @Override
     protected <T> T request(RouteContext<SearchVO> context) {
-        SearchVO        searchVO        = context.getT();
+        SearchVO searchVO = context.getT();
         SearchFlightReq searchFlightReq = new SearchFlightReq();
         searchFlightReq.setFromCity(searchVO.getDepAirportCode());
         searchFlightReq.setFromDate(searchVO.getDepDate());

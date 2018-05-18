@@ -20,6 +20,22 @@ public class SearchFlightRes {
      */
     private String msg;
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
     private List<FlightRoutings> routings;
 
     public List<FlightRoutings> getRoutings() {

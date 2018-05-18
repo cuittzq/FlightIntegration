@@ -1,8 +1,6 @@
 package com.tzq.biz.aop;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -26,15 +24,5 @@ public class InterfaceAccessAspect {
 
     @Before("access()")
     public void deBefore(JoinPoint joinPoint) throws Throwable {
-    }
-
-    @Around("@annotation(userAccess)")
-    public Object around(ProceedingJoinPoint pjp, InterfaceAccess userAccess) {
-        try {
-            return pjp.proceed();
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-            return null;
-        }
     }
 }

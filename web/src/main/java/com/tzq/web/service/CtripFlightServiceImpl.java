@@ -109,7 +109,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         searchFlightRes.setMsg(response.getErrorMessage());
         searchFlightRes.setStatus(StatusEnum.SUCCEED.getCode());
         FlightRouteVO flightRouteVO = response.getData();
-        searchFlightRes.setRoutings(flightRoutingsVOMapper.flightRoutingsVO2DTOs(flightRouteVO.getLightRouteList()));
+        searchFlightRes.setRoutings(flightRoutingsVOMapper.flightRoutingsVO2DTOs(flightRouteVO.getFlightRouteList()));
         return searchFlightRes;
     }
 
@@ -131,14 +131,14 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         verifyReqVO.setInfantNumber(req.getInfantNumber());
         verifyReqVO.setReferenceId(req.getReferenceId());
         verifyReqVO.setRequesttype(req.getRequesttype());
-        verifyReqVO.setTripType(req.getTripType().intValue()==1?TripTypeEnum.OW:TripTypeEnum.RT);
+        verifyReqVO.setTripType(req.getTripType().intValue() == 1 ? TripTypeEnum.OW : TripTypeEnum.RT);
 
         verifyReqVO.setRouting(flightRoutingsVOMapper.flightRoutingsDTO2VO(req.getRoutings()));
         verifyReqVO.getRouting().setFromSegments(flightRoutingsVOMapper.segmentDTO2VOs(req.getRoutings().getFromSegments()));
         verifyReqVO.getRouting().setRetSegments(flightRoutingsVOMapper.segmentDTO2VOs(req.getRoutings().getRetSegments()));
         context.setT(verifyReqVO);
 
-        SingleResult<CtripVerifyResVO> singleResult =   otaVerifyFlightService.verifyFlight(context);
+        SingleResult<CtripVerifyResVO> singleResult = otaVerifyFlightService.verifyFlight(context);
 
         if (!singleResult.isSuccess() || singleResult.getData() == null) {
             response.setMsg(singleResult.getErrorMessage());
@@ -184,7 +184,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         createOrderReqVO.getRouting().setRule(flightRoutingsVOMapper.rulesDTO2VO(req.getRoutings().getRule()));
 
         logger.info("调用LCC{}接口,入参{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(context));
-        SingleResult<CreateOrderResVO>  singleResult= otaCreateOrderService.createOrder(context);
+        SingleResult<CreateOrderResVO> singleResult = otaCreateOrderService.createOrder(context);
         logger.info("调用LCC{}接口,返回{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(1));
         CreateOrderRes response = new CreateOrderRes();
         if (!singleResult.isSuccess() || singleResult.getData() == null) {
@@ -195,7 +195,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
 
         response.setStatus(StatusEnum.SUCCEED.getCode());
         response.setMaxSeats(singleResult.getData().getMaxSeats());
-        response.setOrderContact(orderVOMapper.orderCtripVO2DTO( singleResult.getData().getOrderContact()));
+        response.setOrderContact(orderVOMapper.orderCtripVO2DTO(singleResult.getData().getOrderContact()));
         response.setOrderNo(singleResult.getData().getOrderNo());
         response.setPnrCode(singleResult.getData().getPnrCode());
         response.setRouting(ctripVerifyVOMapper.flightRoutingsVO2DTO(singleResult.getData().getRouting()));
