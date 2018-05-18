@@ -153,7 +153,7 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
         /**
          * 【公布运价强校验】汇率
          */
-        flightRoutingsVO.setExchange(new BigDecimal(1));
+        flightRoutingsVO.setExchange("");
         /**
          * 【公布运价强校验】
          * 1）旅客资质，标准三字码：
