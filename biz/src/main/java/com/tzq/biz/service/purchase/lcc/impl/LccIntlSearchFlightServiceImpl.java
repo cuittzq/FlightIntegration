@@ -1,5 +1,6 @@
 package com.tzq.biz.service.purchase.lcc.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.tzq.biz.annotation.Route;
 import com.tzq.biz.constant.OtaConstants;
 import com.tzq.biz.service.purchase.abstracts.AbstractSearchFlightService;
@@ -34,9 +35,9 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
      */
     @Override
     public FlightRouteVO searchFlight(RouteContext<SearchVO> context) {
-        SearchFlightReq searchFlightReq = request(context);
+        SearchFlightReq searchFlightReq      = request(context);
         SearchFlightRes searchFlightResponse = lccClient.searchFlight(searchFlightReq);
-        FlightRouteVO flightRouteVO = response(searchFlightResponse, context);
+        FlightRouteVO   flightRouteVO        = response(searchFlightResponse, context);
         return flightRouteVO;
     }
 
@@ -75,7 +76,7 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
      */
     @Override
     protected <T> T request(RouteContext<SearchVO> context) {
-        SearchVO searchVO = context.getT();
+        SearchVO        searchVO        = context.getT();
         SearchFlightReq searchFlightReq = new SearchFlightReq();
         searchFlightReq.setFromCity(searchVO.getDepAirportCode());
         searchFlightReq.setFromDate(searchVO.getDepDate());
@@ -104,7 +105,7 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
         /**
          * 可保存必要信息，验价时会放在请求报文中传给供应商；最大 1000 个字符
          */
-        flightRoutingsVO.setData(flightRoutings.getData());
+        flightRoutingsVO.setData(JSON.toJSONString(datamap));
         /**
          * 【公布运价强校验】成人公布价（以CNY为单位），不含税
          */

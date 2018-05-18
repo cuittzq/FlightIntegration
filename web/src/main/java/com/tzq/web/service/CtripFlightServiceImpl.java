@@ -87,7 +87,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         RouteContext<SearchVO> context = new RouteContext();
         setDefaultCont(context);
         SearchVO searchVO = new SearchVO();
-        searchVO.setDepDate(req.getRetDate());
+        searchVO.setDepDate(req.getFromDate());
         searchVO.setDepAirportCode(req.getFromCity());
         searchVO.setArrAirportCode(req.getToCity());
         searchVO.setArrDate(req.getRetDate());
