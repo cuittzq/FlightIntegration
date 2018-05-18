@@ -1,6 +1,8 @@
 package com.tzq.biz.aop;
 
+import com.tzq.commons.enums.MethodEnum;
 import com.tzq.commons.model.context.RouteContext;
+import com.tzq.commons.model.ctrip.search.FlightRouteVO;
 import com.tzq.commons.model.ctrip.search.SearchVO;
 import com.tzq.commons.utils.DateUtils;
 import com.tzq.dal.model.log.InterfaceRequestLog;
@@ -16,6 +18,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * 功能描述
@@ -44,18 +47,7 @@ public class SearchFlightLogAspect {
 
     @Before("interfacelog()")
     public void deBefore(JoinPoint joinPoint) throws Throwable {
-        // 接收到请求，记录请求内容
-        ServletRequestAttributes attributes          = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest       request             = attributes.getRequest();
-        RouteContext<SearchVO>   paramin             = (RouteContext<SearchVO>) joinPoint.getArgs()[0];
-        InterfaceRequestLog      interfaceRequestLog = buildLogs(paramin);
-        interfaceRequestLogService.insert(interfaceRequestLog);
-        // 记录下请求内容
-        System.out.println("URL : " + request.getRequestURL().toString());
-        System.out.println("HTTP_METHOD : " + request.getMethod());
-        System.out.println("IP : " + request.getRemoteAddr());
-        System.out.println("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        System.out.println("ARGS : " + Arrays.toString(joinPoint.getArgs()));
+
 
     }
 
@@ -74,8 +66,24 @@ public class SearchFlightLogAspect {
 
     //后置最终通知,final增强，不管是抛出异常或者正常退出都会执行
     @After("interfacelog()")
-    public void after(JoinPoint jp) {
-        System.out.println("方法最后执行.....");
+    public void after(JoinPoint joinPoint) {
+        // 接收到请求，记录请求内容
+        try {
+            ServletRequestAttributes attributes          = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            HttpServletRequest       request             = attributes.getRequest();
+            RouteContext<SearchVO>   paramin             = (RouteContext<SearchVO>) joinPoint.getArgs()[0];
+            FlightRouteVO            response            = new FlightRouteVO();
+            InterfaceRequestLog      interfaceRequestLog = buildLogs(paramin);
+            interfaceRequestLogService.insert(interfaceRequestLog);
+            // 记录下请求内容
+            System.out.println("URL : " + request.getRequestURL().toString());
+            System.out.println("HTTP_METHOD : " + request.getMethod());
+            System.out.println("IP : " + request.getRemoteAddr());
+            System.out.println("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
+            System.out.println("ARGS : " + Arrays.toString(joinPoint.getArgs()));
+        } catch (Exception ex) {
+
+        }
     }
 
 
@@ -86,6 +94,26 @@ public class SearchFlightLogAspect {
         interfaceRequestLog.setDepdate(DateUtils.parseDateNoTime(paramin.getT().getDepDate(), "YYYYMMDD"));
         interfaceRequestLog.setBackdate(DateUtils.parseDateNoTime(paramin.getT().getArrDate(), "YYYYMMDD"));
         interfaceRequestLog.setCarrier("");
+        interfaceRequestLog.setSalesplatform(1);
+        interfaceRequestLog.setPurchaseplatform(1);
+        interfaceRequestLog.setRequestdate(new Date());
+        interfaceRequestLog.setRequesttype(MethodEnum.SEARCHFLIGHT.getCode());
+        interfaceRequestLog.setRequestresult(1);
+        interfaceRequestLog.setInterfaceresult(1);
+        interfaceRequestLog.setOrderno("");
+        interfaceRequestLog.setPnr("");
+        // 0-单程，1-往返
+        interfaceRequestLog.setVoyagetype(0);
+//        interfaceRequestLog.setSalesplatrequesttime();
+//        interfaceRequestLog.setSalesplatresponsetime();
+//        interfaceRequestLog.setPurchaseplatrequesttime();
+//        interfaceRequestLog.setPurchaseplatresponsetime();
+//        interfaceRequestLog.setSalesplatrequestip()
+//        interfaceRequestLog.setPurchaseplatrequestip();
+//        interfaceRequestLog.setSalesplatrequesttipmessage()
+//        interfaceRequestLog.setPurchaseplatrequesttipmessage();
+//        interfaceRequestLog.setSalesplatlogdetail();
+//        interfaceRequestLog.setPurchaseplatlogdetail();
         return interfaceRequestLog;
 
     }
