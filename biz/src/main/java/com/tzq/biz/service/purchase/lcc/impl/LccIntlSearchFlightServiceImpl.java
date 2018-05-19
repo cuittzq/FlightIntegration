@@ -35,9 +35,16 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
      */
     @Override
     public FlightRouteVO searchFlight(RouteContext<SearchVO> context) {
+        FlightRouteVO flightRouteVO = new FlightRouteVO();
         SearchFlightReq searchFlightReq = request(context);
+
         SearchFlightRes searchFlightResponse = lccClient.searchFlight(searchFlightReq);
-        FlightRouteVO flightRouteVO = response(searchFlightResponse, context);
+        if (searchFlightResponse.getStatus() != 0) {
+            flightRouteVO.setStatus(searchFlightResponse.getStatus());
+            flightRouteVO.setMsg(searchFlightResponse.getMsg());
+            return flightRouteVO;
+        }
+        flightRouteVO = response(searchFlightResponse, context);
         return flightRouteVO;
     }
 
