@@ -1,5 +1,8 @@
 package com.tzq.service.ctrip.models.search;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -192,6 +195,7 @@ public class FlightRoutingsDTO implements Serializable {
      */
     private List<SegmentDTO> retSegments;
 
+    @NotEmpty(message = "data部分不能为空，请带上查询的data")
     public String getData() {
         return data;
     }
@@ -456,6 +460,7 @@ public class FlightRoutingsDTO implements Serializable {
         this.rule = rule;
     }
 
+    @NotNull(message = "出发航段信息不能为空！")
     public List<SegmentDTO> getFromSegments() {
         return fromSegments;
     }

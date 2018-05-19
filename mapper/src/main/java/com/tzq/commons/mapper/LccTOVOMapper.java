@@ -1,106 +1,31 @@
-package com.tzq.biz.service.purchase.lcc.impl;
+package com.tzq.commons.mapper;
 
-import com.tzq.biz.annotation.Route;
-import com.tzq.biz.constant.OtaConstants;
-import com.tzq.biz.service.purchase.abstracts.AbstractSearchFlightService;
-import com.tzq.commons.enums.*;
-import com.tzq.commons.model.context.RouteContext;
-import com.tzq.commons.model.ctrip.search.FlightRouteVO;
+import com.tzq.commons.enums.EligibilityEnum;
+import com.tzq.commons.enums.InvoiceTypeEnum;
+import com.tzq.commons.enums.ProductTypeEnum;
+import com.tzq.commons.enums.PurchaseEnum;
+import com.tzq.commons.enums.ReservationTypeEnum;
 import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
-import com.tzq.commons.model.ctrip.search.SearchVO;
 import com.tzq.commons.model.ctrip.search.SegmentVO;
-import com.tzq.integration.service.intl.lcc.LccClient;
-import com.tzq.integration.service.intl.lcc.model.search.*;
+import com.tzq.integration.service.intl.lcc.model.search.FlightRoutings;
+import com.tzq.integration.service.intl.lcc.model.search.FlightSegment;
+import com.tzq.integration.service.intl.lcc.model.search.Rules;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-@Service("lccIntlSearchFlightService")
-@Route(area = AreaTypeEnum.INTERNATIONAL, purchase = PurchaseEnum.LCC)
-public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService {
-
-    @Resource
-    private LccClient lccClient;
-
-    /**
-     * 查询
-     *
-     * @param context
-     */
-    @Override
-    public FlightRouteVO searchFlight(RouteContext<SearchVO> context) {
-        SearchFlightReq searchFlightReq = request(context);
-        SearchFlightRes searchFlightResponse = lccClient.searchFlight(searchFlightReq);
-        FlightRouteVO flightRouteVO = response(searchFlightResponse, context);
-        return flightRouteVO;
-    }
-
-    /**
-     * 航班查询返回参数组装
-     *
-     * @param t
-     * @param context
-     * @return
-     */
-    @Override
-    protected <T> FlightRouteVO response(T t, RouteContext<SearchVO> context) {
-        SearchFlightRes searchFlightResponse = (SearchFlightRes) t;
-        //把data记录缓存，下单验价出票需要用，强强要干掉的话，自己看着办
-        FlightRouteVO flightRouteVO = new FlightRouteVO();
-        flightRouteVO.setAreaType(context.getAreaType().getCode());
-        flightRouteVO.setDepAirportCode(context.getT().getDepAirportCode());
-        flightRouteVO.setArrAirportCode(context.getT().getArrAirportCode());
-        flightRouteVO.setDepDate(context.getT().getDepDate());
-        flightRouteVO.setTripType(context.getT().getTripType().getCode());
-        flightRouteVO.setLightRouteList(new ArrayList<>());
-        searchFlightResponse.getRoutings().forEach(flightRoutings -> {
-            FlightRoutingsVO flightRoutingsVO = flightRouteDto2FlightRouteVO(flightRoutings);
-            if (flightRoutingsVO != null) {
-                flightRouteVO.getLightRouteList().add(flightRoutingsVO);
-            }
-        });
-        return flightRouteVO;
-    }
-
-    /**
-     * 航班查询请求参数组装
-     *
-     * @param context
-     * @return
-     */
-    @Override
-    protected <T> T request(RouteContext<SearchVO> context) {
-        SearchVO searchVO = context.getT();
-        SearchFlightReq searchFlightReq = new SearchFlightReq();
-        searchFlightReq.setFromCity(searchVO.getDepAirportCode());
-        searchFlightReq.setFromDate(searchVO.getDepDate());
-        searchFlightReq.setToCity(searchVO.getArrAirportCode());
-        searchFlightReq.setTripType(searchVO.getTripType().getCode().equals(TripTypeEnum.OW.getCode()) ? 1 : 2);
-        if (searchVO.getTripType().getCode().equals(TripTypeEnum.RT.getCode())) {
-            searchFlightReq.setRetDate(searchVO.getArrDate());
-        }
-        return (T) searchFlightReq;
-    }
+/**
+ * Created by cl24957 on 2018/5/18.
+ */
+public class LccTOVOMapper {
 
     /**
      * @param flightRoutings
      * @return
      */
-    private FlightRoutingsVO flightRouteDto2FlightRouteVO(FlightRoutings flightRoutings) {
+    public static FlightRoutingsVO flightRouteDto2FlightRouteVO(FlightRoutings flightRoutings) {
         FlightRoutingsVO flightRoutingsVO = new FlightRoutingsVO();
-        if (flightRoutings == null) {
-            return null;
-        }
-        Map<String, Object> datamap = new HashMap<>();
-        datamap.put(OtaConstants.PURCHANAME, PurchaseEnum.LCC.getCode());
-        if (flightRoutings.getData() != null) {
-            datamap.put(OtaConstants.PURCHANAME_DATA, flightRoutings.getData());
-        }
+
         /**
          * 可保存必要信息，验价时会放在请求报文中传给供应商；最大 1000 个字符
          */
@@ -226,28 +151,28 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
         return flightRoutingsVO;
     }
 
-
-    private SegmentVO buildSegment(FlightSegment flightSegment) {
+    private static SegmentVO buildSegment(FlightSegment flightSegment) {
         if (flightSegment == null) {
             return null;
         }
-        SegmentVO segmentVO = new SegmentVO();
-        segmentVO.setAircraftCode(flightSegment.getAircraftCode());
-        segmentVO.setArrAirport(flightSegment.getArrAirport());
-        segmentVO.setArrTerminal(flightSegment.getArrivingTerminal());
-        segmentVO.setArrTime(flightSegment.getArrTime());
-        segmentVO.setDepAirport(flightSegment.getDepAirport());
-        segmentVO.setDepTerminal(flightSegment.getDepartureTerminal());
-        segmentVO.setDepTime(flightSegment.getDepTime());
-        // segmentVO.setDuration(flightSegment.get);
-        segmentVO.setCabin(flightSegment.getCabin());
-        segmentVO.setCabinGrade(flightSegment.getCabin());
-        segmentVO.setCarrier(flightSegment.getCarrier());
-        segmentVO.setCodeShare(StringUtils.isNotEmpty(flightSegment.getSharingFlightNumber()));
-        segmentVO.setOperatingCarrier(flightSegment.getSharingFlightNumber());
-        segmentVO.setOperatingFlightNo(flightSegment.getFlightNumber());
-        segmentVO.setFlightNumber(flightSegment.getFlightNumber());
-        segmentVO.setStopAirports(flightSegment.getStopCities());
-        return segmentVO;
+
+        SegmentVO segmentVO1 = new SegmentVO();
+        segmentVO1.setAircraftCode(flightSegment.getAircraftCode());
+        segmentVO1.setArrAirport(flightSegment.getArrAirport());
+        segmentVO1.setArrTerminal(flightSegment.getArrivingTerminal());
+        segmentVO1.setArrTime(flightSegment.getArrTime());
+        segmentVO1.setDepAirport(flightSegment.getDepAirport());
+        segmentVO1.setDepTerminal(flightSegment.getDepartureTerminal());
+        segmentVO1.setDepTime(flightSegment.getDepTime());
+        segmentVO1.setCabin(flightSegment.getCabin());
+        segmentVO1.setCabinGrade(flightSegment.getCabin());
+        segmentVO1.setCarrier(flightSegment.getCarrier());
+        segmentVO1.setStopAirports(flightSegment.getStopCities());
+        segmentVO1.setCodeShare(StringUtils.isNotEmpty(flightSegment.getSharingFlightNumber()));
+        segmentVO1.setOperatingCarrier(flightSegment.getSharingFlightNumber());
+        segmentVO1.setOperatingFlightNo(flightSegment.getFlightNumber());
+        segmentVO1.setFlightNumber(flightSegment.getFlightNumber());
+
+        return segmentVO1;
     }
 }

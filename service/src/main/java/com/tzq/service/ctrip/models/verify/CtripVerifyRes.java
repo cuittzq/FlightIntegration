@@ -14,7 +14,7 @@ public class CtripVerifyRes extends BaseResponse {
     /**
      * int 可预订的座位数，最大为9；供应商需要确保下maxSeats不小于验价请求人数。
      */
-    private Integer maxSeats;
+    private int maxSeats;
 
     /**
      * 报价信息
@@ -34,11 +34,11 @@ public class CtripVerifyRes extends BaseResponse {
         this.sessionId = sessionId;
     }
 
-    public Integer getMaxSeats() {
+    public int getMaxSeats() {
         return maxSeats;
     }
 
-    public void setMaxSeats(Integer maxSeats) {
+    public void setMaxSeats(int maxSeats) {
         this.maxSeats = maxSeats;
     }
 

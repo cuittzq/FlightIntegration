@@ -2,8 +2,10 @@ package com.tzq.service.ctrip.models.verify;
 
 import com.tzq.service.ctrip.models.BaseRequest;
 import com.tzq.service.ctrip.models.search.FlightRoutingsDTO;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 public class CtripVerifyReq extends BaseRequest implements Serializable {
@@ -15,7 +17,7 @@ public class CtripVerifyReq extends BaseRequest implements Serializable {
     /**
      * 行程类型，1：单程；2：往返；3：多程。
      */
-    private Integer tripType;
+    private int tripType;
     /**
      * 请求类型，全部为1：验价
      */
@@ -23,15 +25,15 @@ public class CtripVerifyReq extends BaseRequest implements Serializable {
     /**
      * 成⼈人数，1-9
      */
-    private Integer adultNumber;
+    private int adultNumber;
     /**
      * ⼉童⼈数，0-9
      */
-    private Integer childNumber;
+    private int childNumber;
     /**
      * 婴儿人数，0-9
      */
-    private Integer infantNumber;
+    private int infantNumber;
     /**
      * 报价信息，参考搜索返回结果中的 Routing Elements。 1）只含航班信息,航班信息不含经停城市/机场，机型；
      * 2）不含价格信息、退改签信息、行李额信息等。
@@ -46,11 +48,12 @@ public class CtripVerifyReq extends BaseRequest implements Serializable {
         this.referenceId = referenceId;
     }
 
-    public Integer getTripType() {
+    @Size(max = 3,min = 1,message = "行程类型错误 1：单程 2：返程")
+    public int getTripType() {
         return tripType;
     }
 
-    public void setTripType(Integer tripType) {
+    public void setTripType(int tripType) {
         this.tripType = tripType;
     }
 
@@ -62,23 +65,23 @@ public class CtripVerifyReq extends BaseRequest implements Serializable {
         this.requesttype = requesttype;
     }
 
-    public Integer getAdultNumber() {
+    public int getAdultNumber() {
         return adultNumber;
     }
 
-    public void setAdultNumber(Integer adultNumber) {
+    public void setAdultNumber(int adultNumber) {
         this.adultNumber = adultNumber;
     }
 
-    public Integer getChildNumber() {
+    public int getChildNumber() {
         return childNumber;
     }
 
-    public void setChildNumber(Integer childNumber) {
+    public void setChildNumber(int childNumber) {
         this.childNumber = childNumber;
     }
 
-    public Integer getInfantNumber() {
+    public int getInfantNumber() {
         return infantNumber;
     }
 
@@ -86,6 +89,7 @@ public class CtripVerifyReq extends BaseRequest implements Serializable {
         this.infantNumber = infantNumber;
     }
 
+    @NotNull(message="航线不能为空")
     public FlightRoutingsDTO getRoutings() {
         return routings;
     }
