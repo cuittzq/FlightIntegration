@@ -1,5 +1,6 @@
 package com.tzq.commons.model.ctrip.order;
 
+import com.tzq.commons.enums.TripTypeEnum;
 import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
 
 import java.util.List;
@@ -20,10 +21,10 @@ public class CreateOrderReqVO {
 
     private CtripOrderIdVO ctripOrderId;
     private String referenceId;
-    private Integer tripType;
+    private TripTypeEnum tripType;
     private String sessionId;
     private FlightRoutingsVO routing;
-    private List<ContactVO> contact;
+    private ContactVO contact;
     private List<PassengerVO> passengers;
     private List<PassengerbaggagesVO> passengerbaggages;
     private List<CtripRefRevServiceFeeVO> ctripRefRevServiceFee;
@@ -44,11 +45,11 @@ public class CreateOrderReqVO {
         this.referenceId = referenceId;
     }
 
-    public Integer getTripType() {
+    public TripTypeEnum getTripType() {
         return tripType;
     }
 
-    public void setTripType(Integer tripType) {
+    public void setTripType(TripTypeEnum tripType) {
         this.tripType = tripType;
     }
 
@@ -68,11 +69,11 @@ public class CreateOrderReqVO {
         this.routing = routing;
     }
 
-    public List<ContactVO> getContact() {
+    public ContactVO getContact() {
         return contact;
     }
 
-    public void setContact(List<ContactVO> contact) {
+    public void setContact(ContactVO contact) {
         this.contact = contact;
     }
 

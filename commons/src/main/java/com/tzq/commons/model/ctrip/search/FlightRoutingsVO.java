@@ -1,15 +1,19 @@
 package com.tzq.commons.model.ctrip.search;
 
+import com.tzq.commons.enums.EligibilityEnum;
+import com.tzq.commons.enums.ReservationTypeEnum;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public class FlightRoutingsVO implements Serializable {
     private static final long serialVersionUID = 4648720182385388979L;
     /**
      * 可保存必要信息，验价时会放在请求报文中传给供应商；最大 1000 个字符
      */
-    private String data;
+    private Map<String, Object> data;
     /**
      * 【公布运价强校验】成人公布价（以CNY为单位），不含税
      */
@@ -87,7 +91,7 @@ public class FlightRoutingsVO implements Serializable {
      * 	YOU：青年
      * 2）如果投放非NOR的政策，请提前告知我们。
      */
-    private String eligibility;
+    private EligibilityEnum eligibility;
     /**
      * 允许国籍，使用标准国家二字码
      * 【如要使用此字段请提前通知我们，盲目使用会影响价格展示】
@@ -162,7 +166,7 @@ public class FlightRoutingsVO implements Serializable {
      * 	1G：Galileo
      * OT：未知订座系统来源
      */
-    private String reservationType;
+    private ReservationTypeEnum reservationType;
     /**
      * 【公布运价强校验】运价类型
      * 1）公布运价请赋值为：PUB：公布运价；
@@ -192,11 +196,11 @@ public class FlightRoutingsVO implements Serializable {
      */
     private List<SegmentVO> retSegments;
 
-    public String getData() {
+    public Map<String, Object> getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Map<String, Object> data) {
         this.data = data;
     }
 
@@ -320,11 +324,11 @@ public class FlightRoutingsVO implements Serializable {
         this.adultAgeRestriction = adultAgeRestriction;
     }
 
-    public String getEligibility() {
+    public EligibilityEnum getEligibility() {
         return eligibility;
     }
 
-    public void setEligibility(String eligibility) {
+    public void setEligibility(EligibilityEnum eligibility) {
         this.eligibility = eligibility;
     }
 
@@ -416,11 +420,11 @@ public class FlightRoutingsVO implements Serializable {
         this.validatingCarrier = validatingCarrier;
     }
 
-    public String getReservationType() {
+    public ReservationTypeEnum getReservationType() {
         return reservationType;
     }
 
-    public void setReservationType(String reservationType) {
+    public void setReservationType(ReservationTypeEnum reservationType) {
         this.reservationType = reservationType;
     }
 

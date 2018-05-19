@@ -1,10 +1,7 @@
-package com.tzq.commons.mapper;
+package com.tzq.commons.mapper.lcc;
 
-import com.tzq.commons.enums.EligibilityEnum;
-import com.tzq.commons.enums.InvoiceTypeEnum;
-import com.tzq.commons.enums.ProductTypeEnum;
-import com.tzq.commons.enums.PurchaseEnum;
-import com.tzq.commons.enums.ReservationTypeEnum;
+import com.tzq.commons.converter.ExtInfoConverter;
+import com.tzq.commons.enums.*;
 import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
 import com.tzq.commons.model.ctrip.search.SegmentVO;
 import com.tzq.integration.service.intl.lcc.model.search.FlightRoutings;
@@ -29,7 +26,7 @@ public class LccTOVOMapper {
         /**
          * 可保存必要信息，验价时会放在请求报文中传给供应商；最大 1000 个字符
          */
-        flightRoutingsVO.setData(flightRoutings.getData());
+        flightRoutingsVO.setData(ExtInfoConverter.string2Map(flightRoutings.getData()));
         /**
          * 【公布运价强校验】成人公布价（以CNY为单位），不含税
          */
@@ -89,7 +86,7 @@ public class LccTOVOMapper {
          * 	YOU：青年
          * 2）如果投放非NOR的政策，请提前告知我们。
          */
-        flightRoutingsVO.setEligibility(EligibilityEnum.NOR.getCode());
+        flightRoutingsVO.setEligibility(EligibilityEnum.NOR);
 
 
         /**
@@ -117,7 +114,7 @@ public class LccTOVOMapper {
          * 	1G：Galileo
          * OT：未知订座系统来源
          */
-        flightRoutingsVO.setReservationType(ReservationTypeEnum.OT.getCode());
+        flightRoutingsVO.setReservationType(ReservationTypeEnum.OT);
         /**
          * 【公布运价强校验】运价类型
          * 1）公布运价请赋值为：PUB：公布运价；
@@ -165,7 +162,7 @@ public class LccTOVOMapper {
         segmentVO1.setDepTerminal(flightSegment.getDepartureTerminal());
         segmentVO1.setDepTime(flightSegment.getDepTime());
         segmentVO1.setCabin(flightSegment.getCabin());
-        segmentVO1.setCabinGrade(flightSegment.getCabin());
+        segmentVO1.setCabinGrade(CabinGradeEnum.getEnumByCode(flightSegment.getCabin()));
         segmentVO1.setCarrier(flightSegment.getCarrier());
         segmentVO1.setStopAirports(flightSegment.getStopCities());
         segmentVO1.setCodeShare(StringUtils.isNotEmpty(flightSegment.getSharingFlightNumber()));

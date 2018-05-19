@@ -37,7 +37,6 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
     @Override
     public SingleResult<CreateOrderResVO> createOrder(RouteContext<CreateOrderReqVO> context) {
         Assert.notNull(context, "RouteContext can not be null ,searchFlight failure");
-        List<CreateOrderResVO> resVOS = null;
         SingleResult<CreateOrderResVO> response = null;
         CreateOrderResVO verifyResVO = purchaseProxy.createOrder(context);
         try {
@@ -56,13 +55,5 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
         }
 
         return response;
-    }
-
-    private CreateOrderResVO flightRegulation(List<CreateOrderResVO> resVOS) {
-        if (null == resVOS || resVOS.size() == 0) {
-            return null;
-        } else {
-            return resVOS.get(0);
-        }
     }
 }

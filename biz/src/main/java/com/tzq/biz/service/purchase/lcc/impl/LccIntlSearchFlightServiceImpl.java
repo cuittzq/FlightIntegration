@@ -114,7 +114,7 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
         /**
          * 可保存必要信息，验价时会放在请求报文中传给供应商；最大 1000 个字符
          */
-        flightRoutingsVO.setData(JSON.toJSONString(datamap));
+        flightRoutingsVO.setData(datamap);
         /**
          * 【公布运价强校验】成人公布价（以CNY为单位），不含税
          */
@@ -174,7 +174,7 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
          * 	YOU：青年
          * 2）如果投放非NOR的政策，请提前告知我们。
          */
-        flightRoutingsVO.setEligibility(EligibilityEnum.NOR.getCode());
+        flightRoutingsVO.setEligibility(EligibilityEnum.NOR);
 
 
         /**
@@ -202,7 +202,7 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
          * 	1G：Galileo
          * OT：未知订座系统来源
          */
-        flightRoutingsVO.setReservationType(ReservationTypeEnum.OT.getCode());
+        flightRoutingsVO.setReservationType(ReservationTypeEnum.OT);
         /**
          * 【公布运价强校验】运价类型
          * 1）公布运价请赋值为：PUB：公布运价；
@@ -251,7 +251,7 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
         segmentVO.setDepTime(flightSegment.getDepTime());
         // segmentVO.setDuration(flightSegment.get);
         segmentVO.setCabin(flightSegment.getCabin());
-        segmentVO.setCabinGrade(flightSegment.getCabin());
+        segmentVO.setCabinGrade(CabinGradeEnum.getEnumByCode(flightSegment.getCabin()));
         segmentVO.setCarrier(flightSegment.getCarrier());
         segmentVO.setCodeShare(StringUtils.isNotEmpty(flightSegment.getSharingFlightNumber()));
         segmentVO.setOperatingCarrier(flightSegment.getSharingFlightNumber());

@@ -65,7 +65,7 @@ public class CtripServiceController {
 
         if (verifyReq.getTripType() == 0 || verifyReq.getTripType() > 2) {
             verifyRes.setStatus(StatusEnum.PARAM_ERROR.getCode());
-            verifyRes.setMsg("行程类型错误 1：单�2：往�);
+            verifyRes.setMsg("行程类型错误 1：单程2：往返");
             return verifyRes;
         }
 
@@ -99,7 +99,8 @@ public class CtripServiceController {
 
         if (createOrderReq.getTripType() == 0 || createOrderReq.getTripType() > 2) {
             createOrderRes.setStatus(StatusEnum.PARAM_ERROR.getCode());
-            createOrderRes.setMsg("行程类型错误 1：单�2：往�);
+            createOrderRes.setMsg("行程类型错误 1：单程2：往返");
+
 
             return createOrderRes;
         }
@@ -117,7 +118,8 @@ public class CtripServiceController {
     }
 
     /**
-     *  基本的routing验证
+     * 基本的routing验证
+     *
      * @param routingsDTO
      * @param type
      * @return

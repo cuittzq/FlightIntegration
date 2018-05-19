@@ -1,43 +1,6 @@
 package com.tzq.commons.model.ctrip.order;
 
 public class CtripRefRevServiceFeeVO {
-    /**
-     * id : 2360250238
-     * status : 0
-     * outboundRevalidationFee : 100
-     * outRevFeeCurrency : RMB
-     * inboundRevalidationFee : 100
-     * inRevFeeCurrency : RMB
-     * revalidationFeeByConsolidator : 50
-     * outNonChg : T
-     * inNonChg : T
-     * outNonRev : T
-     * inNonRev : T
-     * outRevChdFee : 100
-     * inRevChdFee : 100
-     * revHasNoShow : T
-     * outRevNoShowFee : 100
-     * inRevNoShowFee : 100
-     * outRevNoShowChdFee : 100
-     * inRevNoShowChdFee : 100
-     * revNoShowCondition : 0
-     * inRefundFee : 100
-     * inRefCurrency : RMB
-     * outRefundFee : 100
-     * outRefCurrency : RMB
-     * refundFeeByConsolidator : 50
-     * outNonRef : T
-     * inNonRef : F
-     * outRefChdFee : 100
-     * inRefChdFee : 100
-     * refHasNoShow : T
-     * outRefNoShowFee : 100
-     * inRefNoShowFee : 100
-     * outRefNoShowChdFee : 100
-     * inRefNoShowChdFee : 100
-     * refNoShowCondition : 0
-     */
-
     private long id;
     private int status;
     private int outboundRevalidationFee;

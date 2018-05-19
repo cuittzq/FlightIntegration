@@ -7,8 +7,7 @@ import com.tzq.commons.Exception.ServiceAbstractException;
 import com.tzq.commons.Exception.ServiceErrorMsg;
 import com.tzq.commons.enums.AreaTypeEnum;
 import com.tzq.commons.enums.PurchaseEnum;
-import com.tzq.commons.mapper.LccTOVOMapper;
-import com.tzq.commons.mapper.VerifyVOMapper;
+import com.tzq.commons.mapper.lcc.LccTOVOMapper;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyResVO;
@@ -33,9 +32,6 @@ import javax.annotation.Resource;
 public class LCCIntlVerifyServiceImpl extends AbstractVerifyService {
     @Resource
     private LccClient lccClient;
-
-    @Resource
-    private VerifyVOMapper verifyVOMapper;
 
     /**
      * 验价
@@ -87,9 +83,12 @@ public class LCCIntlVerifyServiceImpl extends AbstractVerifyService {
     @Override
     protected <T> T request(RouteContext<CtripVerifyReqVO> context) {
         CtripVerifyReqVO ctripVerifyReqVO = context.getT();
-        VerifyReq verifyReq = verifyVOMapper.VerifyReqVOvO2dto(ctripVerifyReqVO);
-        verifyReq.getRouting().setFromSegments(verifyVOMapper.FlightSegmentvos2dtos(ctripVerifyReqVO.getRouting().getFromSegments()));
-        verifyReq.getRouting().setRetSegments(verifyVOMapper.FlightSegmentvos2dtos(ctripVerifyReqVO.getRouting().getRetSegments()));
+        VerifyReq verifyReq = new VerifyReq();
+//        VerifyReq verifyReq = verifyVOMapper.VerifyReqVOvO2dto(ctripVerifyReqVO);
+//        verifyReq.getRouting().setFromSegments(verifyVOMapper.FlightSegmentvos2dtos(ctripVerifyReqVO.getRouting().getFromSegments()));
+//        verifyReq.getRouting().setRetSegments(verifyVOMapper.FlightSegmentvos2dtos(ctripVerifyReqVO.getRouting().getRetSegments()));
+
+        // 这层请在类的下面写模型转换
 
         return (T) verifyReq;
     }

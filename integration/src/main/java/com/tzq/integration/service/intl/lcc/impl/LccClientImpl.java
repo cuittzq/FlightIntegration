@@ -1,6 +1,7 @@
 package com.tzq.integration.service.intl.lcc.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.tzq.commons.enums.AgeTypeEunm;
 import com.tzq.commons.utils.AESUtil;
 import com.tzq.commons.utils.HttpClientUtil;
 import com.tzq.integration.service.core.AbstractBaseClient;
@@ -109,11 +110,11 @@ public class LccClientImpl extends AbstractBaseClient implements LccClient {
             logger.info("调用LCC{}接口,入参{}", LccConstant.CREATE_ORDER, postData);
 
             // 字符串加密
-            postData = AESUtil.Encrypt(postData,LccConstant.AES_KEY);
+            postData = AESUtil.Encrypt(postData, LccConstant.AES_KEY);
 
             response = HttpClientUtil.sendPostDataByJson(url, postData, header, ENCODING);
             logger.info("调用LCC{}接口,返回{}", LccConstant.CREATE_ORDER, response);
-            response = AESUtil.Decrypt(response,LccConstant.AES_KEY);
+            response = AESUtil.Decrypt(response, LccConstant.AES_KEY);
 
             // 解密
             orderRes = JSON.parseObject(response, OrderRes.class);
@@ -121,12 +122,10 @@ public class LccClientImpl extends AbstractBaseClient implements LccClient {
         } catch (IOException e) {
             logger.error("调用LCC创单接口失败", e);
             e.printStackTrace();
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             logger.error("调用LCC创单接口失败", e);
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             // TODO 记录接口访问日志
         }
 
@@ -149,7 +148,7 @@ public class LccClientImpl extends AbstractBaseClient implements LccClient {
 
         List<Passenger> passengers = new ArrayList<>();
         Passenger passenger = new Passenger();
-        passenger.setAgeType("0");
+        passenger.setAgeType(AgeTypeEunm.ADT.getCode());
         passenger.setBirthday("19910425");
         passenger.setCardExpired("20200101");
         passenger.setCardIssuePlace("CN");
@@ -185,7 +184,7 @@ public class LccClientImpl extends AbstractBaseClient implements LccClient {
         routing.setFromSegments(fromSegments);
         orderReq.setRouting(routing);
         LccClientImpl lccClient = new LccClientImpl();
-        OrderRes res =  lccClient.createOrder(orderReq);
+        OrderRes res = lccClient.createOrder(orderReq);
 
         System.out.println(JSON.toJSONString(res));
     }
@@ -202,23 +201,22 @@ public class LccClientImpl extends AbstractBaseClient implements LccClient {
         try {
             logger.info("调用LCC{}接口,入参{}", LccConstant.ISSUETICKET, postData);
             // 字符串加密
-            postData = AESUtil.Encrypt(postData,LccConstant.AES_KEY);
+            postData = AESUtil.Encrypt(postData, LccConstant.AES_KEY);
 
             response = HttpClientUtil.sendPostDataByJson(url, postData, header, ENCODING);
             logger.info("调用LCC{}接口,返回{}", LccConstant.ISSUETICKET, response);
 
             // 解密
-            response = AESUtil.Encrypt(response,LccConstant.AES_KEY);
+            response = AESUtil.Encrypt(response, LccConstant.AES_KEY);
 
             // 解密
             res = JSON.parseObject(response, IssueTicketRes.class);
 
         } catch (IOException e) {
             logger.error("调用LCC创单接口失败", e);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             logger.error("调用LCC创单接口失败", e);
-        }finally {
+        } finally {
             // TODO 记录接口访问日志
         }
 
@@ -226,7 +224,8 @@ public class LccClientImpl extends AbstractBaseClient implements LccClient {
     }
 
     /**
-     *  出票查询，获取票号状态
+     * 出票查询，获取票号状态
+     *
      * @param req
      * @return
      */

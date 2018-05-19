@@ -1,4 +1,4 @@
-package com.tzq.commons.mapper;
+package com.tzq.commons.mapper.ota;
 
 import com.tzq.commons.converter.*;
 import com.tzq.commons.model.ctrip.search.*;
@@ -8,6 +8,8 @@ import com.tzq.service.ctrip.models.search.*;
 import com.tzq.service.ctrip.models.verify.CtripVerifyReq;
 import com.tzq.service.ctrip.models.verify.CtripVerifyRes;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 import java.util.List;
 
@@ -19,15 +21,25 @@ import java.util.List;
  * LY.com Inc.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
-@Mapper(componentModel = "spring", uses = {AreaTypeEnumConverter.class, CurrencyEnumConverter.class,
-        InventoryEnumConverter.class, PassengerTypeEnumConverter.class, SegmentTypeEnumConverter.class,
-        StatusEnumConverter.class, TripTypeEnumConverter.class, FullDateConverter.class})
+@Mapper(componentModel = "spring",
+        uses = {
+                AreaTypeEnumConverter.class,
+                CurrencyEnumConverter.class,
+                InventoryEnumConverter.class,
+                PassengerTypeEnumConverter.class,
+                SegmentTypeEnumConverter.class,
+                StatusEnumConverter.class,
+                TripTypeEnumConverter.class,
+                CabinGradeEnumConverter.class,
+                CardTypeEnumConverter.class,
+                EligibilityEnumConverter.class,
+                InvoiceTypeEnumConverter.class,
+                ReservationTypeEnumConverter.class,
+                AgeTypeEunmConverter.class})
 public interface CtripVerifyVOMapper {
     CtripVerifyResVO CtripVerifyResdto2vo(CtripVerifyRes verifyRes);
 
     CtripVerifyRes CtripVerifyResvO2dto(CtripVerifyResVO verifyResVO);
-
-
 
     CtripVerifyReqVO CtripVerifyReqdto2vo(CtripVerifyReq verifyRes);
 
@@ -39,9 +51,11 @@ public interface CtripVerifyVOMapper {
     List<FlightRoutingsVO> flightRoutingsDTO2VOs(List<FlightRoutingsDTO> flightRoutingsVO);
 
 
-    FlightRoutingsDTO flightRoutingsVO2DTO(FlightRoutingsVO flightRoutingsVO);
+    @Mappings({@Mapping(target = "data", expression = "java(com.tzq.commons.converter.ExtInfoConverter.map2String(vo == null ? null : vo.getData()))")})
+    FlightRoutingsDTO flightRoutingsVO2DTO(FlightRoutingsVO vo);
 
-    FlightRoutingsVO flightRoutingsDTO2VO(FlightRoutingsDTO flightRoutingsVO);
+    @Mappings({@Mapping(target = "data", expression = "java(com.tzq.commons.converter.ExtInfoConverter.string2Map(dto == null ? \"\" : dto.getData()))")})
+    FlightRoutingsVO flightRoutingsDTO2VO(FlightRoutingsDTO dto);
 
 
     List<SegmentDTO> segmentVO2DTOs(List<SegmentVO> segmentVO);

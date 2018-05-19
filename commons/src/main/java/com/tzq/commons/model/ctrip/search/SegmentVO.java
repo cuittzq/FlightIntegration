@@ -1,5 +1,7 @@
 package com.tzq.commons.model.ctrip.search;
 
+import com.tzq.commons.enums.CabinGradeEnum;
+
 public class SegmentVO {
     /**
      * 航司 IATA 二字码，必须与 flightNumber 航司相同
@@ -62,7 +64,7 @@ public class SegmentVO {
      * 舱等；
      * 头等：F；商务：C；超经：S；经济：Y【目前仅支持返回Y】
      */
-    private String cabinGrade;
+    private CabinGradeEnum cabinGrade;
     /**
      * 飞行时长；
      * 单位为分钟，通过时差转换后的结果
@@ -181,11 +183,11 @@ public class SegmentVO {
         this.arrTerminal = arrTerminal;
     }
 
-    public String getCabinGrade() {
+    public CabinGradeEnum getCabinGrade() {
         return cabinGrade;
     }
 
-    public void setCabinGrade(String cabinGrade) {
+    public void setCabinGrade(CabinGradeEnum cabinGrade) {
         this.cabinGrade = cabinGrade;
     }
 

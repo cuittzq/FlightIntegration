@@ -1,5 +1,8 @@
 package com.tzq.commons.model.ctrip.order;
 
+import com.tzq.commons.enums.AgeTypeEunm;
+import com.tzq.commons.enums.CardTypeEnum;
+
 public class PassengerVO {
     /**
      * name :  Marcus/Tom
@@ -15,10 +18,11 @@ public class PassengerVO {
      */
 
     private String name;
-    private int ageType;
+    // 乘客类型，0 成人/1 儿童/2 婴儿
+    private AgeTypeEunm ageType;
     private String birthday;
     private String gender;
-    private String cardType;
+    private CardTypeEnum cardType;
     private String cardNum;
     private String cardExpired;
     private String cardIssuePlace;
@@ -33,11 +37,11 @@ public class PassengerVO {
         this.name = name;
     }
 
-    public int getAgeType() {
+    public AgeTypeEunm getAgeType() {
         return ageType;
     }
 
-    public void setAgeType(int ageType) {
+    public void setAgeType(AgeTypeEunm ageType) {
         this.ageType = ageType;
     }
 
@@ -57,11 +61,11 @@ public class PassengerVO {
         this.gender = gender;
     }
 
-    public String getCardType() {
+    public CardTypeEnum getCardType() {
         return cardType;
     }
 
-    public void setCardType(String cardType) {
+    public void setCardType(CardTypeEnum cardType) {
         this.cardType = cardType;
     }
 
