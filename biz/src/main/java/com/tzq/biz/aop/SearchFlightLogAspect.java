@@ -11,7 +11,6 @@ import com.tzq.dal.model.log.InterfaceRequestLog;
 import com.tzq.dal.service.InterfaceRequestLogService;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -20,13 +19,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Enumeration;
 
 /**
  * 功能描述
