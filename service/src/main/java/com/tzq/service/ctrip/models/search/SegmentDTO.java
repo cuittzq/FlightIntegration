@@ -1,5 +1,7 @@
 package com.tzq.service.ctrip.models.search;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class SegmentDTO {
     /**
      * 航司 IATA 二字码，必须与 flightNumber 航司相同
@@ -69,6 +71,7 @@ public class SegmentDTO {
      */
     private int duration;
 
+    @NotEmpty(message = "航司不能为空")
     public String getCarrier() {
         return carrier;
     }
@@ -77,6 +80,7 @@ public class SegmentDTO {
         this.carrier = carrier;
     }
 
+    @NotEmpty(message = "出发城市不能为空")
     public String getDepAirport() {
         return depAirport;
     }
@@ -84,7 +88,7 @@ public class SegmentDTO {
     public void setDepAirport(String depAirport) {
         this.depAirport = depAirport;
     }
-
+    @NotEmpty(message = "起飞时间不能为空")
     public String getDepTime() {
         return depTime;
     }
@@ -92,7 +96,7 @@ public class SegmentDTO {
     public void setDepTime(String depTime) {
         this.depTime = depTime;
     }
-
+    @NotEmpty(message = "抵达城市不能为空")
     public String getArrAirport() {
         return arrAirport;
     }
@@ -100,7 +104,7 @@ public class SegmentDTO {
     public void setArrAirport(String arrAirport) {
         this.arrAirport = arrAirport;
     }
-
+    @NotEmpty(message = "抵达时间不能为空")
     public String getArrTime() {
         return arrTime;
     }
@@ -140,7 +144,7 @@ public class SegmentDTO {
     public void setAircraftCode(String aircraftCode) {
         this.aircraftCode = aircraftCode;
     }
-
+    @NotEmpty(message = "")
     public String getFlightNumber() {
         return flightNumber;
     }
