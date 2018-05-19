@@ -15,11 +15,13 @@ import java.util.List;
  */
 public class FlightRouteVO extends BaseVO<Long> {
 
+    private int status;
+
+    private String msg;
+
     /**  */
     private static final long serialVersionUID = 2400324495088848428L;
     private Long id;
-
-
     /**
      * 行程类型
      */
@@ -58,7 +60,7 @@ public class FlightRouteVO extends BaseVO<Long> {
     /**
      * 航班组列表
      */
-    private List<FlightRoutingsVO> lightRouteList = new ArrayList<>();
+    private List<FlightRoutingsVO> flightRouteList = new ArrayList<>();
 
     @Override
     public Long getId() {
@@ -68,6 +70,22 @@ public class FlightRouteVO extends BaseVO<Long> {
     @Override
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public Integer getTripType() {
@@ -126,11 +144,11 @@ public class FlightRouteVO extends BaseVO<Long> {
         this.extInfo = extInfo;
     }
 
-    public List<FlightRoutingsVO> getLightRouteList() {
-        return lightRouteList;
+    public List<FlightRoutingsVO> getFlightRouteList() {
+        return flightRouteList;
     }
 
-    public void setLightRouteList(List<FlightRoutingsVO> lightRouteList) {
-        this.lightRouteList = lightRouteList;
+    public void setFlightRouteList(List<FlightRoutingsVO> flightRouteList) {
+        this.flightRouteList = flightRouteList;
     }
 }

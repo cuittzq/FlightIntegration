@@ -162,52 +162,52 @@ public class InterfaceRequestLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Integer value) {
+        public Criteria andIdEqualTo(Long value) {
             addCriterion("ID =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Integer value) {
+        public Criteria andIdNotEqualTo(Long value) {
             addCriterion("ID <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Integer value) {
+        public Criteria andIdGreaterThan(Long value) {
             addCriterion("ID >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andIdGreaterThanOrEqualTo(Long value) {
             addCriterion("ID >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Integer value) {
+        public Criteria andIdLessThan(Long value) {
             addCriterion("ID <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Integer value) {
+        public Criteria andIdLessThanOrEqualTo(Long value) {
             addCriterion("ID <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Integer> values) {
+        public Criteria andIdIn(List<Long> values) {
             addCriterion("ID in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Integer> values) {
+        public Criteria andIdNotIn(List<Long> values) {
             addCriterion("ID not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Integer value1, Integer value2) {
+        public Criteria andIdBetween(Long value1, Long value2) {
             addCriterion("ID between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andIdNotBetween(Long value1, Long value2) {
             addCriterion("ID not between", value1, value2, "id");
             return (Criteria) this;
         }
@@ -472,52 +472,52 @@ public class InterfaceRequestLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andRequestresultEqualTo(Byte value) {
+        public Criteria andRequestresultEqualTo(Integer value) {
             addCriterion("RequestResult =", value, "requestresult");
             return (Criteria) this;
         }
 
-        public Criteria andRequestresultNotEqualTo(Byte value) {
+        public Criteria andRequestresultNotEqualTo(Integer value) {
             addCriterion("RequestResult <>", value, "requestresult");
             return (Criteria) this;
         }
 
-        public Criteria andRequestresultGreaterThan(Byte value) {
+        public Criteria andRequestresultGreaterThan(Integer value) {
             addCriterion("RequestResult >", value, "requestresult");
             return (Criteria) this;
         }
 
-        public Criteria andRequestresultGreaterThanOrEqualTo(Byte value) {
+        public Criteria andRequestresultGreaterThanOrEqualTo(Integer value) {
             addCriterion("RequestResult >=", value, "requestresult");
             return (Criteria) this;
         }
 
-        public Criteria andRequestresultLessThan(Byte value) {
+        public Criteria andRequestresultLessThan(Integer value) {
             addCriterion("RequestResult <", value, "requestresult");
             return (Criteria) this;
         }
 
-        public Criteria andRequestresultLessThanOrEqualTo(Byte value) {
+        public Criteria andRequestresultLessThanOrEqualTo(Integer value) {
             addCriterion("RequestResult <=", value, "requestresult");
             return (Criteria) this;
         }
 
-        public Criteria andRequestresultIn(List<Byte> values) {
+        public Criteria andRequestresultIn(List<Integer> values) {
             addCriterion("RequestResult in", values, "requestresult");
             return (Criteria) this;
         }
 
-        public Criteria andRequestresultNotIn(List<Byte> values) {
+        public Criteria andRequestresultNotIn(List<Integer> values) {
             addCriterion("RequestResult not in", values, "requestresult");
             return (Criteria) this;
         }
 
-        public Criteria andRequestresultBetween(Byte value1, Byte value2) {
+        public Criteria andRequestresultBetween(Integer value1, Integer value2) {
             addCriterion("RequestResult between", value1, value2, "requestresult");
             return (Criteria) this;
         }
 
-        public Criteria andRequestresultNotBetween(Byte value1, Byte value2) {
+        public Criteria andRequestresultNotBetween(Integer value1, Integer value2) {
             addCriterion("RequestResult not between", value1, value2, "requestresult");
             return (Criteria) this;
         }
@@ -532,52 +532,52 @@ public class InterfaceRequestLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andInterfaceresultEqualTo(Byte value) {
+        public Criteria andInterfaceresultEqualTo(Integer value) {
             addCriterion("InterfaceResult =", value, "interfaceresult");
             return (Criteria) this;
         }
 
-        public Criteria andInterfaceresultNotEqualTo(Byte value) {
+        public Criteria andInterfaceresultNotEqualTo(Integer value) {
             addCriterion("InterfaceResult <>", value, "interfaceresult");
             return (Criteria) this;
         }
 
-        public Criteria andInterfaceresultGreaterThan(Byte value) {
+        public Criteria andInterfaceresultGreaterThan(Integer value) {
             addCriterion("InterfaceResult >", value, "interfaceresult");
             return (Criteria) this;
         }
 
-        public Criteria andInterfaceresultGreaterThanOrEqualTo(Byte value) {
+        public Criteria andInterfaceresultGreaterThanOrEqualTo(Integer value) {
             addCriterion("InterfaceResult >=", value, "interfaceresult");
             return (Criteria) this;
         }
 
-        public Criteria andInterfaceresultLessThan(Byte value) {
+        public Criteria andInterfaceresultLessThan(Integer value) {
             addCriterion("InterfaceResult <", value, "interfaceresult");
             return (Criteria) this;
         }
 
-        public Criteria andInterfaceresultLessThanOrEqualTo(Byte value) {
+        public Criteria andInterfaceresultLessThanOrEqualTo(Integer value) {
             addCriterion("InterfaceResult <=", value, "interfaceresult");
             return (Criteria) this;
         }
 
-        public Criteria andInterfaceresultIn(List<Byte> values) {
+        public Criteria andInterfaceresultIn(List<Integer> values) {
             addCriterion("InterfaceResult in", values, "interfaceresult");
             return (Criteria) this;
         }
 
-        public Criteria andInterfaceresultNotIn(List<Byte> values) {
+        public Criteria andInterfaceresultNotIn(List<Integer> values) {
             addCriterion("InterfaceResult not in", values, "interfaceresult");
             return (Criteria) this;
         }
 
-        public Criteria andInterfaceresultBetween(Byte value1, Byte value2) {
+        public Criteria andInterfaceresultBetween(Integer value1, Integer value2) {
             addCriterion("InterfaceResult between", value1, value2, "interfaceresult");
             return (Criteria) this;
         }
 
-        public Criteria andInterfaceresultNotBetween(Byte value1, Byte value2) {
+        public Criteria andInterfaceresultNotBetween(Integer value1, Integer value2) {
             addCriterion("InterfaceResult not between", value1, value2, "interfaceresult");
             return (Criteria) this;
         }
@@ -922,52 +922,52 @@ public class InterfaceRequestLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeEqualTo(Byte value) {
+        public Criteria andVoyagetypeEqualTo(Integer value) {
             addCriterion("VoyageType =", value, "voyagetype");
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeNotEqualTo(Byte value) {
+        public Criteria andVoyagetypeNotEqualTo(Integer value) {
             addCriterion("VoyageType <>", value, "voyagetype");
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeGreaterThan(Byte value) {
+        public Criteria andVoyagetypeGreaterThan(Integer value) {
             addCriterion("VoyageType >", value, "voyagetype");
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeGreaterThanOrEqualTo(Byte value) {
+        public Criteria andVoyagetypeGreaterThanOrEqualTo(Integer value) {
             addCriterion("VoyageType >=", value, "voyagetype");
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeLessThan(Byte value) {
+        public Criteria andVoyagetypeLessThan(Integer value) {
             addCriterion("VoyageType <", value, "voyagetype");
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeLessThanOrEqualTo(Byte value) {
+        public Criteria andVoyagetypeLessThanOrEqualTo(Integer value) {
             addCriterion("VoyageType <=", value, "voyagetype");
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeIn(List<Byte> values) {
+        public Criteria andVoyagetypeIn(List<Integer> values) {
             addCriterion("VoyageType in", values, "voyagetype");
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeNotIn(List<Byte> values) {
+        public Criteria andVoyagetypeNotIn(List<Integer> values) {
             addCriterion("VoyageType not in", values, "voyagetype");
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeBetween(Byte value1, Byte value2) {
+        public Criteria andVoyagetypeBetween(Integer value1, Integer value2) {
             addCriterion("VoyageType between", value1, value2, "voyagetype");
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeNotBetween(Byte value1, Byte value2) {
+        public Criteria andVoyagetypeNotBetween(Integer value1, Integer value2) {
             addCriterion("VoyageType not between", value1, value2, "voyagetype");
             return (Criteria) this;
         }

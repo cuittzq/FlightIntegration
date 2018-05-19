@@ -3,7 +3,7 @@ package com.tzq.dal.model.log;
 import java.util.Date;
 
 public class RuleMatchingLog {
-    private Integer id;
+    private Long id;
 
     private Integer salesplatform;
 
@@ -45,11 +45,11 @@ public class RuleMatchingLog {
 
     private Date modifytime;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

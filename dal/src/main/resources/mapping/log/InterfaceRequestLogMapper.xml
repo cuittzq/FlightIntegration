@@ -2,19 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tzq.dal.mapper.log.InterfaceRequestLogMapper">
   <resultMap id="BaseResultMap" type="com.tzq.dal.model.log.InterfaceRequestLog">
-    <id column="ID" jdbcType="INTEGER" property="id" />
+    <id column="ID" jdbcType="BIGINT" property="id" />
     <result column="SalesPlatform" jdbcType="INTEGER" property="salesplatform" />
     <result column="PurchasePlatform" jdbcType="INTEGER" property="purchaseplatform" />
     <result column="RequestDate" jdbcType="DATE" property="requestdate" />
     <result column="RequestType" jdbcType="VARCHAR" property="requesttype" />
-    <result column="RequestResult" jdbcType="TINYINT" property="requestresult" />
-    <result column="InterfaceResult" jdbcType="TINYINT" property="interfaceresult" />
+    <result column="RequestResult" jdbcType="INTEGER" property="requestresult" />
+    <result column="InterfaceResult" jdbcType="INTEGER" property="interfaceresult" />
     <result column="Carrier" jdbcType="VARCHAR" property="carrier" />
     <result column="DepCode" jdbcType="VARCHAR" property="depcode" />
     <result column="ArrCode" jdbcType="VARCHAR" property="arrcode" />
     <result column="DepDate" jdbcType="DATE" property="depdate" />
     <result column="BackDate" jdbcType="DATE" property="backdate" />
-    <result column="VoyageType" jdbcType="TINYINT" property="voyagetype" />
+    <result column="VoyageType" jdbcType="INTEGER" property="voyagetype" />
     <result column="SalesPlatRequestTime" jdbcType="TIMESTAMP" property="salesplatrequesttime" />
     <result column="SalesPlatResponseTime" jdbcType="TIMESTAMP" property="salesplatresponsetime" />
     <result column="PurchasePlatRequestTime" jdbcType="TIMESTAMP" property="purchaseplatrequesttime" />
@@ -111,15 +111,15 @@
       limit #{limitStart} , #{limitEnd}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from interfacerequestlog
-    where ID = #{id,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from interfacerequestlog
-    where ID = #{id,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.tzq.dal.model.log.InterfaceRequestLogExample">
     delete from interfacerequestlog
@@ -139,11 +139,11 @@
       SalesPlatLogDetail, PurchasePlatLogDetail, 
       OrderNo, PNR, ModifyTime
       )
-    values (#{id,jdbcType=INTEGER}, #{salesplatform,jdbcType=INTEGER}, #{purchaseplatform,jdbcType=INTEGER}, 
-      #{requestdate,jdbcType=DATE}, #{requesttype,jdbcType=VARCHAR}, #{requestresult,jdbcType=TINYINT}, 
-      #{interfaceresult,jdbcType=TINYINT}, #{carrier,jdbcType=VARCHAR}, #{depcode,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{salesplatform,jdbcType=INTEGER}, #{purchaseplatform,jdbcType=INTEGER}, 
+      #{requestdate,jdbcType=DATE}, #{requesttype,jdbcType=VARCHAR}, #{requestresult,jdbcType=INTEGER}, 
+      #{interfaceresult,jdbcType=INTEGER}, #{carrier,jdbcType=VARCHAR}, #{depcode,jdbcType=VARCHAR}, 
       #{arrcode,jdbcType=VARCHAR}, #{depdate,jdbcType=DATE}, #{backdate,jdbcType=DATE}, 
-      #{voyagetype,jdbcType=TINYINT}, #{salesplatrequesttime,jdbcType=TIMESTAMP}, #{salesplatresponsetime,jdbcType=TIMESTAMP}, 
+      #{voyagetype,jdbcType=INTEGER}, #{salesplatrequesttime,jdbcType=TIMESTAMP}, #{salesplatresponsetime,jdbcType=TIMESTAMP}, 
       #{purchaseplatrequesttime,jdbcType=TIMESTAMP}, #{purchaseplatresponsetime,jdbcType=TIMESTAMP}, 
       #{salesplatrequestip,jdbcType=VARCHAR}, #{purchaseplatrequestip,jdbcType=VARCHAR}, 
       #{salesplatrequesttipmessage,jdbcType=VARCHAR}, #{purchaseplatrequesttipmessage,jdbcType=VARCHAR}, 
@@ -235,7 +235,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=BIGINT},
       </if>
       <if test="salesplatform != null">
         #{salesplatform,jdbcType=INTEGER},
@@ -250,10 +250,10 @@
         #{requesttype,jdbcType=VARCHAR},
       </if>
       <if test="requestresult != null">
-        #{requestresult,jdbcType=TINYINT},
+        #{requestresult,jdbcType=INTEGER},
       </if>
       <if test="interfaceresult != null">
-        #{interfaceresult,jdbcType=TINYINT},
+        #{interfaceresult,jdbcType=INTEGER},
       </if>
       <if test="carrier != null">
         #{carrier,jdbcType=VARCHAR},
@@ -271,7 +271,7 @@
         #{backdate,jdbcType=DATE},
       </if>
       <if test="voyagetype != null">
-        #{voyagetype,jdbcType=TINYINT},
+        #{voyagetype,jdbcType=INTEGER},
       </if>
       <if test="salesplatrequesttime != null">
         #{salesplatrequesttime,jdbcType=TIMESTAMP},
@@ -324,7 +324,7 @@
     update interfacerequestlog
     <set>
       <if test="record.id != null">
-        ID = #{record.id,jdbcType=INTEGER},
+        ID = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.salesplatform != null">
         SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
@@ -339,10 +339,10 @@
         RequestType = #{record.requesttype,jdbcType=VARCHAR},
       </if>
       <if test="record.requestresult != null">
-        RequestResult = #{record.requestresult,jdbcType=TINYINT},
+        RequestResult = #{record.requestresult,jdbcType=INTEGER},
       </if>
       <if test="record.interfaceresult != null">
-        InterfaceResult = #{record.interfaceresult,jdbcType=TINYINT},
+        InterfaceResult = #{record.interfaceresult,jdbcType=INTEGER},
       </if>
       <if test="record.carrier != null">
         Carrier = #{record.carrier,jdbcType=VARCHAR},
@@ -360,7 +360,7 @@
         BackDate = #{record.backdate,jdbcType=DATE},
       </if>
       <if test="record.voyagetype != null">
-        VoyageType = #{record.voyagetype,jdbcType=TINYINT},
+        VoyageType = #{record.voyagetype,jdbcType=INTEGER},
       </if>
       <if test="record.salesplatrequesttime != null">
         SalesPlatRequestTime = #{record.salesplatrequesttime,jdbcType=TIMESTAMP},
@@ -408,19 +408,19 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update interfacerequestlog
-    set ID = #{record.id,jdbcType=INTEGER},
+    set ID = #{record.id,jdbcType=BIGINT},
       SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
       PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
       RequestDate = #{record.requestdate,jdbcType=DATE},
       RequestType = #{record.requesttype,jdbcType=VARCHAR},
-      RequestResult = #{record.requestresult,jdbcType=TINYINT},
-      InterfaceResult = #{record.interfaceresult,jdbcType=TINYINT},
+      RequestResult = #{record.requestresult,jdbcType=INTEGER},
+      InterfaceResult = #{record.interfaceresult,jdbcType=INTEGER},
       Carrier = #{record.carrier,jdbcType=VARCHAR},
       DepCode = #{record.depcode,jdbcType=VARCHAR},
       ArrCode = #{record.arrcode,jdbcType=VARCHAR},
       DepDate = #{record.depdate,jdbcType=DATE},
       BackDate = #{record.backdate,jdbcType=DATE},
-      VoyageType = #{record.voyagetype,jdbcType=TINYINT},
+      VoyageType = #{record.voyagetype,jdbcType=INTEGER},
       SalesPlatRequestTime = #{record.salesplatrequesttime,jdbcType=TIMESTAMP},
       SalesPlatResponseTime = #{record.salesplatresponsetime,jdbcType=TIMESTAMP},
       PurchasePlatRequestTime = #{record.purchaseplatrequesttime,jdbcType=TIMESTAMP},
@@ -454,10 +454,10 @@
         RequestType = #{requesttype,jdbcType=VARCHAR},
       </if>
       <if test="requestresult != null">
-        RequestResult = #{requestresult,jdbcType=TINYINT},
+        RequestResult = #{requestresult,jdbcType=INTEGER},
       </if>
       <if test="interfaceresult != null">
-        InterfaceResult = #{interfaceresult,jdbcType=TINYINT},
+        InterfaceResult = #{interfaceresult,jdbcType=INTEGER},
       </if>
       <if test="carrier != null">
         Carrier = #{carrier,jdbcType=VARCHAR},
@@ -475,7 +475,7 @@
         BackDate = #{backdate,jdbcType=DATE},
       </if>
       <if test="voyagetype != null">
-        VoyageType = #{voyagetype,jdbcType=TINYINT},
+        VoyageType = #{voyagetype,jdbcType=INTEGER},
       </if>
       <if test="salesplatrequesttime != null">
         SalesPlatRequestTime = #{salesplatrequesttime,jdbcType=TIMESTAMP},
@@ -517,7 +517,7 @@
         ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where ID = #{id,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.tzq.dal.model.log.InterfaceRequestLog">
     update interfacerequestlog
@@ -525,14 +525,14 @@
       PurchasePlatform = #{purchaseplatform,jdbcType=INTEGER},
       RequestDate = #{requestdate,jdbcType=DATE},
       RequestType = #{requesttype,jdbcType=VARCHAR},
-      RequestResult = #{requestresult,jdbcType=TINYINT},
-      InterfaceResult = #{interfaceresult,jdbcType=TINYINT},
+      RequestResult = #{requestresult,jdbcType=INTEGER},
+      InterfaceResult = #{interfaceresult,jdbcType=INTEGER},
       Carrier = #{carrier,jdbcType=VARCHAR},
       DepCode = #{depcode,jdbcType=VARCHAR},
       ArrCode = #{arrcode,jdbcType=VARCHAR},
       DepDate = #{depdate,jdbcType=DATE},
       BackDate = #{backdate,jdbcType=DATE},
-      VoyageType = #{voyagetype,jdbcType=TINYINT},
+      VoyageType = #{voyagetype,jdbcType=INTEGER},
       SalesPlatRequestTime = #{salesplatrequesttime,jdbcType=TIMESTAMP},
       SalesPlatResponseTime = #{salesplatresponsetime,jdbcType=TIMESTAMP},
       PurchasePlatRequestTime = #{purchaseplatrequesttime,jdbcType=TIMESTAMP},
@@ -546,6 +546,6 @@
       OrderNo = #{orderno,jdbcType=VARCHAR},
       PNR = #{pnr,jdbcType=VARCHAR},
       ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
-    where ID = #{id,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

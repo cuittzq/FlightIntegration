@@ -11,7 +11,7 @@ public interface InterfaceRequestLogService {
 
     int deleteByExample(InterfaceRequestLogExample example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(InterfaceRequestLog record);
 
@@ -19,7 +19,7 @@ public interface InterfaceRequestLogService {
 
     List<InterfaceRequestLog> selectByExample(InterfaceRequestLogExample example);
 
-    InterfaceRequestLog selectByPrimaryKey(Integer id);
+    InterfaceRequestLog selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(InterfaceRequestLog record, InterfaceRequestLogExample example);
 

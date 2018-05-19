@@ -30,8 +30,7 @@ public class CtripServiceController {
     private CtripFlightService ctripFlightService;
 
     @RequestMapping(value = "/searchflight", method = RequestMethod.POST)
-    @UserAccess(desc = "searchflight")
-    public SearchFlightRes searchFlight(@RequestBody SearchFlightReq searchFlightReq, BindingResult bindingResult) {
+    public SearchFlightRes searchFlight(@Valid @RequestBody SearchFlightReq searchFlightReq, BindingResult bindingResult) {
         SearchFlightRes searchFlightRes = new SearchFlightRes();
         if (bindingResult.hasErrors()) {
             searchFlightRes.setStatus(StatusEnum.PARAM_ERROR.getCode());
@@ -66,7 +65,7 @@ public class CtripServiceController {
 
         if (verifyReq.getTripType() == 0 || verifyReq.getTripType() > 2) {
             verifyRes.setStatus(StatusEnum.PARAM_ERROR.getCode());
-            verifyRes.setMsg("行程类型错误 1：单程 2：往返");
+            verifyRes.setMsg("行程类型错误 1：单�2：往�);
             return verifyRes;
         }
 
@@ -83,7 +82,7 @@ public class CtripServiceController {
 
     @RequestMapping(value = "/createorder", method = RequestMethod.POST)
     @UserAccess(desc = "createorder")
-    public CreateOrderRes CreateOrder(@RequestBody CreateOrderReq createOrderReq, BindingResult bindingResult) {
+    public CreateOrderRes CreateOrder(@Valid @RequestBody CreateOrderReq createOrderReq, BindingResult bindingResult) {
         CreateOrderRes createOrderRes = new CreateOrderRes();
         if (bindingResult.hasErrors()) {
             createOrderRes.setStatus(StatusEnum.PARAM_ERROR.getCode());
@@ -100,7 +99,7 @@ public class CtripServiceController {
 
         if (createOrderReq.getTripType() == 0 || createOrderReq.getTripType() > 2) {
             createOrderRes.setStatus(StatusEnum.PARAM_ERROR.getCode());
-            createOrderRes.setMsg("行程类型错误 1：单程 2：往返");
+            createOrderRes.setMsg("行程类型错误 1：单�2：往�);
 
             return createOrderRes;
         }

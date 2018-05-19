@@ -81,6 +81,12 @@
             <groupId>com.github.cuittzq</groupId>
             <artifactId>mapper</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.cuittzq</groupId>
+            <artifactId>dal</artifactId>
+        </dependency>
+
     </dependencies>
     <build>
         <defaultGoal>compile</defaultGoal>

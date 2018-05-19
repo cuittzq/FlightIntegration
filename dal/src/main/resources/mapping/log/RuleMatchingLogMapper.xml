@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tzq.dal.mapper.log.RuleMatchingLogMapper">
   <resultMap id="BaseResultMap" type="com.tzq.dal.model.log.RuleMatchingLog">
-    <id column="ID" jdbcType="INTEGER" property="id" />
+    <id column="ID" jdbcType="BIGINT" property="id" />
     <result column="SalesPlatform" jdbcType="INTEGER" property="salesplatform" />
     <result column="PurchasePlatform" jdbcType="INTEGER" property="purchaseplatform" />
     <result column="RequestDate" jdbcType="DATE" property="requestdate" />
@@ -105,15 +105,15 @@
       limit #{limitStart} , #{limitEnd}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from rulematchinglog
-    where ID = #{id,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from rulematchinglog
-    where ID = #{id,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.tzq.dal.model.log.RuleMatchingLogExample">
     delete from rulematchinglog
@@ -131,7 +131,7 @@
       ExactSalesRuleIDArray, ExactSalesRuleValue, 
       RefundRuleIDArray, RefundRuleValue, ModifyTime
       )
-    values (#{id,jdbcType=INTEGER}, #{salesplatform,jdbcType=INTEGER}, #{purchaseplatform,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=BIGINT}, #{salesplatform,jdbcType=INTEGER}, #{purchaseplatform,jdbcType=INTEGER}, 
       #{requestdate,jdbcType=DATE}, #{requesttype,jdbcType=VARCHAR}, #{carrier,jdbcType=VARCHAR}, 
       #{depcode,jdbcType=VARCHAR}, #{arrcode,jdbcType=VARCHAR}, #{depdate,jdbcType=DATE}, 
       #{backdate,jdbcType=DATE}, #{platruleidarray,jdbcType=VARCHAR}, #{platrulevalue,jdbcType=VARCHAR}, 
@@ -210,7 +210,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=BIGINT},
       </if>
       <if test="salesplatform != null">
         #{salesplatform,jdbcType=INTEGER},
@@ -284,7 +284,7 @@
     update rulematchinglog
     <set>
       <if test="record.id != null">
-        ID = #{record.id,jdbcType=INTEGER},
+        ID = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.salesplatform != null">
         SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
@@ -353,7 +353,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update rulematchinglog
-    set ID = #{record.id,jdbcType=INTEGER},
+    set ID = #{record.id,jdbcType=BIGINT},
       SalesPlatform = #{record.salesplatform,jdbcType=INTEGER},
       PurchasePlatform = #{record.purchaseplatform,jdbcType=INTEGER},
       RequestDate = #{record.requestdate,jdbcType=DATE},
@@ -442,7 +442,7 @@
         ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where ID = #{id,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.tzq.dal.model.log.RuleMatchingLog">
     update rulematchinglog
@@ -466,6 +466,6 @@
       RefundRuleIDArray = #{refundruleidarray,jdbcType=VARCHAR},
       RefundRuleValue = #{refundrulevalue,jdbcType=VARCHAR},
       ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
-    where ID = #{id,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

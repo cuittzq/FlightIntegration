@@ -26,7 +26,7 @@ public class InterfaceRequestLogServiceImpl implements InterfaceRequestLogServic
     }
 
     @Override
-    public int deleteByPrimaryKey(Integer id) {
+    public int deleteByPrimaryKey(Long id) {
         return interfaceRequestLogMapper.deleteByPrimaryKey(id);
     }
 
@@ -46,7 +46,7 @@ public class InterfaceRequestLogServiceImpl implements InterfaceRequestLogServic
     }
 
     @Override
-    public InterfaceRequestLog selectByPrimaryKey(Integer id) {
+    public InterfaceRequestLog selectByPrimaryKey(Long id) {
         return interfaceRequestLogMapper.selectByPrimaryKey(id);
     }
 

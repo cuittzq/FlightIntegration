@@ -3,7 +3,7 @@ package com.tzq.dal.model.log;
 import java.util.Date;
 
 public class InterfaceRequestLog {
-    private Integer id;
+    private Long id;
 
     private Integer salesplatform;
 
@@ -13,9 +13,9 @@ public class InterfaceRequestLog {
 
     private String requesttype;
 
-    private Byte requestresult;
+    private Integer requestresult;
 
-    private Byte interfaceresult;
+    private Integer interfaceresult;
 
     private String carrier;
 
@@ -27,7 +27,7 @@ public class InterfaceRequestLog {
 
     private Date backdate;
 
-    private Byte voyagetype;
+    private Integer voyagetype;
 
     private Date salesplatrequesttime;
 
@@ -55,11 +55,11 @@ public class InterfaceRequestLog {
 
     private Date modifytime;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -95,19 +95,19 @@ public class InterfaceRequestLog {
         this.requesttype = requesttype == null ? null : requesttype.trim();
     }
 
-    public Byte getRequestresult() {
+    public Integer getRequestresult() {
         return requestresult;
     }
 
-    public void setRequestresult(Byte requestresult) {
+    public void setRequestresult(Integer requestresult) {
         this.requestresult = requestresult;
     }
 
-    public Byte getInterfaceresult() {
+    public Integer getInterfaceresult() {
         return interfaceresult;
     }
 
-    public void setInterfaceresult(Byte interfaceresult) {
+    public void setInterfaceresult(Integer interfaceresult) {
         this.interfaceresult = interfaceresult;
     }
 
@@ -151,11 +151,11 @@ public class InterfaceRequestLog {
         this.backdate = backdate;
     }
 
-    public Byte getVoyagetype() {
+    public Integer getVoyagetype() {
         return voyagetype;
     }
 
-    public void setVoyagetype(Byte voyagetype) {
+    public void setVoyagetype(Integer voyagetype) {
         this.voyagetype = voyagetype;
     }
 

@@ -7,6 +7,7 @@ import com.tzq.biz.core.OtaIssueTicketService;
 import com.tzq.biz.core.OtaSearchFlightService;
 import com.tzq.biz.core.OtaVerifyFlightService;
 import com.tzq.commons.enums.AreaTypeEnum;
+import com.tzq.commons.enums.MethodEnum;
 import com.tzq.commons.enums.OTAEnum;
 import com.tzq.commons.enums.TripTypeEnum;
 import com.tzq.commons.mapper.CtripVerifyVOMapper;
@@ -21,7 +22,6 @@ import com.tzq.commons.model.ctrip.search.SearchVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyResVO;
 import com.tzq.service.ctrip.CtripFlightService;
-import com.tzq.service.ctrip.models.enums.MethodEnum;
 import com.tzq.service.ctrip.models.enums.StatusEnum;
 import com.tzq.service.ctrip.models.order.ContactDTO;
 import com.tzq.service.ctrip.models.order.CreateOrderReq;
@@ -87,7 +87,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         RouteContext<SearchVO> context = new RouteContext();
         setDefaultCont(context);
         SearchVO searchVO = new SearchVO();
-        searchVO.setDepDate(req.getRetDate());
+        searchVO.setDepDate(req.getFromDate());
         searchVO.setDepAirportCode(req.getFromCity());
         searchVO.setArrAirportCode(req.getToCity());
         searchVO.setArrDate(req.getRetDate());
@@ -109,7 +109,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         searchFlightRes.setMsg(response.getErrorMessage());
         searchFlightRes.setStatus(StatusEnum.SUCCEED.getCode());
         FlightRouteVO flightRouteVO = response.getData();
-        searchFlightRes.setRoutings(flightRoutingsVOMapper.flightRoutingsVO2DTOs(flightRouteVO.getLightRouteList()));
+        searchFlightRes.setRoutings(flightRoutingsVOMapper.flightRoutingsVO2DTOs(flightRouteVO.getFlightRouteList()));
         return searchFlightRes;
     }
 
@@ -138,7 +138,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         verifyReqVO.getRouting().setRetSegments(flightRoutingsVOMapper.segmentDTO2VOs(req.getRoutings().getRetSegments()));
         context.setT(verifyReqVO);
 
-        SingleResult<CtripVerifyResVO> singleResult =   otaVerifyFlightService.verifyFlight(context);
+        SingleResult<CtripVerifyResVO> singleResult = otaVerifyFlightService.verifyFlight(context);
 
         if (!singleResult.isSuccess() || singleResult.getData() == null) {
             response.setMsg(singleResult.getErrorMessage());
@@ -175,7 +175,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         List<ContactDTO> contactDTOS = Lists.newArrayList();
         contactDTOS.add(req.getContact());
 
-        // 联系人信�
+        // 联系人信�
         createOrderReqVO.setContact(orderVOMapper.orderCtripDTO2VO(contactDTOS));
         createOrderReqVO.setPassengerbaggages(orderVOMapper.orderCtripDTO2VO1(req.getPassengerbaggages()));
         createOrderReqVO.setPassengers(orderVOMapper.orderCtripDTO2VO2(req.getPassengers()));
@@ -186,7 +186,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         createOrderReqVO.getRouting().setRule(flightRoutingsVOMapper.rulesDTO2VO(req.getRoutings().getRule()));
 
         logger.info("调用LCC{}接口,入参{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(context));
-        SingleResult<CreateOrderResVO>  singleResult= otaCreateOrderService.createOrder(context);
+        SingleResult<CreateOrderResVO> singleResult = otaCreateOrderService.createOrder(context);
         logger.info("调用LCC{}接口,返回{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(1));
         CreateOrderRes response = new CreateOrderRes();
         if (!singleResult.isSuccess() || singleResult.getData() == null) {
@@ -197,7 +197,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
 
         response.setStatus(StatusEnum.SUCCEED.getCode());
         response.setMaxSeats(singleResult.getData().getMaxSeats());
-        response.setOrderContact(orderVOMapper.orderCtripVO2DTO( singleResult.getData().getOrderContact()));
+        response.setOrderContact(orderVOMapper.orderCtripVO2DTO(singleResult.getData().getOrderContact()));
         response.setOrderNo(singleResult.getData().getOrderNo());
         response.setPnrCode(singleResult.getData().getPnrCode());
         response.setRouting(ctripVerifyVOMapper.flightRoutingsVO2DTO(singleResult.getData().getRouting()));

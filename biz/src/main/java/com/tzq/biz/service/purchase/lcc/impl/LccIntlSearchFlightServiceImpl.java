@@ -1,6 +1,8 @@
 package com.tzq.biz.service.purchase.lcc.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.tzq.biz.annotation.Route;
+import com.tzq.biz.aop.InterfaceAccess;
 import com.tzq.biz.constant.OtaConstants;
 import com.tzq.biz.service.purchase.abstracts.AbstractSearchFlightService;
 import com.tzq.commons.enums.*;
@@ -15,7 +17,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,16 +53,18 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
         SearchFlightRes searchFlightResponse = (SearchFlightRes) t;
         //把data记录缓存，下单验价出票需要用，强强要干掉的话，自己看着办
         FlightRouteVO flightRouteVO = new FlightRouteVO();
+        flightRouteVO.setStatus(searchFlightResponse.getStatus());
+        flightRouteVO.setMsg(searchFlightResponse.getMsg());
         flightRouteVO.setAreaType(context.getAreaType().getCode());
         flightRouteVO.setDepAirportCode(context.getT().getDepAirportCode());
         flightRouteVO.setArrAirportCode(context.getT().getArrAirportCode());
         flightRouteVO.setDepDate(context.getT().getDepDate());
         flightRouteVO.setTripType(context.getT().getTripType().getCode());
-        flightRouteVO.setLightRouteList(new ArrayList<>());
+        flightRouteVO.setFlightRouteList(new ArrayList<>());
         searchFlightResponse.getRoutings().forEach(flightRoutings -> {
             FlightRoutingsVO flightRoutingsVO = flightRouteDto2FlightRouteVO(flightRoutings);
             if (flightRoutingsVO != null) {
-                flightRouteVO.getLightRouteList().add(flightRoutingsVO);
+                flightRouteVO.getFlightRouteList().add(flightRoutingsVO);
             }
         });
         return flightRouteVO;
@@ -104,7 +107,7 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
         /**
          * 可保存必要信息，验价时会放在请求报文中传给供应商；最大 1000 个字符
          */
-        flightRoutingsVO.setData(flightRoutings.getData());
+        flightRoutingsVO.setData(JSON.toJSONString(datamap));
         /**
          * 【公布运价强校验】成人公布价（以CNY为单位），不含税
          */
