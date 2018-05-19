@@ -37,42 +37,20 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
     @Override
     public SingleResult<CreateOrderResVO> createOrder(RouteContext<CreateOrderReqVO> context) {
         Assert.notNull(context, "RouteContext can not be null ,searchFlight failure");
-        // 根据OTA配置的销售策略决定调用供应商接口数据(查询平台规则)
-        List<PurchaseEnum> ota2Purchases = new ArrayList<>();
-        if (CollectionUtils.isEmpty(ota2Purchases)) {
-            // 如果没有配置规则默认给LCC
-            ota2Purchases.add(PurchaseEnum.LCC);
-        }
-
         List<CreateOrderResVO> resVOS = null;
         SingleResult<CreateOrderResVO> response = null;
+        CreateOrderResVO verifyResVO = purchaseProxy.createOrder(context);
         try {
-            ota2Purchases.forEach(purchaseEnum -> {
-                RouteContext<CreateOrderReqVO> resuestContext = context.clone();
-                resuestContext.setPurchaseEnum(purchaseEnum);
-                // 分别调用配置的供应商接口数据
-                CreateOrderResVO verifyResVO = purchaseProxy.createOrder(resuestContext);
-
-                // 数据汇总
-                if (verifyResVO != null) {
-                    resVOS.add(verifyResVO);
-                }
-            });
-
-            // 数据调控
-            CreateOrderResVO createOrderResVO = flightRegulation(resVOS);
-            if (createOrderResVO == null) {
-                response = new SingleResult<>(createOrderResVO, false, CommonExcetpionConstant.SYSTEM_EXCEPTION_CODE, "无数据");
+            if (verifyResVO == null) {
+                response = new SingleResult<>(verifyResVO, false, CommonExcetpionConstant.SYSTEM_EXCEPTION_CODE, "无数据");
                 return response;
             }
-            // 返回OTA查询数据
-            response = new SingleResult<>(createOrderResVO, true, CommonExcetpionConstant.SUCCESS, "");
-        } catch (Exception ex) {
-            if(ex instanceof ServiceAbstractException)
-            {
+            response = new SingleResult<>(verifyResVO, true, CommonExcetpionConstant.SUCCESS, "");
+        } catch (
+                Exception ex) {
+            if (ex instanceof ServiceAbstractException) {
                 response = new SingleResult<>(null, false, ((ServiceAbstractException) ex).getErrorCode(), ex.getMessage());
-            }
-            else {
+            } else {
                 response = new SingleResult<>(null, false, CommonExcetpionConstant.SYSTEM_EXCEPTION_CODE, ex.getMessage());
             }
         }
