@@ -1,7 +1,9 @@
 package com.tzq.commons.converter;
 
 import com.tzq.commons.enums.CabinGradeEnum;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CabinGradeEnumConverter {
 
     public String asString(CabinGradeEnum targEnum) {

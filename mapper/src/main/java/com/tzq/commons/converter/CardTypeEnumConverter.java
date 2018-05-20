@@ -1,7 +1,9 @@
 package com.tzq.commons.converter;
 
 import com.tzq.commons.enums.CardTypeEnum;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CardTypeEnumConverter {
     public String asString(CardTypeEnum targEnum) {
         if (targEnum != null) {

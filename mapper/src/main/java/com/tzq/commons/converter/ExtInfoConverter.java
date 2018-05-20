@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import java.util.Map;
  * LY.com Inc.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
+@Component
 public class ExtInfoConverter {
     public static String map2String(Map<String, Object> extInfo) {
         if (MapUtils.isEmpty(extInfo)) {

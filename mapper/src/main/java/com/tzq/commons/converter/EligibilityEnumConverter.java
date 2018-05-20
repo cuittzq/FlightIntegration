@@ -1,7 +1,9 @@
 package com.tzq.commons.converter;
 
 import com.tzq.commons.enums.EligibilityEnum;
+import org.springframework.stereotype.Component;
 
+@Component
 public class EligibilityEnumConverter {
 
     public String asString(EligibilityEnum targEnum) {

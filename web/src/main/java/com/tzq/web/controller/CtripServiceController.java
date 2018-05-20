@@ -48,7 +48,7 @@ public class CtripServiceController {
 
     @RequestMapping(value = "/verify", method = RequestMethod.POST)
     @UserAccess(desc = "verify")
-    CtripVerifyRes Verify(@RequestBody CtripVerifyReq verifyReq, BindingResult bindingResult) {
+    CtripVerifyRes Verify(@Valid @RequestBody CtripVerifyReq verifyReq, BindingResult bindingResult) {
 
         CtripVerifyRes verifyRes = new CtripVerifyRes();
         if (bindingResult.hasErrors()) {
