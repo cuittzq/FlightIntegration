@@ -106,7 +106,7 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
             Passenger passenger = passengerVO2IO(passengerVO);
             orderReq.getPassengers().add(passenger);
         }
-        FlightRoutings routings = flightRoutingsVO2IO(createOrderReqVO.getRouting());
+        FlightRoutings routings = flightRoutingsVO2IO(createOrderReqVO.getRoutings());
         if (routings != null) {
             orderReq.setRouting(routings);
         }

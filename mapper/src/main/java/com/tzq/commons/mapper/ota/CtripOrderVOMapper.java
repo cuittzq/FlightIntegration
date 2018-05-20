@@ -38,6 +38,14 @@ public interface CtripOrderVOMapper {
 
     CreateOrderReq CreateOrderReqVO2DTO(CreateOrderReqVO createOrderReqVO);
 
+
+    @Mappings({@Mapping(target = "data", expression = "java(com.tzq.commons.converter.ExtInfoConverter.map2String(vo == null ? null : vo.getData()))")})
+    FlightRoutingsDTO flightRoutingsVO2DTO(FlightRoutingsVO vo);
+
+    @Mappings({@Mapping(target = "data", expression = "java(com.tzq.commons.converter.ExtInfoConverter.string2Map(dto == null ? \"\" : dto.getData()))")})
+    FlightRoutingsVO flightRoutingsDTO2VO(FlightRoutingsDTO dto);
+
+
     CreateOrderResVO CreateOrderResDTO2VO(CreateOrderRes createOrderRes);
 
     CreateOrderRes CreateOrderResVO2DTO(CreateOrderResVO createOrderReqVO);
@@ -46,11 +54,7 @@ public interface CtripOrderVOMapper {
 
     CtripOrderIdDTO CtripOrderIdVO2DTO(CtripOrderIdVO vo);
 
-    @Mappings({@Mapping(target = "data", expression = "java(com.tzq.commons.converter.ExtInfoConverter.map2String(vo == null ? null : vo.getData()))")})
-    FlightRoutingsDTO flightRoutingsVO2DTO(FlightRoutingsVO vo);
 
-    @Mappings({@Mapping(target = "data", expression = "java(com.tzq.commons.converter.ExtInfoConverter.string2Map(dto == null ? \"\" : dto.getData()))")})
-    FlightRoutingsVO flightRoutingsDTO2VO(FlightRoutingsDTO dto);
 
     List<PassengerVO> PassengerDTO2VOs(List<PassengerDTO> passengerDTO);
 

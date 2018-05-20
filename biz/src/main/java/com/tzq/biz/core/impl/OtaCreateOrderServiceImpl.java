@@ -1,5 +1,6 @@
 package com.tzq.biz.core.impl;
 
+import com.tzq.biz.constant.OtaConstants;
 import com.tzq.biz.core.OtaCreateOrderService;
 import com.tzq.biz.proxy.PurchaseProxy;
 import com.tzq.commons.Exception.CommonExcetpionConstant;
@@ -37,6 +38,8 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
     @Override
     public SingleResult<CreateOrderResVO> createOrder(RouteContext<CreateOrderReqVO> context) {
         Assert.notNull(context, "RouteContext can not be null ,searchFlight failure");
+        String purchaseEnum =  context.getT().getRoutings().getData().get(OtaConstants.PURCHANAME).toString();
+        context.setPurchaseEnum(PurchaseEnum.getEnumByCode(purchaseEnum));
         SingleResult<CreateOrderResVO> response = null;
         CreateOrderResVO verifyResVO = purchaseProxy.createOrder(context);
         try {
