@@ -1,5 +1,6 @@
 package com.tzq.biz.core.impl;
 
+import com.tzq.biz.constant.OtaConstants;
 import com.tzq.biz.core.OtaVerifyFlightService;
 import com.tzq.biz.proxy.PurchaseProxy;
 import com.tzq.commons.Exception.CommonExcetpionConstant;
@@ -37,33 +38,13 @@ public class OtaVerifyFlightServiceImpl implements OtaVerifyFlightService {
     @Override
     public SingleResult<CtripVerifyResVO> verifyFlight(RouteContext<CtripVerifyReqVO> context) {
         Assert.notNull(context, "RouteContext can not be null ,searchFlight failure");
-        // 根据OTA配置的销售策略决定调用供应商接口数据(查询平台规则)
-        List<PurchaseEnum> ota2Purchases = new ArrayList<>();
-        if (CollectionUtils.isEmpty(ota2Purchases)) {
-            // 如果没有配置规则默认给LCC
-            ota2Purchases.add(PurchaseEnum.LCC);
-        }
-
-        List<CtripVerifyResVO> resVOS = new ArrayList<>();
+        // 根据查询的data确定调用供应商
+        String purchaseEnum = context.getT().getRouting().getData().get(OtaConstants.PURCHANAME).toString();
+        context.setPurchaseEnum(PurchaseEnum.getEnumByCode(purchaseEnum));
         SingleResult<CtripVerifyResVO> response = null;
-
         try {
-            // 分别调用配置的供应商接口数据
-            ota2Purchases.forEach(purchaseEnum -> {
-                RouteContext<CtripVerifyReqVO> resuestContext = context.clone();
-                resuestContext.setPurchaseEnum(purchaseEnum);
-                // 分别调用配置的供应商接口数据
-                CtripVerifyResVO verifyResVO = purchaseProxy.verifyFlight(resuestContext);
-
-                // 数据汇总
-                if (verifyResVO != null) {
-                    resVOS.add(verifyResVO);
-                }
-            });
-
-
-            // 数据调控
-            CtripVerifyResVO verifyResVO = flightRegulation(resVOS);
+            // 调用供应商接口数据
+            CtripVerifyResVO verifyResVO = purchaseProxy.verifyFlight(context);
             if (verifyResVO == null) {
                 response = new SingleResult<>(verifyResVO, false, "0001", "无数据");
                 return response;
