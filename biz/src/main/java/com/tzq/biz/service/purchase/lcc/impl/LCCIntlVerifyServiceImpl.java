@@ -69,20 +69,11 @@ public class LCCIntlVerifyServiceImpl extends AbstractVerifyService {
     @Override
     protected <T> CtripVerifyResVO response(T t, RouteContext<CtripVerifyReqVO> context) {
         VerifyRes verifyRes = (VerifyRes) t;
-
         if (verifyRes == null) {
             throw new ServiceAbstractException(ServiceErrorMsg.Builder.newInstance().setErrorMsg("第三方接口返回空").setErrorCode(CommonExcetpionConstant.INTERFACE_INVOKE_ERROR_CODE).build());
         } else if (!StringUtils.isBlank(verifyRes.getMsg()) && !StringUtils.equalsIgnoreCase(verifyRes.getMsg(), "success")) {
             throw new ServiceAbstractException(ServiceErrorMsg.Builder.newInstance().setErrorMsg(verifyRes.getMsg()).setErrorCode(CommonExcetpionConstant.INTERFACE_INVOKE_ERROR_CODE).build());
         }
-
-        CtripVerifyResVO verifyResVO = dto2vo(verifyRes);
-//        verifyResVO.getRouting().setFromSegments(verifyVOMapper.FlightSegmentdtos2vos(verifyRes.getRouting().getFromSegments()));
-//        verifyResVO.getRouting().setRetSegments(verifyVOMapper.FlightSegmentdtos2vos(verifyRes.getRouting().getRetSegments()));
-//        verifyResVO.getRouting().setRule(verifyVOMapper.Rulesdto2vo(verifyRes.getRouting().getRule()));
-//        verifyResVO.setRule(null);
-//
-
         return dto2vo(verifyRes);
     }
 
@@ -94,13 +85,7 @@ public class LCCIntlVerifyServiceImpl extends AbstractVerifyService {
      */
     @Override
     protected <T> T request(RouteContext<CtripVerifyReqVO> context) {
-        CtripVerifyReqVO ctripVerifyReqVO = context.getT();
         VerifyReq verifyReq = new VerifyReq();
-//        VerifyReq verifyReq = verifyVOMapper.VerifyReqVOvO2dto(ctripVerifyReqVO);
-//        verifyReq.getRouting().setFromSegments(verifyVOMapper.FlightSegmentvos2dtos(ctripVerifyReqVO.getRouting().getFromSegments()));
-//        verifyReq.getRouting().setRetSegments(verifyVOMapper.FlightSegmentvos2dtos(ctripVerifyReqVO.getRouting().getRetSegments()));
-
-        // 这层请在类的下面写模型转换
         VerifyRouting verifyRouting = new VerifyRouting();
         verifyRouting.setData(context.getT().getRouting().getData().get(OtaConstants.PURCHANAME_DATA).toString());
         verifyRouting.setFromSegments(flightSegmentVO2IOs(context.getT().getRouting().getFromSegments()));
@@ -125,7 +110,6 @@ public class LCCIntlVerifyServiceImpl extends AbstractVerifyService {
         return flightSegments;
     }
 
-
     private FlightSegment FlightSegmentVO2IO(SegmentVO segmentVO) {
         if (segmentVO == null) {
             return null;
@@ -146,36 +130,6 @@ public class LCCIntlVerifyServiceImpl extends AbstractVerifyService {
         flightSegment.setStopCities(segmentVO.getStopAirports());
         flightSegment.setFlightNumber(segmentVO.getFlightNumber());
         return flightSegment;
-    }
-
-    private Contact contactVO2IO(ContactVO contactVO) {
-        if (contactVO == null) {
-            return null;
-        }
-        Contact contact = new Contact();
-        contact.setAddress(contactVO.getAddress());
-        contact.setEmail(contactVO.getEmail());
-        contact.setName(contactVO.getName());
-        contact.setMobile(contactVO.getMobile());
-        contact.setPostcode(contactVO.getPostcode());
-        return contact;
-    }
-
-    private Passenger passengerVO2IO(PassengerVO passengerVO) {
-        if (passengerVO == null) {
-            return null;
-        }
-        Passenger passenger = new Passenger();
-        passenger.setAgeType(passengerVO.getAgeType().getCode());
-        passenger.setBirthday(passengerVO.getBirthday());
-        passenger.setCardExpired(passengerVO.getCardExpired());
-        passenger.setCardIssuePlace(passengerVO.getCardIssuePlace());
-        passenger.setCardNum(passengerVO.getCardNum());
-        passenger.setCardType(passengerVO.getCardType().getCode());
-        passenger.setGender(passengerVO.getGender());
-        passenger.setName(passengerVO.getName());
-        passenger.setNationality(passengerVO.getNationality());
-        return passenger;
     }
 
     public CtripVerifyResVO dto2vo(VerifyRes verifyRes) {
