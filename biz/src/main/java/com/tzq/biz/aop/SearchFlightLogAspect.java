@@ -44,7 +44,7 @@ public class SearchFlightLogAspect {
     InterfaceRequestLogService interfaceRequestLogService;
 
 
-    @Pointcut("execution(public * com.tzq.biz.core.impl.*.*(..))")
+    @Pointcut("execution(public * com.tzq.biz.core.impl.OtaSearchFlightServiceImpl.*(..))")
     public void interfacelog() {
     }
 
@@ -66,7 +66,7 @@ public class SearchFlightLogAspect {
     public void after(JoinPoint joinPoint) {
     }
 
-    @AfterReturning(pointcut = "execution(* com.tzq.biz.core.impl.*.*(..))", returning = "returnValue")
+    @AfterReturning(pointcut = "execution(* com.tzq.biz.core.impl.OtaSearchFlightServiceImpl.*.*(..))", returning = "returnValue")
     public void log(JoinPoint point, Object returnValue) {
         try {
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
