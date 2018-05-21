@@ -1,5 +1,7 @@
 package com.tzq.service.ctrip;
 
+import com.tzq.service.ctrip.models.issueticket.IssueTicketReqDTO;
+import com.tzq.service.ctrip.models.issueticket.IssueTicketResDTO;
 import com.tzq.service.ctrip.models.order.CreateOrderReq;
 import com.tzq.service.ctrip.models.order.CreateOrderRes;
 import com.tzq.service.ctrip.models.search.SearchFlightReq;
@@ -47,5 +49,5 @@ public interface CtripFlightService {
      * @param req
      * @return
      */
-    String issueTicket(String req);
+    IssueTicketResDTO issueTicket(IssueTicketReqDTO req);
 }

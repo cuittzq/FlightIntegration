@@ -8,14 +8,14 @@ import java.util.List;
 public class CreateOrderReq extends BaseRequest {
 
 
-    private CtripOrderIdDTO ctripOrderId;
-    private String referenceId;
-    private Integer tripType;
-    private String sessionId;
-    private FlightRoutingsDTO routings;
-    private ContactDTO contact;
-    private List<PassengerDTO> passengers;
-    private List<PassengerbaggagesDTO> passengerbaggages;
+    private CtripOrderIdDTO                ctripOrderId;
+    private String                         referenceId;
+    private Integer                        tripType;
+    private String                         sessionId;
+    private FlightRoutingsDTO              routings;
+    private ContactDTO                     contact;
+    private List<PassengerDTO>             passengers;
+    private List<PassengerbaggagesDTO>     passengerbaggages;
     private List<CtripRefRevServiceFeeDTO> ctripRefRevServiceFee;
 
     public FlightRoutingsDTO getRoutings() {

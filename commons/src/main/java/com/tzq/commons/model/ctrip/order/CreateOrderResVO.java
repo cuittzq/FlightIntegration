@@ -1,10 +1,11 @@
 package com.tzq.commons.model.ctrip.order;
 
+import com.tzq.commons.model.ctrip.BaseResponse;
 import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
 
 import java.util.List;
 
-public class CreateOrderResVO {
+public class CreateOrderResVO extends BaseResponse {
 
 
     /**
@@ -17,12 +18,12 @@ public class CreateOrderResVO {
      * passengerbaggages : [{"passengerName":"Marcus/Tom","baggages":[{"flight":"AA89","fromAirport":"PEK","toAirport":"HKG","cabin":"K","depTime":"201507010920","baggagePrices":[{"weight":5,"bookSalePrice":100,"ticketSalePrice":200,"airportSalePrice":300,"refundFee":100,"desc":""}]},{"flight":"CA189","fromAirport":"HKG","toAirport":"TPE","cabin":"K","depTime":"201507010920","baggagePrices":[{"weight":5,"bookSalePrice":100,"ticketSalePrice":200,"airportSalePrice":300,"refundFee":100,"desc":""}]}]},{"passengerName":"Marcus/Jack","baggages":[{"flight":"AA89","fromAirport":"PEK","toAirport":"HKG","cabin":"K","depTime":"201507010920","baggagePrices":[{"weight":5,"bookSalePrice":100,"ticketSalePrice":200,"airportSalePrice":300,"refundFee":100,"desc":""}]},{"flight":"CA189","fromAirport":"HKG","toAirport":"TPE","cabin":"K","depTime":"201507010920","baggagePrices":[{"weight":5,"bookSalePrice":100,"ticketSalePrice":200,"airportSalePrice":300,"refundFee":100,"desc":""}]}]}]
      */
 
-    private String sessionId;
-    private String orderNo;
-    private String pnrCode;
-    private int maxSeats;
-    private ContactVO orderContact;
-    private FlightRoutingsVO routing;
+    private String                    sessionId;
+    private String                    orderNo;
+    private String                    pnrCode;
+    private int                       maxSeats;
+    private ContactVO                 orderContact;
+    private FlightRoutingsVO          routing;
     private List<PassengerbaggagesVO> passengerbaggages;
 
     public String getSessionId() {

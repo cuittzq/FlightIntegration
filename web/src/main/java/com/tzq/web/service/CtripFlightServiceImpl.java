@@ -9,8 +9,11 @@ import com.tzq.commons.enums.*;
 import com.tzq.commons.mapper.ota.CtripOrderVOMapper;
 import com.tzq.commons.mapper.ota.CtripVerifyVOMapper;
 import com.tzq.commons.mapper.ota.FlightRoutingsVOMapper;
+import com.tzq.commons.mapper.ota.IssueTicketVOMapper;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.context.SingleResult;
+import com.tzq.commons.model.ctrip.issueticket.IssueTicketReqVO;
+import com.tzq.commons.model.ctrip.issueticket.IssueTicketResVO;
 import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
 import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
 import com.tzq.commons.model.ctrip.search.FlightRouteVO;
@@ -19,6 +22,8 @@ import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyResVO;
 import com.tzq.service.ctrip.CtripFlightService;
 import com.tzq.service.ctrip.models.enums.StatusEnum;
+import com.tzq.service.ctrip.models.issueticket.IssueTicketReqDTO;
+import com.tzq.service.ctrip.models.issueticket.IssueTicketResDTO;
 import com.tzq.service.ctrip.models.order.CreateOrderReq;
 import com.tzq.service.ctrip.models.order.CreateOrderRes;
 import com.tzq.service.ctrip.models.search.SearchFlightReq;
@@ -67,6 +72,9 @@ public class CtripFlightServiceImpl implements CtripFlightService {
 
     @Resource
     CtripOrderVOMapper ctripOrderVOMapper;
+
+    @Resource
+    IssueTicketVOMapper issueTicketVOMapper;
 
     /**
      *
@@ -212,16 +220,22 @@ public class CtripFlightServiceImpl implements CtripFlightService {
      * @return
      */
     @Override
-    public String issueTicket(String req) {
-        RouteContext<String> context = new RouteContext();
+    public IssueTicketResDTO issueTicket(IssueTicketReqDTO req) {
+        RouteContext<IssueTicketReqVO> context = new RouteContext();
         setDefaultCont(context);
-        context.setT(req);
+        context.setT(issueTicketVOMapper.IssueTicketReqDTO2VO(req));
         logger.info("调用LCC{}接口,入参{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(context));
-        SingleResult<String> response = otaIssueTicketService.issueTicket(context);
+        SingleResult<IssueTicketResVO> response = otaIssueTicketService.issueTicket(context);
         logger.info("调用LCC{}接口,返回{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(response));
-
-        return response.getData();
+        if (response == null) {
+            IssueTicketResDTO issueTicketResDTO = new IssueTicketResDTO();
+            issueTicketResDTO.setStatus(1);
+            issueTicketResDTO.setMsg("");
+            return issueTicketResDTO;
+        }
+        return issueTicketVOMapper.IssueTicketResVO2DTO(response.getData());
     }
+
 
     /**
      * @param routeContext
