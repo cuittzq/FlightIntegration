@@ -198,6 +198,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
     /**
      * @param routeContext
      */
+
     private void setDefaultCont(RouteContext routeContext) {
         routeContext.setAreaType(AreaTypeEnum.INTERNATIONAL);
         routeContext.setOta(OTAEnum.CTRIP);

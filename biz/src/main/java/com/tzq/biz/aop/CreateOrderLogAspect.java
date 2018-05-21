@@ -5,8 +5,9 @@ import com.tzq.commons.enums.MethodEnum;
 import com.tzq.commons.enums.TripTypeEnum;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.context.SingleResult;
+import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
+import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
 import com.tzq.commons.model.ctrip.search.FlightRouteVO;
-import com.tzq.commons.model.ctrip.search.SearchVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
 import com.tzq.commons.utils.DateUtils;
 import com.tzq.dal.model.log.InterfaceRequestLog;
@@ -31,21 +32,21 @@ import java.util.Date;
  */
 @Aspect
 @Component
-public class VerifyLogAspect {
+public class CreateOrderLogAspect {
     @Resource
     InterfaceRequestLogService interfaceRequestLogService;
 
-    @AfterReturning(pointcut = "execution(* com.tzq.biz.core.impl.OtaVerifyFlightServiceImpl.*(..))", returning = "returnValue")
+    @AfterReturning(pointcut = "execution(* com.tzq.biz.core.impl.OtaCreateOrderServiceImpl.*(..))", returning = "returnValue")
     public void log(JoinPoint point, Object returnValue)
     {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         HttpServletResponse response = attributes.getResponse();
 
-        RouteContext<CtripVerifyReqVO> paramin = (RouteContext<CtripVerifyReqVO>) point.getArgs()[0];
-        SingleResult<FlightRouteVO> flightRouteVO = new SingleResult();
+        RouteContext<CreateOrderReqVO> paramin = (RouteContext<CreateOrderReqVO>) point.getArgs()[0];
+        SingleResult<CreateOrderResVO> flightRouteVO = new SingleResult();
         if (returnValue != null) {
-            flightRouteVO = (SingleResult<FlightRouteVO>) returnValue;
+            flightRouteVO = (SingleResult<CreateOrderResVO>) returnValue;
         }
         InterfaceRequestLog interfaceRequestLog = buildLogs(request, response, paramin, flightRouteVO);
         interfaceRequestLogService.insert(interfaceRequestLog);
@@ -57,19 +58,19 @@ public class VerifyLogAspect {
         System.out.println("ARGS : " + Arrays.toString(point.getArgs()));
     }
 
-    private InterfaceRequestLog buildLogs(HttpServletRequest request, HttpServletResponse response, RouteContext<CtripVerifyReqVO> paramin, SingleResult<FlightRouteVO> flightRouteVO) {
+    private InterfaceRequestLog buildLogs(HttpServletRequest request, HttpServletResponse response, RouteContext<CreateOrderReqVO> paramin, SingleResult<CreateOrderResVO> flightRouteVO) {
         InterfaceRequestLog interfaceRequestLog = new InterfaceRequestLog();
-        interfaceRequestLog.setArrcode(paramin.getT().getRouting().getFromSegments().get(0).getArrAirport());
-        interfaceRequestLog.setDepcode(paramin.getT().getRouting().getFromSegments().get(0).getDepAirport());
+        interfaceRequestLog.setArrcode(paramin.getT().getRoutings().getFromSegments().get(0).getArrAirport());
+        interfaceRequestLog.setDepcode(paramin.getT().getRoutings().getFromSegments().get(0).getDepAirport());
         try {
-            interfaceRequestLog.setDepdate(DateUtils.parseDateNoTime(paramin.getT().getRouting().getFromSegments().get(0).getDepTime(),"yyyyMMdd"));
+            interfaceRequestLog.setDepdate(DateUtils.parseDateNoTime(paramin.getT().getRoutings().getFromSegments().get(0).getDepTime(),"yyyyMMdd"));
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        if (paramin.getT().getTripType() == TripTypeEnum.RT && paramin.getT().getRouting().getRetSegments() != null && paramin.getT().getRouting().getRetSegments().size() >0) {
+        if (paramin.getT().getTripType() == TripTypeEnum.RT && paramin.getT().getRoutings().getRetSegments() != null && paramin.getT().getRoutings().getRetSegments().size() >0) {
             try {
-                interfaceRequestLog.setBackdate(DateUtils.parseDateNoTime(paramin.getT().getRouting().getRetSegments().get(0).getDepTime(), "yyyyMMdd"));
+                interfaceRequestLog.setBackdate(DateUtils.parseDateNoTime(paramin.getT().getRoutings().getRetSegments().get(0).getDepTime(), "yyyyMMdd"));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -77,19 +78,29 @@ public class VerifyLogAspect {
             interfaceRequestLog.setBackdate(new Date(1990, 1, 1));
         }
 
-        interfaceRequestLog.setCarrier(paramin.getT().getRouting().getFromSegments().get(0).getCarrier());
+        interfaceRequestLog.setCarrier(paramin.getT().getRoutings().getFromSegments().get(0).getCarrier());
         interfaceRequestLog.setSalesplatform(1);
         interfaceRequestLog.setPurchaseplatform(1);
         interfaceRequestLog.setRequestdate(new Date());
-        interfaceRequestLog.setRequesttype(MethodEnum.VERIFY.getCode());
+        interfaceRequestLog.setRequesttype(MethodEnum.CREATEORDER.getCode());
 
-        interfaceRequestLog.setRequestresult(1);
-        interfaceRequestLog.setInterfaceresult(1);
-        
-        interfaceRequestLog.setOrderno("");
-        interfaceRequestLog.setPnr("");
+        if(flightRouteVO.isSuccess() && !StringUtils.isEmpty(flightRouteVO.getData().getPnrCode()))
+        {
+            interfaceRequestLog.setRequestresult(0);
+            interfaceRequestLog.setInterfaceresult(0);
+            interfaceRequestLog.setOrderno(flightRouteVO.getData().getOrderNo());
+            interfaceRequestLog.setPnr(flightRouteVO.getData().getPnrCode());
+        }
+        else
+        {
+            interfaceRequestLog.setRequestresult(1);
+            interfaceRequestLog.setInterfaceresult(1);
+            interfaceRequestLog.setOrderno("");
+            interfaceRequestLog.setPnr("");
+        }
+
         // 0-单程，1-往返
-        interfaceRequestLog.setVoyagetype(0);
+        interfaceRequestLog.setVoyagetype(paramin.getT().getTripType().getCode());
         interfaceRequestLog.setSalesplatrequesttime(new Date());
         interfaceRequestLog.setSalesplatresponsetime(new Date());
         interfaceRequestLog.setPurchaseplatrequesttime(new Date());
@@ -102,6 +113,4 @@ public class VerifyLogAspect {
         interfaceRequestLog.setPurchaseplatlogdetail(JSON.toJSONString(flightRouteVO));
         return interfaceRequestLog;
     }
-
-
 }
