@@ -1,6 +1,5 @@
 package com.tzq.biz.service.purchase.lcc.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.tzq.biz.annotation.Route;
 import com.tzq.biz.constant.OtaConstants;
 import com.tzq.biz.service.purchase.abstracts.AbstractCreateOrderService;
@@ -9,6 +8,7 @@ import com.tzq.commons.Exception.ServiceAbstractException;
 import com.tzq.commons.Exception.ServiceErrorMsg;
 import com.tzq.commons.enums.AreaTypeEnum;
 import com.tzq.commons.enums.PurchaseEnum;
+import com.tzq.commons.mapper.ota.CtripOrderVOMapper;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.ctrip.order.ContactVO;
 import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
@@ -59,6 +59,8 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         OrderReq orderReq = request(context);
         OrderRes order = lccClient.createOrder(orderReq);
         CreateOrderResVO orderResVO = response(order, context);
+
+
         return orderResVO;
     }
 
@@ -74,22 +76,15 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         OrderRes orderRes = (OrderRes) t;
 
         CreateOrderResVO createOrderResVO = new CreateOrderResVO();
-//        createOrderResVO.setOrderContact(context.getT().getContact());
+        createOrderResVO.setOrderContact(context.getT().getContact());
 
         if (orderRes == null) {
             throw new ServiceAbstractException(ServiceErrorMsg.Builder.newInstance().setErrorMsg("第三方接口返回空").setErrorCode(CommonExcetpionConstant.INTERFACE_INVOKE_ERROR_CODE).build());
-        } else if (!StringUtils.isBlank(orderRes.getMsg())) {
+        } else if (!StringUtils.isBlank(orderRes.getMsg()) && orderRes.getStatus() != 0) {
             throw new ServiceAbstractException(ServiceErrorMsg.Builder.newInstance().setErrorMsg(orderRes.getMsg()).setErrorCode(CommonExcetpionConstant.INTERFACE_INVOKE_ERROR_CODE).build());
         } else {
-
-            Map<String, Object> datamap = new HashMap<>();
-            datamap.put(OtaConstants.PURCHANAME, PurchaseEnum.LCC.getCode());
-            if (orderRes.getRoutings().getData() != null) {
-                datamap.put(OtaConstants.PURCHANAME_DATA, orderRes.getRoutings().getData());
-            }
-            // 转换结果对象
-            orderRes.getRoutings().setData(JSON.toJSONString(datamap));
-//            createOrderResVO = orderVOMapper.orderResIo2Vo(orderRes);
+            /**构建返回结果**/
+            createOrderResVO = createOrderRes2VO(orderRes);
         }
 
         return createOrderResVO;
@@ -112,6 +107,7 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
             orderReq.getContact().add(contact);
         }
 
+        orderReq.setTripType(createOrderReqVO.getTripType().getCode());
         orderReq.setPassengers(new ArrayList<>());
         for (PassengerVO passengerVO : createOrderReqVO.getPassengers()) {
             Passenger passenger = passengerVO2IO(passengerVO);
@@ -125,6 +121,7 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
     }
 
 
+    /** 入参转换 **/
     private FlightRoutings flightRoutingsVO2IO(FlightRoutingsVO flightRoutingsVO) {
         if (flightRoutingsVO == null) {
             return null;
@@ -146,8 +143,6 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         flightRoutings.setPriceType(flightRoutingsVO.getPriceType());
         return flightRoutings;
     }
-
-
     private List<FlightSegment> flightSegmentVO2IOs(List<SegmentVO> segmentVOList) {
         if (CollectionUtils.isEmpty(segmentVOList)) {
             return null;
@@ -159,11 +154,8 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
                 flightSegments.add(flightSegment);
             }
         }
-
         return flightSegments;
     }
-
-
     private FlightSegment FlightSegmentVO2IO(SegmentVO segmentVO) {
         if (segmentVO == null) {
             return null;
@@ -185,7 +177,6 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         flightSegment.setFlightNumber(segmentVO.getFlightNumber());
         return flightSegment;
     }
-
     private Contact contactVO2IO(ContactVO contactVO) {
         if (contactVO == null) {
             return null;
@@ -198,7 +189,6 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         contact.setPostcode(contactVO.getPostcode());
         return contact;
     }
-
     private Passenger passengerVO2IO(PassengerVO passengerVO) {
         if (passengerVO == null) {
             return null;
@@ -215,4 +205,89 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         passenger.setNationality(passengerVO.getNationality());
         return passenger;
     }
+
+    /**结果转换**/
+    private CreateOrderResVO createOrderRes2VO(OrderRes res)
+    {
+        if(res == null)
+        {
+            return null;
+        }
+
+        CreateOrderResVO resVO = new CreateOrderResVO();
+        resVO.setPnrCode(res.getPnrCode());
+        resVO.setOrderNo(res.getOrderNo());
+        resVO.setMaxSeats(res.getMaxSeats());
+        resVO.setSessionId(res.getSessionId());
+
+        // routings转换
+        resVO.setRouting(createOrderRes2VO(res.getRouting()));
+
+        return resVO;
+    }
+
+    private FlightRoutingsVO createOrderRes2VO(FlightRoutings routing) {
+        if(routing == null)
+        {
+            return  null;
+        }
+        FlightRoutingsVO routingsVO = new FlightRoutingsVO();
+
+        Map<String, Object> datamap = new HashMap<>();
+        datamap.put(OtaConstants.PURCHANAME, PurchaseEnum.LCC.getCode());
+        if (routing.getData() != null) {
+            datamap.put(OtaConstants.PURCHANAME_DATA, routing.getData());
+        }
+
+        routingsVO.setAdultPrice(routing.getAdultPrice());
+        routingsVO.setAdultTax(routing.getAdultTax());
+
+        routingsVO.setChildPrice(routing.getChildPrice());
+        routingsVO.setChildTax(routing.getChildTax());
+        routingsVO.setPriceType(routing.getPriceType());
+        routingsVO.setAdultTaxType(routing.getAdultTaxType());
+        routingsVO.setChildTaxType(routing.getChildTaxType());
+
+        routingsVO.setData(datamap);
+        routingsVO.setFromSegments(createOrderRes2VO(routing.getFromSegments()));
+        routingsVO.setRetSegments(createOrderRes2VO(routing.getRetSegments()));
+
+
+        return routingsVO;
+    }
+
+
+
+    private List<SegmentVO> createOrderRes2VO(List<FlightSegment> fromSegments) {
+        if(fromSegments == null || fromSegments.size() == 0)
+        {
+            return  null;
+        }
+
+        List<SegmentVO> list = new ArrayList<>();
+        for(FlightSegment seg:fromSegments)
+        {
+            SegmentVO flightSegment = new SegmentVO();
+            flightSegment.setDepAirport(seg.getDepAirport());
+            flightSegment.setDepTerminal(seg.getDepartureTerminal());
+            flightSegment.setDepTime(seg.getDepTime());
+
+            flightSegment.setAircraftCode(seg.getAircraftCode());
+            flightSegment.setArrAirport(seg.getArrAirport());
+            flightSegment.setArrTerminal(seg.getArrivingTerminal());
+            flightSegment.setArrTime(seg.getArrTime());
+
+            flightSegment.setCabin(seg.getCabin());
+            flightSegment.setCarrier(seg.getCarrier());
+            flightSegment.setCodeShare(false);
+            flightSegment.setFlightNumber(seg.getFlightNumber());
+
+            flightSegment.setStopAirports(seg.getStopCities());
+
+            list.add(flightSegment);
+        }
+
+        return list;
+    }
+
 }

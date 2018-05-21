@@ -38,23 +38,23 @@ public class VerifyLogAspect {
     @AfterReturning(pointcut = "execution(* com.tzq.biz.core.impl.OtaVerifyFlightServiceImpl.*(..))", returning = "returnValue")
     public void log(JoinPoint point, Object returnValue)
     {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-        HttpServletResponse response = attributes.getResponse();
+        try {
+            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            HttpServletRequest request = attributes.getRequest();
+            HttpServletResponse response = attributes.getResponse();
 
-        RouteContext<CtripVerifyReqVO> paramin = (RouteContext<CtripVerifyReqVO>) point.getArgs()[0];
-        SingleResult<FlightRouteVO> flightRouteVO = new SingleResult();
-        if (returnValue != null) {
-            flightRouteVO = (SingleResult<FlightRouteVO>) returnValue;
+            RouteContext<CtripVerifyReqVO> paramin = (RouteContext<CtripVerifyReqVO>) point.getArgs()[0];
+            SingleResult<FlightRouteVO> flightRouteVO = new SingleResult();
+            if (returnValue != null) {
+                flightRouteVO = (SingleResult<FlightRouteVO>) returnValue;
+            }
+            InterfaceRequestLog interfaceRequestLog = buildLogs(request, response, paramin, flightRouteVO);
+            interfaceRequestLogService.insert(interfaceRequestLog);
         }
-        InterfaceRequestLog interfaceRequestLog = buildLogs(request, response, paramin, flightRouteVO);
-        interfaceRequestLogService.insert(interfaceRequestLog);
-        // 记录下请求内容
-        System.out.println("URL : " + request.getRequestURL().toString());
-        System.out.println("HTTP_METHOD : " + request.getMethod());
-        System.out.println("IP : " + request.getRemoteAddr());
-        System.out.println("CLASS_METHOD : " + point.getSignature().getDeclaringTypeName() + "." + point.getSignature().getName());
-        System.out.println("ARGS : " + Arrays.toString(point.getArgs()));
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
     private InterfaceRequestLog buildLogs(HttpServletRequest request, HttpServletResponse response, RouteContext<CtripVerifyReqVO> paramin, SingleResult<FlightRouteVO> flightRouteVO) {
@@ -85,7 +85,7 @@ public class VerifyLogAspect {
 
         interfaceRequestLog.setRequestresult(1);
         interfaceRequestLog.setInterfaceresult(1);
-        
+
         interfaceRequestLog.setOrderno("");
         interfaceRequestLog.setPnr("");
         // 0-单程，1-往返

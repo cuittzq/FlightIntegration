@@ -16,7 +16,7 @@ public class OrderRes extends BaseRes implements Serializable{
     private String orderNo;
     private String pnrCode;
     private Integer maxSeats;
-    private FlightRoutings routings;
+    private FlightRoutings routing;
 
     public String getOrderNo() {
         return orderNo;
@@ -42,12 +42,12 @@ public class OrderRes extends BaseRes implements Serializable{
         this.maxSeats = maxSeats;
     }
 
-    public FlightRoutings getRoutings() {
-        return routings;
+    public FlightRoutings getRouting() {
+        return routing;
     }
 
-    public void setRoutings(FlightRoutings routings) {
-        this.routings = routings;
+    public void setRouting(FlightRoutings routing) {
+        this.routing = routing;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class OrderRes extends BaseRes implements Serializable{
         sb.append("            \"orderNo\":\"").append(orderNo).append('\"');
         sb.append(",             \"pnrCode\":\"").append(pnrCode).append('\"');
         sb.append(",             \"maxSeats\":").append(maxSeats);
-        sb.append(",             \"routings\":").append(routings);
+        sb.append(",             \"routings\":").append(routing);
         sb.append('}');
         sb.append(super.toString());
         return sb.toString();

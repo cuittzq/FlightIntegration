@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.concurrent.Callable;
 
 /**
  * Created by cl24957 on 2018/5/21.
@@ -37,8 +38,7 @@ public class CreateOrderLogAspect {
     InterfaceRequestLogService interfaceRequestLogService;
 
     @AfterReturning(pointcut = "execution(* com.tzq.biz.core.impl.OtaCreateOrderServiceImpl.*(..))", returning = "returnValue")
-    public void log(JoinPoint point, Object returnValue)
-    {
+    public void log(JoinPoint point, Object returnValue) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         HttpServletResponse response = attributes.getResponse();
@@ -49,7 +49,19 @@ public class CreateOrderLogAspect {
             flightRouteVO = (SingleResult<CreateOrderResVO>) returnValue;
         }
         InterfaceRequestLog interfaceRequestLog = buildLogs(request, response, paramin, flightRouteVO);
-        interfaceRequestLogService.insert(interfaceRequestLog);
+
+        Thread td = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    interfaceRequestLogService.insert(interfaceRequestLog);
+                }
+                catch (Exception e){
+                }
+            }
+        });
+        td.start();
+
         // 记录下请求内容
         System.out.println("URL : " + request.getRequestURL().toString());
         System.out.println("HTTP_METHOD : " + request.getMethod());
@@ -63,12 +75,12 @@ public class CreateOrderLogAspect {
         interfaceRequestLog.setArrcode(paramin.getT().getRoutings().getFromSegments().get(0).getArrAirport());
         interfaceRequestLog.setDepcode(paramin.getT().getRoutings().getFromSegments().get(0).getDepAirport());
         try {
-            interfaceRequestLog.setDepdate(DateUtils.parseDateNoTime(paramin.getT().getRoutings().getFromSegments().get(0).getDepTime(),"yyyyMMdd"));
+            interfaceRequestLog.setDepdate(DateUtils.parseDateNoTime(paramin.getT().getRoutings().getFromSegments().get(0).getDepTime(), "yyyyMMdd"));
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        if (paramin.getT().getTripType() == TripTypeEnum.RT && paramin.getT().getRoutings().getRetSegments() != null && paramin.getT().getRoutings().getRetSegments().size() >0) {
+        if (paramin.getT().getTripType() == TripTypeEnum.RT && paramin.getT().getRoutings().getRetSegments() != null && paramin.getT().getRoutings().getRetSegments().size() > 0) {
             try {
                 interfaceRequestLog.setBackdate(DateUtils.parseDateNoTime(paramin.getT().getRoutings().getRetSegments().get(0).getDepTime(), "yyyyMMdd"));
             } catch (ParseException e) {
@@ -84,15 +96,12 @@ public class CreateOrderLogAspect {
         interfaceRequestLog.setRequestdate(new Date());
         interfaceRequestLog.setRequesttype(MethodEnum.CREATEORDER.getCode());
 
-        if(flightRouteVO.isSuccess() && !StringUtils.isEmpty(flightRouteVO.getData().getPnrCode()))
-        {
+        if (flightRouteVO.isSuccess() && !StringUtils.isEmpty(flightRouteVO.getData().getPnrCode())) {
             interfaceRequestLog.setRequestresult(0);
             interfaceRequestLog.setInterfaceresult(0);
             interfaceRequestLog.setOrderno(flightRouteVO.getData().getOrderNo());
             interfaceRequestLog.setPnr(flightRouteVO.getData().getPnrCode());
-        }
-        else
-        {
+        } else {
             interfaceRequestLog.setRequestresult(1);
             interfaceRequestLog.setInterfaceresult(1);
             interfaceRequestLog.setOrderno("");

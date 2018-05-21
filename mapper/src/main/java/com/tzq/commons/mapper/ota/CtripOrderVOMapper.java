@@ -6,6 +6,7 @@ import com.tzq.commons.model.ctrip.search.AirlineAncillariesVO;
 import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
 import com.tzq.commons.model.ctrip.search.RulesVO;
 import com.tzq.commons.model.ctrip.search.SegmentVO;
+import com.tzq.integration.service.intl.lcc.model.order.OrderRes;
 import com.tzq.service.ctrip.models.order.*;
 import com.tzq.service.ctrip.models.search.AirlineAncillariesDTO;
 import com.tzq.service.ctrip.models.search.FlightRoutingsDTO;
@@ -45,8 +46,7 @@ public interface CtripOrderVOMapper {
     @Mappings({@Mapping(target = "data", expression = "java(com.tzq.commons.converter.ExtInfoConverter.string2Map(dto == null ? \"\" : dto.getData()))")})
     FlightRoutingsVO flightRoutingsDTO2VO(FlightRoutingsDTO dto);
 
-
-    CreateOrderResVO CreateOrderResDTO2VO(CreateOrderRes createOrderRes);
+    CreateOrderResVO CreateOrderResDTO2VO(OrderRes createOrderRes);
 
     CreateOrderRes CreateOrderResVO2DTO(CreateOrderResVO createOrderReqVO);
 

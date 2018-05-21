@@ -165,8 +165,8 @@ public class CtripFlightServiceImpl implements CtripFlightService {
      */
     @Override
     public CreateOrderRes createOrder(CreateOrderReq req) {
-        RouteContext<CreateOrderReqVO> context  = new RouteContext();
-        CreateOrderRes                 response = new CreateOrderRes();
+        RouteContext<CreateOrderReqVO> context = new RouteContext();
+        CreateOrderRes response = new CreateOrderRes();
         setDefaultCont(context);
         if (req.getRoutings() == null) {
             response.setMsg("routings can not be null");
@@ -187,16 +187,21 @@ public class CtripFlightServiceImpl implements CtripFlightService {
 
         context.setT(ctripOrderVOMapper.CreateOrderReqDTO2VO(req));
         logger.info("调用LCC{}接口,入参{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(context));
-        SingleResult<CreateOrderResVO> singleResult = otaCreateOrderService.createOrder(context);
-        logger.info("调用LCC{}接口,返回{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(1));
+        try {
+            SingleResult<CreateOrderResVO> singleResult = otaCreateOrderService.createOrder(context);
 
-        if (!singleResult.isSuccess() || singleResult.getData() == null) {
-            response.setMsg(singleResult.getErrorMessage());
-            response.setStatus(StatusEnum.INNER_ERROR.getCode());
-            return response;
+            logger.info("调用LCC{}接口,返回{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(1));
+
+            if (!singleResult.isSuccess() || singleResult.getData() == null) {
+                response.setMsg(singleResult.getErrorMessage());
+                response.setStatus(StatusEnum.INNER_ERROR.getCode());
+                return response;
+            }
+
+            response = ctripOrderVOMapper.CreateOrderResVO2DTO(singleResult.getData());
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-
-        response = ctripOrderVOMapper.CreateOrderResVO2DTO(singleResult.getData());
         return response;
     }
 
