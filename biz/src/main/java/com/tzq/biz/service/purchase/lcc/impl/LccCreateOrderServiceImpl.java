@@ -1,5 +1,6 @@
 package com.tzq.biz.service.purchase.lcc.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.tzq.biz.annotation.Route;
 import com.tzq.biz.constant.OtaConstants;
 import com.tzq.biz.service.purchase.abstracts.AbstractCreateOrderService;
@@ -28,7 +29,9 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 功能描述
@@ -78,6 +81,14 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         } else if (!StringUtils.isBlank(orderRes.getMsg())) {
             throw new ServiceAbstractException(ServiceErrorMsg.Builder.newInstance().setErrorMsg(orderRes.getMsg()).setErrorCode(CommonExcetpionConstant.INTERFACE_INVOKE_ERROR_CODE).build());
         } else {
+
+            Map<String, Object> datamap = new HashMap<>();
+            datamap.put(OtaConstants.PURCHANAME, PurchaseEnum.LCC.getCode());
+            if (orderRes.getRoutings().getData() != null) {
+                datamap.put(OtaConstants.PURCHANAME_DATA, orderRes.getRoutings().getData());
+            }
+            // 转换结果对象
+            orderRes.getRoutings().setData(JSON.toJSONString(datamap));
 //            createOrderResVO = orderVOMapper.orderResIo2Vo(orderRes);
         }
 

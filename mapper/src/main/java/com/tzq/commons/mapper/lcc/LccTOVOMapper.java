@@ -23,6 +23,9 @@ public class LccTOVOMapper {
     public static FlightRoutingsVO flightRouteDto2FlightRouteVO(FlightRoutings flightRoutings) {
         FlightRoutingsVO flightRoutingsVO = new FlightRoutingsVO();
 
+
+
+
         /**
          * 可保存必要信息，验价时会放在请求报文中传给供应商；最大 1000 个字符
          */

@@ -1,5 +1,6 @@
 package com.tzq.biz.service.purchase.lcc.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.tzq.biz.annotation.Route;
 import com.tzq.biz.constant.OtaConstants;
 import com.tzq.biz.service.purchase.abstracts.AbstractVerifyService;
@@ -30,7 +31,9 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 功能描述
@@ -90,6 +93,7 @@ public class LCCIntlVerifyServiceImpl extends AbstractVerifyService {
         verifyRouting.setData(context.getT().getRouting().getData().get(OtaConstants.PURCHANAME_DATA).toString());
         verifyRouting.setFromSegments(flightSegmentVO2IOs(context.getT().getRouting().getFromSegments()));
         verifyRouting.setRetSegments(flightSegmentVO2IOs(context.getT().getRouting().getRetSegments()));
+        verifyReq.setTripType(context.getT().getTripType().getCode());
         verifyReq.setRouting(verifyRouting);
         return (T) verifyReq;
     }
@@ -136,8 +140,20 @@ public class LCCIntlVerifyServiceImpl extends AbstractVerifyService {
 
         CtripVerifyResVO resVO = new CtripVerifyResVO();
         resVO.setRule(null);
+
+        Map<String, Object> datamap = new HashMap<>();
+        datamap.put(OtaConstants.PURCHANAME, PurchaseEnum.LCC.getCode());
+        if (verifyRes.getRouting().getData() != null) {
+            datamap.put(OtaConstants.PURCHANAME_DATA, verifyRes.getRouting().getData());
+        }
+        // 转换结果对象
+        verifyRes.getRouting().setData(JSON.toJSONString(datamap));
+
         resVO.setMaxSeats(verifyRes.getMaxSeats());
         resVO.setSessionId(verifyRes.getSessionId());
+
+
+
         resVO.setRouting(LccTOVOMapper.flightRouteDto2FlightRouteVO(verifyRes.getRouting()));
 
         return resVO;
