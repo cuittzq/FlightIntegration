@@ -29,6 +29,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.Map;
@@ -91,6 +92,10 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         searchVO.setChildCnt(req.getChildNumber());
         searchVO.setTripType(req.getTripType().equals(1) ? TripTypeEnum.OW : TripTypeEnum.RT);
         context.setT(searchVO);
+        context.setDepAirportCode(req.getFromCity());
+        context.setArrAirportCode(req.getToCity());
+        context.setDepDate(req.getFromDate());
+        context.setArrDate(req.getRetDate());
         SearchFlightRes searchFlightRes = new SearchFlightRes();
         logger.info("调用LCC{}接口,入参{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(context));
         SingleResult<FlightRouteVO> response = otaSearchFlightService.searchFlight(context);
@@ -160,13 +165,31 @@ public class CtripFlightServiceImpl implements CtripFlightService {
      */
     @Override
     public CreateOrderRes createOrder(CreateOrderReq req) {
-        RouteContext<CreateOrderReqVO> context = new RouteContext();
+        RouteContext<CreateOrderReqVO> context  = new RouteContext();
+        CreateOrderRes                 response = new CreateOrderRes();
         setDefaultCont(context);
+        if (req.getRoutings() == null) {
+            response.setMsg("routings can not be null");
+            response.setStatus(StatusEnum.PARAM_ERROR.getCode());
+            return response;
+        }
+        if (req.getTripType().equals(1)) {
+            context.setDepAirportCode(req.getRoutings().getFromSegments().get(0).getDepAirport());
+            context.setArrAirportCode(req.getRoutings().getFromSegments().get(0).getArrAirport());
+            context.setDepDate(req.getRoutings().getFromSegments().get(0).getDepTime());
+            context.setArrDate(req.getRoutings().getFromSegments().get(0).getArrTime());
+        } else {
+            context.setDepAirportCode(req.getRoutings().getFromSegments().get(0).getDepAirport());
+            context.setDepDate(req.getRoutings().getFromSegments().get(0).getDepTime());
+            context.setArrAirportCode(req.getRoutings().getRetSegments().get(0).getArrAirport());
+            context.setArrDate(req.getRoutings().getRetSegments().get(0).getArrTime());
+        }
+
         context.setT(ctripOrderVOMapper.CreateOrderReqDTO2VO(req));
         logger.info("调用LCC{}接口,入参{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(context));
         SingleResult<CreateOrderResVO> singleResult = otaCreateOrderService.createOrder(context);
         logger.info("调用LCC{}接口,返回{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(1));
-        CreateOrderRes response = new CreateOrderRes();
+
         if (!singleResult.isSuccess() || singleResult.getData() == null) {
             response.setMsg(singleResult.getErrorMessage());
             response.setStatus(StatusEnum.INNER_ERROR.getCode());
