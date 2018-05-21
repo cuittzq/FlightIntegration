@@ -60,6 +60,27 @@ public class BaseContext implements Serializable {
      */
     protected String traceId;
 
+    /**
+     * 出发三字码
+     */
+    private String depAirportCode;
+
+    /**
+     * 到达三字码
+     */
+    private String arrAirportCode;
+
+    /**
+     * 出发日期格式为YYYYMMDD
+     */
+    private String depDate;
+
+    /**
+     * 返程日期
+     */
+    private String arrDate;
+
+
     public AreaTypeEnum getAreaType() {
         return areaType;
     }
@@ -122,5 +143,37 @@ public class BaseContext implements Serializable {
 
     public void setTraceId(String traceId) {
         this.traceId = traceId;
+    }
+
+    public String getDepAirportCode() {
+        return depAirportCode;
+    }
+
+    public void setDepAirportCode(String depAirportCode) {
+        this.depAirportCode = depAirportCode;
+    }
+
+    public String getArrAirportCode() {
+        return arrAirportCode;
+    }
+
+    public void setArrAirportCode(String arrAirportCode) {
+        this.arrAirportCode = arrAirportCode;
+    }
+
+    public String getDepDate() {
+        return depDate;
+    }
+
+    public void setDepDate(String depDate) {
+        this.depDate = depDate;
+    }
+
+    public String getArrDate() {
+        return arrDate;
+    }
+
+    public void setArrDate(String arrDate) {
+        this.arrDate = arrDate;
     }
 }

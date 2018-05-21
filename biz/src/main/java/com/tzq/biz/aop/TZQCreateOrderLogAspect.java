@@ -4,8 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.tzq.commons.enums.MethodEnum;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.context.SingleResult;
+import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
+import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
 import com.tzq.commons.model.ctrip.search.FlightRouteVO;
 import com.tzq.commons.model.ctrip.search.SearchVO;
+import com.tzq.commons.model.ctrip.search.SegmentVO;
 import com.tzq.commons.utils.DateUtils;
 import com.tzq.dal.model.log.InterfaceRequestLog;
 import com.tzq.dal.service.InterfaceRequestLogService;
@@ -20,31 +23,24 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.Date;
 
 /**
  * 功能描述
  *
  * @Author tzq24955
- * @Created on 2018/5/7
+ * @Created on 2018/5/21
  * LY.com Inc.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
-
-/**
- * Created by wuwf on 17/4/27.
- * 日志切面
- */
 @Aspect
 @Component
-public class SearchFlightLogAspect {
-
+public class TZQCreateOrderLogAspect {
     @Resource
     InterfaceRequestLogService interfaceRequestLogService;
 
 
-    @Pointcut("execution(public * com.tzq.biz.core.impl.OtaSearchFlightServiceImpl.*(..))")
+    @Pointcut("execution(public * com.tzq.biz.core.impl.OtaCreateOrderServiceImpl.*(..))")
     public void interfacelog() {
     }
 
@@ -66,46 +62,45 @@ public class SearchFlightLogAspect {
     public void after(JoinPoint joinPoint) {
     }
 
-    @AfterReturning(pointcut = "execution(* com.tzq.biz.core.impl.OtaSearchFlightServiceImpl.*.*(..))", returning = "returnValue")
+    @AfterReturning(pointcut = "execution(* com.tzq.biz.core.impl.OtaCreateOrderServiceImpl.*.*(..))", returning = "returnValue")
     public void log(JoinPoint point, Object returnValue) {
         try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
-            HttpServletResponse response = attributes.getResponse();
-            RouteContext<SearchVO> paramin = (RouteContext<SearchVO>) point.getArgs()[0];
-            SingleResult<FlightRouteVO> flightRouteVO = new SingleResult();
+            ServletRequestAttributes       attributes             = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            HttpServletRequest             request                = attributes.getRequest();
+            RouteContext<CreateOrderReqVO> context                = (RouteContext<CreateOrderReqVO>) point.getArgs()[0];
+            SingleResult<CreateOrderResVO> orderResVOSingleResult = new SingleResult();
             if (returnValue != null) {
-                flightRouteVO = (SingleResult<FlightRouteVO>) returnValue;
+                orderResVOSingleResult = (SingleResult<CreateOrderResVO>) returnValue;
             }
-            InterfaceRequestLog interfaceRequestLog = buildLogs(request, response, paramin, flightRouteVO);
+            InterfaceRequestLog interfaceRequestLog = buildLogs(request, context, orderResVOSingleResult);
             interfaceRequestLogService.insert(interfaceRequestLog);
         } catch (Exception ex) {
-            ex.printStackTrace();
         }
-
     }
 
 
-    private InterfaceRequestLog buildLogs(HttpServletRequest request, HttpServletResponse response, RouteContext<SearchVO> paramin, SingleResult<FlightRouteVO> flightRouteVO) throws ParseException {
+    private InterfaceRequestLog buildLogs(HttpServletRequest request, RouteContext<CreateOrderReqVO> paramin, SingleResult<CreateOrderResVO> orderResVOSingleResult) throws ParseException {
         InterfaceRequestLog interfaceRequestLog = new InterfaceRequestLog();
-        interfaceRequestLog.setArrcode(paramin.getT().getArrAirportCode());
-        interfaceRequestLog.setDepcode(paramin.getT().getDepAirportCode());
-        interfaceRequestLog.setDepdate(DateUtils.parseDateNoTime(paramin.getT().getDepDate(), "yyyyMMdd"));
-        if (StringUtils.isNotEmpty(paramin.getT().getArrDate())) {
-            interfaceRequestLog.setBackdate(DateUtils.parseDateNoTime(paramin.getT().getArrDate(), "yyyyMMdd"));
-        } else {
-            interfaceRequestLog.setBackdate(new Date(1990, 1, 1));
-        }
+        if (orderResVOSingleResult.isSuccess()) {
+            interfaceRequestLog.setDepcode(paramin.getDepAirportCode());
+            interfaceRequestLog.setArrcode(paramin.getArrAirportCode());
+            interfaceRequestLog.setDepdate(DateUtils.parseDateNoTime(paramin.getDepDate(), "yyyyMMdd"));
+            if (StringUtils.isNotEmpty(paramin.getArrDate())) {
+                interfaceRequestLog.setBackdate(DateUtils.parseDateNoTime(paramin.getArrDate(), "yyyyMMdd"));
+            } else {
+                interfaceRequestLog.setBackdate(new Date(1990, 1, 1));
+            }
 
-        interfaceRequestLog.setCarrier("");
+            interfaceRequestLog.setCarrier(orderResVOSingleResult.getData().getRouting().getFromSegments().get(0).getCarrier());
+            interfaceRequestLog.setOrderno(orderResVOSingleResult.getData().getOrderNo());
+            interfaceRequestLog.setPnr(orderResVOSingleResult.getData().getPnrCode());
+        }
         interfaceRequestLog.setSalesplatform(1);
         interfaceRequestLog.setPurchaseplatform(1);
         interfaceRequestLog.setRequestdate(new Date());
-        interfaceRequestLog.setRequesttype(MethodEnum.SEARCHFLIGHT.getCode());
+        interfaceRequestLog.setRequesttype(MethodEnum.CREATEORDER.getCode());
         interfaceRequestLog.setRequestresult(1);
         interfaceRequestLog.setInterfaceresult(1);
-        interfaceRequestLog.setOrderno("");
-        interfaceRequestLog.setPnr("");
         // 0-单程，1-往返
         interfaceRequestLog.setVoyagetype(0);
         interfaceRequestLog.setSalesplatrequesttime(new Date());
@@ -117,7 +112,7 @@ public class SearchFlightLogAspect {
         interfaceRequestLog.setSalesplatrequesttipmessage("");
         interfaceRequestLog.setPurchaseplatrequesttipmessage("");
         interfaceRequestLog.setSalesplatlogdetail("");
-        interfaceRequestLog.setPurchaseplatlogdetail(JSON.toJSONString(flightRouteVO));
+        interfaceRequestLog.setPurchaseplatlogdetail(JSON.toJSONString(orderResVOSingleResult));
         return interfaceRequestLog;
 
     }
