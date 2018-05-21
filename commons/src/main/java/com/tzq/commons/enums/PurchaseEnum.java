@@ -14,16 +14,21 @@ public enum PurchaseEnum {
     /**
      * 金通
      */
-    LCC("LCC", "金通"),
+    LCC("LCC", 1, "金通"),
     /**
      * 飞猪
      */
-    NA517("517na", "我要去哪");
+    NA517("517na", 2, "我要去哪");
 
     /**
      * 枚举编码
      */
     private String code;
+
+    /**
+     * 枚举ID
+     */
+    private int id;
 
     /**
      * 枚举描述
@@ -33,9 +38,10 @@ public enum PurchaseEnum {
     /**
      * 私有构造函数
      */
-    private PurchaseEnum(String code, String desc) {
+    private PurchaseEnum(String code, int id, String desc) {
         this.code = code;
         this.desc = desc;
+        this.id = id;
     }
 
     /**
@@ -56,6 +62,26 @@ public enum PurchaseEnum {
         return null;
     }
 
+
+    /**
+     * 获取枚举类型
+     *
+     * @param id
+     * @return
+     */
+    public static PurchaseEnum getEnumById(int id) {
+        if (id > 2) {
+            return null;
+        }
+        for (PurchaseEnum e : PurchaseEnum.values()) {
+            if (id == e.getId()) {
+                return e;
+            }
+        }
+        return null;
+    }
+
+
     /**
      * 获取枚举编码
      *
@@ -63,6 +89,16 @@ public enum PurchaseEnum {
      */
     public String getCode() {
         return code;
+    }
+
+
+    /**
+     * 获取枚举编码
+     *
+     * @return
+     */
+    public int getId() {
+        return id;
     }
 
     /**

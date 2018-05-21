@@ -2,6 +2,7 @@ package com.tzq.commons.model.ctrip.search;
 
 import com.tzq.commons.enums.TripTypeEnum;
 import com.tzq.commons.model.BaseVO;
+import com.tzq.commons.model.ctrip.BaseRequest;
 
 /**
  * 功能描述
@@ -11,13 +12,11 @@ import com.tzq.commons.model.BaseVO;
  * LY.com Inc.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
-public class SearchVO extends BaseVO<Long> {
+public class SearchVO extends BaseRequest {
 
 
     /**  */
     private static final long serialVersionUID = -1054900646630922989L;
-
-    private Long id;
 
     /**
      * 行程类型 单程 往返 联程
@@ -53,16 +52,6 @@ public class SearchVO extends BaseVO<Long> {
      * 儿童个数
      **/
     private int ChildCnt = 0;
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public TripTypeEnum getTripType() {
         return tripType;
@@ -122,7 +111,7 @@ public class SearchVO extends BaseVO<Long> {
 
     @Override
     public String toString() {
-        return "SearchDTO{" + "id=" + id + ", tripType='" + tripType + '\'' + ", depAirportCode='" + depAirportCode + '\'' + ", arrAirportCode='" + arrAirportCode + '\''
+        return "SearchDTO{" + "cid=" + getCid() + ", tripType='" + tripType + '\'' + ", depAirportCode='" + depAirportCode + '\'' + ", arrAirportCode='" + arrAirportCode + '\''
                 + ", depDate='" + depDate + '\'' + ", arrDate='" + arrDate + '\'' + '}';
     }
 }

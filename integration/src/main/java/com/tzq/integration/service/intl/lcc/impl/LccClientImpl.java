@@ -205,13 +205,10 @@ public class LccClientImpl extends AbstractBaseClient implements LccClient {
 
             response = HttpClientUtil.sendPostDataByJson(url, postData, header, ENCODING);
             logger.info("调用LCC{}接口,返回{}", LccConstant.ISSUETICKET, response);
-
             // 解密
             response = AESUtil.Encrypt(response, LccConstant.AES_KEY);
-
             // 解密
             res = JSON.parseObject(response, IssueTicketRes.class);
-
         } catch (IOException e) {
             logger.error("调用LCC创单接口失败", e);
         } catch (Exception e) {

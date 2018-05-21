@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.tzq.biz.annotation.Route;
 import com.tzq.biz.constant.Symbol;
 import com.tzq.biz.service.purchase.core.CreateOrderService;
+import com.tzq.biz.service.purchase.core.IssueTicketService;
 import com.tzq.biz.service.purchase.core.SearchFlightService;
 import com.tzq.biz.service.purchase.core.VerifyService;
 import org.apache.commons.lang3.StringUtils;
@@ -39,7 +40,12 @@ public class DefaultRouteProxyFactory implements RouteProxyFactory, ApplicationL
     /**
      * 验价服务集合
      */
-    private Map<String,VerifyService> VERIFY = Maps.newHashMap();
+    private Map<String, VerifyService> VERIFY = Maps.newHashMap();
+
+    /**
+     * 出票服务集合
+     */
+    private Map<String, IssueTicketService> ISSUETICKET = Maps.newHashMap();
 
     /**
      * 取得对应服务接口类
@@ -63,14 +69,17 @@ public class DefaultRouteProxyFactory implements RouteProxyFactory, ApplicationL
         }
 
         // 获取验价服务
-        if(VerifyService.class.isAssignableFrom(clazz))
-        {
+        if (VerifyService.class.isAssignableFrom(clazz)) {
             t = (T) VERIFY.get(key);
+        }
+
+        // 获取验价服务
+        if (IssueTicketService.class.isAssignableFrom(clazz)) {
+            t = (T) ISSUETICKET.get(key);
         }
 
         return t;
     }
-
 
 
     /**
@@ -103,6 +112,12 @@ public class DefaultRouteProxyFactory implements RouteProxyFactory, ApplicationL
                 if (VerifyService.class.isAssignableFrom(obj.getClass())) {
                     logger.warn(key(route));
                     VERIFY.put(key(route), VerifyService.class.cast(obj));
+                }
+
+                //出票服务集合初始化
+                if (IssueTicketService.class.isAssignableFrom(obj.getClass())) {
+                    logger.warn(key(route));
+                    ISSUETICKET.put(key(route), IssueTicketService.class.cast(obj));
                 }
             }
             logger.info("[路由工厂初始化完毕]");

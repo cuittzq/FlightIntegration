@@ -1,11 +1,12 @@
 package com.tzq.commons.model.ctrip.order;
 
 import com.tzq.commons.enums.TripTypeEnum;
+import com.tzq.commons.model.ctrip.BaseRequest;
 import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
 
 import java.util.List;
 
-public class CreateOrderReqVO {
+public class CreateOrderReqVO extends BaseRequest {
 
     /**
      * ctripOrderId : {"adultOrderId":"2360250238","childOrderId":"2360250239","infantOrderId":"2360250240"}
@@ -19,14 +20,14 @@ public class CreateOrderReqVO {
      * ctripRefRevServiceFee : [{"id":2360250238,"status":0,"outboundRevalidationFee":100,"outRevFeeCurrency":"RMB","inboundRevalidationFee":100,"inRevFeeCurrency":"RMB","revalidationFeeByConsolidator":50,"outNonChg":"T","inNonChg":"T","outNonRev":"T","inNonRev":"T","outRevChdFee":100,"inRevChdFee":100,"revHasNoShow":"T","outRevNoShowFee":100,"inRevNoShowFee":100,"outRevNoShowChdFee":100,"inRevNoShowChdFee":100,"revNoShowCondition":0,"inRefundFee":100,"inRefCurrency":"RMB","outRefundFee":100,"outRefCurrency":"RMB","refundFeeByConsolidator":50,"outNonRef":"T","inNonRef":"F","outRefChdFee":100,"inRefChdFee":100,"refHasNoShow":"T","outRefNoShowFee":100,"inRefNoShowFee":100,"outRefNoShowChdFee":100,"inRefNoShowChdFee":100,"refNoShowCondition":0}]
      */
 
-    private CtripOrderIdVO ctripOrderId;
-    private String referenceId;
-    private TripTypeEnum tripType;
-    private String sessionId;
-    private FlightRoutingsVO routings;
-    private ContactVO contact;
-    private List<PassengerVO> passengers;
-    private List<PassengerbaggagesVO> passengerbaggages;
+    private CtripOrderIdVO                ctripOrderId;
+    private String                        referenceId;
+    private TripTypeEnum                  tripType;
+    private String                        sessionId;
+    private FlightRoutingsVO              routings;
+    private ContactVO                     contact;
+    private List<PassengerVO>             passengers;
+    private List<PassengerbaggagesVO>     passengerbaggages;
     private List<CtripRefRevServiceFeeVO> ctripRefRevServiceFee;
 
     public CtripOrderIdVO getCtripOrderId() {
