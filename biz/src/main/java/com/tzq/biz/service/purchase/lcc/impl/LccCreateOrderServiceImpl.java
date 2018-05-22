@@ -2,7 +2,6 @@ package com.tzq.biz.service.purchase.lcc.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 import com.tzq.biz.annotation.Route;
 import com.tzq.biz.constant.OtaConstants;
 import com.tzq.biz.service.purchase.abstracts.AbstractCreateOrderService;
@@ -12,7 +11,6 @@ import com.tzq.commons.Exception.ServiceAbstractException;
 import com.tzq.commons.Exception.ServiceErrorMsg;
 import com.tzq.commons.enums.AreaTypeEnum;
 import com.tzq.commons.enums.PurchaseEnum;
-import com.tzq.commons.mapper.ota.CtripOrderVOMapper;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.ctrip.order.ContactVO;
 import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
@@ -71,6 +69,7 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
 
     @Resource
     private PassengerInfoService passengerInfoService;
+
 
     /**
      * 生单
@@ -169,11 +168,49 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         String orderNo = OrderNoUtils.Builder.newBuilder()
                 .setPurchasePlatName(context.getOta().getCode())
                 .setSalePlatName(context.getPurchaseEnum().getCode()).getOrderNum();
-        OrderInfo orderInfo = getOrerInfo(context,orderResVO,orderNo);
 
-        
+        /**01.插入订单info**/
+        orderInfoService.insert(getOrerInfo(context,orderResVO,orderNo));
 
+        /**02.插入乘客信息**/
+        List<PassengerInfo> passList =  etPassengerInfoList(context,orderResVO,orderNo);
+        for(PassengerInfo passenger:passList)
+        {
+            passengerInfoService.insert(passenger);
+        }
 
+        /**03.插入订单日志表**/
+        orderLogService.insert(getOrderInfoLog(context,orderResVO,orderNo));
+    }
+
+    private OrderLog getOrderInfoLog(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, String orderNo) {
+        OrderLog orderLog = new OrderLog();
+        orderLog.setOrderno(orderNo);
+        return  orderLog;
+    }
+
+    private List<PassengerInfo> etPassengerInfoList(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, String orderNo) {
+        List<PassengerInfo> passList = new ArrayList<>();
+        for (PassengerVO passMo : context.getT().getPassengers())
+        {
+            PassengerInfo passengerInfo = new PassengerInfo();
+            passengerInfo.setBirtyday(DateUtils.parseDateLongFormat(passMo.getBirthday()));
+            passengerInfo.setOrderno(orderNo);
+            passengerInfo.setPassengertype(passMo.getAgeType().getRemark());
+            passengerInfo.setGender(stopDBStrNull(passMo.getGender()));
+            passengerInfo.setCardtype(stopDBStrNull(passMo.getCardType().getCode()));
+            passengerInfo.setCardnum(stopDBStrNull(passMo.getCardNum()));
+            passengerInfo.setCardissueplace(1); // todo
+            passengerInfo.setCardexpired(DateUtils.parseDateLongFormat(passMo.getCardExpired()));
+            passengerInfo.setNationality(stopDBStrNull(passMo.getNationality()));
+            passengerInfo.setTicketno(StringUtils.EMPTY);
+            passengerInfo.setExtendvalue(StringUtils.EMPTY);
+            passengerInfo.setModifytime(new Date());
+
+            passList.add(passengerInfo);
+        }
+
+        return  passList;
     }
 
     private OrderInfo getOrerInfo(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO,String orderNo)
@@ -185,11 +222,11 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         orderInfo.setPurchaseplatform(context.getPurchaseEnum().getId());
         if (orderResVO == null || StringUtils.isBlank(orderResVO.getPnrCode())) {
             orderInfo.setPnr(StringUtils.EMPTY);
-            orderInfo.setOrderstate((byte) 0);
+            orderInfo.setOrderstate( 0);
             orderInfo.setPurchaseorderno(StringUtils.EMPTY);
         } else {
             orderInfo.setPnr(orderResVO.getPnrCode());
-            orderInfo.setOrderstate((byte) 0);
+            orderInfo.setOrderstate(0);
             orderInfo.setPurchaseorderno(orderResVO.getOrderNo());
         }
 
@@ -197,7 +234,7 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
 
         orderInfo.setDepcity(context.getT().getRoutings().getFromSegments().get(0).getDepAirport());
         orderInfo.setArrcity(context.getT().getRoutings().getFromSegments().get(0).getArrAirport());
-        orderInfo.setVoyagetype((byte) context.getT().getTripType().getCode().intValue());
+        orderInfo.setVoyagetype( context.getT().getTripType().getCode().intValue());
 
         float totalPrice = context.getT().getAdultNumber() * context.getT().getRoutings().getAdultPrice() +
                 context.getT().getChildNumber()*context.getT().getRoutings().getChildPrice() +
@@ -229,7 +266,7 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         orderInfo.setLinkpostcode(stopDBStrNull(context.getT().getContact().getPostcode()));
 
         Map<String,Object> map = Maps.newHashMap();
-        map.put("reqrouting",context.getT().getRoutings());
+        map.put("routing",context.getT().getRoutings());
         orderInfo.setExtendvalue(JSON.toJSONString(map));
         orderInfo.setCreatetime(new Date());
         orderInfo.setModifytime(new Date());
