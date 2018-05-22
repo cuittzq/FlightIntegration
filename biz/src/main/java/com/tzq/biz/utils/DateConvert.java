@@ -18,6 +18,9 @@ public class DateConvert {
      */
     public  static final String LCC_VERIFY_DATE_FORMAT="yyyyMMddHHmm";
 
+    public static final String ORDERNO_TIME_STAMP = "yyyyMMddHHmmssSSS";
+
+
     /**
      *  根据格式将字符串装换为日期
      * @param sDate

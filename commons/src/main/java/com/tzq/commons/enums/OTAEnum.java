@@ -14,11 +14,11 @@ public enum OTAEnum {
     /**
      * 携程
      */
-    CTRIP("Ctrip", "携程"),
+    CTRIP("Ctrip", "携程",1),
     /**
      * 飞猪
      */
-    FLIGGY("fliggy", "飞猪");
+    FLIGGY("fliggy", "飞猪",2);
 
     /**
      * 枚举编码
@@ -30,12 +30,15 @@ public enum OTAEnum {
      */
     private String desc;
 
+    private int id;
+
     /**
      * 私有构造函数
      */
-    private OTAEnum(String code, String desc) {
+    private OTAEnum(String code, String desc,int id) {
         this.code = code;
         this.desc = desc;
+        this.id = id;
     }
 
     /**
@@ -73,4 +76,10 @@ public enum OTAEnum {
     public String getDesc() {
         return desc;
     }
+
+    /**
+     * 获取ID
+     * @return
+     */
+    public int getId(){return id;}
 }

@@ -1,8 +1,12 @@
 package com.tzq.biz.service.purchase.lcc.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import com.tzq.biz.annotation.Route;
 import com.tzq.biz.constant.OtaConstants;
 import com.tzq.biz.service.purchase.abstracts.AbstractCreateOrderService;
+import com.tzq.biz.utils.OrderNoUtils;
 import com.tzq.commons.Exception.CommonExcetpionConstant;
 import com.tzq.commons.Exception.ServiceAbstractException;
 import com.tzq.commons.Exception.ServiceErrorMsg;
@@ -16,6 +20,13 @@ import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
 import com.tzq.commons.model.ctrip.order.PassengerVO;
 import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
 import com.tzq.commons.model.ctrip.search.SegmentVO;
+import com.tzq.commons.utils.DateUtils;
+import com.tzq.dal.model.log.OrderLog;
+import com.tzq.dal.model.order.OrderInfo;
+import com.tzq.dal.model.order.PassengerInfo;
+import com.tzq.dal.service.OrderInfoService;
+import com.tzq.dal.service.OrderLogService;
+import com.tzq.dal.service.PassengerInfoService;
 import com.tzq.integration.service.intl.lcc.LccClient;
 import com.tzq.integration.service.intl.lcc.model.order.Contact;
 import com.tzq.integration.service.intl.lcc.model.order.OrderReq;
@@ -25,10 +36,13 @@ import com.tzq.integration.service.intl.lcc.model.search.FlightRoutings;
 import com.tzq.integration.service.intl.lcc.model.search.FlightSegment;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +63,15 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
     @Resource
     private LccClient lccClient;
 
+    @Resource
+    private OrderLogService orderLogService;
+
+    @Resource
+    private OrderInfoService orderInfoService;
+
+    @Resource
+    private PassengerInfoService passengerInfoService;
+
     /**
      * 生单
      *
@@ -56,10 +79,25 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
      */
     @Override
     public CreateOrderResVO createOrder(RouteContext<CreateOrderReqVO> context) {
-        OrderReq orderReq = request(context);
-        OrderRes order = lccClient.createOrder(orderReq);
-        CreateOrderResVO orderResVO = response(order, context);
+        OrderReq orderReq = null;
+        OrderRes order = null;
+        CreateOrderResVO orderResVO = null;
+        try {
+            // 01.构建创建请求
+            orderReq = request(context);
 
+            // 02.调用接口创单
+            order = lccClient.createOrder(orderReq);
+
+            // 03.组装结果
+            orderResVO = response(order, context);
+        } catch (ServiceAbstractException ex) {
+            throw ex;
+        } catch (Exception ex) {
+
+        } finally {
+            dbOperator(context, orderResVO);
+        }
 
         return orderResVO;
     }
@@ -120,8 +158,99 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         return (T) orderReq;
     }
 
+    /**
+     * 数据库落库--涉及到多张表的操作,
+     */
+    @Transactional
+    private void dbOperator(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO) {
+        PassengerInfo passengerInfo = new PassengerInfo();
+        OrderLog orderLog = new OrderLog();
 
-    /** 入参转换 **/
+        String orderNo = OrderNoUtils.Builder.newBuilder()
+                .setPurchasePlatName(context.getOta().getCode())
+                .setSalePlatName(context.getPurchaseEnum().getCode()).getOrderNum();
+        OrderInfo orderInfo = getOrerInfo(context,orderResVO,orderNo);
+
+        
+
+
+    }
+
+    private OrderInfo getOrerInfo(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO,String orderNo)
+    {
+        OrderInfo orderInfo = new OrderInfo();
+        /**订单信息组装入库**/
+        orderInfo.setOrderno(orderNo);
+        orderInfo.setSalesplatform(context.getOta().getId());
+        orderInfo.setPurchaseplatform(context.getPurchaseEnum().getId());
+        if (orderResVO == null || StringUtils.isBlank(orderResVO.getPnrCode())) {
+            orderInfo.setPnr(StringUtils.EMPTY);
+            orderInfo.setOrderstate((byte) 0);
+            orderInfo.setPurchaseorderno(StringUtils.EMPTY);
+        } else {
+            orderInfo.setPnr(orderResVO.getPnrCode());
+            orderInfo.setOrderstate((byte) 0);
+            orderInfo.setPurchaseorderno(orderResVO.getOrderNo());
+        }
+
+        orderInfo.setSalesorderno(stopDBStrNull(context.getT().getReferenceId()));
+
+        orderInfo.setDepcity(context.getT().getRoutings().getFromSegments().get(0).getDepAirport());
+        orderInfo.setArrcity(context.getT().getRoutings().getFromSegments().get(0).getArrAirport());
+        orderInfo.setVoyagetype((byte) context.getT().getTripType().getCode().intValue());
+
+        float totalPrice = context.getT().getAdultNumber() * context.getT().getRoutings().getAdultPrice() +
+                context.getT().getChildNumber()*context.getT().getRoutings().getChildPrice() +
+                context.getT().getInfantNumber()*context.getT().getRoutings().getInfantPrice();
+
+        orderInfo.setTotalsalesprice(new BigDecimal(totalPrice));
+
+        float totalTax =context.getT().getAdultNumber() * context.getT().getRoutings().getAdultTax() +
+                context.getT().getChildNumber()*context.getT().getRoutings().getChildTax() +
+                context.getT().getInfantNumber()*context.getT().getRoutings().getInfantTax();
+        orderInfo.setTotalsalestax(new BigDecimal(totalTax));
+
+        orderInfo.setTotalpurchaseprice(new BigDecimal(0));
+        orderInfo.setTotalpurchasetax(new BigDecimal(0));
+
+        orderInfo.setAuditcount(context.getT().getAdultNumber());
+        orderInfo.setChildcount(context.getT().getChildNumber());
+        orderInfo.setBabycount(context.getT().getInfantNumber());
+
+        orderInfo.setOuttickettype(StringUtils.EMPTY);
+        orderInfo.setOutticketcompany(StringUtils.EMPTY);
+        orderInfo.setOutticketremark(StringUtils.EMPTY);
+        orderInfo.setOuttickettime(DateUtils.parseDateLongFormat("19000101000000"));
+
+        orderInfo.setLinkname(stopDBStrNull(context.getT().getContact().getName()));
+        orderInfo.setLinkaddress(stopDBStrNull(context.getT().getContact().getAddress()));
+        orderInfo.setLinkemail(stopDBStrNull(context.getT().getContact().getEmail()));
+        orderInfo.setLinkmobile(stopDBStrNull(context.getT().getContact().getMobile()));
+        orderInfo.setLinkpostcode(stopDBStrNull(context.getT().getContact().getPostcode()));
+
+        Map<String,Object> map = Maps.newHashMap();
+        map.put("reqrouting",context.getT().getRoutings());
+        orderInfo.setExtendvalue(JSON.toJSONString(map));
+        orderInfo.setCreatetime(new Date());
+        orderInfo.setModifytime(new Date());
+
+        return orderInfo;
+    }
+
+    private String stopDBStrNull(String str)
+    {
+        if(null == str)
+        {
+            return StringUtils.EMPTY;
+        }
+
+        return str;
+    }
+
+
+    /**
+     * 入参转换
+     **/
     private FlightRoutings flightRoutingsVO2IO(FlightRoutingsVO flightRoutingsVO) {
         if (flightRoutingsVO == null) {
             return null;
@@ -143,6 +272,7 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         flightRoutings.setPriceType(flightRoutingsVO.getPriceType());
         return flightRoutings;
     }
+
     private List<FlightSegment> flightSegmentVO2IOs(List<SegmentVO> segmentVOList) {
         if (CollectionUtils.isEmpty(segmentVOList)) {
             return null;
@@ -156,6 +286,7 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         }
         return flightSegments;
     }
+
     private FlightSegment FlightSegmentVO2IO(SegmentVO segmentVO) {
         if (segmentVO == null) {
             return null;
@@ -177,6 +308,7 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         flightSegment.setFlightNumber(segmentVO.getFlightNumber());
         return flightSegment;
     }
+
     private Contact contactVO2IO(ContactVO contactVO) {
         if (contactVO == null) {
             return null;
@@ -189,6 +321,7 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         contact.setPostcode(contactVO.getPostcode());
         return contact;
     }
+
     private Passenger passengerVO2IO(PassengerVO passengerVO) {
         if (passengerVO == null) {
             return null;
@@ -206,11 +339,11 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         return passenger;
     }
 
-    /**结果转换**/
-    private CreateOrderResVO createOrderRes2VO(OrderRes res)
-    {
-        if(res == null)
-        {
+    /**
+     * 结果转换
+     **/
+    private CreateOrderResVO createOrderRes2VO(OrderRes res) {
+        if (res == null) {
             return null;
         }
 
@@ -227,9 +360,8 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
     }
 
     private FlightRoutingsVO createOrderRes2VO(FlightRoutings routing) {
-        if(routing == null)
-        {
-            return  null;
+        if (routing == null) {
+            return null;
         }
         FlightRoutingsVO routingsVO = new FlightRoutingsVO();
 
@@ -256,17 +388,13 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         return routingsVO;
     }
 
-
-
     private List<SegmentVO> createOrderRes2VO(List<FlightSegment> fromSegments) {
-        if(fromSegments == null || fromSegments.size() == 0)
-        {
-            return  null;
+        if (fromSegments == null || fromSegments.size() == 0) {
+            return null;
         }
 
         List<SegmentVO> list = new ArrayList<>();
-        for(FlightSegment seg:fromSegments)
-        {
+        for (FlightSegment seg : fromSegments) {
             SegmentVO flightSegment = new SegmentVO();
             flightSegment.setDepAirport(seg.getDepAirport());
             flightSegment.setDepTerminal(seg.getDepartureTerminal());

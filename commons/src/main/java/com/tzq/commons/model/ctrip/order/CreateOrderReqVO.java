@@ -29,6 +29,33 @@ public class CreateOrderReqVO extends BaseRequest {
     private List<PassengerVO>             passengers;
     private List<PassengerbaggagesVO>     passengerbaggages;
     private List<CtripRefRevServiceFeeVO> ctripRefRevServiceFee;
+    private int adultNumber;
+    private int childNumber;
+    private int infantNumber;
+
+    public int getAdultNumber() {
+        return adultNumber;
+    }
+
+    public void setAdultNumber(int adultNumber) {
+        this.adultNumber = adultNumber;
+    }
+
+    public int getChildNumber() {
+        return childNumber;
+    }
+
+    public void setChildNumber(int childNumber) {
+        this.childNumber = childNumber;
+    }
+
+    public int getInfantNumber() {
+        return infantNumber;
+    }
+
+    public void setInfantNumber(int infantNumber) {
+        this.infantNumber = infantNumber;
+    }
 
     public CtripOrderIdVO getCtripOrderId() {
         return ctripOrderId;
