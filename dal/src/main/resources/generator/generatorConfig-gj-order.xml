@@ -36,10 +36,24 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
+
         <table tableName="orders" domainObjectName="OrderInfo">
             <columnOverride column="ExtendValue" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </table>
+
         <table tableName="passengers" domainObjectName="PassengerInfo">
+            <columnOverride column="ExtendValue" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>
+
+        <table tableName="orderlog" domainObjectName="Orderlog">
+            <columnOverride column="LogValue" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>
+
+        <table tableName="segments" domainObjectName="SegmentInfo">
+            <columnOverride column="ExtendValue" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>
+
+        <table tableName="prices" domainObjectName="PriceInfo">
             <columnOverride column="ExtendValue" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </table>
     </context>

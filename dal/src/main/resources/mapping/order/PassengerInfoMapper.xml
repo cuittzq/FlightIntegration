@@ -5,7 +5,7 @@
     <id column="ID" jdbcType="BIGINT" property="id" />
     <result column="OrderNo" jdbcType="VARCHAR" property="orderno" />
     <result column="PassengerName" jdbcType="VARCHAR" property="passengername" />
-    <result column="PassengerNameType" jdbcType="VARCHAR" property="passengernametype" />
+    <result column="PassengerType" jdbcType="VARCHAR" property="passengertype" />
     <result column="Birtyday" jdbcType="DATE" property="birtyday" />
     <result column="Gender" jdbcType="VARCHAR" property="gender" />
     <result column="CardType" jdbcType="VARCHAR" property="cardtype" />
@@ -76,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    ID, OrderNo, PassengerName, PassengerNameType, Birtyday, Gender, CardType, CardNum, 
-    CardIssuePlace, CardExpired, Nationality, TicketNo, ExtendValue, ModifyTime
+    ID, OrderNo, PassengerName, PassengerType, Birtyday, Gender, CardType, CardNum, CardIssuePlace, 
+    CardExpired, Nationality, TicketNo, ExtendValue, ModifyTime
   </sql>
   <select id="selectByExample" parameterType="com.tzq.dal.model.order.PassengerInfoExample" resultMap="BaseResultMap">
     select
@@ -114,12 +114,12 @@
   </delete>
   <insert id="insert" parameterType="com.tzq.dal.model.order.PassengerInfo">
     insert into passengers (ID, OrderNo, PassengerName, 
-      PassengerNameType, Birtyday, Gender, 
+      PassengerType, Birtyday, Gender, 
       CardType, CardNum, CardIssuePlace, 
       CardExpired, Nationality, TicketNo, 
       ExtendValue, ModifyTime)
     values (#{id,jdbcType=BIGINT}, #{orderno,jdbcType=VARCHAR}, #{passengername,jdbcType=VARCHAR}, 
-      #{passengernametype,jdbcType=VARCHAR}, #{birtyday,jdbcType=DATE}, #{gender,jdbcType=VARCHAR}, 
+      #{passengertype,jdbcType=VARCHAR}, #{birtyday,jdbcType=DATE}, #{gender,jdbcType=VARCHAR}, 
       #{cardtype,jdbcType=VARCHAR}, #{cardnum,jdbcType=VARCHAR}, #{cardissueplace,jdbcType=INTEGER}, 
       #{cardexpired,jdbcType=DATE}, #{nationality,jdbcType=VARCHAR}, #{ticketno,jdbcType=VARCHAR}, 
       #{extendvalue,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP})
@@ -136,8 +136,8 @@
       <if test="passengername != null">
         PassengerName,
       </if>
-      <if test="passengernametype != null">
-        PassengerNameType,
+      <if test="passengertype != null">
+        PassengerType,
       </if>
       <if test="birtyday != null">
         Birtyday,
@@ -180,8 +180,8 @@
       <if test="passengername != null">
         #{passengername,jdbcType=VARCHAR},
       </if>
-      <if test="passengernametype != null">
-        #{passengernametype,jdbcType=VARCHAR},
+      <if test="passengertype != null">
+        #{passengertype,jdbcType=VARCHAR},
       </if>
       <if test="birtyday != null">
         #{birtyday,jdbcType=DATE},
@@ -233,8 +233,8 @@
       <if test="record.passengername != null">
         PassengerName = #{record.passengername,jdbcType=VARCHAR},
       </if>
-      <if test="record.passengernametype != null">
-        PassengerNameType = #{record.passengernametype,jdbcType=VARCHAR},
+      <if test="record.passengertype != null">
+        PassengerType = #{record.passengertype,jdbcType=VARCHAR},
       </if>
       <if test="record.birtyday != null">
         Birtyday = #{record.birtyday,jdbcType=DATE},
@@ -276,7 +276,7 @@
     set ID = #{record.id,jdbcType=BIGINT},
       OrderNo = #{record.orderno,jdbcType=VARCHAR},
       PassengerName = #{record.passengername,jdbcType=VARCHAR},
-      PassengerNameType = #{record.passengernametype,jdbcType=VARCHAR},
+      PassengerType = #{record.passengertype,jdbcType=VARCHAR},
       Birtyday = #{record.birtyday,jdbcType=DATE},
       Gender = #{record.gender,jdbcType=VARCHAR},
       CardType = #{record.cardtype,jdbcType=VARCHAR},
@@ -300,8 +300,8 @@
       <if test="passengername != null">
         PassengerName = #{passengername,jdbcType=VARCHAR},
       </if>
-      <if test="passengernametype != null">
-        PassengerNameType = #{passengernametype,jdbcType=VARCHAR},
+      <if test="passengertype != null">
+        PassengerType = #{passengertype,jdbcType=VARCHAR},
       </if>
       <if test="birtyday != null">
         Birtyday = #{birtyday,jdbcType=DATE},
@@ -340,7 +340,7 @@
     update passengers
     set OrderNo = #{orderno,jdbcType=VARCHAR},
       PassengerName = #{passengername,jdbcType=VARCHAR},
-      PassengerNameType = #{passengernametype,jdbcType=VARCHAR},
+      PassengerType = #{passengertype,jdbcType=VARCHAR},
       Birtyday = #{birtyday,jdbcType=DATE},
       Gender = #{gender,jdbcType=VARCHAR},
       CardType = #{cardtype,jdbcType=VARCHAR},

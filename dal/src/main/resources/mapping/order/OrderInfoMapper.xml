@@ -11,7 +11,7 @@
     <result column="PurchaseOrderNo" jdbcType="VARCHAR" property="purchaseorderno" />
     <result column="DepCity" jdbcType="VARCHAR" property="depcity" />
     <result column="ArrCity" jdbcType="VARCHAR" property="arrcity" />
-    <result column="VoyageType" jdbcType="TINYINT" property="voyagetype" />
+    <result column="VoyageType" jdbcType="INTEGER" property="voyagetype" />
     <result column="TotalSalesPrice" jdbcType="DECIMAL" property="totalsalesprice" />
     <result column="TotalSalesTax" jdbcType="DECIMAL" property="totalsalestax" />
     <result column="TotalPurchasePrice" jdbcType="DECIMAL" property="totalpurchaseprice" />
@@ -27,7 +27,7 @@
     <result column="LinkEmail" jdbcType="VARCHAR" property="linkemail" />
     <result column="LinkAddress" jdbcType="VARCHAR" property="linkaddress" />
     <result column="LinkPostCode" jdbcType="VARCHAR" property="linkpostcode" />
-    <result column="OrderState" jdbcType="TINYINT" property="orderstate" />
+    <result column="OrderState" jdbcType="INTEGER" property="orderstate" />
     <result column="CreateTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="OutTicketTime" jdbcType="TIMESTAMP" property="outtickettime" />
     <result column="ExtendValue" jdbcType="VARCHAR" property="extendvalue" />
@@ -146,12 +146,12 @@
     values (#{id,jdbcType=BIGINT}, #{salesplatform,jdbcType=INTEGER}, #{purchaseplatform,jdbcType=INTEGER}, 
       #{pnr,jdbcType=VARCHAR}, #{orderno,jdbcType=VARCHAR}, #{salesorderno,jdbcType=VARCHAR}, 
       #{purchaseorderno,jdbcType=VARCHAR}, #{depcity,jdbcType=VARCHAR}, #{arrcity,jdbcType=VARCHAR}, 
-      #{voyagetype,jdbcType=TINYINT}, #{totalsalesprice,jdbcType=DECIMAL}, #{totalsalestax,jdbcType=DECIMAL}, 
+      #{voyagetype,jdbcType=INTEGER}, #{totalsalesprice,jdbcType=DECIMAL}, #{totalsalestax,jdbcType=DECIMAL}, 
       #{totalpurchaseprice,jdbcType=DECIMAL}, #{totalpurchasetax,jdbcType=DECIMAL}, #{auditcount,jdbcType=INTEGER}, 
       #{childcount,jdbcType=INTEGER}, #{babycount,jdbcType=INTEGER}, #{outtickettype,jdbcType=VARCHAR}, 
       #{outticketcompany,jdbcType=VARCHAR}, #{outticketremark,jdbcType=VARCHAR}, #{linkname,jdbcType=VARCHAR}, 
       #{linkmobile,jdbcType=VARCHAR}, #{linkemail,jdbcType=VARCHAR}, #{linkaddress,jdbcType=VARCHAR}, 
-      #{linkpostcode,jdbcType=VARCHAR}, #{orderstate,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{linkpostcode,jdbcType=VARCHAR}, #{orderstate,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
       #{outtickettime,jdbcType=TIMESTAMP}, #{extendvalue,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -278,7 +278,7 @@
         #{arrcity,jdbcType=VARCHAR},
       </if>
       <if test="voyagetype != null">
-        #{voyagetype,jdbcType=TINYINT},
+        #{voyagetype,jdbcType=INTEGER},
       </if>
       <if test="totalsalesprice != null">
         #{totalsalesprice,jdbcType=DECIMAL},
@@ -326,7 +326,7 @@
         #{linkpostcode,jdbcType=VARCHAR},
       </if>
       <if test="orderstate != null">
-        #{orderstate,jdbcType=TINYINT},
+        #{orderstate,jdbcType=INTEGER},
       </if>
       <if test="createtime != null">
         #{createtime,jdbcType=TIMESTAMP},
@@ -379,7 +379,7 @@
         ArrCity = #{record.arrcity,jdbcType=VARCHAR},
       </if>
       <if test="record.voyagetype != null">
-        VoyageType = #{record.voyagetype,jdbcType=TINYINT},
+        VoyageType = #{record.voyagetype,jdbcType=INTEGER},
       </if>
       <if test="record.totalsalesprice != null">
         TotalSalesPrice = #{record.totalsalesprice,jdbcType=DECIMAL},
@@ -427,7 +427,7 @@
         LinkPostCode = #{record.linkpostcode,jdbcType=VARCHAR},
       </if>
       <if test="record.orderstate != null">
-        OrderState = #{record.orderstate,jdbcType=TINYINT},
+        OrderState = #{record.orderstate,jdbcType=INTEGER},
       </if>
       <if test="record.createtime != null">
         CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
@@ -457,7 +457,7 @@
       PurchaseOrderNo = #{record.purchaseorderno,jdbcType=VARCHAR},
       DepCity = #{record.depcity,jdbcType=VARCHAR},
       ArrCity = #{record.arrcity,jdbcType=VARCHAR},
-      VoyageType = #{record.voyagetype,jdbcType=TINYINT},
+      VoyageType = #{record.voyagetype,jdbcType=INTEGER},
       TotalSalesPrice = #{record.totalsalesprice,jdbcType=DECIMAL},
       TotalSalesTax = #{record.totalsalestax,jdbcType=DECIMAL},
       TotalPurchasePrice = #{record.totalpurchaseprice,jdbcType=DECIMAL},
@@ -473,7 +473,7 @@
       LinkEmail = #{record.linkemail,jdbcType=VARCHAR},
       LinkAddress = #{record.linkaddress,jdbcType=VARCHAR},
       LinkPostCode = #{record.linkpostcode,jdbcType=VARCHAR},
-      OrderState = #{record.orderstate,jdbcType=TINYINT},
+      OrderState = #{record.orderstate,jdbcType=INTEGER},
       CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
       OutTicketTime = #{record.outtickettime,jdbcType=TIMESTAMP},
       ExtendValue = #{record.extendvalue,jdbcType=VARCHAR},
@@ -510,7 +510,7 @@
         ArrCity = #{arrcity,jdbcType=VARCHAR},
       </if>
       <if test="voyagetype != null">
-        VoyageType = #{voyagetype,jdbcType=TINYINT},
+        VoyageType = #{voyagetype,jdbcType=INTEGER},
       </if>
       <if test="totalsalesprice != null">
         TotalSalesPrice = #{totalsalesprice,jdbcType=DECIMAL},
@@ -558,7 +558,7 @@
         LinkPostCode = #{linkpostcode,jdbcType=VARCHAR},
       </if>
       <if test="orderstate != null">
-        OrderState = #{orderstate,jdbcType=TINYINT},
+        OrderState = #{orderstate,jdbcType=INTEGER},
       </if>
       <if test="createtime != null">
         CreateTime = #{createtime,jdbcType=TIMESTAMP},
@@ -585,7 +585,7 @@
       PurchaseOrderNo = #{purchaseorderno,jdbcType=VARCHAR},
       DepCity = #{depcity,jdbcType=VARCHAR},
       ArrCity = #{arrcity,jdbcType=VARCHAR},
-      VoyageType = #{voyagetype,jdbcType=TINYINT},
+      VoyageType = #{voyagetype,jdbcType=INTEGER},
       TotalSalesPrice = #{totalsalesprice,jdbcType=DECIMAL},
       TotalSalesTax = #{totalsalestax,jdbcType=DECIMAL},
       TotalPurchasePrice = #{totalpurchaseprice,jdbcType=DECIMAL},
@@ -601,7 +601,7 @@
       LinkEmail = #{linkemail,jdbcType=VARCHAR},
       LinkAddress = #{linkaddress,jdbcType=VARCHAR},
       LinkPostCode = #{linkpostcode,jdbcType=VARCHAR},
-      OrderState = #{orderstate,jdbcType=TINYINT},
+      OrderState = #{orderstate,jdbcType=INTEGER},
       CreateTime = #{createtime,jdbcType=TIMESTAMP},
       OutTicketTime = #{outtickettime,jdbcType=TIMESTAMP},
       ExtendValue = #{extendvalue,jdbcType=VARCHAR},

@@ -9,7 +9,7 @@ public class PassengerInfo {
 
     private String passengername;
 
-    private String passengernametype;
+    private String passengertype;
 
     private Date birtyday;
 
@@ -55,12 +55,12 @@ public class PassengerInfo {
         this.passengername = passengername == null ? null : passengername.trim();
     }
 
-    public String getPassengernametype() {
-        return passengernametype;
+    public String getPassengertype() {
+        return passengertype;
     }
 
-    public void setPassengernametype(String passengernametype) {
-        this.passengernametype = passengernametype == null ? null : passengernametype.trim();
+    public void setPassengertype(String passengertype) {
+        this.passengertype = passengertype == null ? null : passengertype.trim();
     }
 
     public Date getBirtyday() {

@@ -1,11 +1,12 @@
 package com.tzq.dal.model.order;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public class PassengerInfoExample {
+public class SegmentInfoExample {
     protected String orderByClause;
 
     protected boolean distinct;
@@ -16,7 +17,7 @@ public class PassengerInfoExample {
 
     protected Integer limitEnd;
 
-    public PassengerInfoExample() {
+    public SegmentInfoExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -282,673 +283,623 @@ public class PassengerInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andPassengernameIsNull() {
-            addCriterion("PassengerName is null");
+        public Criteria andSegmenttypeIsNull() {
+            addCriterion("SegmentType is null");
             return (Criteria) this;
         }
 
-        public Criteria andPassengernameIsNotNull() {
-            addCriterion("PassengerName is not null");
+        public Criteria andSegmenttypeIsNotNull() {
+            addCriterion("SegmentType is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPassengernameEqualTo(String value) {
-            addCriterion("PassengerName =", value, "passengername");
+        public Criteria andSegmenttypeEqualTo(Integer value) {
+            addCriterion("SegmentType =", value, "segmenttype");
             return (Criteria) this;
         }
 
-        public Criteria andPassengernameNotEqualTo(String value) {
-            addCriterion("PassengerName <>", value, "passengername");
+        public Criteria andSegmenttypeNotEqualTo(Integer value) {
+            addCriterion("SegmentType <>", value, "segmenttype");
             return (Criteria) this;
         }
 
-        public Criteria andPassengernameGreaterThan(String value) {
-            addCriterion("PassengerName >", value, "passengername");
+        public Criteria andSegmenttypeGreaterThan(Integer value) {
+            addCriterion("SegmentType >", value, "segmenttype");
             return (Criteria) this;
         }
 
-        public Criteria andPassengernameGreaterThanOrEqualTo(String value) {
-            addCriterion("PassengerName >=", value, "passengername");
+        public Criteria andSegmenttypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("SegmentType >=", value, "segmenttype");
             return (Criteria) this;
         }
 
-        public Criteria andPassengernameLessThan(String value) {
-            addCriterion("PassengerName <", value, "passengername");
+        public Criteria andSegmenttypeLessThan(Integer value) {
+            addCriterion("SegmentType <", value, "segmenttype");
             return (Criteria) this;
         }
 
-        public Criteria andPassengernameLessThanOrEqualTo(String value) {
-            addCriterion("PassengerName <=", value, "passengername");
+        public Criteria andSegmenttypeLessThanOrEqualTo(Integer value) {
+            addCriterion("SegmentType <=", value, "segmenttype");
             return (Criteria) this;
         }
 
-        public Criteria andPassengernameLike(String value) {
-            addCriterion("PassengerName like", value, "passengername");
+        public Criteria andSegmenttypeIn(List<Integer> values) {
+            addCriterion("SegmentType in", values, "segmenttype");
             return (Criteria) this;
         }
 
-        public Criteria andPassengernameNotLike(String value) {
-            addCriterion("PassengerName not like", value, "passengername");
+        public Criteria andSegmenttypeNotIn(List<Integer> values) {
+            addCriterion("SegmentType not in", values, "segmenttype");
             return (Criteria) this;
         }
 
-        public Criteria andPassengernameIn(List<String> values) {
-            addCriterion("PassengerName in", values, "passengername");
+        public Criteria andSegmenttypeBetween(Integer value1, Integer value2) {
+            addCriterion("SegmentType between", value1, value2, "segmenttype");
             return (Criteria) this;
         }
 
-        public Criteria andPassengernameNotIn(List<String> values) {
-            addCriterion("PassengerName not in", values, "passengername");
+        public Criteria andSegmenttypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("SegmentType not between", value1, value2, "segmenttype");
             return (Criteria) this;
         }
 
-        public Criteria andPassengernameBetween(String value1, String value2) {
-            addCriterion("PassengerName between", value1, value2, "passengername");
+        public Criteria andDepportIsNull() {
+            addCriterion("DepPort is null");
             return (Criteria) this;
         }
 
-        public Criteria andPassengernameNotBetween(String value1, String value2) {
-            addCriterion("PassengerName not between", value1, value2, "passengername");
+        public Criteria andDepportIsNotNull() {
+            addCriterion("DepPort is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPassengertypeIsNull() {
-            addCriterion("PassengerType is null");
+        public Criteria andDepportEqualTo(BigDecimal value) {
+            addCriterion("DepPort =", value, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andPassengertypeIsNotNull() {
-            addCriterion("PassengerType is not null");
+        public Criteria andDepportNotEqualTo(BigDecimal value) {
+            addCriterion("DepPort <>", value, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andPassengertypeEqualTo(String value) {
-            addCriterion("PassengerType =", value, "passengertype");
+        public Criteria andDepportGreaterThan(BigDecimal value) {
+            addCriterion("DepPort >", value, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andPassengertypeNotEqualTo(String value) {
-            addCriterion("PassengerType <>", value, "passengertype");
+        public Criteria andDepportGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("DepPort >=", value, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andPassengertypeGreaterThan(String value) {
-            addCriterion("PassengerType >", value, "passengertype");
+        public Criteria andDepportLessThan(BigDecimal value) {
+            addCriterion("DepPort <", value, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andPassengertypeGreaterThanOrEqualTo(String value) {
-            addCriterion("PassengerType >=", value, "passengertype");
+        public Criteria andDepportLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("DepPort <=", value, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andPassengertypeLessThan(String value) {
-            addCriterion("PassengerType <", value, "passengertype");
+        public Criteria andDepportIn(List<BigDecimal> values) {
+            addCriterion("DepPort in", values, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andPassengertypeLessThanOrEqualTo(String value) {
-            addCriterion("PassengerType <=", value, "passengertype");
+        public Criteria andDepportNotIn(List<BigDecimal> values) {
+            addCriterion("DepPort not in", values, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andPassengertypeLike(String value) {
-            addCriterion("PassengerType like", value, "passengertype");
+        public Criteria andDepportBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("DepPort between", value1, value2, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andPassengertypeNotLike(String value) {
-            addCriterion("PassengerType not like", value, "passengertype");
+        public Criteria andDepportNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("DepPort not between", value1, value2, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andPassengertypeIn(List<String> values) {
-            addCriterion("PassengerType in", values, "passengertype");
+        public Criteria andArrportIsNull() {
+            addCriterion("ArrPort is null");
             return (Criteria) this;
         }
 
-        public Criteria andPassengertypeNotIn(List<String> values) {
-            addCriterion("PassengerType not in", values, "passengertype");
+        public Criteria andArrportIsNotNull() {
+            addCriterion("ArrPort is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPassengertypeBetween(String value1, String value2) {
-            addCriterion("PassengerType between", value1, value2, "passengertype");
+        public Criteria andArrportEqualTo(BigDecimal value) {
+            addCriterion("ArrPort =", value, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andPassengertypeNotBetween(String value1, String value2) {
-            addCriterion("PassengerType not between", value1, value2, "passengertype");
+        public Criteria andArrportNotEqualTo(BigDecimal value) {
+            addCriterion("ArrPort <>", value, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andBirtydayIsNull() {
-            addCriterion("Birtyday is null");
+        public Criteria andArrportGreaterThan(BigDecimal value) {
+            addCriterion("ArrPort >", value, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andBirtydayIsNotNull() {
-            addCriterion("Birtyday is not null");
+        public Criteria andArrportGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("ArrPort >=", value, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andBirtydayEqualTo(Date value) {
-            addCriterionForJDBCDate("Birtyday =", value, "birtyday");
+        public Criteria andArrportLessThan(BigDecimal value) {
+            addCriterion("ArrPort <", value, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andBirtydayNotEqualTo(Date value) {
-            addCriterionForJDBCDate("Birtyday <>", value, "birtyday");
+        public Criteria andArrportLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("ArrPort <=", value, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andBirtydayGreaterThan(Date value) {
-            addCriterionForJDBCDate("Birtyday >", value, "birtyday");
+        public Criteria andArrportIn(List<BigDecimal> values) {
+            addCriterion("ArrPort in", values, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andBirtydayGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("Birtyday >=", value, "birtyday");
+        public Criteria andArrportNotIn(List<BigDecimal> values) {
+            addCriterion("ArrPort not in", values, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andBirtydayLessThan(Date value) {
-            addCriterionForJDBCDate("Birtyday <", value, "birtyday");
+        public Criteria andArrportBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("ArrPort between", value1, value2, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andBirtydayLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("Birtyday <=", value, "birtyday");
+        public Criteria andArrportNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("ArrPort not between", value1, value2, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andBirtydayIn(List<Date> values) {
-            addCriterionForJDBCDate("Birtyday in", values, "birtyday");
+        public Criteria andDepdateIsNull() {
+            addCriterion("DepDate is null");
             return (Criteria) this;
         }
 
-        public Criteria andBirtydayNotIn(List<Date> values) {
-            addCriterionForJDBCDate("Birtyday not in", values, "birtyday");
+        public Criteria andDepdateIsNotNull() {
+            addCriterion("DepDate is not null");
             return (Criteria) this;
         }
 
-        public Criteria andBirtydayBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("Birtyday between", value1, value2, "birtyday");
+        public Criteria andDepdateEqualTo(Date value) {
+            addCriterionForJDBCDate("DepDate =", value, "depdate");
             return (Criteria) this;
         }
 
-        public Criteria andBirtydayNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("Birtyday not between", value1, value2, "birtyday");
+        public Criteria andDepdateNotEqualTo(Date value) {
+            addCriterionForJDBCDate("DepDate <>", value, "depdate");
             return (Criteria) this;
         }
 
-        public Criteria andGenderIsNull() {
-            addCriterion("Gender is null");
+        public Criteria andDepdateGreaterThan(Date value) {
+            addCriterionForJDBCDate("DepDate >", value, "depdate");
             return (Criteria) this;
         }
 
-        public Criteria andGenderIsNotNull() {
-            addCriterion("Gender is not null");
+        public Criteria andDepdateGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("DepDate >=", value, "depdate");
             return (Criteria) this;
         }
 
-        public Criteria andGenderEqualTo(String value) {
-            addCriterion("Gender =", value, "gender");
+        public Criteria andDepdateLessThan(Date value) {
+            addCriterionForJDBCDate("DepDate <", value, "depdate");
             return (Criteria) this;
         }
 
-        public Criteria andGenderNotEqualTo(String value) {
-            addCriterion("Gender <>", value, "gender");
+        public Criteria andDepdateLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("DepDate <=", value, "depdate");
             return (Criteria) this;
         }
 
-        public Criteria andGenderGreaterThan(String value) {
-            addCriterion("Gender >", value, "gender");
+        public Criteria andDepdateIn(List<Date> values) {
+            addCriterionForJDBCDate("DepDate in", values, "depdate");
             return (Criteria) this;
         }
 
-        public Criteria andGenderGreaterThanOrEqualTo(String value) {
-            addCriterion("Gender >=", value, "gender");
+        public Criteria andDepdateNotIn(List<Date> values) {
+            addCriterionForJDBCDate("DepDate not in", values, "depdate");
             return (Criteria) this;
         }
 
-        public Criteria andGenderLessThan(String value) {
-            addCriterion("Gender <", value, "gender");
+        public Criteria andDepdateBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("DepDate between", value1, value2, "depdate");
             return (Criteria) this;
         }
 
-        public Criteria andGenderLessThanOrEqualTo(String value) {
-            addCriterion("Gender <=", value, "gender");
+        public Criteria andDepdateNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("DepDate not between", value1, value2, "depdate");
             return (Criteria) this;
         }
 
-        public Criteria andGenderLike(String value) {
-            addCriterion("Gender like", value, "gender");
+        public Criteria andDeptimeIsNull() {
+            addCriterion("DepTime is null");
             return (Criteria) this;
         }
 
-        public Criteria andGenderNotLike(String value) {
-            addCriterion("Gender not like", value, "gender");
+        public Criteria andDeptimeIsNotNull() {
+            addCriterion("DepTime is not null");
             return (Criteria) this;
         }
 
-        public Criteria andGenderIn(List<String> values) {
-            addCriterion("Gender in", values, "gender");
+        public Criteria andDeptimeEqualTo(Date value) {
+            addCriterion("DepTime =", value, "deptime");
             return (Criteria) this;
         }
 
-        public Criteria andGenderNotIn(List<String> values) {
-            addCriterion("Gender not in", values, "gender");
+        public Criteria andDeptimeNotEqualTo(Date value) {
+            addCriterion("DepTime <>", value, "deptime");
             return (Criteria) this;
         }
 
-        public Criteria andGenderBetween(String value1, String value2) {
-            addCriterion("Gender between", value1, value2, "gender");
+        public Criteria andDeptimeGreaterThan(Date value) {
+            addCriterion("DepTime >", value, "deptime");
             return (Criteria) this;
         }
 
-        public Criteria andGenderNotBetween(String value1, String value2) {
-            addCriterion("Gender not between", value1, value2, "gender");
+        public Criteria andDeptimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("DepTime >=", value, "deptime");
             return (Criteria) this;
         }
 
-        public Criteria andCardtypeIsNull() {
-            addCriterion("CardType is null");
+        public Criteria andDeptimeLessThan(Date value) {
+            addCriterion("DepTime <", value, "deptime");
             return (Criteria) this;
         }
 
-        public Criteria andCardtypeIsNotNull() {
-            addCriterion("CardType is not null");
+        public Criteria andDeptimeLessThanOrEqualTo(Date value) {
+            addCriterion("DepTime <=", value, "deptime");
             return (Criteria) this;
         }
 
-        public Criteria andCardtypeEqualTo(String value) {
-            addCriterion("CardType =", value, "cardtype");
+        public Criteria andDeptimeIn(List<Date> values) {
+            addCriterion("DepTime in", values, "deptime");
             return (Criteria) this;
         }
 
-        public Criteria andCardtypeNotEqualTo(String value) {
-            addCriterion("CardType <>", value, "cardtype");
+        public Criteria andDeptimeNotIn(List<Date> values) {
+            addCriterion("DepTime not in", values, "deptime");
             return (Criteria) this;
         }
 
-        public Criteria andCardtypeGreaterThan(String value) {
-            addCriterion("CardType >", value, "cardtype");
+        public Criteria andDeptimeBetween(Date value1, Date value2) {
+            addCriterion("DepTime between", value1, value2, "deptime");
             return (Criteria) this;
         }
 
-        public Criteria andCardtypeGreaterThanOrEqualTo(String value) {
-            addCriterion("CardType >=", value, "cardtype");
+        public Criteria andDeptimeNotBetween(Date value1, Date value2) {
+            addCriterion("DepTime not between", value1, value2, "deptime");
             return (Criteria) this;
         }
 
-        public Criteria andCardtypeLessThan(String value) {
-            addCriterion("CardType <", value, "cardtype");
+        public Criteria andDepterminalIsNull() {
+            addCriterion("DepTerminal is null");
             return (Criteria) this;
         }
 
-        public Criteria andCardtypeLessThanOrEqualTo(String value) {
-            addCriterion("CardType <=", value, "cardtype");
+        public Criteria andDepterminalIsNotNull() {
+            addCriterion("DepTerminal is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCardtypeLike(String value) {
-            addCriterion("CardType like", value, "cardtype");
+        public Criteria andDepterminalEqualTo(String value) {
+            addCriterion("DepTerminal =", value, "depterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardtypeNotLike(String value) {
-            addCriterion("CardType not like", value, "cardtype");
+        public Criteria andDepterminalNotEqualTo(String value) {
+            addCriterion("DepTerminal <>", value, "depterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardtypeIn(List<String> values) {
-            addCriterion("CardType in", values, "cardtype");
+        public Criteria andDepterminalGreaterThan(String value) {
+            addCriterion("DepTerminal >", value, "depterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardtypeNotIn(List<String> values) {
-            addCriterion("CardType not in", values, "cardtype");
+        public Criteria andDepterminalGreaterThanOrEqualTo(String value) {
+            addCriterion("DepTerminal >=", value, "depterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardtypeBetween(String value1, String value2) {
-            addCriterion("CardType between", value1, value2, "cardtype");
+        public Criteria andDepterminalLessThan(String value) {
+            addCriterion("DepTerminal <", value, "depterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardtypeNotBetween(String value1, String value2) {
-            addCriterion("CardType not between", value1, value2, "cardtype");
+        public Criteria andDepterminalLessThanOrEqualTo(String value) {
+            addCriterion("DepTerminal <=", value, "depterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumIsNull() {
-            addCriterion("CardNum is null");
+        public Criteria andDepterminalLike(String value) {
+            addCriterion("DepTerminal like", value, "depterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumIsNotNull() {
-            addCriterion("CardNum is not null");
+        public Criteria andDepterminalNotLike(String value) {
+            addCriterion("DepTerminal not like", value, "depterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumEqualTo(String value) {
-            addCriterion("CardNum =", value, "cardnum");
+        public Criteria andDepterminalIn(List<String> values) {
+            addCriterion("DepTerminal in", values, "depterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumNotEqualTo(String value) {
-            addCriterion("CardNum <>", value, "cardnum");
+        public Criteria andDepterminalNotIn(List<String> values) {
+            addCriterion("DepTerminal not in", values, "depterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumGreaterThan(String value) {
-            addCriterion("CardNum >", value, "cardnum");
+        public Criteria andDepterminalBetween(String value1, String value2) {
+            addCriterion("DepTerminal between", value1, value2, "depterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumGreaterThanOrEqualTo(String value) {
-            addCriterion("CardNum >=", value, "cardnum");
+        public Criteria andDepterminalNotBetween(String value1, String value2) {
+            addCriterion("DepTerminal not between", value1, value2, "depterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumLessThan(String value) {
-            addCriterion("CardNum <", value, "cardnum");
+        public Criteria andArrterminalIsNull() {
+            addCriterion("ArrTerminal is null");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumLessThanOrEqualTo(String value) {
-            addCriterion("CardNum <=", value, "cardnum");
+        public Criteria andArrterminalIsNotNull() {
+            addCriterion("ArrTerminal is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumLike(String value) {
-            addCriterion("CardNum like", value, "cardnum");
+        public Criteria andArrterminalEqualTo(String value) {
+            addCriterion("ArrTerminal =", value, "arrterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumNotLike(String value) {
-            addCriterion("CardNum not like", value, "cardnum");
+        public Criteria andArrterminalNotEqualTo(String value) {
+            addCriterion("ArrTerminal <>", value, "arrterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumIn(List<String> values) {
-            addCriterion("CardNum in", values, "cardnum");
+        public Criteria andArrterminalGreaterThan(String value) {
+            addCriterion("ArrTerminal >", value, "arrterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumNotIn(List<String> values) {
-            addCriterion("CardNum not in", values, "cardnum");
+        public Criteria andArrterminalGreaterThanOrEqualTo(String value) {
+            addCriterion("ArrTerminal >=", value, "arrterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumBetween(String value1, String value2) {
-            addCriterion("CardNum between", value1, value2, "cardnum");
+        public Criteria andArrterminalLessThan(String value) {
+            addCriterion("ArrTerminal <", value, "arrterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumNotBetween(String value1, String value2) {
-            addCriterion("CardNum not between", value1, value2, "cardnum");
+        public Criteria andArrterminalLessThanOrEqualTo(String value) {
+            addCriterion("ArrTerminal <=", value, "arrterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceIsNull() {
-            addCriterion("CardIssuePlace is null");
+        public Criteria andArrterminalLike(String value) {
+            addCriterion("ArrTerminal like", value, "arrterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceIsNotNull() {
-            addCriterion("CardIssuePlace is not null");
+        public Criteria andArrterminalNotLike(String value) {
+            addCriterion("ArrTerminal not like", value, "arrterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceEqualTo(Integer value) {
-            addCriterion("CardIssuePlace =", value, "cardissueplace");
+        public Criteria andArrterminalIn(List<String> values) {
+            addCriterion("ArrTerminal in", values, "arrterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceNotEqualTo(Integer value) {
-            addCriterion("CardIssuePlace <>", value, "cardissueplace");
+        public Criteria andArrterminalNotIn(List<String> values) {
+            addCriterion("ArrTerminal not in", values, "arrterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceGreaterThan(Integer value) {
-            addCriterion("CardIssuePlace >", value, "cardissueplace");
+        public Criteria andArrterminalBetween(String value1, String value2) {
+            addCriterion("ArrTerminal between", value1, value2, "arrterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceGreaterThanOrEqualTo(Integer value) {
-            addCriterion("CardIssuePlace >=", value, "cardissueplace");
+        public Criteria andArrterminalNotBetween(String value1, String value2) {
+            addCriterion("ArrTerminal not between", value1, value2, "arrterminal");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceLessThan(Integer value) {
-            addCriterion("CardIssuePlace <", value, "cardissueplace");
+        public Criteria andFlightnoIsNull() {
+            addCriterion("FlightNo is null");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceLessThanOrEqualTo(Integer value) {
-            addCriterion("CardIssuePlace <=", value, "cardissueplace");
+        public Criteria andFlightnoIsNotNull() {
+            addCriterion("FlightNo is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceIn(List<Integer> values) {
-            addCriterion("CardIssuePlace in", values, "cardissueplace");
+        public Criteria andFlightnoEqualTo(BigDecimal value) {
+            addCriterion("FlightNo =", value, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceNotIn(List<Integer> values) {
-            addCriterion("CardIssuePlace not in", values, "cardissueplace");
+        public Criteria andFlightnoNotEqualTo(BigDecimal value) {
+            addCriterion("FlightNo <>", value, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceBetween(Integer value1, Integer value2) {
-            addCriterion("CardIssuePlace between", value1, value2, "cardissueplace");
+        public Criteria andFlightnoGreaterThan(BigDecimal value) {
+            addCriterion("FlightNo >", value, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andCardissueplaceNotBetween(Integer value1, Integer value2) {
-            addCriterion("CardIssuePlace not between", value1, value2, "cardissueplace");
+        public Criteria andFlightnoGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("FlightNo >=", value, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andCardexpiredIsNull() {
-            addCriterion("CardExpired is null");
+        public Criteria andFlightnoLessThan(BigDecimal value) {
+            addCriterion("FlightNo <", value, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andCardexpiredIsNotNull() {
-            addCriterion("CardExpired is not null");
+        public Criteria andFlightnoLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("FlightNo <=", value, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andCardexpiredEqualTo(Date value) {
-            addCriterionForJDBCDate("CardExpired =", value, "cardexpired");
+        public Criteria andFlightnoIn(List<BigDecimal> values) {
+            addCriterion("FlightNo in", values, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andCardexpiredNotEqualTo(Date value) {
-            addCriterionForJDBCDate("CardExpired <>", value, "cardexpired");
+        public Criteria andFlightnoNotIn(List<BigDecimal> values) {
+            addCriterion("FlightNo not in", values, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andCardexpiredGreaterThan(Date value) {
-            addCriterionForJDBCDate("CardExpired >", value, "cardexpired");
+        public Criteria andFlightnoBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("FlightNo between", value1, value2, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andCardexpiredGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("CardExpired >=", value, "cardexpired");
+        public Criteria andFlightnoNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("FlightNo not between", value1, value2, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andCardexpiredLessThan(Date value) {
-            addCriterionForJDBCDate("CardExpired <", value, "cardexpired");
+        public Criteria andShareflagIsNull() {
+            addCriterion("ShareFlag is null");
             return (Criteria) this;
         }
 
-        public Criteria andCardexpiredLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("CardExpired <=", value, "cardexpired");
+        public Criteria andShareflagIsNotNull() {
+            addCriterion("ShareFlag is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCardexpiredIn(List<Date> values) {
-            addCriterionForJDBCDate("CardExpired in", values, "cardexpired");
+        public Criteria andShareflagEqualTo(Integer value) {
+            addCriterion("ShareFlag =", value, "shareflag");
             return (Criteria) this;
         }
 
-        public Criteria andCardexpiredNotIn(List<Date> values) {
-            addCriterionForJDBCDate("CardExpired not in", values, "cardexpired");
+        public Criteria andShareflagNotEqualTo(Integer value) {
+            addCriterion("ShareFlag <>", value, "shareflag");
             return (Criteria) this;
         }
 
-        public Criteria andCardexpiredBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("CardExpired between", value1, value2, "cardexpired");
+        public Criteria andShareflagGreaterThan(Integer value) {
+            addCriterion("ShareFlag >", value, "shareflag");
             return (Criteria) this;
         }
 
-        public Criteria andCardexpiredNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("CardExpired not between", value1, value2, "cardexpired");
+        public Criteria andShareflagGreaterThanOrEqualTo(Integer value) {
+            addCriterion("ShareFlag >=", value, "shareflag");
             return (Criteria) this;
         }
 
-        public Criteria andNationalityIsNull() {
-            addCriterion("Nationality is null");
+        public Criteria andShareflagLessThan(Integer value) {
+            addCriterion("ShareFlag <", value, "shareflag");
             return (Criteria) this;
         }
 
-        public Criteria andNationalityIsNotNull() {
-            addCriterion("Nationality is not null");
+        public Criteria andShareflagLessThanOrEqualTo(Integer value) {
+            addCriterion("ShareFlag <=", value, "shareflag");
             return (Criteria) this;
         }
 
-        public Criteria andNationalityEqualTo(String value) {
-            addCriterion("Nationality =", value, "nationality");
+        public Criteria andShareflagIn(List<Integer> values) {
+            addCriterion("ShareFlag in", values, "shareflag");
             return (Criteria) this;
         }
 
-        public Criteria andNationalityNotEqualTo(String value) {
-            addCriterion("Nationality <>", value, "nationality");
+        public Criteria andShareflagNotIn(List<Integer> values) {
+            addCriterion("ShareFlag not in", values, "shareflag");
             return (Criteria) this;
         }
 
-        public Criteria andNationalityGreaterThan(String value) {
-            addCriterion("Nationality >", value, "nationality");
+        public Criteria andShareflagBetween(Integer value1, Integer value2) {
+            addCriterion("ShareFlag between", value1, value2, "shareflag");
             return (Criteria) this;
         }
 
-        public Criteria andNationalityGreaterThanOrEqualTo(String value) {
-            addCriterion("Nationality >=", value, "nationality");
+        public Criteria andShareflagNotBetween(Integer value1, Integer value2) {
+            addCriterion("ShareFlag not between", value1, value2, "shareflag");
             return (Criteria) this;
         }
 
-        public Criteria andNationalityLessThan(String value) {
-            addCriterion("Nationality <", value, "nationality");
+        public Criteria andCabinIsNull() {
+            addCriterion("Cabin is null");
             return (Criteria) this;
         }
 
-        public Criteria andNationalityLessThanOrEqualTo(String value) {
-            addCriterion("Nationality <=", value, "nationality");
+        public Criteria andCabinIsNotNull() {
+            addCriterion("Cabin is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNationalityLike(String value) {
-            addCriterion("Nationality like", value, "nationality");
+        public Criteria andCabinEqualTo(BigDecimal value) {
+            addCriterion("Cabin =", value, "cabin");
             return (Criteria) this;
         }
 
-        public Criteria andNationalityNotLike(String value) {
-            addCriterion("Nationality not like", value, "nationality");
+        public Criteria andCabinNotEqualTo(BigDecimal value) {
+            addCriterion("Cabin <>", value, "cabin");
             return (Criteria) this;
         }
 
-        public Criteria andNationalityIn(List<String> values) {
-            addCriterion("Nationality in", values, "nationality");
+        public Criteria andCabinGreaterThan(BigDecimal value) {
+            addCriterion("Cabin >", value, "cabin");
             return (Criteria) this;
         }
 
-        public Criteria andNationalityNotIn(List<String> values) {
-            addCriterion("Nationality not in", values, "nationality");
+        public Criteria andCabinGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("Cabin >=", value, "cabin");
             return (Criteria) this;
         }
 
-        public Criteria andNationalityBetween(String value1, String value2) {
-            addCriterion("Nationality between", value1, value2, "nationality");
+        public Criteria andCabinLessThan(BigDecimal value) {
+            addCriterion("Cabin <", value, "cabin");
             return (Criteria) this;
         }
 
-        public Criteria andNationalityNotBetween(String value1, String value2) {
-            addCriterion("Nationality not between", value1, value2, "nationality");
+        public Criteria andCabinLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("Cabin <=", value, "cabin");
             return (Criteria) this;
         }
 
-        public Criteria andTicketnoIsNull() {
-            addCriterion("TicketNo is null");
+        public Criteria andCabinIn(List<BigDecimal> values) {
+            addCriterion("Cabin in", values, "cabin");
             return (Criteria) this;
         }
 
-        public Criteria andTicketnoIsNotNull() {
-            addCriterion("TicketNo is not null");
+        public Criteria andCabinNotIn(List<BigDecimal> values) {
+            addCriterion("Cabin not in", values, "cabin");
             return (Criteria) this;
         }
 
-        public Criteria andTicketnoEqualTo(String value) {
-            addCriterion("TicketNo =", value, "ticketno");
+        public Criteria andCabinBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("Cabin between", value1, value2, "cabin");
             return (Criteria) this;
         }
 
-        public Criteria andTicketnoNotEqualTo(String value) {
-            addCriterion("TicketNo <>", value, "ticketno");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketnoGreaterThan(String value) {
-            addCriterion("TicketNo >", value, "ticketno");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketnoGreaterThanOrEqualTo(String value) {
-            addCriterion("TicketNo >=", value, "ticketno");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketnoLessThan(String value) {
-            addCriterion("TicketNo <", value, "ticketno");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketnoLessThanOrEqualTo(String value) {
-            addCriterion("TicketNo <=", value, "ticketno");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketnoLike(String value) {
-            addCriterion("TicketNo like", value, "ticketno");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketnoNotLike(String value) {
-            addCriterion("TicketNo not like", value, "ticketno");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketnoIn(List<String> values) {
-            addCriterion("TicketNo in", values, "ticketno");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketnoNotIn(List<String> values) {
-            addCriterion("TicketNo not in", values, "ticketno");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketnoBetween(String value1, String value2) {
-            addCriterion("TicketNo between", value1, value2, "ticketno");
-            return (Criteria) this;
-        }
-
-        public Criteria andTicketnoNotBetween(String value1, String value2) {
-            addCriterion("TicketNo not between", value1, value2, "ticketno");
+        public Criteria andCabinNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("Cabin not between", value1, value2, "cabin");
             return (Criteria) this;
         }
 
