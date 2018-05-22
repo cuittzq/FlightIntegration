@@ -736,52 +736,52 @@ public class OrderInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeEqualTo(Byte value) {
+        public Criteria andVoyagetypeEqualTo(Integer value) {
             addCriterion("VoyageType =", value, "voyagetype");
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeNotEqualTo(Byte value) {
+        public Criteria andVoyagetypeNotEqualTo(Integer value) {
             addCriterion("VoyageType <>", value, "voyagetype");
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeGreaterThan(Byte value) {
+        public Criteria andVoyagetypeGreaterThan(Integer value) {
             addCriterion("VoyageType >", value, "voyagetype");
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeGreaterThanOrEqualTo(Byte value) {
+        public Criteria andVoyagetypeGreaterThanOrEqualTo(Integer value) {
             addCriterion("VoyageType >=", value, "voyagetype");
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeLessThan(Byte value) {
+        public Criteria andVoyagetypeLessThan(Integer value) {
             addCriterion("VoyageType <", value, "voyagetype");
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeLessThanOrEqualTo(Byte value) {
+        public Criteria andVoyagetypeLessThanOrEqualTo(Integer value) {
             addCriterion("VoyageType <=", value, "voyagetype");
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeIn(List<Byte> values) {
+        public Criteria andVoyagetypeIn(List<Integer> values) {
             addCriterion("VoyageType in", values, "voyagetype");
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeNotIn(List<Byte> values) {
+        public Criteria andVoyagetypeNotIn(List<Integer> values) {
             addCriterion("VoyageType not in", values, "voyagetype");
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeBetween(Byte value1, Byte value2) {
+        public Criteria andVoyagetypeBetween(Integer value1, Integer value2) {
             addCriterion("VoyageType between", value1, value2, "voyagetype");
             return (Criteria) this;
         }
 
-        public Criteria andVoyagetypeNotBetween(Byte value1, Byte value2) {
+        public Criteria andVoyagetypeNotBetween(Integer value1, Integer value2) {
             addCriterion("VoyageType not between", value1, value2, "voyagetype");
             return (Criteria) this;
         }
@@ -1776,52 +1776,52 @@ public class OrderInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andOrderstateEqualTo(Byte value) {
+        public Criteria andOrderstateEqualTo(Integer value) {
             addCriterion("OrderState =", value, "orderstate");
             return (Criteria) this;
         }
 
-        public Criteria andOrderstateNotEqualTo(Byte value) {
+        public Criteria andOrderstateNotEqualTo(Integer value) {
             addCriterion("OrderState <>", value, "orderstate");
             return (Criteria) this;
         }
 
-        public Criteria andOrderstateGreaterThan(Byte value) {
+        public Criteria andOrderstateGreaterThan(Integer value) {
             addCriterion("OrderState >", value, "orderstate");
             return (Criteria) this;
         }
 
-        public Criteria andOrderstateGreaterThanOrEqualTo(Byte value) {
+        public Criteria andOrderstateGreaterThanOrEqualTo(Integer value) {
             addCriterion("OrderState >=", value, "orderstate");
             return (Criteria) this;
         }
 
-        public Criteria andOrderstateLessThan(Byte value) {
+        public Criteria andOrderstateLessThan(Integer value) {
             addCriterion("OrderState <", value, "orderstate");
             return (Criteria) this;
         }
 
-        public Criteria andOrderstateLessThanOrEqualTo(Byte value) {
+        public Criteria andOrderstateLessThanOrEqualTo(Integer value) {
             addCriterion("OrderState <=", value, "orderstate");
             return (Criteria) this;
         }
 
-        public Criteria andOrderstateIn(List<Byte> values) {
+        public Criteria andOrderstateIn(List<Integer> values) {
             addCriterion("OrderState in", values, "orderstate");
             return (Criteria) this;
         }
 
-        public Criteria andOrderstateNotIn(List<Byte> values) {
+        public Criteria andOrderstateNotIn(List<Integer> values) {
             addCriterion("OrderState not in", values, "orderstate");
             return (Criteria) this;
         }
 
-        public Criteria andOrderstateBetween(Byte value1, Byte value2) {
+        public Criteria andOrderstateBetween(Integer value1, Integer value2) {
             addCriterion("OrderState between", value1, value2, "orderstate");
             return (Criteria) this;
         }
 
-        public Criteria andOrderstateNotBetween(Byte value1, Byte value2) {
+        public Criteria andOrderstateNotBetween(Integer value1, Integer value2) {
             addCriterion("OrderState not between", value1, value2, "orderstate");
             return (Criteria) this;
         }

@@ -22,7 +22,7 @@ public class OrderInfo {
 
     private String arrcity;
 
-    private Byte voyagetype;
+    private Integer voyagetype;
 
     private BigDecimal totalsalesprice;
 
@@ -54,7 +54,7 @@ public class OrderInfo {
 
     private String linkpostcode;
 
-    private Byte orderstate;
+    private Integer orderstate;
 
     private Date createtime;
 
@@ -136,11 +136,11 @@ public class OrderInfo {
         this.arrcity = arrcity == null ? null : arrcity.trim();
     }
 
-    public Byte getVoyagetype() {
+    public Integer getVoyagetype() {
         return voyagetype;
     }
 
-    public void setVoyagetype(Byte voyagetype) {
+    public void setVoyagetype(Integer voyagetype) {
         this.voyagetype = voyagetype;
     }
 
@@ -264,11 +264,11 @@ public class OrderInfo {
         this.linkpostcode = linkpostcode == null ? null : linkpostcode.trim();
     }
 
-    public Byte getOrderstate() {
+    public Integer getOrderstate() {
         return orderstate;
     }
 
-    public void setOrderstate(Byte orderstate) {
+    public void setOrderstate(Integer orderstate) {
         this.orderstate = orderstate;
     }
 
