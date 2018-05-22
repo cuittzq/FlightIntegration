@@ -2,6 +2,9 @@ package com.tzq.biz.service.purchase.lcc.impl;
 
 import com.tzq.biz.annotation.Route;
 import com.tzq.biz.service.purchase.abstracts.AbstractIssueTicketService;
+import com.tzq.commons.Exception.CommonExcetpionConstant;
+import com.tzq.commons.Exception.ServiceAbstractException;
+import com.tzq.commons.Exception.ServiceErrorMsg;
 import com.tzq.commons.enums.AreaTypeEnum;
 import com.tzq.commons.enums.PurchaseEnum;
 import com.tzq.commons.model.context.RouteContext;
@@ -15,6 +18,7 @@ import com.tzq.integration.service.intl.lcc.model.issueticket.IssueTicketReq;
 import com.tzq.integration.service.intl.lcc.model.issueticket.IssueTicketRes;
 import com.tzq.integration.service.intl.lcc.model.search.FlightRoutings;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -82,8 +86,20 @@ public class LccIntlIssueTicketServiceImpl extends AbstractIssueTicketService {
      */
     @Override
     protected <T> IssueTicketResVO response(T t, RouteContext<IssueTicketReqVO> context) {
-        return null;
+        IssueTicketRes   issueTicketRes   = (IssueTicketRes) t;
+        IssueTicketResVO issueTicketResVO = new IssueTicketResVO();
+        if (issueTicketRes == null) {
+            throw new ServiceAbstractException(ServiceErrorMsg.Builder.newInstance().setErrorMsg("第三方接口返回空").setErrorCode(CommonExcetpionConstant.INTERFACE_INVOKE_ERROR_CODE).build());
+        } else if (!StringUtils.isBlank(issueTicketRes.getMsg()) && issueTicketRes.getStatus() != 0) {
+            throw new ServiceAbstractException(ServiceErrorMsg.Builder.newInstance().setErrorMsg(issueTicketRes.getMsg()).setErrorCode(CommonExcetpionConstant.INTERFACE_INVOKE_ERROR_CODE).build());
+        } else {
+            /**构建返回结果**/
+
+            issueTicketResVO.setOrderNo(context.getT().getOrderNo());
+            issueTicketResVO.setPnrCode(issueTicketRes.getPnrCode());
+            issueTicketResVO.setOrderState(issueTicketRes.getOrderState());
+        }
+
+        return issueTicketResVO;
     }
-
-
 }
