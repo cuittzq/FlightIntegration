@@ -21,8 +21,10 @@ import com.tzq.integration.service.intl.lcc.model.search.SearchFlightReq;
 import com.tzq.integration.service.intl.lcc.model.search.SearchFlightRes;
 import com.tzq.integration.service.intl.lcc.model.verify.VerifyReq;
 import com.tzq.integration.service.intl.lcc.model.verify.VerifyRes;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -40,6 +42,7 @@ import java.util.Map;
  */
 @Service("lccClient")
 public class LccClientImpl extends AbstractBaseClient implements LccClient {
+
     /**
      *
      */
@@ -82,7 +85,7 @@ public class LccClientImpl extends AbstractBaseClient implements LccClient {
         req.setCid(LccConstant.CID + ":" + LccConstant.CIDPWD);
         String postData = JSON.toJSONString(req);
         Map<String, String> header = getDefaultHeader();
-        String response;
+        String response= StringUtils.EMPTY;
         VerifyRes verifyRes = null;
         try {
             logger.info("调用LCC{}接口,入参{}", LccConstant.VERIFY, postData);
@@ -93,6 +96,7 @@ public class LccClientImpl extends AbstractBaseClient implements LccClient {
             logger.error("调用LCC验舱验价接口失败", e);
         } finally {
             // TODO 记录接口访问日志
+            logger.info("验舱请求完成！入参：{} 返回：{}",JSON.toJSONString(req),response);
         }
 
         return verifyRes;
@@ -104,7 +108,7 @@ public class LccClientImpl extends AbstractBaseClient implements LccClient {
         req.setCid(LccConstant.CID + ":" + LccConstant.CIDPWD);
         String postData = JSON.toJSONString(req);
         Map<String, String> header = getDefaultHeader();
-        String response;
+        String response=StringUtils.EMPTY;
         OrderRes orderRes = null;
         try {
             logger.info("调用LCC{}接口,入参{}", LccConstant.CREATE_ORDER, postData);
@@ -123,12 +127,11 @@ public class LccClientImpl extends AbstractBaseClient implements LccClient {
 
         } catch (IOException e) {
             logger.error("调用LCC创单接口失败", e);
-            e.printStackTrace();
         } catch (Exception e) {
             logger.error("调用LCC创单接口失败", e);
-            e.printStackTrace();
         } finally {
             // TODO 记录接口访问日志
+            logger.info("创单请求完成！入参：{} 返回：{}",JSON.toJSONString(req),response);
         }
 
         return orderRes;

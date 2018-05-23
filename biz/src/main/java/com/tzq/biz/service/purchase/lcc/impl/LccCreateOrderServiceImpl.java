@@ -57,7 +57,6 @@ import java.util.Map;
 @Route(area = AreaTypeEnum.INTERNATIONAL, purchase = PurchaseEnum.LCC)
 public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
 
-
     @Resource
     private LccClient lccClient;
 
