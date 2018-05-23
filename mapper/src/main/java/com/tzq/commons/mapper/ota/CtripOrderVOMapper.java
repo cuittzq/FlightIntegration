@@ -46,8 +46,6 @@ public interface CtripOrderVOMapper {
     @Mappings({@Mapping(target = "data", expression = "java(com.tzq.commons.converter.ExtInfoConverter.string2Map(dto == null ? \"\" : dto.getData()))")})
     FlightRoutingsVO flightRoutingsDTO2VO(FlightRoutingsDTO dto);
 
-    CreateOrderResVO CreateOrderResDTO2VO(OrderRes createOrderRes);
-
     CreateOrderRes CreateOrderResVO2DTO(CreateOrderResVO createOrderReqVO);
 
     CtripOrderIdVO CtripOrderIdDTO2VO(CtripOrderIdDTO ctripOrderIdDTO);

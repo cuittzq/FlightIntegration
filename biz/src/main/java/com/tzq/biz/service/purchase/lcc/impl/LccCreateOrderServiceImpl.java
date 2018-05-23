@@ -33,6 +33,8 @@ import com.tzq.integration.service.intl.lcc.model.order.Passenger;
 import com.tzq.integration.service.intl.lcc.model.search.FlightRoutings;
 import com.tzq.integration.service.intl.lcc.model.search.FlightSegment;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -69,6 +71,10 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
     @Resource
     private PassengerInfoService passengerInfoService;
 
+    /**
+     *
+     */
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * 生单
@@ -161,25 +167,30 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
      */
     @Transactional
     private void dbOperator(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO) {
-        PassengerInfo passengerInfo = new PassengerInfo();
-        OrderLog orderLog = new OrderLog();
+        try {
+            PassengerInfo passengerInfo = new PassengerInfo();
+            OrderLog orderLog = new OrderLog();
 
-        String orderNo = OrderNoUtils.Builder.newBuilder()
-                .setPurchasePlatName(context.getOta().getCode())
-                .setSalePlatName(context.getPurchaseEnum().getCode()).getOrderNum();
+            String orderNo = OrderNoUtils.Builder.newBuilder()
+                    .setPurchasePlatName(context.getOta().getCode())
+                    .setSalePlatName(context.getPurchaseEnum().getCode()).getOrderNum();
 
-        /**01.插入订单info**/
-        orderInfoService.insert(getOrerInfo(context,orderResVO,orderNo));
+            /**01.插入订单info**/
+            orderInfoService.insert(getOrerInfo(context, orderResVO, orderNo));
 
-        /**02.插入乘客信息**/
-        List<PassengerInfo> passList =  etPassengerInfoList(context,orderResVO,orderNo);
-        for(PassengerInfo passenger:passList)
-        {
-            passengerInfoService.insert(passenger);
+            /**02.插入乘客信息**/
+            List<PassengerInfo> passList = etPassengerInfoList(context, orderResVO, orderNo);
+            for (PassengerInfo passenger : passList) {
+                passengerInfoService.insert(passenger);
+            }
+
+            /**03.插入订单日志表**/
+            orderLogService.insert(getOrderInfoLog(context, orderResVO, orderNo));
         }
-
-        /**03.插入订单日志表**/
-        orderLogService.insert(getOrderInfoLog(context,orderResVO,orderNo));
+        catch (Exception ex)
+        {
+            logger.error("订单记录入库异常",ex);
+        }
     }
 
     private OrderLog getOrderInfoLog(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, String orderNo) {
