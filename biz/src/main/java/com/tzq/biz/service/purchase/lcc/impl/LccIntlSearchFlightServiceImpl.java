@@ -14,6 +14,8 @@ import com.tzq.commons.model.ctrip.search.SegmentVO;
 import com.tzq.integration.service.intl.lcc.LccClient;
 import com.tzq.integration.service.intl.lcc.model.search.*;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,6 +29,11 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
 
     @Resource
     private LccClient lccClient;
+
+    /**
+     *
+     */
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * 查询
@@ -44,6 +51,7 @@ public class LccIntlSearchFlightServiceImpl extends AbstractSearchFlightService 
             flightRouteVO.setMsg(searchFlightResponse.getMsg());
             return flightRouteVO;
         }
+        logger.info("LCC 原始返回{}", JSON.toJSONString(searchFlightResponse));
         flightRouteVO = response(searchFlightResponse, context);
         return flightRouteVO;
     }
