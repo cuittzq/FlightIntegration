@@ -23,7 +23,7 @@ public class OrderNoUtils {
 
         String serialNum = StringUtils.leftPad(SERIALS_NUM.toString(), 2, "0");
         String timestamp = DateConvert.getStrFromDateByFormat(new Date(), DateConvert.ORDERNO_TIME_STAMP);
-        return String.format("%s|%s|%s|%s", this.salePlatName, this.purchasePlatName, timestamp, serialNum);
+        return String.format("TCL%s%s%s%s", timestamp, serialNum,this.purchasePlatName,this.salePlatName);
     }
 
     public static class Builder {

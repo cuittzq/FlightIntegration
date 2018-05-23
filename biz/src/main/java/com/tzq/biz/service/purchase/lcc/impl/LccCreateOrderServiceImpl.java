@@ -175,8 +175,8 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
             OrderLog orderLog = new OrderLog();
 
             String orderNo = OrderNoUtils.Builder.newBuilder()
-                    .setPurchasePlatName(context.getOta().getCode())
-                    .setSalePlatName(context.getPurchaseEnum().getCode()).getOrderNum();
+                    .setPurchasePlatName(String.valueOf(context.getOta().getId()))
+                    .setSalePlatName(String.valueOf(context.getPurchaseEnum().getId())).getOrderNum();
 
             /**01.插入订单info**/
             orderInfoService.insert(getOrerInfo(context, orderResVO, orderNo));
