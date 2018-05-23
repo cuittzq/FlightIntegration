@@ -41,6 +41,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -166,7 +167,7 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
      * 数据库落库--涉及到多张表的操作,
      */
     @Transactional
-    private void dbOperator(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO) {
+    public void dbOperator(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO) {
         try {
             PassengerInfo passengerInfo = new PassengerInfo();
             OrderLog orderLog = new OrderLog();
@@ -177,6 +178,7 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
 
             /**01.插入订单info**/
             orderInfoService.insert(getOrerInfo(context, orderResVO, orderNo));
+          // OrderInfo orderInfo = getOrerInfo(context, orderResVO, orderNo);
 
             /**02.插入乘客信息**/
             List<PassengerInfo> passList = etPassengerInfoList(context, orderResVO, orderNo);
@@ -185,7 +187,7 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
             }
 
             /**03.插入订单日志表**/
-            orderLogService.insert(getOrderInfoLog(context, orderResVO, orderNo));
+           // orderLogService.insert(getOrderInfoLog(context, orderResVO, orderNo));
         }
         catch (Exception ex)
         {
@@ -199,7 +201,7 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         return  orderLog;
     }
 
-    private List<PassengerInfo> etPassengerInfoList(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, String orderNo) {
+    private List<PassengerInfo> etPassengerInfoList(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, String orderNo) throws ParseException {
         List<PassengerInfo> passList = new ArrayList<>();
         for (PassengerVO passMo : context.getT().getPassengers())
         {
@@ -211,11 +213,13 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
             passengerInfo.setCardtype(stopDBStrNull(passMo.getCardType().getCode()));
             passengerInfo.setCardnum(stopDBStrNull(passMo.getCardNum()));
             passengerInfo.setCardissueplace(1); // todo
-            passengerInfo.setCardexpired(DateUtils.parseDateLongFormat(passMo.getCardExpired()));
             passengerInfo.setNationality(stopDBStrNull(passMo.getNationality()));
             passengerInfo.setTicketno(StringUtils.EMPTY);
             passengerInfo.setExtendvalue(StringUtils.EMPTY);
             passengerInfo.setModifytime(new Date());
+            passengerInfo.setPassengername(stopDBStrNull(passMo.getName()));
+            passengerInfo.setBirtyday(DateUtils.parseDateNoTime(passMo.getBirthday()));
+            passengerInfo.setCardexpired(DateUtils.parseDateNoTime(passMo.getCardExpired()));
 
             passList.add(passengerInfo);
         }
