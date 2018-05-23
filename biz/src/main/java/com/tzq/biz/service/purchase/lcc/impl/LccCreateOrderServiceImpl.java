@@ -101,7 +101,6 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         } catch (Exception ex) {
             logger.error("创单异常，异常信息{}", ex.getMessage(), ex);
             throw new ServiceAbstractException(CommonExcetpionConstant.SYSTEM_EXCEPTION);
-
         }
 
         return orderResVO;
@@ -163,25 +162,7 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         return (T) orderReq;
     }
 
-                    .setPurchasePlatName(String.valueOf(context.getOta().getId()))
-                    .setSalePlatName(String.valueOf(context.getPurchaseEnum().getId())).getOrderNum();
 
-            /**01.插入订单info**/
-            orderInfoService.insert(getOrerInfo(context, orderResVO, orderNo));
-            // OrderInfo orderInfo = getOrerInfo(context, orderResVO, orderNo);
-
-            /**02.插入乘客信息**/
-            List<PassengerInfo> passList = etPassengerInfoList(context, orderResVO, orderNo);
-            for (PassengerInfo passenger : passList) {
-                passengerInfoService.insert(passenger);
-            }
-
-            /**03.插入订单日志�*/
-            // orderLogService.insert(getOrderInfoLog(context, orderResVO, orderNo));
-        } catch (Exception ex) {
-            logger.error("订单记录入库异常", ex);
-        }
-    }
 
     private OrderLog getOrderInfoLog(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, String orderNo) {
         OrderLog orderLog = new OrderLog();
@@ -189,98 +170,6 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         return orderLog;
     }
 
-    private List<PassengerInfo> etPassengerInfoList(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, String orderNo) throws ParseException {
-        List<PassengerInfo> passList = new ArrayList<>();
-        for (PassengerVO passMo : context.getT().getPassengers()) {
-            PassengerInfo passengerInfo = new PassengerInfo();
-            passengerInfo.setBirtyday(DateUtils.parseDateLongFormat(passMo.getBirthday()));
-            passengerInfo.setOrderno(orderNo);
-            passengerInfo.setPassengertype(passMo.getAgeType().getRemark());
-            passengerInfo.setGender(stopDBStrNull(passMo.getGender()));
-            passengerInfo.setCardtype(stopDBStrNull(passMo.getCardType().getCode()));
-            passengerInfo.setCardnum(stopDBStrNull(passMo.getCardNum()));
-            passengerInfo.setCardissueplace(1); // todo
-            passengerInfo.setNationality(stopDBStrNull(passMo.getNationality()));
-            passengerInfo.setTicketno(StringUtils.EMPTY);
-            passengerInfo.setExtendvalue(StringUtils.EMPTY);
-            passengerInfo.setModifytime(new Date());
-            passengerInfo.setPassengername(stopDBStrNull(passMo.getName()));
-            passengerInfo.setBirtyday(DateUtils.parseDateNoTime(passMo.getBirthday()));
-            passengerInfo.setCardexpired(DateUtils.parseDateNoTime(passMo.getCardExpired()));
-
-            passList.add(passengerInfo);
-        }
-
-        return passList;
-    }
-
-    private OrderInfo getOrerInfo(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, String orderNo) {
-        OrderInfo orderInfo = new OrderInfo();
-        /**订单信息组装入库**/
-        orderInfo.setOrderno(orderNo);
-        orderInfo.setSalesplatform(context.getOta().getId());
-        orderInfo.setPurchaseplatform(context.getPurchaseEnum().getId());
-        if (orderResVO == null || StringUtils.isBlank(orderResVO.getPnrCode())) {
-            orderInfo.setPnr(StringUtils.EMPTY);
-            orderInfo.setOrderstate(0);
-            orderInfo.setPurchaseorderno(StringUtils.EMPTY);
-        } else {
-            orderInfo.setPnr(orderResVO.getPnrCode());
-            orderInfo.setOrderstate(0);
-            orderInfo.setPurchaseorderno(orderResVO.getOrderNo());
-        }
-
-        orderInfo.setSalesorderno(stopDBStrNull(context.getT().getReferenceId()));
-
-        orderInfo.setDepcity(context.getT().getRoutings().getFromSegments().get(0).getDepAirport());
-        orderInfo.setArrcity(context.getT().getRoutings().getFromSegments().get(0).getArrAirport());
-        orderInfo.setVoyagetype(context.getT().getTripType().getCode().intValue());
-
-        float totalPrice = context.getT().getAdultNumber() * context.getT().getRoutings().getAdultPrice() +
-                context.getT().getChildNumber() * context.getT().getRoutings().getChildPrice() +
-                context.getT().getInfantNumber() * context.getT().getRoutings().getInfantPrice();
-
-        orderInfo.setTotalsalesprice(new BigDecimal(totalPrice));
-
-        float totalTax = context.getT().getAdultNumber() * context.getT().getRoutings().getAdultTax() +
-                context.getT().getChildNumber() * context.getT().getRoutings().getChildTax() +
-                context.getT().getInfantNumber() * context.getT().getRoutings().getInfantTax();
-        orderInfo.setTotalsalestax(new BigDecimal(totalTax));
-
-        orderInfo.setTotalpurchaseprice(new BigDecimal(0));
-        orderInfo.setTotalpurchasetax(new BigDecimal(0));
-
-        orderInfo.setAuditcount(context.getT().getAdultNumber());
-        orderInfo.setChildcount(context.getT().getChildNumber());
-        orderInfo.setBabycount(context.getT().getInfantNumber());
-
-        orderInfo.setOuttickettype(StringUtils.EMPTY);
-        orderInfo.setOutticketcompany(StringUtils.EMPTY);
-        orderInfo.setOutticketremark(StringUtils.EMPTY);
-        orderInfo.setOuttickettime(DateUtils.parseDateLongFormat("19000101000000"));
-
-        orderInfo.setLinkname(stopDBStrNull(context.getT().getContact().getName()));
-        orderInfo.setLinkaddress(stopDBStrNull(context.getT().getContact().getAddress()));
-        orderInfo.setLinkemail(stopDBStrNull(context.getT().getContact().getEmail()));
-        orderInfo.setLinkmobile(stopDBStrNull(context.getT().getContact().getMobile()));
-        orderInfo.setLinkpostcode(stopDBStrNull(context.getT().getContact().getPostcode()));
-
-        Map<String, Object> map = Maps.newHashMap();
-        map.put("routing", context.getT().getRoutings());
-        orderInfo.setExtendvalue(JSON.toJSONString(map));
-        orderInfo.setCreatetime(new Date());
-        orderInfo.setModifytime(new Date());
-
-        return orderInfo;
-    }
-
-    private String stopDBStrNull(String str) {
-        if (null == str) {
-            return StringUtils.EMPTY;
-        }
-
-        return str;
-    }
 
 
     /**
