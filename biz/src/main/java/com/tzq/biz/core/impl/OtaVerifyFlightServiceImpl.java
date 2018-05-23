@@ -12,6 +12,8 @@ import com.tzq.commons.model.ctrip.search.FlightRouteVO;
 import com.tzq.commons.model.ctrip.search.SearchVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyResVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -28,6 +30,11 @@ public class OtaVerifyFlightServiceImpl implements OtaVerifyFlightService {
      */
     @Resource
     PurchaseProxy purchaseProxy;
+
+    /**
+     *
+     */
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * 查询航班
@@ -58,6 +65,8 @@ public class OtaVerifyFlightServiceImpl implements OtaVerifyFlightService {
             } else {
                 response = new SingleResult<>(null, false, CommonExcetpionConstant.SYSTEM_EXCEPTION_CODE, ex.getMessage());
             }
+
+            logger.error(ex.getMessage(),ex);
         }
 
         return response;

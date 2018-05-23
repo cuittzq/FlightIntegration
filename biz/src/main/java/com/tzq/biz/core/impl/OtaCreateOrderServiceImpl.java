@@ -11,6 +11,8 @@ import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.context.SingleResult;
 import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
 import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -23,6 +25,11 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
      */
     @Resource
     PurchaseProxy purchaseProxy;
+
+    /**
+     *
+     */
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * 生单
@@ -50,6 +57,8 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
             } else {
                 response = new SingleResult<>(null, false, CommonExcetpionConstant.SYSTEM_EXCEPTION_CODE, ex.getMessage());
             }
+
+            logger.error(ex.getMessage(), ex);
         }
 
         return response;

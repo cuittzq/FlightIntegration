@@ -195,11 +195,11 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         }
 
         context.setT(ctripOrderVOMapper.CreateOrderReqDTO2VO(req));
-        logger.info("调用LCC{}接口,入参{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(context));
+        logger.info("调用LCC{}接口,入参{}", MethodEnum.CREATEORDER, JSON.toJSONString(context));
         try {
             SingleResult<CreateOrderResVO> singleResult = otaCreateOrderService.createOrder(context);
 
-            logger.info("调用LCC{}接口,返回{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(1));
+            logger.info("调用LCC{}接口,返回{}", MethodEnum.CREATEORDER, JSON.toJSONString(1));
 
             if (!singleResult.isSuccess() || singleResult.getData() == null) {
                 response.setMsg(singleResult.getErrorMessage());
@@ -210,6 +210,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
             response = ctripOrderVOMapper.CreateOrderResVO2DTO(singleResult.getData());
         } catch (Exception ex) {
             ex.printStackTrace();
+            logger.error("调用创单接口异常", MethodEnum.CREATEORDER, ex);
         }
         return response;
     }
