@@ -102,8 +102,6 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
             logger.error("创单异常，异常信息{}", ex.getMessage(), ex);
             throw new ServiceAbstractException(CommonExcetpionConstant.SYSTEM_EXCEPTION);
 
-        } finally {
-            dbOperator(context, orderResVO);
         }
 
         return orderResVO;
@@ -165,16 +163,6 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
         return (T) orderReq;
     }
 
-    /**
-     * 数据库落库--涉及到多张表的操作,
-     */
-    // @Transactional
-    public void dbOperator(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO) {
-        try {
-            PassengerInfo passengerInfo = new PassengerInfo();
-            OrderLog orderLog = new OrderLog();
-
-            String orderNo = OrderNoUtils.Builder.newBuilder()
                     .setPurchasePlatName(String.valueOf(context.getOta().getId()))
                     .setSalePlatName(String.valueOf(context.getPurchaseEnum().getId())).getOrderNum();
 
@@ -188,7 +176,7 @@ public class LccCreateOrderServiceImpl extends AbstractCreateOrderService {
                 passengerInfoService.insert(passenger);
             }
 
-            /**03.插入订单日志表**/
+            /**03.插入订单日志�*/
             // orderLogService.insert(getOrderInfoLog(context, orderResVO, orderNo));
         } catch (Exception ex) {
             logger.error("订单记录入库异常", ex);
