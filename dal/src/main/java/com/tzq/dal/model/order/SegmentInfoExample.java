@@ -1,6 +1,5 @@
 package com.tzq.dal.model.order;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -353,52 +352,62 @@ public class SegmentInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andDepportEqualTo(BigDecimal value) {
+        public Criteria andDepportEqualTo(String value) {
             addCriterion("DepPort =", value, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andDepportNotEqualTo(BigDecimal value) {
+        public Criteria andDepportNotEqualTo(String value) {
             addCriterion("DepPort <>", value, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andDepportGreaterThan(BigDecimal value) {
+        public Criteria andDepportGreaterThan(String value) {
             addCriterion("DepPort >", value, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andDepportGreaterThanOrEqualTo(BigDecimal value) {
+        public Criteria andDepportGreaterThanOrEqualTo(String value) {
             addCriterion("DepPort >=", value, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andDepportLessThan(BigDecimal value) {
+        public Criteria andDepportLessThan(String value) {
             addCriterion("DepPort <", value, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andDepportLessThanOrEqualTo(BigDecimal value) {
+        public Criteria andDepportLessThanOrEqualTo(String value) {
             addCriterion("DepPort <=", value, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andDepportIn(List<BigDecimal> values) {
+        public Criteria andDepportLike(String value) {
+            addCriterion("DepPort like", value, "depport");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepportNotLike(String value) {
+            addCriterion("DepPort not like", value, "depport");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepportIn(List<String> values) {
             addCriterion("DepPort in", values, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andDepportNotIn(List<BigDecimal> values) {
+        public Criteria andDepportNotIn(List<String> values) {
             addCriterion("DepPort not in", values, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andDepportBetween(BigDecimal value1, BigDecimal value2) {
+        public Criteria andDepportBetween(String value1, String value2) {
             addCriterion("DepPort between", value1, value2, "depport");
             return (Criteria) this;
         }
 
-        public Criteria andDepportNotBetween(BigDecimal value1, BigDecimal value2) {
+        public Criteria andDepportNotBetween(String value1, String value2) {
             addCriterion("DepPort not between", value1, value2, "depport");
             return (Criteria) this;
         }
@@ -413,52 +422,62 @@ public class SegmentInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andArrportEqualTo(BigDecimal value) {
+        public Criteria andArrportEqualTo(String value) {
             addCriterion("ArrPort =", value, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andArrportNotEqualTo(BigDecimal value) {
+        public Criteria andArrportNotEqualTo(String value) {
             addCriterion("ArrPort <>", value, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andArrportGreaterThan(BigDecimal value) {
+        public Criteria andArrportGreaterThan(String value) {
             addCriterion("ArrPort >", value, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andArrportGreaterThanOrEqualTo(BigDecimal value) {
+        public Criteria andArrportGreaterThanOrEqualTo(String value) {
             addCriterion("ArrPort >=", value, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andArrportLessThan(BigDecimal value) {
+        public Criteria andArrportLessThan(String value) {
             addCriterion("ArrPort <", value, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andArrportLessThanOrEqualTo(BigDecimal value) {
+        public Criteria andArrportLessThanOrEqualTo(String value) {
             addCriterion("ArrPort <=", value, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andArrportIn(List<BigDecimal> values) {
+        public Criteria andArrportLike(String value) {
+            addCriterion("ArrPort like", value, "arrport");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrportNotLike(String value) {
+            addCriterion("ArrPort not like", value, "arrport");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrportIn(List<String> values) {
             addCriterion("ArrPort in", values, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andArrportNotIn(List<BigDecimal> values) {
+        public Criteria andArrportNotIn(List<String> values) {
             addCriterion("ArrPort not in", values, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andArrportBetween(BigDecimal value1, BigDecimal value2) {
+        public Criteria andArrportBetween(String value1, String value2) {
             addCriterion("ArrPort between", value1, value2, "arrport");
             return (Criteria) this;
         }
 
-        public Criteria andArrportNotBetween(BigDecimal value1, BigDecimal value2) {
+        public Criteria andArrportNotBetween(String value1, String value2) {
             addCriterion("ArrPort not between", value1, value2, "arrport");
             return (Criteria) this;
         }
@@ -733,52 +752,62 @@ public class SegmentInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andFlightnoEqualTo(BigDecimal value) {
+        public Criteria andFlightnoEqualTo(String value) {
             addCriterion("FlightNo =", value, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andFlightnoNotEqualTo(BigDecimal value) {
+        public Criteria andFlightnoNotEqualTo(String value) {
             addCriterion("FlightNo <>", value, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andFlightnoGreaterThan(BigDecimal value) {
+        public Criteria andFlightnoGreaterThan(String value) {
             addCriterion("FlightNo >", value, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andFlightnoGreaterThanOrEqualTo(BigDecimal value) {
+        public Criteria andFlightnoGreaterThanOrEqualTo(String value) {
             addCriterion("FlightNo >=", value, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andFlightnoLessThan(BigDecimal value) {
+        public Criteria andFlightnoLessThan(String value) {
             addCriterion("FlightNo <", value, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andFlightnoLessThanOrEqualTo(BigDecimal value) {
+        public Criteria andFlightnoLessThanOrEqualTo(String value) {
             addCriterion("FlightNo <=", value, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andFlightnoIn(List<BigDecimal> values) {
+        public Criteria andFlightnoLike(String value) {
+            addCriterion("FlightNo like", value, "flightno");
+            return (Criteria) this;
+        }
+
+        public Criteria andFlightnoNotLike(String value) {
+            addCriterion("FlightNo not like", value, "flightno");
+            return (Criteria) this;
+        }
+
+        public Criteria andFlightnoIn(List<String> values) {
             addCriterion("FlightNo in", values, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andFlightnoNotIn(List<BigDecimal> values) {
+        public Criteria andFlightnoNotIn(List<String> values) {
             addCriterion("FlightNo not in", values, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andFlightnoBetween(BigDecimal value1, BigDecimal value2) {
+        public Criteria andFlightnoBetween(String value1, String value2) {
             addCriterion("FlightNo between", value1, value2, "flightno");
             return (Criteria) this;
         }
 
-        public Criteria andFlightnoNotBetween(BigDecimal value1, BigDecimal value2) {
+        public Criteria andFlightnoNotBetween(String value1, String value2) {
             addCriterion("FlightNo not between", value1, value2, "flightno");
             return (Criteria) this;
         }
@@ -853,52 +882,62 @@ public class SegmentInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCabinEqualTo(BigDecimal value) {
+        public Criteria andCabinEqualTo(String value) {
             addCriterion("Cabin =", value, "cabin");
             return (Criteria) this;
         }
 
-        public Criteria andCabinNotEqualTo(BigDecimal value) {
+        public Criteria andCabinNotEqualTo(String value) {
             addCriterion("Cabin <>", value, "cabin");
             return (Criteria) this;
         }
 
-        public Criteria andCabinGreaterThan(BigDecimal value) {
+        public Criteria andCabinGreaterThan(String value) {
             addCriterion("Cabin >", value, "cabin");
             return (Criteria) this;
         }
 
-        public Criteria andCabinGreaterThanOrEqualTo(BigDecimal value) {
+        public Criteria andCabinGreaterThanOrEqualTo(String value) {
             addCriterion("Cabin >=", value, "cabin");
             return (Criteria) this;
         }
 
-        public Criteria andCabinLessThan(BigDecimal value) {
+        public Criteria andCabinLessThan(String value) {
             addCriterion("Cabin <", value, "cabin");
             return (Criteria) this;
         }
 
-        public Criteria andCabinLessThanOrEqualTo(BigDecimal value) {
+        public Criteria andCabinLessThanOrEqualTo(String value) {
             addCriterion("Cabin <=", value, "cabin");
             return (Criteria) this;
         }
 
-        public Criteria andCabinIn(List<BigDecimal> values) {
+        public Criteria andCabinLike(String value) {
+            addCriterion("Cabin like", value, "cabin");
+            return (Criteria) this;
+        }
+
+        public Criteria andCabinNotLike(String value) {
+            addCriterion("Cabin not like", value, "cabin");
+            return (Criteria) this;
+        }
+
+        public Criteria andCabinIn(List<String> values) {
             addCriterion("Cabin in", values, "cabin");
             return (Criteria) this;
         }
 
-        public Criteria andCabinNotIn(List<BigDecimal> values) {
+        public Criteria andCabinNotIn(List<String> values) {
             addCriterion("Cabin not in", values, "cabin");
             return (Criteria) this;
         }
 
-        public Criteria andCabinBetween(BigDecimal value1, BigDecimal value2) {
+        public Criteria andCabinBetween(String value1, String value2) {
             addCriterion("Cabin between", value1, value2, "cabin");
             return (Criteria) this;
         }
 
-        public Criteria andCabinNotBetween(BigDecimal value1, BigDecimal value2) {
+        public Criteria andCabinNotBetween(String value1, String value2) {
             addCriterion("Cabin not between", value1, value2, "cabin");
             return (Criteria) this;
         }

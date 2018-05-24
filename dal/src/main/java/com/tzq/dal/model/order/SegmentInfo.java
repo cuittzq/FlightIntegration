@@ -1,6 +1,5 @@
 package com.tzq.dal.model.order;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class SegmentInfo {
@@ -10,9 +9,9 @@ public class SegmentInfo {
 
     private Integer segmenttype;
 
-    private BigDecimal depport;
+    private String depport;
 
-    private BigDecimal arrport;
+    private String arrport;
 
     private Date depdate;
 
@@ -22,11 +21,11 @@ public class SegmentInfo {
 
     private String arrterminal;
 
-    private BigDecimal flightno;
+    private String flightno;
 
     private Integer shareflag;
 
-    private BigDecimal cabin;
+    private String cabin;
 
     private String extendvalue;
 
@@ -56,20 +55,20 @@ public class SegmentInfo {
         this.segmenttype = segmenttype;
     }
 
-    public BigDecimal getDepport() {
+    public String getDepport() {
         return depport;
     }
 
-    public void setDepport(BigDecimal depport) {
-        this.depport = depport;
+    public void setDepport(String depport) {
+        this.depport = depport == null ? null : depport.trim();
     }
 
-    public BigDecimal getArrport() {
+    public String getArrport() {
         return arrport;
     }
 
-    public void setArrport(BigDecimal arrport) {
-        this.arrport = arrport;
+    public void setArrport(String arrport) {
+        this.arrport = arrport == null ? null : arrport.trim();
     }
 
     public Date getDepdate() {
@@ -104,12 +103,12 @@ public class SegmentInfo {
         this.arrterminal = arrterminal == null ? null : arrterminal.trim();
     }
 
-    public BigDecimal getFlightno() {
+    public String getFlightno() {
         return flightno;
     }
 
-    public void setFlightno(BigDecimal flightno) {
-        this.flightno = flightno;
+    public void setFlightno(String flightno) {
+        this.flightno = flightno == null ? null : flightno.trim();
     }
 
     public Integer getShareflag() {
@@ -120,12 +119,12 @@ public class SegmentInfo {
         this.shareflag = shareflag;
     }
 
-    public BigDecimal getCabin() {
+    public String getCabin() {
         return cabin;
     }
 
-    public void setCabin(BigDecimal cabin) {
-        this.cabin = cabin;
+    public void setCabin(String cabin) {
+        this.cabin = cabin == null ? null : cabin.trim();
     }
 
     public String getExtendvalue() {
