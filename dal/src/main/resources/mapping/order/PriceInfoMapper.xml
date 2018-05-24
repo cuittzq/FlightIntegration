@@ -90,7 +90,651 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
-    <if test="limitStart != null and limitStart>=0">
+    <if test="limitStart != null and limitStart&gt;=0">
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from prices
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from prices
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tzq.dal.model.order.PriceInfoExample">
+    delete from prices
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tzq.dal.model.order.PriceInfo">
+    insert into prices (ID, OrderNo, SegmentID, 
+      SalesPrice, SalesTax, PriceType, 
+      PurchasePrice, PurchaseTax, PolicyReturnPoint, 
+      SettlementPrice, ExtendValue, ModifyTime
+      )
+    values (#{id,jdbcType=BIGINT}, #{orderno,jdbcType=VARCHAR}, #{segmentid,jdbcType=INTEGER}, 
+      #{salesprice,jdbcType=DECIMAL}, #{salestax,jdbcType=DECIMAL}, #{pricetype,jdbcType=VARCHAR}, 
+      #{purchaseprice,jdbcType=DECIMAL}, #{purchasetax,jdbcType=DECIMAL}, #{policyreturnpoint,jdbcType=DECIMAL}, 
+      #{settlementprice,jdbcType=DECIMAL}, #{extendvalue,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tzq.dal.model.order.PriceInfo">
+    insert into prices
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="orderno != null">
+        OrderNo,
+      </if>
+      <if test="segmentid != null">
+        SegmentID,
+      </if>
+      <if test="salesprice != null">
+        SalesPrice,
+      </if>
+      <if test="salestax != null">
+        SalesTax,
+      </if>
+      <if test="pricetype != null">
+        PriceType,
+      </if>
+      <if test="purchaseprice != null">
+        PurchasePrice,
+      </if>
+      <if test="purchasetax != null">
+        PurchaseTax,
+      </if>
+      <if test="policyreturnpoint != null">
+        PolicyReturnPoint,
+      </if>
+      <if test="settlementprice != null">
+        SettlementPrice,
+      </if>
+      <if test="extendvalue != null">
+        ExtendValue,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderno != null">
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="segmentid != null">
+        #{segmentid,jdbcType=INTEGER},
+      </if>
+      <if test="salesprice != null">
+        #{salesprice,jdbcType=DECIMAL},
+      </if>
+      <if test="salestax != null">
+        #{salestax,jdbcType=DECIMAL},
+      </if>
+      <if test="pricetype != null">
+        #{pricetype,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseprice != null">
+        #{purchaseprice,jdbcType=DECIMAL},
+      </if>
+      <if test="purchasetax != null">
+        #{purchasetax,jdbcType=DECIMAL},
+      </if>
+      <if test="policyreturnpoint != null">
+        #{policyreturnpoint,jdbcType=DECIMAL},
+      </if>
+      <if test="settlementprice != null">
+        #{settlementprice,jdbcType=DECIMAL},
+      </if>
+      <if test="extendvalue != null">
+        #{extendvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tzq.dal.model.order.PriceInfoExample" resultType="java.lang.Long">
+    select count(*) from prices
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update prices
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderno != null">
+        OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.segmentid != null">
+        SegmentID = #{record.segmentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesprice != null">
+        SalesPrice = #{record.salesprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.salestax != null">
+        SalesTax = #{record.salestax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pricetype != null">
+        PriceType = #{record.pricetype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseprice != null">
+        PurchasePrice = #{record.purchaseprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.purchasetax != null">
+        PurchaseTax = #{record.purchasetax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.policyreturnpoint != null">
+        PolicyReturnPoint = #{record.policyreturnpoint,jdbcType=DECIMAL},
+      </if>
+      <if test="record.settlementprice != null">
+        SettlementPrice = #{record.settlementprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.extendvalue != null">
+        ExtendValue = #{record.extendvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null">
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update prices
+    set ID = #{record.id,jdbcType=BIGINT},
+      OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      SegmentID = #{record.segmentid,jdbcType=INTEGER},
+      SalesPrice = #{record.salesprice,jdbcType=DECIMAL},
+      SalesTax = #{record.salestax,jdbcType=DECIMAL},
+      PriceType = #{record.pricetype,jdbcType=VARCHAR},
+      PurchasePrice = #{record.purchaseprice,jdbcType=DECIMAL},
+      PurchaseTax = #{record.purchasetax,jdbcType=DECIMAL},
+      PolicyReturnPoint = #{record.policyreturnpoint,jdbcType=DECIMAL},
+      SettlementPrice = #{record.settlementprice,jdbcType=DECIMAL},
+      ExtendValue = #{record.extendvalue,jdbcType=VARCHAR},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tzq.dal.model.order.PriceInfo">
+    update prices
+    <set>
+      <if test="orderno != null">
+        OrderNo = #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="segmentid != null">
+        SegmentID = #{segmentid,jdbcType=INTEGER},
+      </if>
+      <if test="salesprice != null">
+        SalesPrice = #{salesprice,jdbcType=DECIMAL},
+      </if>
+      <if test="salestax != null">
+        SalesTax = #{salestax,jdbcType=DECIMAL},
+      </if>
+      <if test="pricetype != null">
+        PriceType = #{pricetype,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseprice != null">
+        PurchasePrice = #{purchaseprice,jdbcType=DECIMAL},
+      </if>
+      <if test="purchasetax != null">
+        PurchaseTax = #{purchasetax,jdbcType=DECIMAL},
+      </if>
+      <if test="policyreturnpoint != null">
+        PolicyReturnPoint = #{policyreturnpoint,jdbcType=DECIMAL},
+      </if>
+      <if test="settlementprice != null">
+        SettlementPrice = #{settlementprice,jdbcType=DECIMAL},
+      </if>
+      <if test="extendvalue != null">
+        ExtendValue = #{extendvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tzq.dal.model.order.PriceInfo">
+    update prices
+    set OrderNo = #{orderno,jdbcType=VARCHAR},
+      SegmentID = #{segmentid,jdbcType=INTEGER},
+      SalesPrice = #{salesprice,jdbcType=DECIMAL},
+      SalesTax = #{salestax,jdbcType=DECIMAL},
+      PriceType = #{pricetype,jdbcType=VARCHAR},
+      PurchasePrice = #{purchaseprice,jdbcType=DECIMAL},
+      PurchaseTax = #{purchasetax,jdbcType=DECIMAL},
+      PolicyReturnPoint = #{policyreturnpoint,jdbcType=DECIMAL},
+      SettlementPrice = #{settlementprice,jdbcType=DECIMAL},
+      ExtendValue = #{extendvalue,jdbcType=VARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.tzq.dal.model.order.PriceInfo">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="OrderNo" jdbcType="VARCHAR" property="orderno" />
+    <result column="SegmentID" jdbcType="INTEGER" property="segmentid" />
+    <result column="SalesPrice" jdbcType="DECIMAL" property="salesprice" />
+    <result column="SalesTax" jdbcType="DECIMAL" property="salestax" />
+    <result column="PriceType" jdbcType="VARCHAR" property="pricetype" />
+    <result column="PurchasePrice" jdbcType="DECIMAL" property="purchaseprice" />
+    <result column="PurchaseTax" jdbcType="DECIMAL" property="purchasetax" />
+    <result column="PolicyReturnPoint" jdbcType="DECIMAL" property="policyreturnpoint" />
+    <result column="SettlementPrice" jdbcType="DECIMAL" property="settlementprice" />
+    <result column="ExtendValue" jdbcType="VARCHAR" property="extendvalue" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, OrderNo, SegmentID, SalesPrice, SalesTax, PriceType, PurchasePrice, PurchaseTax, 
+    PolicyReturnPoint, SettlementPrice, ExtendValue, ModifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.tzq.dal.model.order.PriceInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from prices
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart&gt;=0">
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from prices
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from prices
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tzq.dal.model.order.PriceInfoExample">
+    delete from prices
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tzq.dal.model.order.PriceInfo">
+    insert into prices (ID, OrderNo, SegmentID, 
+      SalesPrice, SalesTax, PriceType, 
+      PurchasePrice, PurchaseTax, PolicyReturnPoint, 
+      SettlementPrice, ExtendValue, ModifyTime
+      )
+    values (#{id,jdbcType=BIGINT}, #{orderno,jdbcType=VARCHAR}, #{segmentid,jdbcType=INTEGER}, 
+      #{salesprice,jdbcType=DECIMAL}, #{salestax,jdbcType=DECIMAL}, #{pricetype,jdbcType=VARCHAR}, 
+      #{purchaseprice,jdbcType=DECIMAL}, #{purchasetax,jdbcType=DECIMAL}, #{policyreturnpoint,jdbcType=DECIMAL}, 
+      #{settlementprice,jdbcType=DECIMAL}, #{extendvalue,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tzq.dal.model.order.PriceInfo">
+    insert into prices
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="orderno != null">
+        OrderNo,
+      </if>
+      <if test="segmentid != null">
+        SegmentID,
+      </if>
+      <if test="salesprice != null">
+        SalesPrice,
+      </if>
+      <if test="salestax != null">
+        SalesTax,
+      </if>
+      <if test="pricetype != null">
+        PriceType,
+      </if>
+      <if test="purchaseprice != null">
+        PurchasePrice,
+      </if>
+      <if test="purchasetax != null">
+        PurchaseTax,
+      </if>
+      <if test="policyreturnpoint != null">
+        PolicyReturnPoint,
+      </if>
+      <if test="settlementprice != null">
+        SettlementPrice,
+      </if>
+      <if test="extendvalue != null">
+        ExtendValue,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderno != null">
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="segmentid != null">
+        #{segmentid,jdbcType=INTEGER},
+      </if>
+      <if test="salesprice != null">
+        #{salesprice,jdbcType=DECIMAL},
+      </if>
+      <if test="salestax != null">
+        #{salestax,jdbcType=DECIMAL},
+      </if>
+      <if test="pricetype != null">
+        #{pricetype,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseprice != null">
+        #{purchaseprice,jdbcType=DECIMAL},
+      </if>
+      <if test="purchasetax != null">
+        #{purchasetax,jdbcType=DECIMAL},
+      </if>
+      <if test="policyreturnpoint != null">
+        #{policyreturnpoint,jdbcType=DECIMAL},
+      </if>
+      <if test="settlementprice != null">
+        #{settlementprice,jdbcType=DECIMAL},
+      </if>
+      <if test="extendvalue != null">
+        #{extendvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tzq.dal.model.order.PriceInfoExample" resultType="java.lang.Long">
+    select count(*) from prices
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update prices
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderno != null">
+        OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.segmentid != null">
+        SegmentID = #{record.segmentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesprice != null">
+        SalesPrice = #{record.salesprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.salestax != null">
+        SalesTax = #{record.salestax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pricetype != null">
+        PriceType = #{record.pricetype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseprice != null">
+        PurchasePrice = #{record.purchaseprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.purchasetax != null">
+        PurchaseTax = #{record.purchasetax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.policyreturnpoint != null">
+        PolicyReturnPoint = #{record.policyreturnpoint,jdbcType=DECIMAL},
+      </if>
+      <if test="record.settlementprice != null">
+        SettlementPrice = #{record.settlementprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.extendvalue != null">
+        ExtendValue = #{record.extendvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null">
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update prices
+    set ID = #{record.id,jdbcType=BIGINT},
+      OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      SegmentID = #{record.segmentid,jdbcType=INTEGER},
+      SalesPrice = #{record.salesprice,jdbcType=DECIMAL},
+      SalesTax = #{record.salestax,jdbcType=DECIMAL},
+      PriceType = #{record.pricetype,jdbcType=VARCHAR},
+      PurchasePrice = #{record.purchaseprice,jdbcType=DECIMAL},
+      PurchaseTax = #{record.purchasetax,jdbcType=DECIMAL},
+      PolicyReturnPoint = #{record.policyreturnpoint,jdbcType=DECIMAL},
+      SettlementPrice = #{record.settlementprice,jdbcType=DECIMAL},
+      ExtendValue = #{record.extendvalue,jdbcType=VARCHAR},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tzq.dal.model.order.PriceInfo">
+    update prices
+    <set>
+      <if test="orderno != null">
+        OrderNo = #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="segmentid != null">
+        SegmentID = #{segmentid,jdbcType=INTEGER},
+      </if>
+      <if test="salesprice != null">
+        SalesPrice = #{salesprice,jdbcType=DECIMAL},
+      </if>
+      <if test="salestax != null">
+        SalesTax = #{salestax,jdbcType=DECIMAL},
+      </if>
+      <if test="pricetype != null">
+        PriceType = #{pricetype,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseprice != null">
+        PurchasePrice = #{purchaseprice,jdbcType=DECIMAL},
+      </if>
+      <if test="purchasetax != null">
+        PurchaseTax = #{purchasetax,jdbcType=DECIMAL},
+      </if>
+      <if test="policyreturnpoint != null">
+        PolicyReturnPoint = #{policyreturnpoint,jdbcType=DECIMAL},
+      </if>
+      <if test="settlementprice != null">
+        SettlementPrice = #{settlementprice,jdbcType=DECIMAL},
+      </if>
+      <if test="extendvalue != null">
+        ExtendValue = #{extendvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tzq.dal.model.order.PriceInfo">
+    update prices
+    set OrderNo = #{orderno,jdbcType=VARCHAR},
+      SegmentID = #{segmentid,jdbcType=INTEGER},
+      SalesPrice = #{salesprice,jdbcType=DECIMAL},
+      SalesTax = #{salestax,jdbcType=DECIMAL},
+      PriceType = #{pricetype,jdbcType=VARCHAR},
+      PurchasePrice = #{purchaseprice,jdbcType=DECIMAL},
+      PurchaseTax = #{purchasetax,jdbcType=DECIMAL},
+      PolicyReturnPoint = #{policyreturnpoint,jdbcType=DECIMAL},
+      SettlementPrice = #{settlementprice,jdbcType=DECIMAL},
+      ExtendValue = #{extendvalue,jdbcType=VARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.tzq.dal.model.order.PriceInfo">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="OrderNo" jdbcType="VARCHAR" property="orderno" />
+    <result column="SegmentID" jdbcType="INTEGER" property="segmentid" />
+    <result column="SalesPrice" jdbcType="DECIMAL" property="salesprice" />
+    <result column="SalesTax" jdbcType="DECIMAL" property="salestax" />
+    <result column="PriceType" jdbcType="VARCHAR" property="pricetype" />
+    <result column="PurchasePrice" jdbcType="DECIMAL" property="purchaseprice" />
+    <result column="PurchaseTax" jdbcType="DECIMAL" property="purchasetax" />
+    <result column="PolicyReturnPoint" jdbcType="DECIMAL" property="policyreturnpoint" />
+    <result column="SettlementPrice" jdbcType="DECIMAL" property="settlementprice" />
+    <result column="ExtendValue" jdbcType="VARCHAR" property="extendvalue" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, OrderNo, SegmentID, SalesPrice, SalesTax, PriceType, PurchasePrice, PurchaseTax, 
+    PolicyReturnPoint, SettlementPrice, ExtendValue, ModifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.tzq.dal.model.order.PriceInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from prices
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart&gt;=0">
       limit #{limitStart} , #{limitEnd}
     </if>
   </select>

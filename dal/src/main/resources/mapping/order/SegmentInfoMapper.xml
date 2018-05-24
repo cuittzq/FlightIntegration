@@ -5,6 +5,710 @@
     <id column="ID" jdbcType="BIGINT" property="id" />
     <result column="OrderNo" jdbcType="VARCHAR" property="orderno" />
     <result column="SegmentType" jdbcType="INTEGER" property="segmenttype" />
+    <result column="DepPort" jdbcType="VARCHAR" property="depport" />
+    <result column="ArrPort" jdbcType="VARCHAR" property="arrport" />
+    <result column="DepDate" jdbcType="DATE" property="depdate" />
+    <result column="DepTime" jdbcType="TIMESTAMP" property="deptime" />
+    <result column="DepTerminal" jdbcType="VARCHAR" property="depterminal" />
+    <result column="ArrTerminal" jdbcType="VARCHAR" property="arrterminal" />
+    <result column="FlightNo" jdbcType="VARCHAR" property="flightno" />
+    <result column="ShareFlag" jdbcType="INTEGER" property="shareflag" />
+    <result column="Cabin" jdbcType="VARCHAR" property="cabin" />
+    <result column="ExtendValue" jdbcType="VARCHAR" property="extendvalue" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, OrderNo, SegmentType, DepPort, ArrPort, DepDate, DepTime, DepTerminal, ArrTerminal, 
+    FlightNo, ShareFlag, Cabin, ExtendValue, ModifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.tzq.dal.model.order.SegmentInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from segments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart&gt;=0">
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from segments
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from segments
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tzq.dal.model.order.SegmentInfoExample">
+    delete from segments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tzq.dal.model.order.SegmentInfo">
+    insert into segments (ID, OrderNo, SegmentType, 
+      DepPort, ArrPort, DepDate, 
+      DepTime, DepTerminal, ArrTerminal, 
+      FlightNo, ShareFlag, Cabin, 
+      ExtendValue, ModifyTime)
+    values (#{id,jdbcType=BIGINT}, #{orderno,jdbcType=VARCHAR}, #{segmenttype,jdbcType=INTEGER}, 
+      #{depport,jdbcType=VARCHAR}, #{arrport,jdbcType=VARCHAR}, #{depdate,jdbcType=DATE}, 
+      #{deptime,jdbcType=TIMESTAMP}, #{depterminal,jdbcType=VARCHAR}, #{arrterminal,jdbcType=VARCHAR}, 
+      #{flightno,jdbcType=VARCHAR}, #{shareflag,jdbcType=INTEGER}, #{cabin,jdbcType=VARCHAR}, 
+      #{extendvalue,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tzq.dal.model.order.SegmentInfo">
+    insert into segments
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="orderno != null">
+        OrderNo,
+      </if>
+      <if test="segmenttype != null">
+        SegmentType,
+      </if>
+      <if test="depport != null">
+        DepPort,
+      </if>
+      <if test="arrport != null">
+        ArrPort,
+      </if>
+      <if test="depdate != null">
+        DepDate,
+      </if>
+      <if test="deptime != null">
+        DepTime,
+      </if>
+      <if test="depterminal != null">
+        DepTerminal,
+      </if>
+      <if test="arrterminal != null">
+        ArrTerminal,
+      </if>
+      <if test="flightno != null">
+        FlightNo,
+      </if>
+      <if test="shareflag != null">
+        ShareFlag,
+      </if>
+      <if test="cabin != null">
+        Cabin,
+      </if>
+      <if test="extendvalue != null">
+        ExtendValue,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderno != null">
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="segmenttype != null">
+        #{segmenttype,jdbcType=INTEGER},
+      </if>
+      <if test="depport != null">
+        #{depport,jdbcType=VARCHAR},
+      </if>
+      <if test="arrport != null">
+        #{arrport,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        #{depdate,jdbcType=DATE},
+      </if>
+      <if test="deptime != null">
+        #{deptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="depterminal != null">
+        #{depterminal,jdbcType=VARCHAR},
+      </if>
+      <if test="arrterminal != null">
+        #{arrterminal,jdbcType=VARCHAR},
+      </if>
+      <if test="flightno != null">
+        #{flightno,jdbcType=VARCHAR},
+      </if>
+      <if test="shareflag != null">
+        #{shareflag,jdbcType=INTEGER},
+      </if>
+      <if test="cabin != null">
+        #{cabin,jdbcType=VARCHAR},
+      </if>
+      <if test="extendvalue != null">
+        #{extendvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tzq.dal.model.order.SegmentInfoExample" resultType="java.lang.Long">
+    select count(*) from segments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update segments
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderno != null">
+        OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.segmenttype != null">
+        SegmentType = #{record.segmenttype,jdbcType=INTEGER},
+      </if>
+      <if test="record.depport != null">
+        DepPort = #{record.depport,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrport != null">
+        ArrPort = #{record.arrport,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depdate != null">
+        DepDate = #{record.depdate,jdbcType=DATE},
+      </if>
+      <if test="record.deptime != null">
+        DepTime = #{record.deptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.depterminal != null">
+        DepTerminal = #{record.depterminal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrterminal != null">
+        ArrTerminal = #{record.arrterminal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flightno != null">
+        FlightNo = #{record.flightno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shareflag != null">
+        ShareFlag = #{record.shareflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.cabin != null">
+        Cabin = #{record.cabin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extendvalue != null">
+        ExtendValue = #{record.extendvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null">
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update segments
+    set ID = #{record.id,jdbcType=BIGINT},
+      OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      SegmentType = #{record.segmenttype,jdbcType=INTEGER},
+      DepPort = #{record.depport,jdbcType=VARCHAR},
+      ArrPort = #{record.arrport,jdbcType=VARCHAR},
+      DepDate = #{record.depdate,jdbcType=DATE},
+      DepTime = #{record.deptime,jdbcType=TIMESTAMP},
+      DepTerminal = #{record.depterminal,jdbcType=VARCHAR},
+      ArrTerminal = #{record.arrterminal,jdbcType=VARCHAR},
+      FlightNo = #{record.flightno,jdbcType=VARCHAR},
+      ShareFlag = #{record.shareflag,jdbcType=INTEGER},
+      Cabin = #{record.cabin,jdbcType=VARCHAR},
+      ExtendValue = #{record.extendvalue,jdbcType=VARCHAR},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tzq.dal.model.order.SegmentInfo">
+    update segments
+    <set>
+      <if test="orderno != null">
+        OrderNo = #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="segmenttype != null">
+        SegmentType = #{segmenttype,jdbcType=INTEGER},
+      </if>
+      <if test="depport != null">
+        DepPort = #{depport,jdbcType=VARCHAR},
+      </if>
+      <if test="arrport != null">
+        ArrPort = #{arrport,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        DepDate = #{depdate,jdbcType=DATE},
+      </if>
+      <if test="deptime != null">
+        DepTime = #{deptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="depterminal != null">
+        DepTerminal = #{depterminal,jdbcType=VARCHAR},
+      </if>
+      <if test="arrterminal != null">
+        ArrTerminal = #{arrterminal,jdbcType=VARCHAR},
+      </if>
+      <if test="flightno != null">
+        FlightNo = #{flightno,jdbcType=VARCHAR},
+      </if>
+      <if test="shareflag != null">
+        ShareFlag = #{shareflag,jdbcType=INTEGER},
+      </if>
+      <if test="cabin != null">
+        Cabin = #{cabin,jdbcType=VARCHAR},
+      </if>
+      <if test="extendvalue != null">
+        ExtendValue = #{extendvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tzq.dal.model.order.SegmentInfo">
+    update segments
+    set OrderNo = #{orderno,jdbcType=VARCHAR},
+      SegmentType = #{segmenttype,jdbcType=INTEGER},
+      DepPort = #{depport,jdbcType=VARCHAR},
+      ArrPort = #{arrport,jdbcType=VARCHAR},
+      DepDate = #{depdate,jdbcType=DATE},
+      DepTime = #{deptime,jdbcType=TIMESTAMP},
+      DepTerminal = #{depterminal,jdbcType=VARCHAR},
+      ArrTerminal = #{arrterminal,jdbcType=VARCHAR},
+      FlightNo = #{flightno,jdbcType=VARCHAR},
+      ShareFlag = #{shareflag,jdbcType=INTEGER},
+      Cabin = #{cabin,jdbcType=VARCHAR},
+      ExtendValue = #{extendvalue,jdbcType=VARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.tzq.dal.model.order.SegmentInfo">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="OrderNo" jdbcType="VARCHAR" property="orderno" />
+    <result column="SegmentType" jdbcType="INTEGER" property="segmenttype" />
+    <result column="DepPort" jdbcType="VARCHAR" property="depport" />
+    <result column="ArrPort" jdbcType="VARCHAR" property="arrport" />
+    <result column="DepDate" jdbcType="DATE" property="depdate" />
+    <result column="DepTime" jdbcType="TIMESTAMP" property="deptime" />
+    <result column="DepTerminal" jdbcType="VARCHAR" property="depterminal" />
+    <result column="ArrTerminal" jdbcType="VARCHAR" property="arrterminal" />
+    <result column="FlightNo" jdbcType="DECIMAL" property="flightno" />
+    <result column="ShareFlag" jdbcType="INTEGER" property="shareflag" />
+    <result column="Cabin" jdbcType="DECIMAL" property="cabin" />
+    <result column="ExtendValue" jdbcType="VARCHAR" property="extendvalue" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, OrderNo, SegmentType, DepPort, ArrPort, DepDate, DepTime, DepTerminal, ArrTerminal, 
+    FlightNo, ShareFlag, Cabin, ExtendValue, ModifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.tzq.dal.model.order.SegmentInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from segments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart&gt;=0">
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from segments
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from segments
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tzq.dal.model.order.SegmentInfoExample">
+    delete from segments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tzq.dal.model.order.SegmentInfo">
+    insert into segments (ID, OrderNo, SegmentType, 
+      DepPort, ArrPort, DepDate, 
+      DepTime, DepTerminal, ArrTerminal, 
+      FlightNo, ShareFlag, Cabin, 
+      ExtendValue, ModifyTime)
+    values (#{id,jdbcType=BIGINT}, #{orderno,jdbcType=VARCHAR}, #{segmenttype,jdbcType=INTEGER}, 
+      #{depport,jdbcType=VARCHAR}, #{arrport,jdbcType=VARCHAR}, #{depdate,jdbcType=DATE}, 
+      #{deptime,jdbcType=TIMESTAMP}, #{depterminal,jdbcType=VARCHAR}, #{arrterminal,jdbcType=VARCHAR}, 
+      #{flightno,jdbcType=DECIMAL}, #{shareflag,jdbcType=INTEGER}, #{cabin,jdbcType=DECIMAL}, 
+      #{extendvalue,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tzq.dal.model.order.SegmentInfo">
+    insert into segments
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="orderno != null">
+        OrderNo,
+      </if>
+      <if test="segmenttype != null">
+        SegmentType,
+      </if>
+      <if test="depport != null">
+        DepPort,
+      </if>
+      <if test="arrport != null">
+        ArrPort,
+      </if>
+      <if test="depdate != null">
+        DepDate,
+      </if>
+      <if test="deptime != null">
+        DepTime,
+      </if>
+      <if test="depterminal != null">
+        DepTerminal,
+      </if>
+      <if test="arrterminal != null">
+        ArrTerminal,
+      </if>
+      <if test="flightno != null">
+        FlightNo,
+      </if>
+      <if test="shareflag != null">
+        ShareFlag,
+      </if>
+      <if test="cabin != null">
+        Cabin,
+      </if>
+      <if test="extendvalue != null">
+        ExtendValue,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderno != null">
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="segmenttype != null">
+        #{segmenttype,jdbcType=INTEGER},
+      </if>
+      <if test="depport != null">
+        #{depport,jdbcType=VARCHAR},
+      </if>
+      <if test="arrport != null">
+        #{arrport,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        #{depdate,jdbcType=DATE},
+      </if>
+      <if test="deptime != null">
+        #{deptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="depterminal != null">
+        #{depterminal,jdbcType=VARCHAR},
+      </if>
+      <if test="arrterminal != null">
+        #{arrterminal,jdbcType=VARCHAR},
+      </if>
+      <if test="flightno != null">
+        #{flightno,jdbcType=DECIMAL},
+      </if>
+      <if test="shareflag != null">
+        #{shareflag,jdbcType=INTEGER},
+      </if>
+      <if test="cabin != null">
+        #{cabin,jdbcType=DECIMAL},
+      </if>
+      <if test="extendvalue != null">
+        #{extendvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tzq.dal.model.order.SegmentInfoExample" resultType="java.lang.Long">
+    select count(*) from segments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update segments
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderno != null">
+        OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.segmenttype != null">
+        SegmentType = #{record.segmenttype,jdbcType=INTEGER},
+      </if>
+      <if test="record.depport != null">
+        DepPort = #{record.depport,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrport != null">
+        ArrPort = #{record.arrport,jdbcType=VARCHAR},
+      </if>
+      <if test="record.depdate != null">
+        DepDate = #{record.depdate,jdbcType=DATE},
+      </if>
+      <if test="record.deptime != null">
+        DepTime = #{record.deptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.depterminal != null">
+        DepTerminal = #{record.depterminal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrterminal != null">
+        ArrTerminal = #{record.arrterminal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flightno != null">
+        FlightNo = #{record.flightno,jdbcType=DECIMAL},
+      </if>
+      <if test="record.shareflag != null">
+        ShareFlag = #{record.shareflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.cabin != null">
+        Cabin = #{record.cabin,jdbcType=DECIMAL},
+      </if>
+      <if test="record.extendvalue != null">
+        ExtendValue = #{record.extendvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null">
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update segments
+    set ID = #{record.id,jdbcType=BIGINT},
+      OrderNo = #{record.orderno,jdbcType=VARCHAR},
+      SegmentType = #{record.segmenttype,jdbcType=INTEGER},
+      DepPort = #{record.depport,jdbcType=VARCHAR},
+      ArrPort = #{record.arrport,jdbcType=VARCHAR},
+      DepDate = #{record.depdate,jdbcType=DATE},
+      DepTime = #{record.deptime,jdbcType=TIMESTAMP},
+      DepTerminal = #{record.depterminal,jdbcType=VARCHAR},
+      ArrTerminal = #{record.arrterminal,jdbcType=VARCHAR},
+      FlightNo = #{record.flightno,jdbcType=DECIMAL},
+      ShareFlag = #{record.shareflag,jdbcType=INTEGER},
+      Cabin = #{record.cabin,jdbcType=DECIMAL},
+      ExtendValue = #{record.extendvalue,jdbcType=VARCHAR},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tzq.dal.model.order.SegmentInfo">
+    update segments
+    <set>
+      <if test="orderno != null">
+        OrderNo = #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="segmenttype != null">
+        SegmentType = #{segmenttype,jdbcType=INTEGER},
+      </if>
+      <if test="depport != null">
+        DepPort = #{depport,jdbcType=VARCHAR},
+      </if>
+      <if test="arrport != null">
+        ArrPort = #{arrport,jdbcType=VARCHAR},
+      </if>
+      <if test="depdate != null">
+        DepDate = #{depdate,jdbcType=DATE},
+      </if>
+      <if test="deptime != null">
+        DepTime = #{deptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="depterminal != null">
+        DepTerminal = #{depterminal,jdbcType=VARCHAR},
+      </if>
+      <if test="arrterminal != null">
+        ArrTerminal = #{arrterminal,jdbcType=VARCHAR},
+      </if>
+      <if test="flightno != null">
+        FlightNo = #{flightno,jdbcType=DECIMAL},
+      </if>
+      <if test="shareflag != null">
+        ShareFlag = #{shareflag,jdbcType=INTEGER},
+      </if>
+      <if test="cabin != null">
+        Cabin = #{cabin,jdbcType=DECIMAL},
+      </if>
+      <if test="extendvalue != null">
+        ExtendValue = #{extendvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tzq.dal.model.order.SegmentInfo">
+    update segments
+    set OrderNo = #{orderno,jdbcType=VARCHAR},
+      SegmentType = #{segmenttype,jdbcType=INTEGER},
+      DepPort = #{depport,jdbcType=VARCHAR},
+      ArrPort = #{arrport,jdbcType=VARCHAR},
+      DepDate = #{depdate,jdbcType=DATE},
+      DepTime = #{deptime,jdbcType=TIMESTAMP},
+      DepTerminal = #{depterminal,jdbcType=VARCHAR},
+      ArrTerminal = #{arrterminal,jdbcType=VARCHAR},
+      FlightNo = #{flightno,jdbcType=DECIMAL},
+      ShareFlag = #{shareflag,jdbcType=INTEGER},
+      Cabin = #{cabin,jdbcType=DECIMAL},
+      ExtendValue = #{extendvalue,jdbcType=VARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.tzq.dal.model.order.SegmentInfo">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="OrderNo" jdbcType="VARCHAR" property="orderno" />
+    <result column="SegmentType" jdbcType="INTEGER" property="segmenttype" />
     <result column="DepPort" jdbcType="DECIMAL" property="depport" />
     <result column="ArrPort" jdbcType="DECIMAL" property="arrport" />
     <result column="DepDate" jdbcType="DATE" property="depdate" />
@@ -92,7 +796,7 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
-    <if test="limitStart != null and limitStart>=0">
+    <if test="limitStart != null and limitStart&gt;=0">
       limit #{limitStart} , #{limitEnd}
     </if>
   </select>
