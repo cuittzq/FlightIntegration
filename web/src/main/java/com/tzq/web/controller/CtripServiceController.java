@@ -101,6 +101,13 @@ public class CtripServiceController {
             createOrderRes.setStatus(StatusEnum.PARAM_ERROR.getCode());
             createOrderRes.setMsg("行程类型错误 1：单程2：往返");
 
+            return createOrderRes;
+        }
+
+        if((createOrderReq.getAdultNumber() + createOrderReq.getChildNumber() + createOrderReq.getInfantNumber()) ==0)
+        {
+            createOrderRes.setStatus(StatusEnum.PARAM_ERROR.getCode());
+            createOrderRes.setMsg("乘客数量非法");
 
             return createOrderRes;
         }

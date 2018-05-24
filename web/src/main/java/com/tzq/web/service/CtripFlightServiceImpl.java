@@ -146,23 +146,28 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         verifyReqVO.getRouting().setFromSegments(flightRoutingsVOMapper.segmentDTO2VOs(req.getRoutings().getFromSegments()));
         verifyReqVO.getRouting().setRetSegments(flightRoutingsVOMapper.segmentDTO2VOs(req.getRoutings().getRetSegments()));
         context.setT(verifyReqVO);
+        try {
+            SingleResult<CtripVerifyResVO> singleResult = otaVerifyFlightService.verifyFlight(context);
 
-        SingleResult<CtripVerifyResVO> singleResult = otaVerifyFlightService.verifyFlight(context);
-
-        if (!singleResult.isSuccess() || singleResult.getData() == null) {
-            response.setMsg(singleResult.getErrorMessage());
-            response.setStatus(StatusEnum.INNER_ERROR.getCode());
-            return response;
+            if (!singleResult.isSuccess() || singleResult.getData() == null) {
+                response.setMsg(singleResult.getErrorMessage());
+                response.setStatus(StatusEnum.INNER_ERROR.getCode());
+                return response;
+            }
+            response.setStatus(StatusEnum.SUCCEED.getCode());
+            response.setMsg("success");
+            response.setSessionId("");
+            response.setMaxSeats(singleResult.getData().getMaxSeats());
+            response.setRule(ctripVerifyVOMapper.rulesVO2DTO(singleResult.getData().getRule()));
+            response.setRouting(ctripVerifyVOMapper.flightRoutingsVO2DTO(singleResult.getData().getRouting()));
+            response.getRouting().setFromSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getFromSegments()));
+            response.getRouting().setRetSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getRetSegments()));
         }
-        response.setStatus(StatusEnum.SUCCEED.getCode());
-        response.setMsg("success");
-        response.setSessionId("");
-        response.setMaxSeats(singleResult.getData().getMaxSeats());
-        response.setRule(ctripVerifyVOMapper.rulesVO2DTO(singleResult.getData().getRule()));
-        response.setRouting(ctripVerifyVOMapper.flightRoutingsVO2DTO(singleResult.getData().getRouting()));
-        response.getRouting().setFromSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getFromSegments()));
-        response.getRouting().setRetSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getRetSegments()));
-
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            logger.error("调用验价接口异常", MethodEnum.CREATEORDER, ex);
+        }
         return response;
     }
 

@@ -7,8 +7,6 @@ import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.context.SingleResult;
 import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
 import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
-import com.tzq.commons.model.ctrip.search.FlightRouteVO;
-import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
 import com.tzq.commons.utils.DateUtils;
 import com.tzq.dal.model.log.InterfaceRequestLog;
 import com.tzq.dal.service.InterfaceRequestLogService;
@@ -26,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.concurrent.Callable;
 
 /**
  * Created by cl24957 on 2018/5/21.

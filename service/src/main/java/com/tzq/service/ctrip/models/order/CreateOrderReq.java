@@ -17,6 +17,42 @@ public class CreateOrderReq extends BaseRequest {
     private List<PassengerDTO>             passengers;
     private List<PassengerbaggagesDTO>     passengerbaggages;
     private List<CtripRefRevServiceFeeDTO> ctripRefRevServiceFee;
+    private int adultNumber;
+    private int childNumber;
+    private int infantNumber;
+    private int maxSeats;
+
+    public int getAdultNumber() {
+        return adultNumber;
+    }
+
+    public void setAdultNumber(int adultNumber) {
+        this.adultNumber = adultNumber;
+    }
+
+    public int getChildNumber() {
+        return childNumber;
+    }
+
+    public void setChildNumber(int childNumber) {
+        this.childNumber = childNumber;
+    }
+
+    public int getInfantNumber() {
+        return infantNumber;
+    }
+
+    public void setInfantNumber(int infantNumber) {
+        this.infantNumber = infantNumber;
+    }
+
+    public int getMaxSeats() {
+        return maxSeats;
+    }
+
+    public void setMaxSeats(int maxSeats) {
+        this.maxSeats = maxSeats;
+    }
 
     public FlightRoutingsDTO getRoutings() {
         return routings;

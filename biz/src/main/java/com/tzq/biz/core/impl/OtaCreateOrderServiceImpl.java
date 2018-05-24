@@ -1,27 +1,36 @@
 package com.tzq.biz.core.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.tzq.biz.aop.InterfaceAccess;
 import com.tzq.biz.constant.OtaConstants;
 import com.tzq.biz.core.OtaCreateOrderService;
 import com.tzq.biz.proxy.PurchaseProxy;
+import com.tzq.biz.utils.DateConvert;
 import com.tzq.biz.utils.OrderNoUtils;
 import com.tzq.commons.Exception.CommonExcetpionConstant;
 import com.tzq.commons.Exception.ServiceAbstractException;
 import com.tzq.commons.enums.PurchaseEnum;
+import com.tzq.commons.enums.SegmentType;
+import com.tzq.commons.enums.TripTypeEnum;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.context.SingleResult;
 import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
 import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
 import com.tzq.commons.model.ctrip.order.PassengerVO;
+import com.tzq.commons.model.ctrip.search.SegmentVO;
 import com.tzq.commons.utils.DateUtils;
 import com.tzq.dal.model.log.OrderLog;
 import com.tzq.dal.model.order.OrderInfo;
 import com.tzq.dal.model.order.PassengerInfo;
+import com.tzq.dal.model.order.PriceInfo;
+import com.tzq.dal.model.order.SegmentInfo;
 import com.tzq.dal.service.OrderInfoService;
 import com.tzq.dal.service.OrderLogService;
 import com.tzq.dal.service.PassengerInfoService;
+import com.tzq.dal.service.PriceInfoService;
+import com.tzq.dal.service.SegmentInfoService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +64,12 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
     @Resource
     private PassengerInfoService passengerInfoService;
 
+    @Resource
+    private SegmentInfoService segmentInfoService;
+
+    @Resource
+    private PriceInfoService priceInfoService;
+
     /**
      *
      */
@@ -74,6 +89,12 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
         context.setPurchaseEnum(PurchaseEnum.getEnumByCode(purchaseEnum));
         SingleResult<CreateOrderResVO> response = null;
         try {
+            //1.获取验价规则
+
+
+            //2.验价
+
+            //3.下单
             CreateOrderResVO verifyResVO = purchaseProxy.createOrder(context);
             if (verifyResVO == null) {
                 response = new SingleResult<>(verifyResVO, false, CommonExcetpionConstant.SYSTEM_EXCEPTION_CODE, "无数据");
@@ -89,6 +110,7 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
 
             logger.error(ex.getMessage(), ex);
         } finally {
+            //4.落库
             dbOperator(context, response.getData());
         }
 
@@ -103,7 +125,7 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
     public void dbOperator(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO) {
         try {
             PassengerInfo passengerInfo = new PassengerInfo();
-            OrderLog      orderLog      = new OrderLog();
+            OrderLog orderLog = new OrderLog();
 
             String orderNo = OrderNoUtils.Builder.newBuilder()
                     .setPurchasePlatName(String.valueOf(context.getOta().getId()))
@@ -121,9 +143,80 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
 
             /**03.插入订单日志表**/
             // orderLogService.insert(getOrderInfoLog(context, orderResVO, orderNo));
+
+
+            /**04.插入航段表**/
+            List<SegmentInfo> segmentInfos = getSegments(context, orderResVO, orderNo);
+            for(SegmentInfo segmentInfo:segmentInfos) {
+                segmentInfoService.insert(segmentInfo);
+            }
+
+            /**05.插入价格表**/
+            List<PriceInfo> priceInfos = getPriceInfo(context, orderResVO, orderNo);
+            for(PriceInfo priceInfo:priceInfos)
+            {
+                priceInfoService.insert(priceInfo);
+            }
+
         } catch (Exception ex) {
-            logger.error("订单记录入库s异常", ex);
+            logger.error("订单记录入库异常", ex);
         }
+    }
+
+    private List<PriceInfo> getPriceInfo(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, String orderNo) {
+    }
+
+    private List<SegmentInfo> getSegments(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, String orderNo) {
+        List<SegmentInfo> segmentInfos = Lists.newArrayList();
+
+        // 去程航段
+        if(context.getT().getRoutings().getFromSegments() != null && context.getT().getRoutings().getFromSegments().size()>0)
+        {
+            for(SegmentVO seg:context.getT().getRoutings().getFromSegments())
+            {
+                segmentInfos.add(segmentChange(seg,orderNo,SegmentType.GO));
+            }
+        }
+
+        // 返程航班
+        for(context.getT().getRoutings().getRetSegments() != null && context.getT().getRoutings().getRetSegments().size()>0)
+        {
+            for(SegmentVO seg:context.getT().getRoutings().getRetSegments())
+            {
+                segmentInfos.add(segmentChange(seg,orderNo,SegmentType.BACK));
+            }
+        }
+
+        return segmentInfos;
+    }
+
+    private SegmentInfo segmentChange(SegmentVO seg,String orderNo,SegmentType segmentType )
+    {
+        SegmentInfo segmentInfo = new SegmentInfo();
+        segmentInfo.setArrport(stopDBStrNull(seg.getArrAirport()));
+        segmentInfo.setArrterminal(stopDBStrNull(seg.getArrTerminal()));
+        segmentInfo.setCabin(stopDBStrNull(seg.getCabin()));
+        try {
+            segmentInfo.setDepdate(DateConvert.getDateFromStrByFormat(seg.getDepTime(),DateConvert.LCC_VERIFY_DATE_FORMAT));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        segmentInfo.setDepport(stopDBStrNull(seg.getDepAirport()));
+        segmentInfo.setDepterminal(stopDBStrNull(seg.getDepTerminal()));
+        try {
+            segmentInfo.setDeptime(DateConvert.getDateFromStrByFormat(seg.getDepTime(),DateConvert.LCC_VERIFY_DATE_FORMAT));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        segmentInfo.setExtendvalue(StringUtils.EMPTY);
+        segmentInfo.setFlightno(stopDBStrNull(seg.getFlightNumber()));
+        segmentInfo.setOrderno(orderNo);
+        segmentInfo.setModifytime(new Date());
+        segmentInfo.setArrterminal(stopDBStrNull(seg.getArrTerminal()));
+        segmentInfo.setSegmenttype(segmentType.getCode());
+        segmentInfo.setShareflag(seg.isCodeShare()?1:0);
+
+        return segmentInfo;
     }
 
     private OrderLog getOrderInfoLog(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, String orderNo) {
