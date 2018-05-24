@@ -13,7 +13,6 @@ import com.tzq.commons.Exception.CommonExcetpionConstant;
 import com.tzq.commons.Exception.ServiceAbstractException;
 import com.tzq.commons.enums.PurchaseEnum;
 import com.tzq.commons.enums.SegmentType;
-import com.tzq.commons.enums.TripTypeEnum;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.context.SingleResult;
 import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
@@ -132,7 +131,8 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
                     .setSalePlatName(String.valueOf(context.getPurchaseEnum().getId())).getOrderNum();
 
             /**01.插入订单info**/
-            orderInfoService.insert(getOrerInfo(context, orderResVO, orderNo));
+            OrderInfo orderInfo = getOrerInfo(context, orderResVO, orderNo);
+            orderInfoService.insert(orderInfo);
             // OrderInfo orderInfo = getOrerInfo(context, orderResVO, orderNo);
 
             /**02.插入乘客信息**/
@@ -147,64 +147,77 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
 
             /**04.插入航段表**/
             List<SegmentInfo> segmentInfos = getSegments(context, orderResVO, orderNo);
-            for(SegmentInfo segmentInfo:segmentInfos) {
+            for (SegmentInfo segmentInfo : segmentInfos) {
                 segmentInfoService.insert(segmentInfo);
             }
 
             /**05.插入价格表**/
-            List<PriceInfo> priceInfos = getPriceInfo(context, orderResVO, orderNo);
-            for(PriceInfo priceInfo:priceInfos)
-            {
-                priceInfoService.insert(priceInfo);
-            }
+            priceInfoService.insert(getPriceInfo(orderInfo, orderNo));
 
         } catch (Exception ex) {
             logger.error("订单记录入库异常", ex);
         }
     }
 
-    private List<PriceInfo> getPriceInfo(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, String orderNo) {
+    private PriceInfo getPriceInfo(OrderInfo orderInfo, String orderNo) {
+        PriceInfo priceInfo = new PriceInfo();
+        priceInfo.setOrderno(orderNo);
+        priceInfo.setPolicyreturnpoint(new BigDecimal(0));
+
+        priceInfo.setPurchaseprice(orderInfo.getTotalpurchaseprice());
+        priceInfo.setPurchasetax(orderInfo.getTotalpurchasetax());
+        priceInfo.setPricetype(StringUtils.EMPTY);
+        priceInfo.setExtendvalue(StringUtils.EMPTY);
+        priceInfo.setSalesprice(orderInfo.getTotalsalesprice());
+        priceInfo.setSalestax(orderInfo.getTotalsalestax());
+        priceInfo.setSegmentid(1);
+        priceInfo.setSettlementprice(orderInfo.getTotalpurchaseprice());
+
+        return priceInfo;
     }
 
     private List<SegmentInfo> getSegments(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, String orderNo) {
         List<SegmentInfo> segmentInfos = Lists.newArrayList();
 
         // 去程航段
-        if(context.getT().getRoutings().getFromSegments() != null && context.getT().getRoutings().getFromSegments().size()>0)
-        {
-            for(SegmentVO seg:context.getT().getRoutings().getFromSegments())
-            {
-                segmentInfos.add(segmentChange(seg,orderNo,SegmentType.GO));
+        if (context.getT().getRoutings().getFromSegments() != null && context.getT().getRoutings().getFromSegments().size() > 0) {
+            for (SegmentVO seg : context.getT().getRoutings().getFromSegments()) {
+                segmentInfos.add(segmentChange(seg, orderNo, SegmentType.GO));
             }
         }
 
         // 返程航班
-        for(context.getT().getRoutings().getRetSegments() != null && context.getT().getRoutings().getRetSegments().size()>0)
-        {
-            for(SegmentVO seg:context.getT().getRoutings().getRetSegments())
-            {
-                segmentInfos.add(segmentChange(seg,orderNo,SegmentType.BACK));
+        if (context.getT().getRoutings().getRetSegments() != null && context.getT().getRoutings().getRetSegments().size() > 0) {
+            for (SegmentVO seg : context.getT().getRoutings().getRetSegments()) {
+                segmentInfos.add(segmentChange(seg, orderNo, SegmentType.BACK));
             }
         }
 
         return segmentInfos;
     }
 
-    private SegmentInfo segmentChange(SegmentVO seg,String orderNo,SegmentType segmentType )
-    {
+    /**
+     * 航段model转换
+     *
+     * @param seg
+     * @param orderNo
+     * @param segmentType
+     * @return
+     */
+    private SegmentInfo segmentChange(SegmentVO seg, String orderNo, SegmentType segmentType) {
         SegmentInfo segmentInfo = new SegmentInfo();
         segmentInfo.setArrport(stopDBStrNull(seg.getArrAirport()));
         segmentInfo.setArrterminal(stopDBStrNull(seg.getArrTerminal()));
         segmentInfo.setCabin(stopDBStrNull(seg.getCabin()));
         try {
-            segmentInfo.setDepdate(DateConvert.getDateFromStrByFormat(seg.getDepTime(),DateConvert.LCC_VERIFY_DATE_FORMAT));
+            segmentInfo.setDepdate(DateConvert.getDateFromStrByFormat(seg.getDepTime(), DateConvert.LCC_VERIFY_DATE_FORMAT));
         } catch (ParseException e) {
             e.printStackTrace();
         }
         segmentInfo.setDepport(stopDBStrNull(seg.getDepAirport()));
         segmentInfo.setDepterminal(stopDBStrNull(seg.getDepTerminal()));
         try {
-            segmentInfo.setDeptime(DateConvert.getDateFromStrByFormat(seg.getDepTime(),DateConvert.LCC_VERIFY_DATE_FORMAT));
+            segmentInfo.setDeptime(DateConvert.getDateFromStrByFormat(seg.getDepTime(), DateConvert.LCC_VERIFY_DATE_FORMAT));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -214,7 +227,7 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
         segmentInfo.setModifytime(new Date());
         segmentInfo.setArrterminal(stopDBStrNull(seg.getArrTerminal()));
         segmentInfo.setSegmenttype(segmentType.getCode());
-        segmentInfo.setShareflag(seg.isCodeShare()?1:0);
+        segmentInfo.setShareflag(seg.isCodeShare() ? 1 : 0);
 
         return segmentInfo;
     }
