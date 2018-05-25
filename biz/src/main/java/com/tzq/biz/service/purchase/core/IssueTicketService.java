@@ -7,9 +7,9 @@ import com.tzq.commons.model.ctrip.issueticket.IssueTicketResVO;
 /**
  * 功能描述
  *
- * @Author tzq24955
+ * @Author TanZhiqiang
  * @Created on 2018/5/21
- * LY.com Inc.
+ * LTC.COM.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
 public interface IssueTicketService {

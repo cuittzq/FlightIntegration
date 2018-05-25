@@ -7,9 +7,9 @@ import java.io.Serializable;
 /**
  * 实体ID领域模型，所有业务领域模型应实现该接口，提供ID的获取和设置功能
  *
- * @Author tzq24955
+ * @Author TanZhiqiang
  * @Created on 2018/5/8
- * LY.com Inc.
+ * LTC.COM.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
 public interface Identifiable<ID extends Serializable> extends Serializable {

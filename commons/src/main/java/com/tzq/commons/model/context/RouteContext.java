@@ -1,5 +1,5 @@
 /**
- * LY.com Inc.
+ * LTC.COM.
  * Copyright (c) 2004-2016 All Rights Reserved.
  */
 package com.tzq.commons.model.context;
