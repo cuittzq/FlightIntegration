@@ -1,9 +1,9 @@
-package com.tzq.dal.service.impl;
+package com.tzq.dal.service.log.impl;
 
 import com.tzq.dal.mapper.log.RuleMatchingLogMapper;
 import com.tzq.dal.model.log.RuleMatchingLog;
 import com.tzq.dal.model.log.RuleMatchingLogExample;
-import com.tzq.dal.service.RuleMatchingLogService;
+import com.tzq.dal.service.log.RuleMatchingLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

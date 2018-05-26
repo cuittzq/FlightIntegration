@@ -1,4 +1,4 @@
-package com.tzq.dal.service;
+package com.tzq.dal.service.log;
 
 import com.tzq.dal.model.log.OrderLog;
 import com.tzq.dal.model.log.OrderLogExample;

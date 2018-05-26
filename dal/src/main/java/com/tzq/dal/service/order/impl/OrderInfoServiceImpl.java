@@ -1,9 +1,9 @@
-package com.tzq.dal.service.impl;
+package com.tzq.dal.service.order.impl;
 
 import com.tzq.dal.mapper.order.OrderInfoMapper;
 import com.tzq.dal.model.order.OrderInfo;
 import com.tzq.dal.model.order.OrderInfoExample;
-import com.tzq.dal.service.OrderInfoService;
+import com.tzq.dal.service.order.OrderInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

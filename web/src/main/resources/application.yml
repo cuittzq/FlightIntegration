@@ -29,6 +29,14 @@ orderdb:
     password: 1989513bs
     mappinglocation: classpath*:mapping/order/*.xml
 
+platsettingdb:
+  datasource:
+    driver-class-name:  com.mysql.jdbc.Driver
+    url: jdbc:mysql://123.56.139.13:3306/gj_platsetting
+    username: root
+    password: 1989513bs
+    mappinglocation: classpath*:mapping/platsetting/*.xml
+
 
 spring:
     datasource:
@@ -47,4 +55,11 @@ spring:
         testOnReturn: false
         poolPreparedStatements: true
         maxOpenPreparedStatements: 20
+
+    cache:
+      #缓存名称
+      cache-names: platSetCache
+      #缓存最大数量5000条, 缓存失效时间 10分钟
+      guava:
+        spec: maximumSize=5000,expireAfterWrite=10m
 

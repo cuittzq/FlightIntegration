@@ -1,9 +1,9 @@
-package com.tzq.dal.service.impl;
+package com.tzq.dal.service.log.impl;
 
 import com.tzq.dal.mapper.log.InterfaceRequestLogMapper;
 import com.tzq.dal.model.log.InterfaceRequestLog;
 import com.tzq.dal.model.log.InterfaceRequestLogExample;
-import com.tzq.dal.service.InterfaceRequestLogService;
+import com.tzq.dal.service.log.InterfaceRequestLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

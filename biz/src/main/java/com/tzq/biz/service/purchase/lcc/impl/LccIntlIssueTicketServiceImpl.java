@@ -12,7 +12,7 @@ import com.tzq.commons.model.ctrip.issueticket.IssueTicketReqVO;
 import com.tzq.commons.model.ctrip.issueticket.IssueTicketResVO;
 import com.tzq.dal.model.order.OrderInfo;
 import com.tzq.dal.model.order.OrderInfoExample;
-import com.tzq.dal.service.OrderInfoService;
+import com.tzq.dal.service.order.OrderInfoService;
 import com.tzq.integration.service.intl.lcc.LccClient;
 import com.tzq.integration.service.intl.lcc.model.issueticket.IssueTicketReq;
 import com.tzq.integration.service.intl.lcc.model.issueticket.IssueTicketRes;

@@ -9,7 +9,7 @@ import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
 import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
 import com.tzq.commons.utils.DateUtils;
 import com.tzq.dal.model.log.InterfaceRequestLog;
-import com.tzq.dal.service.InterfaceRequestLogService;
+import com.tzq.dal.service.log.InterfaceRequestLogService;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;

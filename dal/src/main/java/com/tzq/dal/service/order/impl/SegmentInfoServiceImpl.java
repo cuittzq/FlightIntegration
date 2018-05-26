@@ -1,9 +1,9 @@
-package com.tzq.dal.service.impl;
+package com.tzq.dal.service.order.impl;
 
 import com.tzq.dal.mapper.order.SegmentInfoMapper;
 import com.tzq.dal.model.order.SegmentInfo;
 import com.tzq.dal.model.order.SegmentInfoExample;
-import com.tzq.dal.service.SegmentInfoService;
+import com.tzq.dal.service.order.SegmentInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

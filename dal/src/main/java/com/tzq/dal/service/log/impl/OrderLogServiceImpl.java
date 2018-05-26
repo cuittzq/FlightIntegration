@@ -1,9 +1,9 @@
-package com.tzq.dal.service.impl;
+package com.tzq.dal.service.log.impl;
 
 import com.tzq.dal.mapper.log.OrderLogMapper;
 import com.tzq.dal.model.log.OrderLog;
 import com.tzq.dal.model.log.OrderLogExample;
-import com.tzq.dal.service.OrderLogService;
+import com.tzq.dal.service.log.OrderLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

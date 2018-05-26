@@ -8,7 +8,7 @@ import com.tzq.commons.model.ctrip.search.FlightRouteVO;
 import com.tzq.commons.model.ctrip.search.SearchVO;
 import com.tzq.commons.utils.DateUtils;
 import com.tzq.dal.model.log.InterfaceRequestLog;
-import com.tzq.dal.service.InterfaceRequestLogService;
+import com.tzq.dal.service.log.InterfaceRequestLogService;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -20,7 +20,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.Date;
 
 /**

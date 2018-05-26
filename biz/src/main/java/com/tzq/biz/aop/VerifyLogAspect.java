@@ -9,7 +9,7 @@ import com.tzq.commons.model.ctrip.search.FlightRouteVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
 import com.tzq.commons.utils.DateUtils;
 import com.tzq.dal.model.log.InterfaceRequestLog;
-import com.tzq.dal.service.InterfaceRequestLogService;
+import com.tzq.dal.service.log.InterfaceRequestLogService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;

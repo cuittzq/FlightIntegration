@@ -1,4 +1,4 @@
-package com.tzq.dal.service;
+package com.tzq.dal.service.order;
 
 import com.tzq.dal.model.order.OrderInfo;
 import com.tzq.dal.model.order.OrderInfoExample;

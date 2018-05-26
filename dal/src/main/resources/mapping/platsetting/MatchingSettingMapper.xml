@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tzq.dal.mapper.platsetting.MatchingSettingMapper">
+  <resultMap id="BaseResultMap" type="com.tzq.dal.model.platsetting.MatchingSetting">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="SalesPlatform" jdbcType="VARCHAR" property="salesplatform" />
+    <result column="PurchasePlatform" jdbcType="VARCHAR" property="purchaseplatform" />
+    <result column="VoyageType" jdbcType="INTEGER" property="voyagetype" />
+    <result column="SalesStartDay" jdbcType="INTEGER" property="salesstartday" />
+    <result column="SalesEndDay" jdbcType="INTEGER" property="salesendday" />
+    <result column="RefundRuleStatus" jdbcType="INTEGER" property="refundrulestatus" />
+    <result column="WeekLimit" jdbcType="VARCHAR" property="weeklimit" />
+    <result column="SalesStartDate" jdbcType="DATE" property="salesstartdate" />
+    <result column="SalesEndDate" jdbcType="DATE" property="salesenddate" />
+    <result column="StartWorkTime" jdbcType="TIME" property="startworktime" />
+    <result column="StopWorkTime" jdbcType="TIME" property="stopworktime" />
+    <result column="SettingStatus" jdbcType="INTEGER" property="settingstatus" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, SalesPlatform, PurchasePlatform, VoyageType, SalesStartDay, SalesEndDay, RefundRuleStatus, 
+    WeekLimit, SalesStartDate, SalesEndDate, StartWorkTime, StopWorkTime, SettingStatus, 
+    ModifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.tzq.dal.model.platsetting.MatchingSettingExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from matchingsetting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0">
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from matchingsetting
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from matchingsetting
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tzq.dal.model.platsetting.MatchingSettingExample">
+    delete from matchingsetting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tzq.dal.model.platsetting.MatchingSetting">
+    insert into matchingsetting (ID, SalesPlatform, PurchasePlatform, 
+      VoyageType, SalesStartDay, SalesEndDay, 
+      RefundRuleStatus, WeekLimit, SalesStartDate, 
+      SalesEndDate, StartWorkTime, StopWorkTime, 
+      SettingStatus, ModifyTime)
+    values (#{id,jdbcType=VARCHAR}, #{salesplatform,jdbcType=VARCHAR}, #{purchaseplatform,jdbcType=VARCHAR}, 
+      #{voyagetype,jdbcType=INTEGER}, #{salesstartday,jdbcType=INTEGER}, #{salesendday,jdbcType=INTEGER}, 
+      #{refundrulestatus,jdbcType=INTEGER}, #{weeklimit,jdbcType=VARCHAR}, #{salesstartdate,jdbcType=DATE}, 
+      #{salesenddate,jdbcType=DATE}, #{startworktime,jdbcType=TIME}, #{stopworktime,jdbcType=TIME}, 
+      #{settingstatus,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tzq.dal.model.platsetting.MatchingSetting">
+    insert into matchingsetting
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="salesplatform != null">
+        SalesPlatform,
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform,
+      </if>
+      <if test="voyagetype != null">
+        VoyageType,
+      </if>
+      <if test="salesstartday != null">
+        SalesStartDay,
+      </if>
+      <if test="salesendday != null">
+        SalesEndDay,
+      </if>
+      <if test="refundrulestatus != null">
+        RefundRuleStatus,
+      </if>
+      <if test="weeklimit != null">
+        WeekLimit,
+      </if>
+      <if test="salesstartdate != null">
+        SalesStartDate,
+      </if>
+      <if test="salesenddate != null">
+        SalesEndDate,
+      </if>
+      <if test="startworktime != null">
+        StartWorkTime,
+      </if>
+      <if test="stopworktime != null">
+        StopWorkTime,
+      </if>
+      <if test="settingstatus != null">
+        SettingStatus,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatform != null">
+        #{salesplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatform != null">
+        #{purchaseplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="voyagetype != null">
+        #{voyagetype,jdbcType=INTEGER},
+      </if>
+      <if test="salesstartday != null">
+        #{salesstartday,jdbcType=INTEGER},
+      </if>
+      <if test="salesendday != null">
+        #{salesendday,jdbcType=INTEGER},
+      </if>
+      <if test="refundrulestatus != null">
+        #{refundrulestatus,jdbcType=INTEGER},
+      </if>
+      <if test="weeklimit != null">
+        #{weeklimit,jdbcType=VARCHAR},
+      </if>
+      <if test="salesstartdate != null">
+        #{salesstartdate,jdbcType=DATE},
+      </if>
+      <if test="salesenddate != null">
+        #{salesenddate,jdbcType=DATE},
+      </if>
+      <if test="startworktime != null">
+        #{startworktime,jdbcType=TIME},
+      </if>
+      <if test="stopworktime != null">
+        #{stopworktime,jdbcType=TIME},
+      </if>
+      <if test="settingstatus != null">
+        #{settingstatus,jdbcType=INTEGER},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tzq.dal.model.platsetting.MatchingSettingExample" resultType="java.lang.Long">
+    select count(*) from matchingsetting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update matchingsetting
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesplatform != null">
+        SalesPlatform = #{record.salesplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseplatform != null">
+        PurchasePlatform = #{record.purchaseplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="record.voyagetype != null">
+        VoyageType = #{record.voyagetype,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesstartday != null">
+        SalesStartDay = #{record.salesstartday,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesendday != null">
+        SalesEndDay = #{record.salesendday,jdbcType=INTEGER},
+      </if>
+      <if test="record.refundrulestatus != null">
+        RefundRuleStatus = #{record.refundrulestatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.weeklimit != null">
+        WeekLimit = #{record.weeklimit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesstartdate != null">
+        SalesStartDate = #{record.salesstartdate,jdbcType=DATE},
+      </if>
+      <if test="record.salesenddate != null">
+        SalesEndDate = #{record.salesenddate,jdbcType=DATE},
+      </if>
+      <if test="record.startworktime != null">
+        StartWorkTime = #{record.startworktime,jdbcType=TIME},
+      </if>
+      <if test="record.stopworktime != null">
+        StopWorkTime = #{record.stopworktime,jdbcType=TIME},
+      </if>
+      <if test="record.settingstatus != null">
+        SettingStatus = #{record.settingstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.modifytime != null">
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update matchingsetting
+    set ID = #{record.id,jdbcType=VARCHAR},
+      SalesPlatform = #{record.salesplatform,jdbcType=VARCHAR},
+      PurchasePlatform = #{record.purchaseplatform,jdbcType=VARCHAR},
+      VoyageType = #{record.voyagetype,jdbcType=INTEGER},
+      SalesStartDay = #{record.salesstartday,jdbcType=INTEGER},
+      SalesEndDay = #{record.salesendday,jdbcType=INTEGER},
+      RefundRuleStatus = #{record.refundrulestatus,jdbcType=INTEGER},
+      WeekLimit = #{record.weeklimit,jdbcType=VARCHAR},
+      SalesStartDate = #{record.salesstartdate,jdbcType=DATE},
+      SalesEndDate = #{record.salesenddate,jdbcType=DATE},
+      StartWorkTime = #{record.startworktime,jdbcType=TIME},
+      StopWorkTime = #{record.stopworktime,jdbcType=TIME},
+      SettingStatus = #{record.settingstatus,jdbcType=INTEGER},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tzq.dal.model.platsetting.MatchingSetting">
+    update matchingsetting
+    <set>
+      <if test="salesplatform != null">
+        SalesPlatform = #{salesplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform = #{purchaseplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="voyagetype != null">
+        VoyageType = #{voyagetype,jdbcType=INTEGER},
+      </if>
+      <if test="salesstartday != null">
+        SalesStartDay = #{salesstartday,jdbcType=INTEGER},
+      </if>
+      <if test="salesendday != null">
+        SalesEndDay = #{salesendday,jdbcType=INTEGER},
+      </if>
+      <if test="refundrulestatus != null">
+        RefundRuleStatus = #{refundrulestatus,jdbcType=INTEGER},
+      </if>
+      <if test="weeklimit != null">
+        WeekLimit = #{weeklimit,jdbcType=VARCHAR},
+      </if>
+      <if test="salesstartdate != null">
+        SalesStartDate = #{salesstartdate,jdbcType=DATE},
+      </if>
+      <if test="salesenddate != null">
+        SalesEndDate = #{salesenddate,jdbcType=DATE},
+      </if>
+      <if test="startworktime != null">
+        StartWorkTime = #{startworktime,jdbcType=TIME},
+      </if>
+      <if test="stopworktime != null">
+        StopWorkTime = #{stopworktime,jdbcType=TIME},
+      </if>
+      <if test="settingstatus != null">
+        SettingStatus = #{settingstatus,jdbcType=INTEGER},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tzq.dal.model.platsetting.MatchingSetting">
+    update matchingsetting
+    set SalesPlatform = #{salesplatform,jdbcType=VARCHAR},
+      PurchasePlatform = #{purchaseplatform,jdbcType=VARCHAR},
+      VoyageType = #{voyagetype,jdbcType=INTEGER},
+      SalesStartDay = #{salesstartday,jdbcType=INTEGER},
+      SalesEndDay = #{salesendday,jdbcType=INTEGER},
+      RefundRuleStatus = #{refundrulestatus,jdbcType=INTEGER},
+      WeekLimit = #{weeklimit,jdbcType=VARCHAR},
+      SalesStartDate = #{salesstartdate,jdbcType=DATE},
+      SalesEndDate = #{salesenddate,jdbcType=DATE},
+      StartWorkTime = #{startworktime,jdbcType=TIME},
+      StopWorkTime = #{stopworktime,jdbcType=TIME},
+      SettingStatus = #{settingstatus,jdbcType=INTEGER},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
