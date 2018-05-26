@@ -9,21 +9,25 @@ import com.tzq.commons.enums.PurchaseEnum;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.context.SingleResult;
 import com.tzq.commons.model.ctrip.search.FlightRouteVO;
+import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
 import com.tzq.commons.model.ctrip.search.SearchVO;
 import com.tzq.commons.utils.DateUtils;
 import com.tzq.dal.model.platsetting.MatchingSetting;
+import com.tzq.dal.model.suppliersetting.SalesAirLineSetting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -66,13 +70,51 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
         ota2Purchases.forEach(purchaseEnum -> {
             RouteContext<SearchVO> resuestContext = context.clone();
             resuestContext.setPurchaseEnum(purchaseEnum);
-            // 分别调用配置的供应商接口数据
             FlightRouteVO flightRouteVO = purchaseProxy.searchFlight(resuestContext);
-            // 数据汇总
             if (flightRouteVO != null) {
+                // 获取采购规则
+                List<SalesAirLineSetting> salesAirLineSettings = platSetCache.getSaleAirLineSeting(String.valueOf(purchaseEnum.getId()));
+                List<FlightRoutingsVO> flightRoutingsVOS = new ArrayList<>();
+                flightRouteVO.getFlightRouteList().forEach(flightRoutingsVO -> {
+                    salesAirLineSettings.forEach(salesAirLineSetting -> {
+                        // 出发地限制
+                        if (!StringUtils.isEmpty(salesAirLineSetting.getDeps())) {
+                            String[] depports = salesAirLineSetting.getDeps().split(",");
+                            if (depports.length > 0) {
+                                if (!Arrays.asList(depports).contains(context.getDepAirportCode())) {
+                                    return;
+                                }
+                            }
+                        }
+                        // 抵达地限制
+                        if (!StringUtils.isEmpty(salesAirLineSetting.getArrs())) {
+                            String[] arrports = salesAirLineSetting.getArrs().split(",");
+                            if (arrports.length > 0) {
+                                if (!Arrays.asList(arrports).contains(context.getArrAirportCode())) {
+                                    return;
+                                }
+                            }
+                        }
+                        // 航司限制
+                        if (!StringUtils.isEmpty(salesAirLineSetting.getCarriers())) {
+                            String[] airlines = salesAirLineSetting.getCarriers().split(",");
+                            if (airlines.length > 0) {
+                                if (!Arrays.asList(airlines).contains(flightRoutingsVO.getFromSegments().get(0).getCarrier())) {
+                                    return;
+                                }
+                            }
+                        }
+                        flightRoutingsVOS.add(flightRoutingsVO);
+                    });
+                });
+                flightRouteVO.setFlightRouteList(flightRoutingsVOS);
+            }
+
+            if (!CollectionUtils.isEmpty(flightRouteVO.getFlightRouteList())) {
                 flightRouteVOList.add(flightRouteVO);
             }
         });
+
         try {
             // 数据调控
             FlightRouteVO flightRouteVO = flightRegulation(flightRouteVOList);
@@ -91,6 +133,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
 
     /**
      * @param matchingSettings
+     * @param context
      * @return
      */
     private List<MatchingSetting> getMatchedSetting(List<MatchingSetting> matchingSettings, RouteContext<SearchVO> context) {
@@ -143,6 +186,10 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
         return matchedSettings;
     }
 
+    /**
+     * @param matchedSettings
+     * @return
+     */
     private List<PurchaseEnum> getPurchases(List<MatchingSetting> matchedSettings) {
         List<PurchaseEnum> ota2Purchases = new ArrayList<>();
         matchedSettings.forEach(p -> {

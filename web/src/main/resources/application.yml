@@ -37,6 +37,14 @@ platsettingdb:
     password: 1989513bs
     mappinglocation: classpath*:mapping/platsetting/*.xml
 
+platsettingdb:
+  datasource:
+    driver-class-name:  com.mysql.jdbc.Driver
+    url: jdbc:mysql://123.56.139.13:3306/gj_suppliersetting
+    username: root
+    password: 1989513bs
+    mappinglocation: classpath*:mapping/suppliersetting/*.xml
+
 
 spring:
     datasource:
