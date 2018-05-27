@@ -49,36 +49,54 @@ public class PlatSetCache {
     // 通用规则
     private Map<String, List<CurrencySetting>> currencytMatchsetmap = new HashMap<>();
 
-    @Cacheable(value = "platSetCache", key = "#plat + 'dataMap'")
-    public List<MatchingSetting> getPlatRules(String plat) {
-        if (plateMatchsetmap.containsKey(plat)) {
-            return plateMatchsetmap.get(plat);
+    /**
+     * @param salePlat OTA平台ID
+     * @return
+     */
+    @Cacheable(value = "platSetCache", key = "#salePlat + 'dataMap'")
+    public List<MatchingSetting> getPlatRules(String salePlat) {
+        if (plateMatchsetmap.containsKey(salePlat)) {
+            return plateMatchsetmap.get(salePlat);
         }
         return null;
     }
 
 
-    @Cacheable(value = "platSetCache", key = "#plat + 'dataMap'")
-    public List<SalesAirLineSetting> getSaleAirLineRules(String plat) {
-        if (salesMatchsetmap.containsKey(plat)) {
-            return salesMatchsetmap.get(plat);
+    /**
+     * @param purchPlat 供应平台ID
+     * @return
+     */
+    @Cacheable(value = "platSetCache", key = "#purchPlat + 'dataMap'")
+    public List<SalesAirLineSetting> getSaleAirLineRules(String purchPlat) {
+        if (salesMatchsetmap.containsKey(purchPlat)) {
+            return salesMatchsetmap.get(purchPlat);
         }
         return null;
     }
 
-    @Cacheable(value = "platSetCache", key = "#plat + 'dataMap'")
-    public List<ExactSetting> getExactRules(String plat) {
-        if (exactMatchsetmap.containsKey(plat)) {
-            return exactMatchsetmap.get(plat);
+    /**
+     * @param purchPlat 供应平台ID
+     * @return
+     */
+    @Cacheable(value = "platSetCache", key = "#purchPlat + 'dataMap'")
+    public List<ExactSetting> getExactRules(String purchPlat) {
+        if (exactMatchsetmap.containsKey(purchPlat)) {
+            return exactMatchsetmap.get(purchPlat);
         }
         return null;
     }
 
 
-    @Cacheable(value = "platSetCache", key = "#plat + 'dataMap'")
-    public List<CurrencySetting> getCurrencyRules(String plat) {
-        if (currencytMatchsetmap.containsKey(plat)) {
-            return currencytMatchsetmap.get(plat);
+    /**
+     * @param salePlat  OTA平台ID
+     * @param purchPlat 供应平台ID
+     * @return
+     */
+    @Cacheable(value = "platSetCache", key = "#salePlat + #purchPlat+ 'dataMap'")
+    public List<CurrencySetting> getCurrencyRules(String salePlat, String purchPlat) {
+        String key = salePlat + "-" + purchPlat;
+        if (currencytMatchsetmap.containsKey(key)) {
+            return currencytMatchsetmap.get(key);
         }
         return null;
     }
@@ -132,7 +150,7 @@ public class PlatSetCache {
         List<CurrencySetting> currencySettings = currencySettingService.selectByExample(currencySettingExample);
         if (!CollectionUtils.isEmpty(currencySettings)) {
             currencySettings.forEach(currencySetting -> {
-                String key = currencySetting.getPurchaseplatform();
+                String key = currencySetting.getSalesplatform() + "-" + currencySetting.getPurchaseplatform();
                 if (!currencytMatchsetmap.containsKey(key)) {
                     currencytMatchsetmap.put(key, new ArrayList<>());
                 }

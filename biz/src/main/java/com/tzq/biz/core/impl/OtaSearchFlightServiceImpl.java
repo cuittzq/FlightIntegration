@@ -3,6 +3,7 @@ package com.tzq.biz.core.impl;
 import com.tzq.biz.aop.InterfaceAccess;
 import com.tzq.biz.cache.PlatSetCache;
 import com.tzq.biz.core.OtaSearchFlightService;
+import com.tzq.biz.core.PriceRuleRegulation;
 import com.tzq.biz.proxy.PurchaseProxy;
 import com.tzq.commons.enums.OTAEnum;
 import com.tzq.commons.enums.PurchaseEnum;
@@ -48,6 +49,9 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
     @Autowired
     PlatSetCache platSetCache;
 
+    @Autowired
+    PriceRuleRegulation priceRuleRegulation;
+
     @Override
     @InterfaceAccess(desc = "SEARCHFLIGHT")
     public SingleResult<FlightRouteVO> searchFlight(RouteContext<SearchVO> context) {
@@ -80,7 +84,9 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                         // 精准规则匹配
                         ExactSetting exactSetting = exactLimit(flightRoutingsVO, resuestContext, purchaseEnum);
                         // 通用规则匹配
-
+                        CurrencySetting currencySetting = currencyLimit(resuestContext, purchaseEnum);
+                        // 价格调控
+                        flightRoutingsVO = priceRuleRegulation.flightRegulation(exactSetting, currencySetting, flightRoutingsVO);
                         flightRoutingsVOS.add(flightRoutingsVO);
                     }
                 });
@@ -92,8 +98,8 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
         });
 
         try {
-            // 精准数据调控
-            FlightRouteVO flightRouteVO = flightRegulation(flightRouteVOList);
+            // 数据汇总
+            FlightRouteVO flightRouteVO = flightRouteVOList.get(0);
             if (flightRouteVO == null) {
                 response = new SingleResult<>(flightRouteVO, false, "0001", "无数据");
                 return response;
@@ -165,15 +171,65 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
         return !CollectionUtils.isEmpty(salesMatchedSettings);
     }
 
-    private boolean currencyLimit(FlightRoutingsVO flightRoutingsVO, RouteContext<SearchVO> context, PurchaseEnum purchaseEnum) {
-        List<CurrencySetting> currencySettings = platSetCache.getCurrencyRules(String.valueOf(purchaseEnum.getId()));
+    /**
+     * 通用规则匹配
+     *
+     * @param context
+     * @param purchaseEnum
+     * @return
+     */
+    private CurrencySetting currencyLimit(RouteContext<SearchVO> context, PurchaseEnum purchaseEnum) {
+        List<CurrencySetting> currencySettings = platSetCache.getCurrencyRules(String.valueOf(OTAEnum.CTRIP.getId()), String.valueOf(purchaseEnum.getId()));
         List<CurrencySetting> currencyMatchedRules = new ArrayList<>();
         currencySettings.forEach(currencySetting -> {
+            // 行程类型过滤
+            if (currencySetting.getVoyagetype() != context.getT().getTripType().getCode() - 1) {
+                return;
+            }
 
+            // 销售日期控制
+            Date nowdate = new Date();
+            if (nowdate.after(currencySetting.getSalesenddate()) || nowdate.before(currencySetting.getSalesstartdate())) {
+                return;
+            }
+            // 工作时间限制
+            if (!workTimeLimit(currencySetting.getStartworktime(), currencySetting.getStopworktime())) {
+                return;
+            }
+            // 旅行日期 过滤
+            try {
+                if (DateUtils.parseDateNoTime(context.getT().getDepDate()).before(currencySetting.getTodepstartdate()) || DateUtils.parseDateNoTime(context.getT().getDepDate()).after(currencySetting.getTodependdate())) {
+                    return;
+                }
+
+                if (context.getT().getTripType().getCode().equals(TripTypeEnum.RT.getCode())) {
+                    if (DateUtils.parseDateNoTime(context.getT().getArrDate()).before(currencySetting.getBackdepstartdate()) || DateUtils.parseDateNoTime(context.getT().getArrDate()).after(currencySetting.getBackdependdate())) {
+                        return;
+                    }
+                }
+            } catch (ParseException e) {
+                logger.error("旅行日期 过滤异常", e);
+            }
+
+            currencyMatchedRules.add(currencySetting);
         });
-        return false;
+        if (CollectionUtils.isEmpty(currencyMatchedRules)) {
+            return null;
+        }
+
+        // 如果有多条就用最近修改的那条
+        Optional<CurrencySetting> currencySetting = currencyMatchedRules.stream().max(Comparator.comparing(CurrencySetting::getModifytime));
+        return currencySetting.get();
     }
 
+    /**
+     * 精确规则匹配
+     *
+     * @param flightRoutingsVO
+     * @param context
+     * @param purchaseEnum
+     * @return
+     */
     private ExactSetting exactLimit(FlightRoutingsVO flightRoutingsVO, RouteContext<SearchVO> context, PurchaseEnum purchaseEnum) {
         List<ExactSetting> exactSettings = platSetCache.getExactRules(String.valueOf(purchaseEnum.getId()));
         List<ExactSetting> exactMatchedRules = new ArrayList<>();
@@ -331,6 +387,8 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
     }
 
     /**
+     * 平台规则匹配
+     *
      * @param matchingSettings
      * @param context
      * @return
@@ -377,22 +435,12 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
     }
 
     /**
-     * @param matchedSettings
+     * 工作时间限制
+     *
+     * @param startworktime
+     * @param stopworktime
      * @return
      */
-    private List<PurchaseEnum> getPurchases(List<MatchingSetting> matchedSettings) {
-        List<PurchaseEnum> ota2Purchases = new ArrayList<>();
-        matchedSettings.forEach(p -> {
-            PurchaseEnum pa = PurchaseEnum.getEnumById(Integer.parseInt(p.getPurchaseplatform()));
-            if (!ota2Purchases.contains(pa)) {
-                ota2Purchases.add(pa);
-            }
-        });
-
-        return ota2Purchases;
-    }
-
-
     private boolean workTimeLimit(Date startworktime, Date stopworktime) {
         Date nowdate = new Date();
         if (nowdate.getHours() > stopworktime.getHours()) {
@@ -411,31 +459,18 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
     }
 
     /**
-     * 数据调控
-     *
-     * @param flightRouteVO
-     * @param purchaseEnum
+     * @param matchedSettings
      * @return
      */
-    private FlightRouteVO flightRegulation(List<FlightRouteVO> flightRouteVOs) {
-        // 精准规则
-//        List<ExactSetting> exactSettings = platSetCache.getExactRules(String.valueOf(purchaseEnum.getId()));
+    private List<PurchaseEnum> getPurchases(List<MatchingSetting> matchedSettings) {
+        List<PurchaseEnum> ota2Purchases = new ArrayList<>();
+        matchedSettings.forEach(p -> {
+            PurchaseEnum pa = PurchaseEnum.getEnumById(Integer.parseInt(p.getPurchaseplatform()));
+            if (!ota2Purchases.contains(pa)) {
+                ota2Purchases.add(pa);
+            }
+        });
 
-        FlightRouteVO flightRouteVO = flightRouteVOs.get(0);
-
-//        flightRouteVO.getFlightRouteList().forEach(flightRoutingsVO -> {
-//            if (!CollectionUtils.isEmpty(exactSettings)) {
-//                // 1.根据航司、出发、到达、舱位先查找精准规则（优先级：舱位>到达&出发>航司）；
-//                // 2.如果存在精准规则，如果有多条，则以ModifyTime倒序排序选择第一条；
-//                ExactSetting exactSetting = exactSettings.stream().filter(p -> p.getCarrier().equals())
-//            }
-//
-//            //  3.如果有精准规则，根据精准规则，对数据进行处理；否则根据通用规则进行处理；
-//            //  4.如果不存在精准规则同时也不存在精准规则，则原数据返回；
-//
-//        });
-
-
-        return flightRouteVO;
+        return ota2Purchases;
     }
 }
