@@ -2,9 +2,15 @@ package com.tzq.biz.cache;
 
 import com.tzq.dal.model.platsetting.MatchingSetting;
 import com.tzq.dal.model.platsetting.MatchingSettingExample;
+import com.tzq.dal.model.rulesetting.CurrencySetting;
+import com.tzq.dal.model.rulesetting.CurrencySettingExample;
+import com.tzq.dal.model.rulesetting.ExactSetting;
+import com.tzq.dal.model.rulesetting.ExactSettingExample;
 import com.tzq.dal.model.suppliersetting.SalesAirLineSetting;
 import com.tzq.dal.model.suppliersetting.SalesAirLineSettingExample;
 import com.tzq.dal.service.platsetting.MatchingSettingService;
+import com.tzq.dal.service.rulesetting.CurrencySettingService;
+import com.tzq.dal.service.rulesetting.ExactSettingService;
 import com.tzq.dal.service.suppliersetting.SalesAirLineSettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -25,12 +31,26 @@ public class PlatSetCache {
     @Autowired
     private SalesAirLineSettingService salesAirLineSettingService;
 
+    @Autowired
+    private ExactSettingService exactSettingService;
+
+    @Autowired
+    private CurrencySettingService currencySettingService;
+
+    // 平台规则
     private Map<String, List<MatchingSetting>> plateMatchsetmap = new HashMap<>();
 
+    // 供应规则
     private Map<String, List<SalesAirLineSetting>> salesMatchsetmap = new HashMap<>();
 
+    // 精准规则
+    private Map<String, List<ExactSetting>> exactMatchsetmap = new HashMap<>();
+
+    // 通用规则
+    private Map<String, List<CurrencySetting>> currencytMatchsetmap = new HashMap<>();
+
     @Cacheable(value = "platSetCache", key = "#plat + 'dataMap'")
-    public List<MatchingSetting> getPlatSeting(String plat) {
+    public List<MatchingSetting> getPlatRules(String plat) {
         if (plateMatchsetmap.containsKey(plat)) {
             return plateMatchsetmap.get(plat);
         }
@@ -39,9 +59,26 @@ public class PlatSetCache {
 
 
     @Cacheable(value = "platSetCache", key = "#plat + 'dataMap'")
-    public List<SalesAirLineSetting> getSaleAirLineSeting(String plat) {
+    public List<SalesAirLineSetting> getSaleAirLineRules(String plat) {
         if (salesMatchsetmap.containsKey(plat)) {
             return salesMatchsetmap.get(plat);
+        }
+        return null;
+    }
+
+    @Cacheable(value = "platSetCache", key = "#plat + 'dataMap'")
+    public List<ExactSetting> getExactRules(String plat) {
+        if (exactMatchsetmap.containsKey(plat)) {
+            return exactMatchsetmap.get(plat);
+        }
+        return null;
+    }
+
+
+    @Cacheable(value = "platSetCache", key = "#plat + 'dataMap'")
+    public List<CurrencySetting> getCurrencyRules(String plat) {
+        if (currencytMatchsetmap.containsKey(plat)) {
+            return currencytMatchsetmap.get(plat);
         }
         return null;
     }
@@ -61,6 +98,7 @@ public class PlatSetCache {
                 plateMatchsetmap.get(key).add(matchingSetting);
             });
         }
+
         SalesAirLineSettingExample salesAirLineSettingExample = new SalesAirLineSettingExample();
         salesAirLineSettingExample.createCriteria().andSettingstatusEqualTo(0);
         List<SalesAirLineSetting> salesAirLineSettings = salesAirLineSettingService.selectByExample(salesAirLineSettingExample);
@@ -71,6 +109,34 @@ public class PlatSetCache {
                     salesMatchsetmap.put(key, new ArrayList<>());
                 }
                 salesMatchsetmap.get(key).add(salesAirLineSetting);
+            });
+        }
+
+
+        ExactSettingExample exactSettingExample = new ExactSettingExample();
+        exactSettingExample.createCriteria().andSettingstatusEqualTo(0);
+        List<ExactSetting> exactSettings = exactSettingService.selectByExample(exactSettingExample);
+        if (!CollectionUtils.isEmpty(exactSettings)) {
+            exactSettings.forEach(exactSetting -> {
+                String key = exactSetting.getPurchaseplatform();
+                if (!exactMatchsetmap.containsKey(key)) {
+                    exactMatchsetmap.put(key, new ArrayList<>());
+                }
+                exactMatchsetmap.get(key).add(exactSetting);
+            });
+        }
+
+
+        CurrencySettingExample currencySettingExample = new CurrencySettingExample();
+        currencySettingExample.createCriteria().andSettingstatusEqualTo(0);
+        List<CurrencySetting> currencySettings = currencySettingService.selectByExample(currencySettingExample);
+        if (!CollectionUtils.isEmpty(currencySettings)) {
+            currencySettings.forEach(currencySetting -> {
+                String key = currencySetting.getPurchaseplatform();
+                if (!currencytMatchsetmap.containsKey(key)) {
+                    currencytMatchsetmap.put(key, new ArrayList<>());
+                }
+                currencytMatchsetmap.get(key).add(currencySetting);
             });
         }
     }
