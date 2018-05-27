@@ -78,7 +78,9 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                     // 供应销售规则匹配
                     if (salelimit(flightRoutingsVO, resuestContext, purchaseEnum)) {
                         // 精准规则匹配
+                        ExactSetting exactSetting = exactLimit(flightRoutingsVO, resuestContext, purchaseEnum);
                         // 通用规则匹配
+
                         flightRoutingsVOS.add(flightRoutingsVO);
                     }
                 });
@@ -172,7 +174,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
         return false;
     }
 
-    private boolean exactLimit(FlightRoutingsVO flightRoutingsVO, RouteContext<SearchVO> context, PurchaseEnum purchaseEnum) {
+    private ExactSetting exactLimit(FlightRoutingsVO flightRoutingsVO, RouteContext<SearchVO> context, PurchaseEnum purchaseEnum) {
         List<ExactSetting> exactSettings = platSetCache.getExactRules(String.valueOf(purchaseEnum.getId()));
         List<ExactSetting> exactMatchedRules = new ArrayList<>();
         exactSettings.forEach(exactSetting -> {
@@ -202,8 +204,65 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
             }
 
             // 出发地限制
+            if (!StringUtils.isEmpty(exactSetting.getDeps())) {
+                String[] deps = exactSetting.getDeps().split(",");
+                if (deps.length > 0) {
+                    if (!Arrays.asList(deps).contains(context.getT().getDepAirportCode())) {
+                        return;
+                    }
+                }
+            }
 
             // 抵达地限制
+            if (!StringUtils.isEmpty(exactSetting.getArrs())) {
+                String[] arrs = exactSetting.getArrs().split(",");
+                if (arrs.length > 0) {
+                    if (Arrays.asList(arrs).contains(context.getT().getArrAirportCode())) {
+                        return;
+                    }
+                }
+            }
+
+            // 销售日期控制
+            Date nowdate = new Date();
+            if (nowdate.after(exactSetting.getSalesenddate()) || nowdate.before(exactSetting.getSalesstartdate())) {
+                return;
+            }
+
+            // 旅行日期 过滤
+            try {
+                if (DateUtils.parseDateNoTime(context.getT().getDepDate()).before(exactSetting.getTodepstartdate()) || DateUtils.parseDateNoTime(context.getT().getDepDate()).after(exactSetting.getTodependdate())) {
+                    return;
+                }
+
+                if (context.getT().getTripType().getCode().equals(TripTypeEnum.RT.getCode())) {
+                    if (DateUtils.parseDateNoTime(context.getT().getArrDate()).before(exactSetting.getBackdepstartdate()) || DateUtils.parseDateNoTime(context.getT().getArrDate()).after(exactSetting.getBackdependdate())) {
+                        return;
+                    }
+                }
+            } catch (ParseException e) {
+                logger.error("旅行日期 过滤异常", e);
+            }
+
+            // 工作时间限制
+            if (!workTimeLimit(exactSetting.getStartworktime(), exactSetting.getStopworktime())) {
+                return;
+            }
+
+            // 提前销售天数过滤
+            Date depDate = null;
+            if (exactSetting.getSalesdayenable().equals(1)) {
+                try {
+                    depDate = DateUtils.parseDateNoTime(context.getT().getDepDate());
+                    Date saleStartDate = DateUtils.addDays(nowdate, exactSetting.getSalesstartday());
+                    Date saleEndDate = DateUtils.addDays(nowdate, exactSetting.getSalesendday());
+                    if (depDate.after(saleEndDate) || depDate.before(saleStartDate)) {
+                        return;
+                    }
+                } catch (ParseException e) {
+                    logger.error("出发日期转化失败！", e);
+                }
+            }
 
             // 航司过滤
             if (!StringUtils.isEmpty(exactSetting.getCarrier())) {
@@ -230,7 +289,6 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                             return;
                         }
                     }
-
                     if (context.getT().getTripType().getCode().equals(TripTypeEnum.RT.getCode())) {
                         for (SegmentVO segmentVO : flightRoutingsVO.getRetSegments()) {
                             if (!Arrays.asList(cabins).contains(segmentVO.getCabin())) {
@@ -260,11 +318,16 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                     }
                 }
             }
-
-
             exactMatchedRules.add(exactSetting);
         });
-        return false;
+
+        if (CollectionUtils.isEmpty(exactMatchedRules)) {
+            return null;
+        }
+
+        // 如果有多条就用最近修改的那条
+        Optional<ExactSetting> exactSetting = exactMatchedRules.stream().max(Comparator.comparing(ExactSetting::getModifytime));
+        return exactSetting.get();
     }
 
     /**
@@ -288,16 +351,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
             }
 
             // 工作时间控制
-            if (nowdate.getHours() > matchingSetting.getStopworktime().getHours()) {
-                return;
-            }
-            if (nowdate.getHours() == matchingSetting.getStopworktime().getHours() && nowdate.getMinutes() > matchingSetting.getStopworktime().getMinutes()) {
-                return;
-            }
-            if (nowdate.getHours() < matchingSetting.getStartworktime().getHours()) {
-                return;
-            }
-            if (nowdate.getHours() == matchingSetting.getStartworktime().getHours() && nowdate.getMinutes() < matchingSetting.getStartworktime().getMinutes()) {
+            if (!workTimeLimit(matchingSetting.getStartworktime(), matchingSetting.getStopworktime())) {
                 return;
             }
             // 行程类型
@@ -336,6 +390,24 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
         });
 
         return ota2Purchases;
+    }
+
+
+    private boolean workTimeLimit(Date startworktime, Date stopworktime) {
+        Date nowdate = new Date();
+        if (nowdate.getHours() > stopworktime.getHours()) {
+            return false;
+        }
+        if (nowdate.getHours() == stopworktime.getHours() && nowdate.getMinutes() > stopworktime.getMinutes()) {
+            return false;
+        }
+        if (nowdate.getHours() < startworktime.getHours()) {
+            return false;
+        }
+        if (nowdate.getHours() == startworktime.getHours() && nowdate.getMinutes() < startworktime.getMinutes()) {
+            return false;
+        }
+        return true;
     }
 
     /**
