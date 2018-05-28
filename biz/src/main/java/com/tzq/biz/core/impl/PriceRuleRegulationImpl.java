@@ -6,6 +6,8 @@ import com.tzq.dal.model.rulesetting.CurrencySetting;
 import com.tzq.dal.model.rulesetting.ExactSetting;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 @Component
 public class PriceRuleRegulationImpl implements PriceRuleRegulation {
     /**
@@ -21,20 +23,40 @@ public class PriceRuleRegulationImpl implements PriceRuleRegulation {
         if (exactSetting == null && currencySetting == null) {
             return flightRoutingsVO;
         }
-
         if (exactSetting != null) {
             // 精准调控
-            //`AduitLeaveMoney` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '成人票面留钱',
-            //`AduitLeavePoint` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '成人票面留点',
-            //`AduitTaxAddMoeny` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '成人税金加钱',
-            //`ChildLeaveMoney` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '儿童票面留钱',
-            //`ChildLeavePoint` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '儿童票面留点',
-            //`ChildTaxAddMoney` decimal(10,2) NOT NULL COMMENT '儿童税费加钱',
-            //`AllowLossMoney` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '允许亏损金额（最大亏损金额）',
-        }
+            // 成人票面留点\留钱
+            BigDecimal adultprice = new BigDecimal(flightRoutingsVO.getAdultPrice()).multiply(exactSetting.getAduitleavepoint().add(new BigDecimal(1))).add(exactSetting.getAduitleavemoney());
+            flightRoutingsVO.setAdultPrice(adultprice.setScale(0, BigDecimal.ROUND_UP).scale());
 
-        if (currencySetting != null) {
+            // 儿童票面留点\留钱
+            BigDecimal childprice = new BigDecimal(flightRoutingsVO.getChildPrice()).multiply(exactSetting.getChildleavepoint().add(new BigDecimal(1))).add(exactSetting.getChildleavemoney());
+            flightRoutingsVO.setChildPrice(childprice.setScale(0, BigDecimal.ROUND_UP).scale());
+
+            // 成人税金加钱
+            BigDecimal adultpriceTax = new BigDecimal(flightRoutingsVO.getAdultTax()).add(exactSetting.getAduittaxaddmoeny());
+            flightRoutingsVO.setAdultTax(adultpriceTax.setScale(0, BigDecimal.ROUND_UP).scale());
+
+            // 儿童税费加钱
+            BigDecimal childpriceTax = new BigDecimal(flightRoutingsVO.getChildTax()).add(exactSetting.getChildtaxaddmoney());
+            flightRoutingsVO.setChildTax(childpriceTax.setScale(0, BigDecimal.ROUND_UP).scale());
+        } else if (currencySetting != null) {
             // 通用规则调控
+            // 成人票面留点\留钱
+            BigDecimal adultprice = new BigDecimal(flightRoutingsVO.getAdultPrice()).multiply(currencySetting.getAduitleavepoint().add(new BigDecimal(1))).add(currencySetting.getAduitleavemoney());
+            flightRoutingsVO.setAdultPrice(adultprice.setScale(0, BigDecimal.ROUND_UP).scale());
+
+            // 儿童票面留点\留钱
+            BigDecimal childprice = new BigDecimal(flightRoutingsVO.getChildPrice()).multiply(currencySetting.getChildleavepoint().add(new BigDecimal(1))).add(currencySetting.getChildleavemoney());
+            flightRoutingsVO.setChildPrice(childprice.setScale(0, BigDecimal.ROUND_UP).scale());
+
+            // 成人税金加钱
+            BigDecimal adultpriceTax = new BigDecimal(flightRoutingsVO.getAdultTax()).add(currencySetting.getAduittaxaddmoeny());
+            flightRoutingsVO.setAdultTax(adultpriceTax.setScale(0, BigDecimal.ROUND_UP).scale());
+
+            // 儿童税费加钱
+            BigDecimal childpriceTax = new BigDecimal(flightRoutingsVO.getChildTax()).add(currencySetting.getChildtaxaddmoney());
+            flightRoutingsVO.setChildTax(childpriceTax.setScale(0, BigDecimal.ROUND_UP).scale());
         }
 
         return flightRoutingsVO;
