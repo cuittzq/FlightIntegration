@@ -108,7 +108,6 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         logger.info("调用LCC{}接口,入参{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(context));
         SingleResult<FlightRouteVO> response = otaSearchFlightService.searchFlight(context);
         logger.info("调用LCC{}接口,返回{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(response));
-
         if (!response.isSuccess()) {
             searchFlightRes.setMsg(response.getErrorMessage());
             searchFlightRes.setStatus(StatusEnum.INNER_ERROR.getCode());
