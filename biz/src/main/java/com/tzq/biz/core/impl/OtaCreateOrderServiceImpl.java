@@ -6,11 +6,14 @@ import com.google.common.collect.Maps;
 import com.tzq.biz.aop.InterfaceAccess;
 import com.tzq.biz.constant.OtaConstants;
 import com.tzq.biz.core.OtaCreateOrderService;
+import com.tzq.biz.core.OtaVerifyFlightService;
 import com.tzq.biz.proxy.PurchaseProxy;
 import com.tzq.biz.utils.DateConvert;
 import com.tzq.biz.utils.OrderNoUtils;
 import com.tzq.commons.Exception.CommonExcetpionConstant;
 import com.tzq.commons.Exception.ServiceAbstractException;
+import com.tzq.commons.enums.AreaTypeEnum;
+import com.tzq.commons.enums.OTAEnum;
 import com.tzq.commons.enums.PurchaseEnum;
 import com.tzq.commons.enums.SegmentType;
 import com.tzq.commons.model.context.RouteContext;
@@ -19,6 +22,8 @@ import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
 import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
 import com.tzq.commons.model.ctrip.order.PassengerVO;
 import com.tzq.commons.model.ctrip.search.SegmentVO;
+import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
+import com.tzq.commons.model.ctrip.verify.CtripVerifyResVO;
 import com.tzq.commons.utils.DateUtils;
 import com.tzq.dal.model.log.OrderLog;
 import com.tzq.dal.model.order.OrderInfo;
@@ -74,6 +79,9 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
      */
     private Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Resource
+    private OtaVerifyFlightService otaVerifyFlightService;
+
     /**
      * 生单
      *
@@ -87,11 +95,12 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
         String purchaseEnum = context.getT().getRoutings().getData().get(OtaConstants.PURCHANAME).toString();
         context.setPurchaseEnum(PurchaseEnum.getEnumByCode(purchaseEnum));
         SingleResult<CreateOrderResVO> response = null;
+        CtripVerifyResVO priceVerifyResVO = null;
         try {
             //1.获取验价规则
 
-
             //2.验价
+            priceVerifyResVO = this.priceVerify(context);
 
             //3.下单
             CreateOrderResVO verifyResVO = purchaseProxy.createOrder(context);
@@ -110,10 +119,48 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
             logger.error(ex.getMessage(), ex);
         } finally {
             //4.落库
-            dbOperator(context, response.getData());
+            dbOperator(context, response.getData(),priceVerifyResVO);
         }
 
         return response;
+    }
+
+    /**
+     *  验证价格
+     * @param context
+     */
+    private CtripVerifyResVO priceVerify(RouteContext<CreateOrderReqVO> context) {
+        // 组装验价接口请求参数
+        SingleResult<CtripVerifyResVO> singleResult = otaVerifyFlightService.verifyFlight(getVerifyParam(context));
+
+        // 调用强强规则接口价格校验 价格匹配
+        if(singleResult.isSuccess() && singleResult.getData() != null)
+        {
+            return  singleResult.getData();
+        }
+        return null;
+    }
+
+    /**
+     *  获取验价请求参数
+     * @param context  上下文
+     * @return
+     */
+    private RouteContext<CtripVerifyReqVO> getVerifyParam(RouteContext<CreateOrderReqVO> context) {
+        RouteContext<CtripVerifyReqVO> verifyReqVORouteContext = new RouteContext<CtripVerifyReqVO>();
+
+        CtripVerifyReqVO reqVO = new CtripVerifyReqVO();
+        reqVO.setRouting(context.getT().getRoutings());
+        reqVO.setTripType(context.getT().getTripType());
+
+        // 根据查询的data确定调用供应商
+        String purchaseEnum = context.getT().getRoutings().getData().get(OtaConstants.PURCHANAME).toString();
+        verifyReqVORouteContext.setPurchaseEnum(PurchaseEnum.getEnumByCode(purchaseEnum));
+        verifyReqVORouteContext.setAreaType(AreaTypeEnum.INTERNATIONAL);
+        verifyReqVORouteContext.setOta(OTAEnum.CTRIP);
+        verifyReqVORouteContext.setT(reqVO);
+
+        return verifyReqVORouteContext;
     }
 
 
@@ -121,7 +168,7 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
      * 数据库落库--涉及到多张表的操作,
      */
     @Transactional
-    public void dbOperator(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO) {
+    public void dbOperator(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO,CtripVerifyResVO priceVerifyResVO) {
         try {
             PassengerInfo passengerInfo = new PassengerInfo();
             OrderLog orderLog = new OrderLog();
@@ -131,7 +178,7 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
                     .setSalePlatName(String.valueOf(context.getPurchaseEnum().getId())).getOrderNum();
 
             /**01.插入订单info**/
-            OrderInfo orderInfo = getOrerInfo(context, orderResVO, orderNo);
+            OrderInfo orderInfo = getOrerInfo(context, orderResVO,priceVerifyResVO ,orderNo);
             orderInfoService.insert(orderInfo);
             // OrderInfo orderInfo = getOrerInfo(context, orderResVO, orderNo);
 
@@ -152,14 +199,14 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
             }
 
             /**05.插入价格表**/
-            priceInfoService.insert(getPriceInfo(orderInfo, orderNo));
+            priceInfoService.insert(getPriceInfo(orderInfo, orderNo, priceVerifyResVO));
 
         } catch (Exception ex) {
             logger.error("订单记录入库异常", ex);
         }
     }
 
-    private PriceInfo getPriceInfo(OrderInfo orderInfo, String orderNo) {
+    private PriceInfo getPriceInfo(OrderInfo orderInfo, String orderNo,CtripVerifyResVO priceVerifyResVO) {
         PriceInfo priceInfo = new PriceInfo();
         priceInfo.setOrderno(orderNo);
         priceInfo.setPolicyreturnpoint(new BigDecimal(0));
@@ -222,7 +269,10 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
             e.printStackTrace();
         }
         segmentInfo.setExtendvalue(StringUtils.EMPTY);
-        segmentInfo.setFlightno(stopDBStrNull(seg.getFlightNumber()));
+
+        String flightNo  = seg.getCarrier()+ Integer.valueOf(seg.getFlightNumber());
+
+        segmentInfo.setFlightno(stopDBStrNull(flightNo));
         segmentInfo.setOrderno(orderNo);
         segmentInfo.setModifytime(new Date());
         segmentInfo.setArrterminal(stopDBStrNull(seg.getArrTerminal()));
@@ -263,7 +313,7 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
         return passList;
     }
 
-    private OrderInfo getOrerInfo(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, String orderNo) {
+    private OrderInfo getOrerInfo(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, CtripVerifyResVO priceVerifyResVO,String orderNo) {
         OrderInfo orderInfo = new OrderInfo();
         /**订单信息组装入库**/
         orderInfo.setOrderno(orderNo);
@@ -289,15 +339,23 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
                 context.getT().getChildNumber() * context.getT().getRoutings().getChildPrice() +
                 context.getT().getInfantNumber() * context.getT().getRoutings().getInfantPrice();
 
+        float totalSellsPrice = context.getT().getAdultNumber() * priceVerifyResVO.getRouting().getAdultPrice() +
+                context.getT().getChildNumber() * priceVerifyResVO.getRouting().getChildPrice() +
+                context.getT().getInfantNumber() * priceVerifyResVO.getRouting().getInfantPrice();
+        orderInfo.setTotalpurchaseprice(new BigDecimal(totalSellsPrice));
         orderInfo.setTotalsalesprice(new BigDecimal(totalPrice));
+
 
         float totalTax = context.getT().getAdultNumber() * context.getT().getRoutings().getAdultTax() +
                 context.getT().getChildNumber() * context.getT().getRoutings().getChildTax() +
                 context.getT().getInfantNumber() * context.getT().getRoutings().getInfantTax();
-        orderInfo.setTotalsalestax(new BigDecimal(totalTax));
 
-        orderInfo.setTotalpurchaseprice(new BigDecimal(0));
-        orderInfo.setTotalpurchasetax(new BigDecimal(0));
+        float totalSellsTax = context.getT().getAdultNumber() * priceVerifyResVO.getRouting().getAdultTax() +
+                context.getT().getChildNumber() * priceVerifyResVO.getRouting().getChildTax() +
+                context.getT().getInfantNumber() * priceVerifyResVO.getRouting().getInfantTax();
+
+        orderInfo.setTotalsalestax(new BigDecimal(totalTax));
+        orderInfo.setTotalpurchasetax(new BigDecimal(totalSellsTax));
 
         orderInfo.setAuditcount(context.getT().getAdultNumber());
         orderInfo.setChildcount(context.getT().getChildNumber());
