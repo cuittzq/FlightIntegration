@@ -373,7 +373,7 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
         orderInfo.setLinkpostcode(stopDBStrNull(context.getT().getContact().getPostcode()));
 
         Map<String, Object> map = Maps.newHashMap();
-        map.put("routing", context.getT().getRoutings());
+        map.put(OtaConstants.ORDER_ROUTING, context.getT().getRoutings());
         orderInfo.setExtendvalue(JSON.toJSONString(map));
         orderInfo.setCreatetime(new Date());
         orderInfo.setModifytime(new Date());

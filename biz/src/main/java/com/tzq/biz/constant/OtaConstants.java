@@ -11,4 +11,6 @@ public class OtaConstants {
     public static final String EXACT_SETTING = "EXACT_SETTING";
 
     public static final String CURRENCY_SETTING = "CURRENCY_SETTING";
+
+    public static final String ORDER_ROUTING = "ORDER_ROUTING";
 }
