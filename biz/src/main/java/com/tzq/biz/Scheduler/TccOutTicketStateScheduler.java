@@ -47,14 +47,14 @@ public class TccOutTicketStateScheduler {
         // 02.开启线程池扫描
         if(orderInfos != null && orderInfos.size()>0)
         {
-//            orderInfos.forEach(event->
-//                executorService.execute(new Runnable() {
-//                    @Override
-//                    public void run() {
-                        ticketStateScan(orderInfos.get(0));
-//                    }
-//                })
-//            );
+            orderInfos.forEach(event->
+                executorService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        ticketStateScan(event);
+                    }
+                })
+            );
         }
 
     }
