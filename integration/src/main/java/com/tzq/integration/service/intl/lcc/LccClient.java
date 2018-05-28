@@ -26,7 +26,7 @@ public interface LccClient {
      * @param req
      * @return
      */
-    public SearchFlightRes searchFlight(SearchFlightReq req);
+    SearchFlightRes searchFlight(SearchFlightReq req);
 
     VerifyRes verifyCabinPrice(VerifyReq req);
 
