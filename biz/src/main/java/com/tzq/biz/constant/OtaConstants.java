@@ -7,4 +7,8 @@ public class OtaConstants {
     public static final String PURCHANAME = "PURCHANAME";
 
     public static final String PURCHANAME_DATA = "PURCHANAME_DATA";
+
+    public static final String EXACT_SETTING = "EXACT_SETTING";
+
+    public static final String CURRENCY_SETTING = "CURRENCY_SETTING";
 }

@@ -1,7 +1,9 @@
 package com.tzq.biz.core.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.tzq.biz.aop.InterfaceAccess;
 import com.tzq.biz.cache.PlatSetCache;
+import com.tzq.biz.constant.OtaConstants;
 import com.tzq.biz.core.OtaSearchFlightService;
 import com.tzq.biz.core.PriceRuleRegulation;
 import com.tzq.biz.proxy.PurchaseProxy;
@@ -85,6 +87,8 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                         ExactSetting exactSetting = exactLimit(flightRoutingsVO, resuestContext, purchaseEnum);
                         // 通用规则匹配
                         CurrencySetting currencySetting = currencyLimit(resuestContext, purchaseEnum);
+                        flightRoutingsVO.getData().put(OtaConstants.EXACT_SETTING, JSON.toJSONString(exactSetting));
+                        flightRoutingsVO.getData().put(OtaConstants.EXACT_SETTING, JSON.toJSONString(exactSetting));
                         // 价格调控
                         flightRoutingsVO = priceRuleRegulation.flightRegulation(exactSetting, currencySetting, flightRoutingsVO);
                         flightRoutingsVOS.add(flightRoutingsVO);
