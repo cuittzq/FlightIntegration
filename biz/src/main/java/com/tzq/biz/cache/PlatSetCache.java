@@ -66,7 +66,7 @@ public class PlatSetCache {
      * @param purchPlat 供应平台ID
      * @return
      */
-    @Cacheable(value = "platSetCache", key = "#purchPlat + 'dataMap'")
+    @Cacheable(value = "salesAirLineSetCache", key = "#purchPlat + 'dataMap'")
     public List<SalesAirLineSetting> getSaleAirLineRules(String purchPlat) {
         if (salesMatchsetmap.containsKey(purchPlat)) {
             return salesMatchsetmap.get(purchPlat);
@@ -78,7 +78,7 @@ public class PlatSetCache {
      * @param purchPlat 供应平台ID
      * @return
      */
-    @Cacheable(value = "platSetCache", key = "#purchPlat + 'dataMap'")
+    @Cacheable(value = "exactSetCache", key = "#purchPlat + 'dataMap'")
     public List<ExactSetting> getExactRules(String purchPlat) {
         if (exactMatchsetmap.containsKey(purchPlat)) {
             return exactMatchsetmap.get(purchPlat);
@@ -92,7 +92,7 @@ public class PlatSetCache {
      * @param purchPlat 供应平台ID
      * @return
      */
-    @Cacheable(value = "platSetCache", key = "#salePlat + #purchPlat+ 'dataMap'")
+    @Cacheable(value = "currencySetCache", key = "#salePlat + #purchPlat+ 'dataMap'")
     public List<CurrencySetting> getCurrencyRules(String salePlat, String purchPlat) {
         String key = salePlat + "-" + purchPlat;
         if (currencytMatchsetmap.containsKey(key)) {

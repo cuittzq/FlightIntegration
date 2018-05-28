@@ -72,8 +72,8 @@ spring:
 
     cache:
       #缓存名称
-      cache-names: platSetCache
-      #缓存最大数量5000条, 缓存失效时间 10分钟
+      cache-names: platSetCache,salesAirLineSetCache,exactSetCache,currencySetCache
+      #缓存最大数量5000条, 缓存失效时间 1分钟
       guava:
-        spec: maximumSize=5000,expireAfterWrite=10m
+        spec: maximumSize=5000,expireAfterWrite=1m
 
