@@ -1,5 +1,6 @@
 package com.tzq.biz.service.purchase.lcc.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.tzq.biz.annotation.Route;
 import com.tzq.biz.constant.OtaConstants;
 import com.tzq.biz.service.purchase.abstracts.AbstractIssueTicketService;
@@ -87,8 +88,8 @@ public class LccIntlIssueTicketServiceImpl extends AbstractIssueTicketService {
         if (CollectionUtils.isNotEmpty(orderinfos)) {
             issueTicketReq.setOrderNo(orderinfos.get(0).getPurchaseorderno());
             issueTicketReq.setPnrCode(orderinfos.get(0).getPnr());
-            Map<String, Object> extMap = ExtInfoConverter.string2Map(orderinfos.get(0).getExtendvalue());
-            FlightRoutingsVO flightRoutings = (FlightRoutingsVO) extMap.get(OtaConstants.ORDER_ROUTING);
+            Map<String, Object> extMap         = ExtInfoConverter.string2Map(orderinfos.get(0).getExtendvalue());
+            FlightRoutingsVO    flightRoutings = JSON.parseObject(extMap.get(OtaConstants.ORDER_ROUTING).toString(), FlightRoutingsVO.class);
             issueTicketReq.setReqRouting(flightRoutingsVO2IO(flightRoutings));
         }
         return (T) issueTicketReq;
