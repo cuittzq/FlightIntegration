@@ -136,7 +136,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                 String[] depports = salesAirLineSetting.getDeps().split(",");
                 if (depports.length > 0) {
                     if (!Arrays.asList(depports).contains(context.getDepAirportCode())) {
-                        logger.info("出发地限制 过滤");
+                        logger.info(" 供应销售规则匹配 出发地限制 过滤");
                         return;
                     }
                 }
@@ -146,7 +146,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                 String[] arrports = salesAirLineSetting.getArrs().split(",");
                 if (arrports.length > 0) {
                     if (!Arrays.asList(arrports).contains(context.getArrAirportCode())) {
-                        logger.info("抵达地限制 过滤");
+                        logger.info("供应销售规则匹配 抵达地限制 过滤");
                         return;
                     }
                 }
@@ -157,7 +157,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                 if (airlines.length > 0) {
                     for (SegmentVO segmentVO : flightRoutingsVO.getFromSegments()) {
                         if (!Arrays.asList(airlines).contains(segmentVO.getCarrier())) {
-                            logger.info("去程航司限制 过滤");
+                            logger.info("供应销售规则匹配 去程航司限制 过滤");
                             return;
                         }
                     }
@@ -165,7 +165,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                     if (context.getT().getTripType().getCode().equals(TripTypeEnum.RT.getCode())) {
                         for (SegmentVO segmentVO : flightRoutingsVO.getRetSegments()) {
                             if (!Arrays.asList(airlines).contains(segmentVO.getCarrier())) {
-                                logger.info("返程航司限制 过滤");
+                                logger.info("供应销售规则匹配 返程航司限制 过滤");
                                 return;
                             }
                         }
@@ -192,36 +192,36 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
         currencySettings.forEach(currencySetting -> {
             // 行程类型过滤
             if (currencySetting.getVoyagetype() != context.getT().getTripType().getCode() - 1) {
-                logger.info("行程类型 过滤");
+                logger.info("通用规则匹配 行程类型 过滤");
                 return;
             }
 
             // 销售日期控制
             Date nowdate = new Date();
             if (nowdate.after(currencySetting.getSalesenddate()) || nowdate.before(currencySetting.getSalesstartdate())) {
-                logger.info("销售日期控制 过滤");
+                logger.info("通用规则匹配 销售日期控制 过滤");
                 return;
             }
             // 工作时间限制
             if (!workTimeLimit(currencySetting.getStartworktime(), currencySetting.getStopworktime())) {
-                logger.info("工作时间限制 过滤");
+                logger.info("通用规则匹配 工作时间限制 过滤");
                 return;
             }
             // 旅行日期 过滤
             try {
                 if (DateUtils.parseDateNoTime(context.getT().getDepDate()).before(currencySetting.getTodepstartdate()) || DateUtils.parseDateNoTime(context.getT().getDepDate()).after(currencySetting.getTodependdate())) {
-                    logger.info("旅行日期 过滤");
+                    logger.info("通用规则匹配 旅行日期 过滤");
                     return;
                 }
 
                 if (context.getT().getTripType().getCode().equals(TripTypeEnum.RT.getCode())) {
                     if (DateUtils.parseDateNoTime(context.getT().getArrDate()).before(currencySetting.getBackdepstartdate()) || DateUtils.parseDateNoTime(context.getT().getArrDate()).after(currencySetting.getBackdependdate())) {
-                        logger.info("返程旅行日期 过滤");
+                        logger.info("通用规则匹配 返程旅行日期 过滤");
                         return;
                     }
                 }
             } catch (ParseException e) {
-                logger.error("旅行日期 过滤异常", e);
+                logger.error("通用规则匹配 旅行日期 过滤异常", e);
             }
 
             currencyMatchedRules.add(currencySetting);
@@ -249,7 +249,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
         exactSettings.forEach(exactSetting -> {
             // 行程类型过滤
             if (exactSetting.getVoyagetype() != context.getT().getTripType().getCode() - 1) {
-                logger.info("行程类型 过滤");
+                logger.info("精准规则匹配 行程类型 过滤");
                 return;
             }
 
@@ -258,7 +258,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                 String[] excludedeps = exactSetting.getExcludedeps().split(",");
                 if (excludedeps.length > 0) {
                     if (Arrays.asList(excludedeps).contains(context.getT().getDepAirportCode())) {
-                        logger.info("排除出发地 过滤");
+                        logger.info("精准规则匹配 排除出发地 过滤");
                         return;
                     }
                 }
@@ -269,7 +269,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                 String[] excludearrs = exactSetting.getExcludearrs().split(",");
                 if (excludearrs.length > 0) {
                     if (Arrays.asList(excludearrs).contains(context.getT().getArrAirportCode())) {
-                        logger.info("排除抵达地 过滤");
+                        logger.info("精准规则匹配 排除抵达地 过滤");
                         return;
                     }
                 }
@@ -280,7 +280,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                 String[] deps = exactSetting.getDeps().split(",");
                 if (deps.length > 0) {
                     if (!Arrays.asList(deps).contains(context.getT().getDepAirportCode())) {
-                        logger.info("出发地限制 过滤");
+                        logger.info("精准规则匹配 出发地限制 过滤");
                         return;
                     }
                 }
@@ -291,7 +291,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                 String[] arrs = exactSetting.getArrs().split(",");
                 if (arrs.length > 0) {
                     if (Arrays.asList(arrs).contains(context.getT().getArrAirportCode())) {
-                        logger.info("抵达地限制 过滤");
+                        logger.info("精准规则匹配 抵达地限制 过滤");
                         return;
                     }
                 }
@@ -300,30 +300,30 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
             // 销售日期控制
             Date nowdate = new Date();
             if (nowdate.after(exactSetting.getSalesenddate()) || nowdate.before(exactSetting.getSalesstartdate())) {
-                logger.info("销售日期 过滤");
+                logger.info("精准规则匹配 销售日期 过滤");
                 return;
             }
 
             // 旅行日期 过滤
             try {
                 if (DateUtils.parseDateNoTime(context.getT().getDepDate()).before(exactSetting.getTodepstartdate()) || DateUtils.parseDateNoTime(context.getT().getDepDate()).after(exactSetting.getTodependdate())) {
-                    logger.info("去程旅行日期 过滤");
+                    logger.info("精准规则匹配 去程旅行日期 过滤");
                     return;
                 }
 
                 if (context.getT().getTripType().getCode().equals(TripTypeEnum.RT.getCode())) {
                     if (DateUtils.parseDateNoTime(context.getT().getArrDate()).before(exactSetting.getBackdepstartdate()) || DateUtils.parseDateNoTime(context.getT().getArrDate()).after(exactSetting.getBackdependdate())) {
-                        logger.info("返程旅行日期 过滤");
+                        logger.info("精准规则匹配 返程旅行日期 过滤");
                         return;
                     }
                 }
             } catch (ParseException e) {
-                logger.error("旅行日期 过滤异常", e);
+                logger.error("精准规则匹配 旅行日期 过滤异常", e);
             }
 
             // 工作时间限制
             if (!workTimeLimit(exactSetting.getStartworktime(), exactSetting.getStopworktime())) {
-                logger.info("工作时间限制 过滤");
+                logger.info("精准规则匹配 工作时间限制 过滤");
                 return;
             }
 
@@ -335,11 +335,11 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                     Date saleStartDate = DateUtils.addDays(nowdate, exactSetting.getSalesstartday());
                     Date saleEndDate = DateUtils.addDays(nowdate, exactSetting.getSalesendday());
                     if (depDate.after(saleEndDate) || depDate.before(saleStartDate)) {
-                        logger.info("提前销售天数 过滤");
+                        logger.info("精准规则匹配 提前销售天数 过滤");
                         return;
                     }
                 } catch (ParseException e) {
-                    logger.error("出发日期转化失败！", e);
+                    logger.error("精准规则匹配 出发日期转化失败！", e);
                 }
             }
 
@@ -347,14 +347,14 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
             if (!StringUtils.isEmpty(exactSetting.getCarrier())) {
                 for (SegmentVO segmentVO : flightRoutingsVO.getFromSegments()) {
                     if (!exactSetting.getCarrier().equals(segmentVO.getCarrier())) {
-                        logger.info("去程航司 过滤");
+                        logger.info("精准规则匹配 去程航司 过滤");
                         return;
                     }
                 }
                 if (context.getT().getTripType().getCode().equals(TripTypeEnum.RT.getCode())) {
                     for (SegmentVO segmentVO : flightRoutingsVO.getRetSegments()) {
                         if (!exactSetting.getCarrier().equals(segmentVO.getCarrier())) {
-                            logger.info("返程航司 过滤");
+                            logger.info("精准规则匹配 返程航司 过滤");
                             return;
                         }
                     }
@@ -367,14 +367,14 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                 if (cabins.length > 0) {
                     for (SegmentVO segmentVO : flightRoutingsVO.getFromSegments()) {
                         if (!Arrays.asList(cabins).contains(segmentVO.getCabin())) {
-                            logger.info("去程仓位 过滤");
+                            logger.info("精准规则匹配 去程仓位 过滤");
                             return;
                         }
                     }
                     if (context.getT().getTripType().getCode().equals(TripTypeEnum.RT.getCode())) {
                         for (SegmentVO segmentVO : flightRoutingsVO.getRetSegments()) {
                             if (!Arrays.asList(cabins).contains(segmentVO.getCabin())) {
-                                logger.info("返程仓位 过滤");
+                                logger.info("精准规则匹配 返程仓位 过滤");
                                 return;
                             }
                         }
@@ -388,7 +388,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                 if (flightNos.length > 0) {
                     for (SegmentVO segmentVO : flightRoutingsVO.getFromSegments()) {
                         if (!Arrays.asList(flightNos).contains(segmentVO.getFlightNumber())) {
-                            logger.info("去程航班号 过滤");
+                            logger.info("精准规则匹配 去程航班号 过滤");
                             return;
                         }
                     }
@@ -396,7 +396,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                     if (context.getT().getTripType().getCode().equals(TripTypeEnum.RT.getCode())) {
                         for (SegmentVO segmentVO : flightRoutingsVO.getRetSegments()) {
                             if (!Arrays.asList(flightNos).contains(segmentVO.getFlightNumber())) {
-                                logger.info("返程航班号 过滤");
+                                logger.info("精准规则匹配 返程航班号 过滤");
                                 return;
                             }
                         }
