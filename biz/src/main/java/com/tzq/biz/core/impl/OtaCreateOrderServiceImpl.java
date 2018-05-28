@@ -12,6 +12,7 @@ import com.tzq.biz.utils.DateConvert;
 import com.tzq.biz.utils.OrderNoUtils;
 import com.tzq.commons.Exception.CommonExcetpionConstant;
 import com.tzq.commons.Exception.ServiceAbstractException;
+import com.tzq.commons.converter.ExtInfoConverter;
 import com.tzq.commons.enums.AreaTypeEnum;
 import com.tzq.commons.enums.OTAEnum;
 import com.tzq.commons.enums.PurchaseEnum;
@@ -374,7 +375,7 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
 
         Map<String, Object> map = Maps.newHashMap();
         map.put(OtaConstants.ORDER_ROUTING, context.getT().getRoutings());
-        orderInfo.setExtendvalue(JSON.toJSONString(map));
+        orderInfo.setExtendvalue(ExtInfoConverter.map2String(map));
         orderInfo.setCreatetime(new Date());
         orderInfo.setModifytime(new Date());
 
