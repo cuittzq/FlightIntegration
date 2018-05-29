@@ -133,7 +133,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
         salesAirLineSettings.forEach(salesAirLineSetting -> {
             // 出发地限制
             if (!StringUtils.isEmpty(salesAirLineSetting.getDeps())) {
-                String[] depports = salesAirLineSetting.getDeps().split(",");
+                String[] depports = salesAirLineSetting.getDeps().split(",|/");
                 if (depports.length > 0) {
                     if (!Arrays.asList(depports).contains(context.getDepAirportCode())) {
                         logger.info(" 供应销售规则匹配 出发地限制 过滤");
@@ -143,7 +143,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
             }
             // 抵达地限制
             if (!StringUtils.isEmpty(salesAirLineSetting.getArrs())) {
-                String[] arrports = salesAirLineSetting.getArrs().split(",");
+                String[] arrports = salesAirLineSetting.getArrs().split(",|/");
                 if (arrports.length > 0) {
                     if (!Arrays.asList(arrports).contains(context.getArrAirportCode())) {
                         logger.info("供应销售规则匹配 抵达地限制 过滤");
@@ -153,7 +153,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
             }
             // 航司限制
             if (!StringUtils.isEmpty(salesAirLineSetting.getCarriers())) {
-                String[] airlines = salesAirLineSetting.getCarriers().split(",");
+                String[] airlines = salesAirLineSetting.getCarriers().split(",|/");
                 if (airlines.length > 0) {
                     for (SegmentVO segmentVO : flightRoutingsVO.getFromSegments()) {
                         if (!Arrays.asList(airlines).contains(segmentVO.getCarrier())) {
@@ -255,7 +255,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
 
             // 排除出发地过滤
             if (!StringUtils.isEmpty(exactSetting.getExcludedeps())) {
-                String[] excludedeps = exactSetting.getExcludedeps().split(",");
+                String[] excludedeps = exactSetting.getExcludedeps().split(",|/");
                 if (excludedeps.length > 0) {
                     if (Arrays.asList(excludedeps).contains(context.getT().getDepAirportCode())) {
                         logger.info("精准规则匹配 排除出发地 过滤");
@@ -266,7 +266,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
 
             // 排除抵达地过滤
             if (!StringUtils.isEmpty(exactSetting.getExcludearrs())) {
-                String[] excludearrs = exactSetting.getExcludearrs().split(",");
+                String[] excludearrs = exactSetting.getExcludearrs().split(",|/");
                 if (excludearrs.length > 0) {
                     if (Arrays.asList(excludearrs).contains(context.getT().getArrAirportCode())) {
                         logger.info("精准规则匹配 排除抵达地 过滤");
@@ -277,7 +277,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
 
             // 出发地限制
             if (!StringUtils.isEmpty(exactSetting.getDeps())) {
-                String[] deps = exactSetting.getDeps().split(",");
+                String[] deps = exactSetting.getDeps().split(",|/");
                 if (deps.length > 0) {
                     if (!Arrays.asList(deps).contains(context.getT().getDepAirportCode())) {
                         logger.info("精准规则匹配 出发地限制 过滤");
@@ -288,7 +288,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
 
             // 抵达地限制
             if (!StringUtils.isEmpty(exactSetting.getArrs())) {
-                String[] arrs = exactSetting.getArrs().split(",");
+                String[] arrs = exactSetting.getArrs().split(",|/");
                 if (arrs.length > 0) {
                     if (Arrays.asList(arrs).contains(context.getT().getArrAirportCode())) {
                         logger.info("精准规则匹配 抵达地限制 过滤");
@@ -363,7 +363,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
 
             // 仓位过滤
             if (!StringUtils.isEmpty(exactSetting.getCabins())) {
-                String[] cabins = exactSetting.getCabins().split(",");
+                String[] cabins = exactSetting.getCabins().split(",|/");
                 if (cabins.length > 0) {
                     for (SegmentVO segmentVO : flightRoutingsVO.getFromSegments()) {
                         if (!Arrays.asList(cabins).contains(segmentVO.getCabin())) {
@@ -384,7 +384,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
 
             // 航班号过滤
             if (!StringUtils.isEmpty(exactSetting.getFlightnos())) {
-                String[] flightNos = exactSetting.getCabins().split(",");
+                String[] flightNos = exactSetting.getCabins().split(",|/");
                 if (flightNos.length > 0) {
                     for (SegmentVO segmentVO : flightRoutingsVO.getFromSegments()) {
                         if (!Arrays.asList(flightNos).contains(segmentVO.getFlightNumber())) {
