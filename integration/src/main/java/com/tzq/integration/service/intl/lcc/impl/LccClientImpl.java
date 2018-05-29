@@ -1,6 +1,7 @@
 package com.tzq.integration.service.intl.lcc.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
 import com.tzq.commons.enums.AgeTypeEunm;
 import com.tzq.commons.utils.AESUtil;
 import com.tzq.commons.utils.HttpClientUtil;
@@ -238,20 +239,22 @@ public class LccClientImpl extends AbstractBaseClient implements LccClient {
     public IssueTicketRes issueTicket(IssueTicketReq req) {
         String url = String.format("%s/%s/%s", LccConstant.LCCDOMAIN, LccConstant.CID, LccConstant.ISSUETICKET);
         req.setCid(LccConstant.CID + ":" + LccConstant.CIDPWD);
-        String postData = JSON.toJSONString(req);
+      //  String postData = JSON.toJSONString(req);
         Map<String, String> header = getDefaultHeader();
         String response;
 
+        Map<String, String> postDataMap= Maps.newConcurrentMap();
+        postDataMap.put("cid",req.getCid());
+        postDataMap.put("orderNo",req.getOrderNo());
+        postDataMap.put("pnrCode",req.getPnrCode());
+        String postData = JSON.toJSONString(postDataMap);
         IssueTicketRes res = null;
         try {
             logger.info("调用LCC{}接口,入参{}", LccConstant.ISSUETICKET, postData);
-            // 字符串加密
-            postData = AESUtil.Encrypt(postData, LccConstant.AES_KEY);
 
             response = HttpClientUtil.sendPostDataByJson(url, postData, header, ENCODING);
             logger.info("调用LCC{}接口,返回{}", LccConstant.ISSUETICKET, response);
-            // 解密
-            response = AESUtil.Decrypt(response, LccConstant.AES_KEY);
+
             // 解密
             res = JSON.parseObject(response, IssueTicketRes.class);
         } catch (IOException e) {
