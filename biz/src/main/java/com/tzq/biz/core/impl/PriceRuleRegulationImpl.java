@@ -26,11 +26,11 @@ public class PriceRuleRegulationImpl implements PriceRuleRegulation {
         if (exactSetting != null) {
             // 精准调控
             // 成人票面留点\留钱
-            BigDecimal adultprice = new BigDecimal(flightRoutingsVO.getAdultPrice()).multiply(exactSetting.getAduitleavepoint().add(new BigDecimal(1))).add(exactSetting.getAduitleavemoney());
+            BigDecimal adultprice = new BigDecimal(flightRoutingsVO.getAdultPrice()).multiply(exactSetting.getAduitleavepoint().divide(new BigDecimal(100)).add(new BigDecimal(1))).add(exactSetting.getAduitleavemoney());
             flightRoutingsVO.setAdultPrice(adultprice.setScale(0, BigDecimal.ROUND_UP).scale());
 
             // 儿童票面留点\留钱
-            BigDecimal childprice = new BigDecimal(flightRoutingsVO.getChildPrice()).multiply(exactSetting.getChildleavepoint().add(new BigDecimal(1))).add(exactSetting.getChildleavemoney());
+            BigDecimal childprice = new BigDecimal(flightRoutingsVO.getChildPrice()).multiply(exactSetting.getChildleavepoint().divide(new BigDecimal(100)).add(new BigDecimal(1))).add(exactSetting.getChildleavemoney());
             flightRoutingsVO.setChildPrice(childprice.setScale(0, BigDecimal.ROUND_UP).scale());
 
             // 成人税金加钱
@@ -43,11 +43,11 @@ public class PriceRuleRegulationImpl implements PriceRuleRegulation {
         } else if (currencySetting != null) {
             // 通用规则调控
             // 成人票面留点\留钱
-            BigDecimal adultprice = new BigDecimal(flightRoutingsVO.getAdultPrice()).multiply(currencySetting.getAduitleavepoint().add(new BigDecimal(1))).add(currencySetting.getAduitleavemoney());
+            BigDecimal adultprice = new BigDecimal(flightRoutingsVO.getAdultPrice()).multiply(currencySetting.getAduitleavepoint().divide(new BigDecimal(100)).add(new BigDecimal(1))).add(currencySetting.getAduitleavemoney());
             flightRoutingsVO.setAdultPrice(adultprice.setScale(0, BigDecimal.ROUND_UP).scale());
 
             // 儿童票面留点\留钱
-            BigDecimal childprice = new BigDecimal(flightRoutingsVO.getChildPrice()).multiply(currencySetting.getChildleavepoint().add(new BigDecimal(1))).add(currencySetting.getChildleavemoney());
+            BigDecimal childprice = new BigDecimal(flightRoutingsVO.getChildPrice()).multiply(currencySetting.getChildleavepoint().divide(new BigDecimal(100)).add(new BigDecimal(1))).add(currencySetting.getChildleavemoney());
             flightRoutingsVO.setChildPrice(childprice.setScale(0, BigDecimal.ROUND_UP).scale());
 
             // 成人税金加钱
