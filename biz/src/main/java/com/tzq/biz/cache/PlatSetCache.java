@@ -55,6 +55,7 @@ public class PlatSetCache {
      */
     @Cacheable(value = "platSetCache", key = "#salePlat + 'dataMap'")
     public List<MatchingSetting> getPlatRules(String salePlat) {
+        reloadplateData();
         if (plateMatchsetmap.containsKey(salePlat)) {
             return plateMatchsetmap.get(salePlat);
         }
@@ -68,6 +69,7 @@ public class PlatSetCache {
      */
     @Cacheable(value = "salesAirLineSetCache", key = "#purchPlat + 'dataMap'")
     public List<SalesAirLineSetting> getSaleAirLineRules(String purchPlat) {
+        reloadsalesData();
         if (salesMatchsetmap.containsKey(purchPlat)) {
             return salesMatchsetmap.get(purchPlat);
         }
@@ -80,6 +82,7 @@ public class PlatSetCache {
      */
     @Cacheable(value = "exactSetCache", key = "#purchPlat + 'dataMap'")
     public List<ExactSetting> getExactRules(String purchPlat) {
+        reloadexactData();
         if (exactMatchsetmap.containsKey(purchPlat)) {
             return exactMatchsetmap.get(purchPlat);
         }
@@ -94,6 +97,7 @@ public class PlatSetCache {
      */
     @Cacheable(value = "currencySetCache", key = "#salePlat + #purchPlat+ 'dataMap'")
     public List<CurrencySetting> getCurrencyRules(String salePlat, String purchPlat) {
+        reloadcurrencytData();
         String key = salePlat + "-" + purchPlat;
         if (currencytMatchsetmap.containsKey(key)) {
             return currencytMatchsetmap.get(key);
@@ -104,6 +108,14 @@ public class PlatSetCache {
 
     @PostConstruct
     private void initData() {
+        reloadplateData();
+        reloadsalesData();
+        reloadexactData();
+        reloadcurrencytData();
+    }
+
+
+    private void reloadplateData() {
         MatchingSettingExample example = new MatchingSettingExample();
         example.createCriteria().andSettingstatusEqualTo(0);
         List<MatchingSetting> matchingSettings = matchingSettingService.selectByExample(example);
@@ -116,7 +128,9 @@ public class PlatSetCache {
                 plateMatchsetmap.get(key).add(matchingSetting);
             });
         }
+    }
 
+    private void reloadsalesData() {
         SalesAirLineSettingExample salesAirLineSettingExample = new SalesAirLineSettingExample();
         salesAirLineSettingExample.createCriteria().andSettingstatusEqualTo(0);
         List<SalesAirLineSetting> salesAirLineSettings = salesAirLineSettingService.selectByExample(salesAirLineSettingExample);
@@ -129,8 +143,9 @@ public class PlatSetCache {
                 salesMatchsetmap.get(key).add(salesAirLineSetting);
             });
         }
+    }
 
-
+    private void reloadexactData() {
         ExactSettingExample exactSettingExample = new ExactSettingExample();
         exactSettingExample.createCriteria().andSettingstatusEqualTo(0);
         List<ExactSetting> exactSettings = exactSettingService.selectByExample(exactSettingExample);
@@ -143,8 +158,9 @@ public class PlatSetCache {
                 exactMatchsetmap.get(key).add(exactSetting);
             });
         }
+    }
 
-
+    private void reloadcurrencytData() {
         CurrencySettingExample currencySettingExample = new CurrencySettingExample();
         currencySettingExample.createCriteria().andSettingstatusEqualTo(0);
         List<CurrencySetting> currencySettings = currencySettingService.selectByExample(currencySettingExample);
