@@ -7,6 +7,7 @@ import com.tzq.biz.aop.InterfaceAccess;
 import com.tzq.biz.constant.OtaConstants;
 import com.tzq.biz.core.OtaCreateOrderService;
 import com.tzq.biz.core.OtaVerifyFlightService;
+import com.tzq.biz.core.PriceRuleRegulation;
 import com.tzq.biz.proxy.PurchaseProxy;
 import com.tzq.biz.utils.DateConvert;
 import com.tzq.biz.utils.OrderNoUtils;
@@ -22,6 +23,7 @@ import com.tzq.commons.model.context.SingleResult;
 import com.tzq.commons.model.ctrip.order.CreateOrderReqVO;
 import com.tzq.commons.model.ctrip.order.CreateOrderResVO;
 import com.tzq.commons.model.ctrip.order.PassengerVO;
+import com.tzq.commons.model.ctrip.search.FlightRoutingsVO;
 import com.tzq.commons.model.ctrip.search.SegmentVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyResVO;
@@ -31,6 +33,8 @@ import com.tzq.dal.model.order.OrderInfo;
 import com.tzq.dal.model.order.PassengerInfo;
 import com.tzq.dal.model.order.PriceInfo;
 import com.tzq.dal.model.order.SegmentInfo;
+import com.tzq.dal.model.rulesetting.CurrencySetting;
+import com.tzq.dal.model.rulesetting.ExactSetting;
 import com.tzq.dal.service.order.OrderInfoService;
 import com.tzq.dal.service.log.OrderLogService;
 import com.tzq.dal.service.order.PassengerInfoService;
@@ -83,6 +87,9 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
     @Resource
     private OtaVerifyFlightService otaVerifyFlightService;
 
+    @Resource
+    PriceRuleRegulation priceRuleRegulation;
+
     /**
      * 生单
      *
@@ -120,31 +127,48 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
             logger.error(ex.getMessage(), ex);
         } finally {
             //4.落库
-            dbOperator(context, response.getData(),priceVerifyResVO);
+            dbOperator(context, response.getData(), priceVerifyResVO);
         }
 
         return response;
     }
 
     /**
-     *  验证价格
+     * 验证价格
+     *
      * @param context
      */
     private CtripVerifyResVO priceVerify(RouteContext<CreateOrderReqVO> context) {
         // 组装验价接口请求参数
         SingleResult<CtripVerifyResVO> singleResult = otaVerifyFlightService.verifyFlight(getVerifyParam(context));
-
         // 调用强强规则接口价格校验 价格匹配
-        if(singleResult.isSuccess() && singleResult.getData() != null)
-        {
-            return  singleResult.getData();
+        if (singleResult.isSuccess() && singleResult.getData() != null) {
+            ExactSetting exactSetting = null;
+            CurrencySetting currencySetting = null;
+            // 从data中获取精准规则
+            if (context.getT().getRoutings().getData().containsKey(OtaConstants.EXACT_SETTING)) {
+                String exactSetstr = context.getT().getRoutings().getData().get(OtaConstants.EXACT_SETTING).toString();
+                exactSetting = JSON.parseObject(exactSetstr, ExactSetting.class);
+            }
+
+            // 从data中获取通用规则
+            if (context.getT().getRoutings().getData().containsKey(OtaConstants.CURRENCY_SETTING)) {
+                String currencySetstr = context.getT().getRoutings().getData().get(OtaConstants.CURRENCY_SETTING).toString();
+                currencySetting = JSON.parseObject(currencySetstr, CurrencySetting.class);
+            }
+            // 将规则传入计算
+            FlightRoutingsVO flightRoutingsVO =  priceRuleRegulation.flightRegulation(exactSetting, currencySetting, singleResult.getData().getRouting());
+            // TODO 将原始的RoutingsVO 与计算后的RoutingsVO 做比较
+
+            return singleResult.getData();
         }
         return null;
     }
 
     /**
-     *  获取验价请求参数
-     * @param context  上下文
+     * 获取验价请求参数
+     *
+     * @param context 上下文
      * @return
      */
     private RouteContext<CtripVerifyReqVO> getVerifyParam(RouteContext<CreateOrderReqVO> context) {
@@ -169,7 +193,7 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
      * 数据库落库--涉及到多张表的操作,
      */
     @Transactional
-    public void dbOperator(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO,CtripVerifyResVO priceVerifyResVO) {
+    public void dbOperator(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, CtripVerifyResVO priceVerifyResVO) {
         try {
             PassengerInfo passengerInfo = new PassengerInfo();
             OrderLog orderLog = new OrderLog();
@@ -179,7 +203,7 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
                     .setSalePlatName(String.valueOf(context.getPurchaseEnum().getId())).getOrderNum();
 
             /**01.插入订单info**/
-            OrderInfo orderInfo = getOrerInfo(context, orderResVO,priceVerifyResVO ,orderNo);
+            OrderInfo orderInfo = getOrerInfo(context, orderResVO, priceVerifyResVO, orderNo);
             orderInfoService.insert(orderInfo);
             // OrderInfo orderInfo = getOrerInfo(context, orderResVO, orderNo);
 
@@ -207,7 +231,7 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
         }
     }
 
-    private PriceInfo getPriceInfo(OrderInfo orderInfo, String orderNo,CtripVerifyResVO priceVerifyResVO) {
+    private PriceInfo getPriceInfo(OrderInfo orderInfo, String orderNo, CtripVerifyResVO priceVerifyResVO) {
         PriceInfo priceInfo = new PriceInfo();
         priceInfo.setOrderno(orderNo);
         priceInfo.setPolicyreturnpoint(new BigDecimal(0));
@@ -271,7 +295,7 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
         }
         segmentInfo.setExtendvalue(StringUtils.EMPTY);
 
-        String flightNo  = seg.getCarrier()+ Integer.valueOf(seg.getFlightNumber());
+        String flightNo = seg.getCarrier() + Integer.valueOf(seg.getFlightNumber());
 
         segmentInfo.setFlightno(stopDBStrNull(flightNo));
         segmentInfo.setOrderno(orderNo);
@@ -314,7 +338,7 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
         return passList;
     }
 
-    private OrderInfo getOrerInfo(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, CtripVerifyResVO priceVerifyResVO,String orderNo) {
+    private OrderInfo getOrerInfo(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, CtripVerifyResVO priceVerifyResVO, String orderNo) {
         OrderInfo orderInfo = new OrderInfo();
         /**订单信息组装入库**/
         orderInfo.setOrderno(orderNo);

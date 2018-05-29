@@ -88,7 +88,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                         // 通用规则匹配
                         CurrencySetting currencySetting = currencyLimit(resuestContext, purchaseEnum);
                         flightRoutingsVO.getData().put(OtaConstants.EXACT_SETTING, JSON.toJSONString(exactSetting));
-                        flightRoutingsVO.getData().put(OtaConstants.EXACT_SETTING, JSON.toJSONString(exactSetting));
+                        flightRoutingsVO.getData().put(OtaConstants.CURRENCY_SETTING, JSON.toJSONString(currencySetting));
                         // 价格调控
                         flightRoutingsVO = priceRuleRegulation.flightRegulation(exactSetting, currencySetting, flightRoutingsVO);
                         flightRoutingsVOS.add(flightRoutingsVO);
