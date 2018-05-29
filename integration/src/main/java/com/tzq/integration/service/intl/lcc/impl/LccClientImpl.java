@@ -138,60 +138,100 @@ public class LccClientImpl extends AbstractBaseClient implements LccClient {
     }
 
     public static void main(String[] args) {
-        OrderReq orderReq = new OrderReq();
+//        OrderReq orderReq = new OrderReq();
+//
+//        orderReq.setCid("cdchangxin:YVpEgd3m");
+//        orderReq.setTripType(1);
+//        List<Contact> contacts = new ArrayList<>();
+//        Contact contact = new Contact();
+//        contact.setAddress("CHENGDU");
+//        contact.setEmail("281813694@qq.com");
+//        contact.setMobile("18200273125");
+//        contact.setName("ZHIGANG/LIN");
+//        contacts.add(contact);
+//        orderReq.setContact(contacts);
+//
+//        List<Passenger> passengers = new ArrayList<>();
+//        Passenger passenger = new Passenger();
+//        passenger.setAgeType(AgeTypeEunm.ADT.getCode());
+//        passenger.setBirthday("19910425");
+//        passenger.setCardExpired("20200101");
+//        passenger.setCardIssuePlace("CN");
+//        passenger.setCardType("PP");
+//        passenger.setName("LEI/CHEN");
+//        passenger.setGender("M");
+//        passenger.setCardNum("C85492398");
+//        passenger.setNationality("CN");
+//        passengers.add(passenger);
+//        orderReq.setPassengers(passengers);
+//
+//        FlightRoutings routing = new FlightRoutings();
+//        routing.setData("GnyaJaYZ7wuQvG1DsFEY7tc8GB0lrrEJNYtQF9ssRaFx4J7QJYXNwlRlqklpYOzV1E9T1s4TN0ELCQJIUns8VK1W1YS5aIGU3TVOW6DJw1C0AsAy92Oa6jFHWyb0+sNdBeCAtom/4Cl7s4enI1JR8gFhvPqrzh2WuJ8s6DDRatXBGk6Kkr4ryF9+whKWPXNTbUPnUQ/9O99yZTlv5A1GvYhpL24gde6urfUcOrmp34Xxqj+DE8Bw/H8FkK5F4W7OIULGln8LQaYwKwVHz4G1VA==");
+//        routing.setRefData("SCOT-SIN-BKK-20180829-608-nil-nil-OneWay 0516092757");
+//        List<FlightSegment> fromSegments = new ArrayList<>();
+//        FlightSegment segment = new FlightSegment();
+//        segment.setCarrier("TR");
+//        segment.setFlightNumber("608");
+//        segment.setDepAirport("SIN");
+//        segment.setDepTime("201808290635");
+//        segment.setArrAirport("BKK");
+//        segment.setArrTime("201808290800");
+//        segment.setStopCities("");
+//        segment.setCodeShare(false);
+//        segment.setSharingFlightNumber("");
+//        segment.setDepartureTerminal("2");
+//        segment.setArrivingTerminal("");
+//        segment.setCabin("X1");
+//        segment.setAircraftCode("789");
+//        segment.setSeatCount(9);
+//
+//        fromSegments.add(segment);
+//        routing.setFromSegments(fromSegments);
+//        orderReq.setRouting(routing);
+//        LccClientImpl lccClient = new LccClientImpl();
+//        OrderRes res = lccClient.createOrder(orderReq);
+//
+//        System.out.println(JSON.toJSONString(res));
 
-        orderReq.setCid("cdchangxin:YVpEgd3m");
-        orderReq.setTripType(1);
-        List<Contact> contacts = new ArrayList<>();
-        Contact contact = new Contact();
-        contact.setAddress("CHENGDU");
-        contact.setEmail("281813694@qq.com");
-        contact.setMobile("18200273125");
-        contact.setName("ZHIGANG/LIN");
-        contacts.add(contact);
-        orderReq.setContact(contacts);
 
-        List<Passenger> passengers = new ArrayList<>();
-        Passenger passenger = new Passenger();
-        passenger.setAgeType(AgeTypeEunm.ADT.getCode());
-        passenger.setBirthday("19910425");
-        passenger.setCardExpired("20200101");
-        passenger.setCardIssuePlace("CN");
-        passenger.setCardType("PP");
-        passenger.setName("LEI/CHEN");
-        passenger.setGender("M");
-        passenger.setCardNum("C85492398");
-        passenger.setNationality("CN");
-        passengers.add(passenger);
-        orderReq.setPassengers(passengers);
+        try {
+            IssueTicketReq req = new IssueTicketReq();
+            req.setTripType(1);
+            req.setOrderNo("20180529061137976355");
+            req.setPnrCode("L4BRNF");
+            req.setSessionId("");
+            FlightRoutings routings = new FlightRoutings();
+            routings.setData("GnyaJaYZ7wuQvG1DsFEY7tc8GB0lrrEJNYtQF9ssRaGOKRvE+9e8faEpKyLD07VCryOix5hECzt7dJW7657DwgZnGxwubse4vlDP+7gJEsa29l4fz3SoSVWzg8RcUfQ2W+My2YfkAWAY6VSDOyQg2y8AysgsV7sI/WjotSEHsZjL/onxZo3eCT+pCS5Xz0LwYrkPHlgmcbNXi31Oi0G0tCN+XGB2YzTta97xvaZVBVZKDIfewf5uuizU7bbT/GWEDRBdIVc7noCs0TnECQ4yPA==");
+            List<FlightSegment> fromSegments = new ArrayList<>();
+            List<FlightSegment> retSegments = new ArrayList<>();
+            FlightSegment segment = new FlightSegment();
+            segment.setCarrier("TR");
+            segment.setFlightNumber("107");
+            segment.setDepAirport("CAN");
+            segment.setDepTime("201811250345");
+             segment.setArrAirport("SIN");
+            segment.setArrTime("201811250830");
+            segment.setStopCities("");
+            segment.setCodeShare(false);
+            segment.setSharingFlightNumber("");
+            segment.setDepartureTerminal("1");
+            segment.setArrivingTerminal("2");
+            segment.setCabin("O1");
+            segment.setSeatCount(7);
+            segment.setAircraftCode("789");
+            fromSegments.add(segment);
+            routings.setFromSegments(fromSegments);
+            routings.setRetSegments(retSegments);
+            req.setRouting(routings);
 
-        FlightRoutings routing = new FlightRoutings();
-        routing.setData("GnyaJaYZ7wuQvG1DsFEY7tc8GB0lrrEJNYtQF9ssRaFx4J7QJYXNwlRlqklpYOzV1E9T1s4TN0ELCQJIUns8VK1W1YS5aIGU3TVOW6DJw1C0AsAy92Oa6jFHWyb0+sNdBeCAtom/4Cl7s4enI1JR8gFhvPqrzh2WuJ8s6DDRatXBGk6Kkr4ryF9+whKWPXNTbUPnUQ/9O99yZTlv5A1GvYhpL24gde6urfUcOrmp34Xxqj+DE8Bw/H8FkK5F4W7OIULGln8LQaYwKwVHz4G1VA==");
-        routing.setRefData("SCOT-SIN-BKK-20180829-608-nil-nil-OneWay 0516092757");
-        List<FlightSegment> fromSegments = new ArrayList<>();
-        FlightSegment segment = new FlightSegment();
-        segment.setCarrier("TR");
-        segment.setFlightNumber("608");
-        segment.setDepAirport("SIN");
-        segment.setDepTime("201808290635");
-        segment.setArrAirport("BKK");
-        segment.setArrTime("201808290800");
-        segment.setStopCities("");
-        segment.setCodeShare(false);
-        segment.setSharingFlightNumber("");
-        segment.setDepartureTerminal("2");
-        segment.setArrivingTerminal("");
-        segment.setCabin("X1");
-        segment.setAircraftCode("789");
-        segment.setSeatCount(9);
-
-        fromSegments.add(segment);
-        routing.setFromSegments(fromSegments);
-        orderReq.setRouting(routing);
-        LccClientImpl lccClient = new LccClientImpl();
-        OrderRes res = lccClient.createOrder(orderReq);
-
-        System.out.println(JSON.toJSONString(res));
+            LccClientImpl lccClient = new LccClientImpl();
+            lccClient.issueTicket(req);
+            System.out.println("完毕");
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
     @Override

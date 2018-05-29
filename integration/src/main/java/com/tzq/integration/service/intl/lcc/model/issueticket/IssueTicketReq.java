@@ -14,7 +14,7 @@ public class IssueTicketReq extends BaseParam implements Serializable {
     private String orderNo;
     private String pnrCode;
 
-    private FlightRoutings reqRouting;
+    private FlightRoutings routing;
 
     public String getOrderNo() {
         return orderNo;
@@ -32,12 +32,12 @@ public class IssueTicketReq extends BaseParam implements Serializable {
         this.pnrCode = pnrCode;
     }
 
-    public FlightRoutings getReqRouting() {
-        return reqRouting;
+    public FlightRoutings getRouting() {
+        return routing;
     }
 
-    public void setReqRouting(FlightRoutings reqRouting) {
-        this.reqRouting = reqRouting;
+    public void setRouting(FlightRoutings routing) {
+        this.routing = routing;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class IssueTicketReq extends BaseParam implements Serializable {
         final StringBuilder sb = new StringBuilder("{");
         sb.append("            \"orderNo\":\"").append(orderNo).append('\"');
         sb.append(",             \"pnrCode\":\"").append(pnrCode).append('\"');
-        sb.append(",             \"reqRouting\":").append(reqRouting);
+        sb.append(",             \"routing\":").append(routing);
         sb.append('}');
         sb.append(super.toString());
         return sb.toString();

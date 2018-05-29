@@ -90,7 +90,13 @@ public class LccIntlIssueTicketServiceImpl extends AbstractIssueTicketService {
             issueTicketReq.setPnrCode(orderinfos.get(0).getPnr());
             Map<String, Object> extMap         = ExtInfoConverter.string2Map(orderinfos.get(0).getExtendvalue());
             FlightRoutingsVO    flightRoutings = JSON.parseObject(extMap.get(OtaConstants.ORDER_ROUTING).toString(), FlightRoutingsVO.class);
-            issueTicketReq.setReqRouting(flightRoutingsVO2IO(flightRoutings));
+            issueTicketReq.setRouting(flightRoutingsVO2IO(flightRoutings));
+            issueTicketReq.setTripType(orderinfos.get(0).getVoyagetype());
+            if(orderinfos.get(0).getVoyagetype()==1)
+            {
+                issueTicketReq.getRouting().setRetSegments(new ArrayList<>());
+            }
+
         }
         return (T) issueTicketReq;
     }
