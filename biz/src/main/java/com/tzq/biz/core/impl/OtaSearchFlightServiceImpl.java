@@ -90,7 +90,9 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                         flightRoutingsVO.getData().put(OtaConstants.EXACT_SETTING, JSON.toJSONString(exactSetting));
                         flightRoutingsVO.getData().put(OtaConstants.CURRENCY_SETTING, JSON.toJSONString(currencySetting));
                         // 价格调控
+                        logger.info("价格调控前{}",JSON.toJSONString(flightRoutingsVO));
                         flightRoutingsVO = priceRuleRegulation.flightRegulation(exactSetting, currencySetting, flightRoutingsVO);
+                        logger.info("价格调控后{}",JSON.toJSONString(flightRoutingsVO));
                         flightRoutingsVOS.add(flightRoutingsVO);
                     }
                 });
@@ -136,7 +138,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                 String[] depports = salesAirLineSetting.getDeps().split(",|/");
                 if (depports.length > 0) {
                     if (!Arrays.asList(depports).contains(context.getDepAirportCode())) {
-                        logger.info(" 供应销售规则匹配 出发地限制 过滤");
+                        logger.info(" 供应销售规则匹配 出发地限制 过滤 原始:{},出发地限制{}", context.getDepAirportCode(), salesAirLineSetting.getDeps());
                         return;
                     }
                 }
@@ -146,7 +148,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                 String[] arrports = salesAirLineSetting.getArrs().split(",|/");
                 if (arrports.length > 0) {
                     if (!Arrays.asList(arrports).contains(context.getArrAirportCode())) {
-                        logger.info("供应销售规则匹配 抵达地限制 过滤");
+                        logger.info(" 供应销售规则匹配 抵达地限制 过滤 原始:{},出发地限制{}", context.getArrAirportCode(), salesAirLineSetting.getArrs());
                         return;
                     }
                 }
@@ -290,7 +292,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
             if (!StringUtils.isEmpty(exactSetting.getArrs())) {
                 String[] arrs = exactSetting.getArrs().split(",|/");
                 if (arrs.length > 0) {
-                    if (Arrays.asList(arrs).contains(context.getT().getArrAirportCode())) {
+                    if (!Arrays.asList(arrs).contains(context.getT().getArrAirportCode())) {
                         logger.info("精准规则匹配 抵达地限制 过滤");
                         return;
                     }

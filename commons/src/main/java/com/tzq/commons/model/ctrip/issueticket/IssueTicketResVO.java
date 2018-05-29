@@ -10,21 +10,18 @@ package com.tzq.commons.model.ctrip.issueticket;
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
 public class IssueTicketResVO {
-
     /**
      * 订单号
      */
     private String orderNo;
-
     /**
-     * PNR
+     * 结果类型: 0 成功 / 其他 失败
      */
-    private String pnrCode;
-
+    private int status;
     /**
-     * 订单状态
+     * 提示信息，长度小于64个字符
      */
-    private Integer orderState;
+    private String msg;
 
     public String getOrderNo() {
         return orderNo;
@@ -34,19 +31,19 @@ public class IssueTicketResVO {
         this.orderNo = orderNo;
     }
 
-    public String getPnrCode() {
-        return pnrCode;
+    public int getStatus() {
+        return status;
     }
 
-    public void setPnrCode(String pnrCode) {
-        this.pnrCode = pnrCode;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-    public Integer getOrderState() {
-        return orderState;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setOrderState(Integer orderState) {
-        this.orderState = orderState;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

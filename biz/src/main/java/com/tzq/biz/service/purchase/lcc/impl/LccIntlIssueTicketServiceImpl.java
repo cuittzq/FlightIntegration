@@ -118,10 +118,9 @@ public class LccIntlIssueTicketServiceImpl extends AbstractIssueTicketService {
             throw new ServiceAbstractException(ServiceErrorMsg.Builder.newInstance().setErrorMsg(issueTicketRes.getMsg()).setErrorCode(CommonExcetpionConstant.INTERFACE_INVOKE_ERROR_CODE).build());
         } else {
             /**构建返回结果**/
-
             issueTicketResVO.setOrderNo(context.getT().getOrderNo());
-            issueTicketResVO.setPnrCode(issueTicketRes.getPnrCode());
-            issueTicketResVO.setOrderState(issueTicketRes.getOrderState());
+            issueTicketResVO.setMsg(issueTicketRes.getMsg());
+            issueTicketResVO.setStatus(issueTicketRes.getStatus());
         }
 
         return issueTicketResVO;

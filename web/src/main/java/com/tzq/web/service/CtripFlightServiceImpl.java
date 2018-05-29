@@ -161,9 +161,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
             response.setRouting(ctripVerifyVOMapper.flightRoutingsVO2DTO(singleResult.getData().getRouting()));
             response.getRouting().setFromSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getFromSegments()));
             response.getRouting().setRetSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getRetSegments()));
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
             logger.error("调用验价接口异常", MethodEnum.CREATEORDER, ex);
         }
@@ -230,16 +228,27 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         RouteContext<IssueTicketReqVO> context = new RouteContext();
         setDefaultCont(context);
         context.setT(issueTicketVOMapper.IssueTicketReqDTO2VO(req));
-        logger.info("调用LCC{}接口,入参{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(context));
+        logger.info("调用LCC{}接口,入参{}", MethodEnum.OOTTICKET, JSON.toJSONString(context));
         SingleResult<IssueTicketResVO> response = otaIssueTicketService.issueTicket(context);
-        logger.info("调用LCC{}接口,返回{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(response));
+        logger.info("调用LCC{}接口,返回{}", MethodEnum.OOTTICKET, JSON.toJSONString(response));
+        IssueTicketResDTO issueTicketResDTO = new IssueTicketResDTO();
         if (response == null) {
-            IssueTicketResDTO issueTicketResDTO = new IssueTicketResDTO();
-            issueTicketResDTO.setStatus(1);
-            issueTicketResDTO.setMsg("");
+            issueTicketResDTO.setStatus(-1);
+            issueTicketResDTO.setMsg(response.getErrorMessage());
+            issueTicketResDTO.setOrderNo(req.getOrderNo());
+            return issueTicketResDTO;
+        } else {
+            issueTicketResDTO.setOrderNo(req.getOrderNo());
+            if (response.getData() != null) {
+                issueTicketResDTO.setStatus(response.getData().getStatus());
+                issueTicketResDTO.setMsg(response.getData().getMsg());
+                return issueTicketResDTO;
+            }
+
+            issueTicketResDTO.setStatus(-1);
+            issueTicketResDTO.setMsg(response.getErrorMessage());
             return issueTicketResDTO;
         }
-        return issueTicketVOMapper.IssueTicketResVO2DTO(response.getData());
     }
 
 

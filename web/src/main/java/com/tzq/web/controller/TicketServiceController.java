@@ -43,6 +43,7 @@ public class TicketServiceController {
             issueTicketResDTO = new IssueTicketResDTO();
             issueTicketResDTO.setStatus(StatusEnum.DATA_ERROR.getCode());
             issueTicketResDTO.setMsg(StatusEnum.DATA_ERROR.getDesc());
+            issueTicketResDTO.setOrderNo(issueTicketReqDTO.getOrderNo());
         }
         return issueTicketResDTO;
     }
