@@ -127,6 +127,8 @@ public class CtripFlightServiceImpl implements CtripFlightService {
                     routing.setData(GZipCompress.rDataCompress(routing.getData()));
                 } catch (IOException e) {
                     logger.error("data压缩异常", e);
+                } catch (Exception e) {
+                    logger.error("data压缩异常", e);
                 }
             });
         }
@@ -158,6 +160,8 @@ public class CtripFlightServiceImpl implements CtripFlightService {
                 req.getRoutings().setData(GZipCompress.rDataUnCompress(req.getRoutings().getData()));
             } catch (IOException e) {
                 logger.error("data解压缩异常", e);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 
@@ -215,6 +219,8 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         try {
             req.getRoutings().setData(GZipCompress.rDataUnCompress(req.getRoutings().getData()));
         } catch (IOException e) {
+            logger.error("data解压缩异常", e);
+        } catch (Exception e) {
             logger.error("data解压缩异常", e);
         }
 

@@ -107,10 +107,16 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
         try {
             //1.获取验价规则
 
-            //2.验价
-            priceVerifyResVO = this.priceVerify(context);
+            //2.获取原始价格数据
+            priceVerifyResVO = this.getOriginPrice(context);
 
-            //3.下单
+            if (priceVerifyResVO == null || priceVerifyResVO.getRouting() == null) {
+                throw new ServiceAbstractException(CommonExcetpionConstant.VERIFY_PRICE_NULL);
+            }
+            //3.价格校验
+            verifyData(context, priceVerifyResVO.getRouting());
+
+            //4.下单
             CreateOrderResVO verifyResVO = purchaseProxy.createOrder(context);
             if (verifyResVO == null) {
                 response = new SingleResult<>(verifyResVO, false, CommonExcetpionConstant.SYSTEM_EXCEPTION_CODE, "无数据");
@@ -133,35 +139,51 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
         return response;
     }
 
+    private void verifyData(RouteContext<CreateOrderReqVO> context, FlightRoutingsVO routingsVO) {
+        ExactSetting exactSetting = null;
+        CurrencySetting currencySetting = null;
+        // 从data中获取精准规则
+        if (context.getT().getRoutings().getData().containsKey(OtaConstants.EXACT_SETTING)) {
+            String exactSetstr = context.getT().getRoutings().getData().get(OtaConstants.EXACT_SETTING).toString();
+            exactSetting = JSON.parseObject(exactSetstr, ExactSetting.class);
+        }
+
+        // 从data中获取通用规则
+        if (context.getT().getRoutings().getData().containsKey(OtaConstants.CURRENCY_SETTING)) {
+            String currencySetstr = context.getT().getRoutings().getData().get(OtaConstants.CURRENCY_SETTING).toString();
+            currencySetting = JSON.parseObject(currencySetstr, CurrencySetting.class);
+        }
+
+        // 对象序列化克隆
+        FlightRoutingsVO routingsVOClone = JSON.parseObject(JSON.toJSONString(routingsVO),FlightRoutingsVO.class);
+
+        // 将规则传入计算
+        FlightRoutingsVO flightRoutingsVO = priceRuleRegulation.flightRegulation(exactSetting, currencySetting, routingsVOClone);
+
+
+        // 成人价格价格比较
+        if(flightRoutingsVO.getAdultPrice() != context.getT().getRoutings().getAdultPrice() ||
+                flightRoutingsVO.getAdultTax() != context.getT().getRoutings().getAdultTax() ||
+                flightRoutingsVO.getChildTax() != context.getT().getRoutings().getChildTax() ||
+                flightRoutingsVO.getChildPrice() != context.getT().getRoutings().getChildPrice() )
+        {
+            throw new ServiceAbstractException(CommonExcetpionConstant.VERIFY_PRICE_ERROR);
+        }
+    }
+
     /**
      * 验证价格
      *
      * @param context
      */
-    private CtripVerifyResVO priceVerify(RouteContext<CreateOrderReqVO> context) {
+    private CtripVerifyResVO getOriginPrice(RouteContext<CreateOrderReqVO> context) {
         // 组装验价接口请求参数
         SingleResult<CtripVerifyResVO> singleResult = otaVerifyFlightService.verifyFlight(getVerifyParam(context));
         // 调用强强规则接口价格校验 价格匹配
         if (singleResult.isSuccess() && singleResult.getData() != null) {
-            ExactSetting exactSetting = null;
-            CurrencySetting currencySetting = null;
-            // 从data中获取精准规则
-            if (context.getT().getRoutings().getData().containsKey(OtaConstants.EXACT_SETTING)) {
-                String exactSetstr = context.getT().getRoutings().getData().get(OtaConstants.EXACT_SETTING).toString();
-                exactSetting = JSON.parseObject(exactSetstr, ExactSetting.class);
-            }
-
-            // 从data中获取通用规则
-            if (context.getT().getRoutings().getData().containsKey(OtaConstants.CURRENCY_SETTING)) {
-                String currencySetstr = context.getT().getRoutings().getData().get(OtaConstants.CURRENCY_SETTING).toString();
-                currencySetting = JSON.parseObject(currencySetstr, CurrencySetting.class);
-            }
-            // 将规则传入计算
-            FlightRoutingsVO flightRoutingsVO =  priceRuleRegulation.flightRegulation(exactSetting, currencySetting, singleResult.getData().getRouting());
-            // TODO 将原始的RoutingsVO 与计算后的RoutingsVO 做比较
-
             return singleResult.getData();
         }
+
         return null;
     }
 
@@ -177,6 +199,7 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
         CtripVerifyReqVO reqVO = new CtripVerifyReqVO();
         reqVO.setRouting(context.getT().getRoutings());
         reqVO.setTripType(context.getT().getTripType());
+        reqVO.setNeedCalPrice(false);
 
         // 根据查询的data确定调用供应商
         String purchaseEnum = context.getT().getRoutings().getData().get(OtaConstants.PURCHANAME).toString();

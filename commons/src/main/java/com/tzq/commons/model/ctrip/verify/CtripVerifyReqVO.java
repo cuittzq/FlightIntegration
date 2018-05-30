@@ -35,6 +35,16 @@ public class CtripVerifyReqVO extends BaseRequest{
      */
     private FlightRoutingsVO routing;
 
+    private Boolean needCalPrice = true;
+
+    public Boolean getNeedCalPrice() {
+        return needCalPrice;
+    }
+
+    public void setNeedCalPrice(Boolean needCalPrice) {
+        this.needCalPrice = needCalPrice;
+    }
+
     public String getReferenceId() {
         return referenceId;
     }
