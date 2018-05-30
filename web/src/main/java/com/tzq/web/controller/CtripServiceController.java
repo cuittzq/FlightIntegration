@@ -47,8 +47,8 @@ public class CtripServiceController {
     }
 
     @RequestMapping(value = "/verify", method = RequestMethod.POST)
-    @UserAccess(desc = "verify")
-    CtripVerifyRes Verify( @RequestBody CtripVerifyReq verifyReq, BindingResult bindingResult) {
+
+    public CtripVerifyRes Verify( @RequestBody CtripVerifyReq verifyReq, BindingResult bindingResult) {
 
         CtripVerifyRes verifyRes = new CtripVerifyRes();
         if (bindingResult.hasErrors()) {
@@ -81,7 +81,7 @@ public class CtripServiceController {
     }
 
     @RequestMapping(value = "/createorder", method = RequestMethod.POST)
-    @UserAccess(desc = "createorder")
+
     public CreateOrderRes CreateOrder(@Valid @RequestBody CreateOrderReq createOrderReq, BindingResult bindingResult) {
         CreateOrderRes createOrderRes = new CreateOrderRes();
         if (bindingResult.hasErrors()) {

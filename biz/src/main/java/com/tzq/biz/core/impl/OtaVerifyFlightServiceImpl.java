@@ -100,17 +100,7 @@ public class OtaVerifyFlightServiceImpl implements OtaVerifyFlightService {
             throw  new ServiceAbstractException(ServiceErrorMsg.Builder.newInstance().setErrorCode(CommonExcetpionConstant.ROUTING_DATA_ERROR).setErrorMsg("routing数据非法！").setStatus(false).build());
         }
 
-        //
-        FlightRoutingsVO vo = context.getT().getRouting();
-        vo.setAdultTax(verifyResVO.getRouting().getAdultTax());
-        vo.setAdultPrice(verifyResVO.getRouting().getAdultPrice());
-        vo.setAdultAgeRestriction(verifyResVO.getRouting().getAdultAgeRestriction());
-        vo.setChildTaxType(verifyResVO.getRouting().getChildTaxType());
-        vo.setAdultTaxType(verifyResVO.getRouting().getAdultTaxType());
-        vo.setChildTax(verifyResVO.getRouting().getChildTax());
-        vo.setChildPrice(verifyResVO.getRouting().getChildPrice());
-
-        priceRuleRegulation.flightRegulation(exactSetting,currencySetting,vo);
+        priceRuleRegulation.flightRegulation(exactSetting,currencySetting,verifyResVO.getRouting());
     }
 
     /**
@@ -119,7 +109,6 @@ public class OtaVerifyFlightServiceImpl implements OtaVerifyFlightService {
      * @param resVOS
      * @return
      */
-
     private CtripVerifyResVO flightRegulation(List<CtripVerifyResVO> resVOS) {
         if (null != resVOS && resVOS.size() > 0) {
             return resVOS.get(0);

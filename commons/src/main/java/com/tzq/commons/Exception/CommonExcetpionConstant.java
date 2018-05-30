@@ -47,5 +47,5 @@ public class CommonExcetpionConstant {
 
     public static final ServiceErrorMsg VERIFY_PRICE_ERROR = ServiceErrorMsg.Builder.newInstance()
             .setErrorCode(CommonExcetpionConstant.VERIFY_PRICE_ERROR_CODE)
-            .setErrorMsg("验价返回空").build();
+            .setErrorMsg("验价不通过").build();
 }
