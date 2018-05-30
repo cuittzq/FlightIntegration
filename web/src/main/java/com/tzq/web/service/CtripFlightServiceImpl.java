@@ -5,6 +5,7 @@ import com.tzq.biz.core.OtaCreateOrderService;
 import com.tzq.biz.core.OtaIssueTicketService;
 import com.tzq.biz.core.OtaSearchFlightService;
 import com.tzq.biz.core.OtaVerifyFlightService;
+import com.tzq.commons.compress.GZipCompress;
 import com.tzq.commons.enums.*;
 import com.tzq.commons.mapper.ota.CtripOrderVOMapper;
 import com.tzq.commons.mapper.ota.CtripVerifyVOMapper;
@@ -35,8 +36,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -118,6 +121,15 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         searchFlightRes.setStatus(StatusEnum.SUCCEED.getCode());
         FlightRouteVO flightRouteVO = response.getData();
         searchFlightRes.setRoutings(flightRoutingsVOMapper.flightRoutingsVO2DTOs(flightRouteVO.getFlightRouteList()));
+        if (!CollectionUtils.isEmpty(searchFlightRes.getRoutings())) {
+            searchFlightRes.getRoutings().forEach(routing -> {
+                try {
+                    routing.setData(GZipCompress.rDataCompress(routing.getData()));
+                } catch (IOException e) {
+                    logger.error("data压缩异常", e);
+                }
+            });
+        }
         return searchFlightRes;
     }
 
@@ -141,6 +153,14 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         verifyReqVO.setRequesttype(req.getRequesttype());
         verifyReqVO.setTripType(req.getTripType() == 1 ? TripTypeEnum.OW : TripTypeEnum.RT);
 
+        if (req.getRoutings() != null) {
+            try {
+                req.getRoutings().setData(GZipCompress.rDataUnCompress(req.getRoutings().getData()));
+            } catch (IOException e) {
+                logger.error("data解压缩异常", e);
+            }
+        }
+
         verifyReqVO.setRouting(flightRoutingsVOMapper.flightRoutingsDTO2VO(req.getRoutings()));
         verifyReqVO.getRouting().setFromSegments(flightRoutingsVOMapper.segmentDTO2VOs(req.getRoutings().getFromSegments()));
         verifyReqVO.getRouting().setRetSegments(flightRoutingsVOMapper.segmentDTO2VOs(req.getRoutings().getRetSegments()));
@@ -159,6 +179,14 @@ public class CtripFlightServiceImpl implements CtripFlightService {
             response.setMaxSeats(singleResult.getData().getMaxSeats());
             response.setRule(ctripVerifyVOMapper.rulesVO2DTO(singleResult.getData().getRule()));
             response.setRouting(ctripVerifyVOMapper.flightRoutingsVO2DTO(singleResult.getData().getRouting()));
+
+            if (response.getRouting() != null) {
+                try {
+                    response.getRouting().setData(GZipCompress.rDataCompress(response.getRouting().getData()));
+                } catch (IOException e) {
+                    logger.error("data压缩异常", e);
+                }
+            }
             response.getRouting().setFromSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getFromSegments()));
             response.getRouting().setRetSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getRetSegments()));
         } catch (Exception ex) {
@@ -176,14 +204,20 @@ public class CtripFlightServiceImpl implements CtripFlightService {
      */
     @Override
     public CreateOrderRes createOrder(CreateOrderReq req) {
-        RouteContext<CreateOrderReqVO> context = new RouteContext();
-        CreateOrderRes response = new CreateOrderRes();
+        RouteContext<CreateOrderReqVO> context  = new RouteContext();
+        CreateOrderRes                 response = new CreateOrderRes();
         setDefaultCont(context);
         if (req.getRoutings() == null) {
             response.setMsg("routings can not be null");
             response.setStatus(StatusEnum.PARAM_ERROR.getCode());
             return response;
         }
+        try {
+            req.getRoutings().setData(GZipCompress.rDataUnCompress(req.getRoutings().getData()));
+        } catch (IOException e) {
+            logger.error("data解压缩异常", e);
+        }
+
         if (req.getTripType().equals(1)) {
             context.setDepAirportCode(req.getRoutings().getFromSegments().get(0).getDepAirport());
             context.setArrAirportCode(req.getRoutings().getFromSegments().get(0).getArrAirport());
@@ -202,7 +236,6 @@ public class CtripFlightServiceImpl implements CtripFlightService {
             SingleResult<CreateOrderResVO> singleResult = otaCreateOrderService.createOrder(context);
 
             logger.info("调用LCC{}接口,返回{}", MethodEnum.CREATEORDER, JSON.toJSONString(1));
-
             if (!singleResult.isSuccess() || singleResult.getData() == null) {
                 response.setMsg(singleResult.getErrorMessage());
                 response.setStatus(StatusEnum.INNER_ERROR.getCode());
@@ -210,6 +243,11 @@ public class CtripFlightServiceImpl implements CtripFlightService {
             }
 
             response = ctripOrderVOMapper.CreateOrderResVO2DTO(singleResult.getData());
+            try {
+                response.getRouting().setData(GZipCompress.rDataCompress(response.getRouting().getData()));
+            } catch (IOException e) {
+                logger.error("data压缩异常", e);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             logger.error("调用创单接口异常", MethodEnum.CREATEORDER, ex);
