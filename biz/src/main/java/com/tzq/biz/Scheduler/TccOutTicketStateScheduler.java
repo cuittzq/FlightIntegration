@@ -61,7 +61,7 @@ public class TccOutTicketStateScheduler {
     private List<OrderInfo> getOrderInfoLst() {
         //扫描订单状态为0 并且有PNR的订单
         OrderInfoExample example = new OrderInfoExample();
-        example.or().andOrderstateEqualTo(1).andPnrIsNotNull();
+        example.or().andOrderstateEqualTo(3).andPnrIsNotNull();
 
         List<OrderInfo> orderInfos = orderInfoService.selectByExample(example);
         return  orderInfos;
