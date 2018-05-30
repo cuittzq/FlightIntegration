@@ -38,7 +38,6 @@ public class TccOutTicketStateScheduler {
     @Scheduled(cron = SchedulerConstants.CRON_FOR_TCC_TICKET_STATE_JOB)
     public void ticketStateJob()
     {
-        System.out.println("开始扫描订单单库数据");
         logger.info("开始扫描订单单库数据");
         // 01.获取需要扫描的订单
         List<OrderInfo> orderInfos = getOrderInfoLst();

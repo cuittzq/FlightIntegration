@@ -58,13 +58,6 @@ public class CreateOrderLogAspect {
             }
         });
         td.start();
-
-        // 记录下请求内容
-        System.out.println("URL : " + request.getRequestURL().toString());
-        System.out.println("HTTP_METHOD : " + request.getMethod());
-        System.out.println("IP : " + request.getRemoteAddr());
-        System.out.println("CLASS_METHOD : " + point.getSignature().getDeclaringTypeName() + "." + point.getSignature().getName());
-        System.out.println("ARGS : " + Arrays.toString(point.getArgs()));
     }
 
     private InterfaceRequestLog buildLogs(HttpServletRequest request, HttpServletResponse response, RouteContext<CreateOrderReqVO> paramin, SingleResult<CreateOrderResVO> flightRouteVO) {
