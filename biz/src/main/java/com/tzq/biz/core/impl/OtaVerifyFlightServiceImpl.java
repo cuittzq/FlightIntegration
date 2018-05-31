@@ -1,6 +1,7 @@
 package com.tzq.biz.core.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.tzq.biz.cache.PlatSetCache;
 import com.tzq.biz.constant.OtaConstants;
 import com.tzq.biz.core.OtaVerifyFlightService;
 import com.tzq.biz.core.PriceRuleRegulation;
@@ -18,8 +19,10 @@ import com.tzq.commons.model.ctrip.verify.CtripVerifyReqVO;
 import com.tzq.commons.model.ctrip.verify.CtripVerifyResVO;
 import com.tzq.dal.model.rulesetting.CurrencySetting;
 import com.tzq.dal.model.rulesetting.ExactSetting;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -45,6 +48,8 @@ public class OtaVerifyFlightServiceImpl implements OtaVerifyFlightService {
     @Resource
     PriceRuleRegulation priceRuleRegulation;
 
+    @Autowired
+    PlatSetCache platSetCache;
     /**
      * 查询航班
      *
@@ -93,13 +98,29 @@ public class OtaVerifyFlightServiceImpl implements OtaVerifyFlightService {
      * @param verifyResVO
      */
     private void priceHandle(RouteContext<CtripVerifyReqVO> context, CtripVerifyResVO verifyResVO) {
-        ExactSetting exactSetting = JSON.parseObject(String.valueOf( context.getT().getRouting().getData().get(OtaConstants.EXACT_SETTING)),ExactSetting.class);
-        CurrencySetting currencySetting=JSON.parseObject(String.valueOf( context.getT().getRouting().getData().get(OtaConstants.CURRENCY_SETTING)),CurrencySetting.class);
-        if(exactSetting ==null && currencySetting==null)
-        {
-            throw  new ServiceAbstractException(ServiceErrorMsg.Builder.newInstance().setErrorCode(CommonExcetpionConstant.ROUTING_DATA_ERROR).setErrorMsg("routing数据非法！").setStatus(false).build());
+
+        ExactSetting exactSetting =null;
+        CurrencySetting currencySetting=null;
+        // 从data中获取精准规则
+        if (context.getT().getRouting().getData().containsKey(OtaConstants.EXACT_SETTING)) {
+            String exactSetstr = context.getT().getRouting().getData().get(OtaConstants.EXACT_SETTING).toString();
+            if (StringUtils.isNotEmpty(exactSetstr)) {
+                exactSetting = platSetCache.getExactRulesbyid(exactSetstr);
+            }
         }
 
+        // 从data中获取通用规则
+        if (context.getT().getRouting().getData().containsKey(OtaConstants.CURRENCY_SETTING)) {
+            String currencySetstr = context.getT().getRouting().getData().get(OtaConstants.CURRENCY_SETTING).toString();
+            if (StringUtils.isNotEmpty(currencySetstr)) {
+                currencySetting = platSetCache.getCurrencyRulesByid(currencySetstr);
+            }
+        }
+
+//        if(exactSetting ==null && currencySetting==null)
+//        {
+//            throw  new ServiceAbstractException(ServiceErrorMsg.Builder.newInstance().setErrorCode(CommonExcetpionConstant.ROUTING_DATA_ERROR).setErrorMsg("routing数据非法！").setStatus(false).build());
+//        }
         //
         FlightRoutingsVO vo = context.getT().getRouting();
         vo.setAdultTax(verifyResVO.getRouting().getAdultTax());

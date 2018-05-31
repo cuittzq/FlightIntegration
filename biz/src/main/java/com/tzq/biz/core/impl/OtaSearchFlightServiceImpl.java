@@ -66,7 +66,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
         }
         // 筛选适合的规则
         List<MatchingSetting> matchedSetting = getMatchedSetting(matchingSettings, context);
-        List<PurchaseEnum> ota2Purchases = getPurchases(matchedSetting);
+        List<PurchaseEnum>    ota2Purchases  = getPurchases(matchedSetting);
         if (CollectionUtils.isEmpty(ota2Purchases)) {
             // 如果没有配置规则直接返回空
             return response;
@@ -87,12 +87,12 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                         ExactSetting exactSetting = exactLimit(flightRoutingsVO, resuestContext, purchaseEnum);
                         // 通用规则匹配
                         CurrencySetting currencySetting = currencyLimit(resuestContext, purchaseEnum);
-                        flightRoutingsVO.getData().put(OtaConstants.EXACT_SETTING, JSON.toJSONString(exactSetting));
-                        flightRoutingsVO.getData().put(OtaConstants.CURRENCY_SETTING, JSON.toJSONString(currencySetting));
+                        flightRoutingsVO.getData().put(OtaConstants.EXACT_SETTING, exactSetting != null ? exactSetting.getId() : "");
+                        flightRoutingsVO.getData().put(OtaConstants.CURRENCY_SETTING, currencySetting != null ? currencySetting.getId() : "");
                         // 价格调控
-                        logger.info("价格调控前{}",JSON.toJSONString(flightRoutingsVO));
+                        logger.info("价格调控前{}", JSON.toJSONString(flightRoutingsVO));
                         flightRoutingsVO = priceRuleRegulation.flightRegulation(exactSetting, currencySetting, flightRoutingsVO);
-                        logger.info("价格调控后{}",JSON.toJSONString(flightRoutingsVO));
+                        logger.info("价格调控后{}", JSON.toJSONString(flightRoutingsVO));
                         flightRoutingsVOS.add(flightRoutingsVO);
                     }
                 });
@@ -189,7 +189,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
      * @return
      */
     private CurrencySetting currencyLimit(RouteContext<SearchVO> context, PurchaseEnum purchaseEnum) {
-        List<CurrencySetting> currencySettings = platSetCache.getCurrencyRules(String.valueOf(OTAEnum.CTRIP.getId()), String.valueOf(purchaseEnum.getId()));
+        List<CurrencySetting> currencySettings     = platSetCache.getCurrencyRules(String.valueOf(OTAEnum.CTRIP.getId()), String.valueOf(purchaseEnum.getId()));
         List<CurrencySetting> currencyMatchedRules = new ArrayList<>();
         currencySettings.forEach(currencySetting -> {
             // 行程类型过滤
@@ -246,7 +246,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
      * @return
      */
     private ExactSetting exactLimit(FlightRoutingsVO flightRoutingsVO, RouteContext<SearchVO> context, PurchaseEnum purchaseEnum) {
-        List<ExactSetting> exactSettings = platSetCache.getExactRules(String.valueOf(purchaseEnum.getId()));
+        List<ExactSetting> exactSettings     = platSetCache.getExactRules(String.valueOf(purchaseEnum.getId()));
         List<ExactSetting> exactMatchedRules = new ArrayList<>();
         exactSettings.forEach(exactSetting -> {
             // 行程类型过滤
@@ -335,7 +335,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
                 try {
                     depDate = DateUtils.parseDateNoTime(context.getT().getDepDate());
                     Date saleStartDate = DateUtils.addDays(nowdate, exactSetting.getSalesstartday());
-                    Date saleEndDate = DateUtils.addDays(nowdate, exactSetting.getSalesendday());
+                    Date saleEndDate   = DateUtils.addDays(nowdate, exactSetting.getSalesendday());
                     if (depDate.after(saleEndDate) || depDate.before(saleStartDate)) {
                         logger.info("精准规则匹配 提前销售天数 过滤");
                         return;
@@ -455,7 +455,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
             try {
                 depDate = DateUtils.parseDateNoTime(context.getT().getDepDate());
                 Date saleStartDate = DateUtils.addDays(nowdate, matchingSetting.getSalesstartday());
-                Date saleEndDate = DateUtils.addDays(nowdate, matchingSetting.getSalesendday());
+                Date saleEndDate   = DateUtils.addDays(nowdate, matchingSetting.getSalesendday());
                 if (depDate.after(saleEndDate) || depDate.before(saleStartDate)) {
                     logger.info("出发日期 过滤");
                     return;

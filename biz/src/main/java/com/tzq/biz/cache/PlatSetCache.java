@@ -49,6 +49,7 @@ public class PlatSetCache {
     // 通用规则
     private Map<String, List<CurrencySetting>> currencytMatchsetmap = new HashMap<>();
 
+
     /**
      * @param salePlat OTA平台ID
      * @return
@@ -106,6 +107,27 @@ public class PlatSetCache {
     }
 
 
+    /**
+     * @param exactRuleId
+     * @return
+     */
+    @Cacheable(value = "exactSetSingleCache", key = "#exactRuleId + 'ExactRule'")
+    public ExactSetting getExactRulesbyid(String exactRuleId) {
+        ExactSetting exactSettings = exactSettingService.selectByPrimaryKey(exactRuleId);
+        return exactSettings;
+    }
+
+    /**
+     * @param currencyRuleId
+     * @return
+     */
+    @Cacheable(value = "currencySetSingleCache", key = "#exactRuleId + 'CurrencyRule'")
+    public CurrencySetting getCurrencyRulesByid(String currencyRuleId) {
+        CurrencySetting currencySetting = currencySettingService.selectByPrimaryKey(currencyRuleId);
+        return currencySetting;
+    }
+
+
     @PostConstruct
     private void initData() {
         reloadplateData();
@@ -120,6 +142,7 @@ public class PlatSetCache {
         example.createCriteria().andSettingstatusEqualTo(0);
         List<MatchingSetting> matchingSettings = matchingSettingService.selectByExample(example);
         if (!CollectionUtils.isEmpty(matchingSettings)) {
+            plateMatchsetmap.clear();
             matchingSettings.forEach(matchingSetting -> {
                 String key = matchingSetting.getSalesplatform();
                 if (!plateMatchsetmap.containsKey(key)) {
@@ -135,6 +158,7 @@ public class PlatSetCache {
         salesAirLineSettingExample.createCriteria().andSettingstatusEqualTo(0);
         List<SalesAirLineSetting> salesAirLineSettings = salesAirLineSettingService.selectByExample(salesAirLineSettingExample);
         if (!CollectionUtils.isEmpty(salesAirLineSettings)) {
+            salesMatchsetmap.clear();
             salesAirLineSettings.forEach(salesAirLineSetting -> {
                 String key = salesAirLineSetting.getPurchaseplatform();
                 if (!salesMatchsetmap.containsKey(key)) {
@@ -150,6 +174,7 @@ public class PlatSetCache {
         exactSettingExample.createCriteria().andSettingstatusEqualTo(0);
         List<ExactSetting> exactSettings = exactSettingService.selectByExample(exactSettingExample);
         if (!CollectionUtils.isEmpty(exactSettings)) {
+            exactMatchsetmap.clear();
             exactSettings.forEach(exactSetting -> {
                 String key = exactSetting.getPurchaseplatform();
                 if (!exactMatchsetmap.containsKey(key)) {
@@ -165,6 +190,7 @@ public class PlatSetCache {
         currencySettingExample.createCriteria().andSettingstatusEqualTo(0);
         List<CurrencySetting> currencySettings = currencySettingService.selectByExample(currencySettingExample);
         if (!CollectionUtils.isEmpty(currencySettings)) {
+            currencytMatchsetmap.clear();
             currencySettings.forEach(currencySetting -> {
                 String key = currencySetting.getSalesplatform() + "-" + currencySetting.getPurchaseplatform();
                 if (!currencytMatchsetmap.containsKey(key)) {

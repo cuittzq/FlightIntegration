@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.tzq.biz.aop.InterfaceAccess;
+import com.tzq.biz.cache.PlatSetCache;
 import com.tzq.biz.constant.OtaConstants;
 import com.tzq.biz.core.OtaCreateOrderService;
 import com.tzq.biz.core.OtaVerifyFlightService;
@@ -43,6 +44,7 @@ import com.tzq.dal.service.order.SegmentInfoService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -90,6 +92,10 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
     @Resource
     PriceRuleRegulation priceRuleRegulation;
 
+
+    @Autowired
+    PlatSetCache platSetCache;
+
     /**
      * 生单
      *
@@ -102,8 +108,8 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
         Assert.notNull(context, "RouteContext can not be null ,searchFlight failure");
         String purchaseEnum = context.getT().getRoutings().getData().get(OtaConstants.PURCHANAME).toString();
         context.setPurchaseEnum(PurchaseEnum.getEnumByCode(purchaseEnum));
-        SingleResult<CreateOrderResVO> response = null;
-        CtripVerifyResVO priceVerifyResVO = null;
+        SingleResult<CreateOrderResVO> response         = null;
+        CtripVerifyResVO               priceVerifyResVO = null;
         try {
             //1.获取验价规则
 
@@ -140,33 +146,36 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
     }
 
     private void verifyData(RouteContext<CreateOrderReqVO> context, FlightRoutingsVO routingsVO) {
-        ExactSetting exactSetting = null;
+        ExactSetting    exactSetting    = null;
         CurrencySetting currencySetting = null;
         // 从data中获取精准规则
         if (context.getT().getRoutings().getData().containsKey(OtaConstants.EXACT_SETTING)) {
             String exactSetstr = context.getT().getRoutings().getData().get(OtaConstants.EXACT_SETTING).toString();
-            exactSetting = JSON.parseObject(exactSetstr, ExactSetting.class);
+            if (StringUtils.isNotEmpty(exactSetstr)) {
+                exactSetting = platSetCache.getExactRulesbyid(exactSetstr);
+            }
         }
 
         // 从data中获取通用规则
         if (context.getT().getRoutings().getData().containsKey(OtaConstants.CURRENCY_SETTING)) {
             String currencySetstr = context.getT().getRoutings().getData().get(OtaConstants.CURRENCY_SETTING).toString();
-            currencySetting = JSON.parseObject(currencySetstr, CurrencySetting.class);
+            if (StringUtils.isNotEmpty(currencySetstr)) {
+                currencySetting = platSetCache.getCurrencyRulesByid(currencySetstr);
+            }
         }
 
         // 对象序列化克隆
-        FlightRoutingsVO routingsVOClone = JSON.parseObject(JSON.toJSONString(routingsVO),FlightRoutingsVO.class);
+        FlightRoutingsVO routingsVOClone = JSON.parseObject(JSON.toJSONString(routingsVO), FlightRoutingsVO.class);
 
         // 将规则传入计算
         FlightRoutingsVO flightRoutingsVO = priceRuleRegulation.flightRegulation(exactSetting, currencySetting, routingsVOClone);
 
 
         // 成人价格价格比较
-        if(flightRoutingsVO.getAdultPrice() != context.getT().getRoutings().getAdultPrice() ||
+        if (flightRoutingsVO.getAdultPrice() != context.getT().getRoutings().getAdultPrice() ||
                 flightRoutingsVO.getAdultTax() != context.getT().getRoutings().getAdultTax() ||
                 flightRoutingsVO.getChildTax() != context.getT().getRoutings().getChildTax() ||
-                flightRoutingsVO.getChildPrice() != context.getT().getRoutings().getChildPrice() )
-        {
+                flightRoutingsVO.getChildPrice() != context.getT().getRoutings().getChildPrice()) {
             throw new ServiceAbstractException(CommonExcetpionConstant.VERIFY_PRICE_ERROR);
         }
     }
@@ -219,7 +228,7 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
     public void dbOperator(RouteContext<CreateOrderReqVO> context, CreateOrderResVO orderResVO, CtripVerifyResVO priceVerifyResVO) {
         try {
             PassengerInfo passengerInfo = new PassengerInfo();
-            OrderLog orderLog = new OrderLog();
+            OrderLog      orderLog      = new OrderLog();
 
             String orderNo = OrderNoUtils.Builder.newBuilder()
                     .setPurchasePlatName(String.valueOf(context.getOta().getId()))
