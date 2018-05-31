@@ -110,6 +110,7 @@ public class OtaVerifyFlightServiceImpl implements OtaVerifyFlightService {
         }
 
         // 从data中获取通用规则
+        priceRuleRegulation.flightRegulation(exactSetting,currencySetting,verifyResVO.getRouting());
         if (context.getT().getRouting().getData().containsKey(OtaConstants.CURRENCY_SETTING)) {
             String currencySetstr = context.getT().getRouting().getData().get(OtaConstants.CURRENCY_SETTING).toString();
             if (StringUtils.isNotEmpty(currencySetstr)) {
@@ -140,7 +141,6 @@ public class OtaVerifyFlightServiceImpl implements OtaVerifyFlightService {
      * @param resVOS
      * @return
      */
-
     private CtripVerifyResVO flightRegulation(List<CtripVerifyResVO> resVOS) {
         if (null != resVOS && resVOS.size() > 0) {
             return resVOS.get(0);
