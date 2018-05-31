@@ -98,7 +98,6 @@ public class OtaVerifyFlightServiceImpl implements OtaVerifyFlightService {
      * @param verifyResVO
      */
     private void priceHandle(RouteContext<CtripVerifyReqVO> context, CtripVerifyResVO verifyResVO) {
-
         ExactSetting exactSetting =null;
         CurrencySetting currencySetting=null;
         // 从data中获取精准规则
@@ -110,29 +109,13 @@ public class OtaVerifyFlightServiceImpl implements OtaVerifyFlightService {
         }
 
         // 从data中获取通用规则
-        priceRuleRegulation.flightRegulation(exactSetting,currencySetting,verifyResVO.getRouting());
         if (context.getT().getRouting().getData().containsKey(OtaConstants.CURRENCY_SETTING)) {
             String currencySetstr = context.getT().getRouting().getData().get(OtaConstants.CURRENCY_SETTING).toString();
             if (StringUtils.isNotEmpty(currencySetstr)) {
                 currencySetting = platSetCache.getCurrencyRulesByid(currencySetstr);
             }
         }
-
-//        if(exactSetting ==null && currencySetting==null)
-//        {
-//            throw  new ServiceAbstractException(ServiceErrorMsg.Builder.newInstance().setErrorCode(CommonExcetpionConstant.ROUTING_DATA_ERROR).setErrorMsg("routing数据非法！").setStatus(false).build());
-//        }
-        //
-        FlightRoutingsVO vo = context.getT().getRouting();
-        vo.setAdultTax(verifyResVO.getRouting().getAdultTax());
-        vo.setAdultPrice(verifyResVO.getRouting().getAdultPrice());
-        vo.setAdultAgeRestriction(verifyResVO.getRouting().getAdultAgeRestriction());
-        vo.setChildTaxType(verifyResVO.getRouting().getChildTaxType());
-        vo.setAdultTaxType(verifyResVO.getRouting().getAdultTaxType());
-        vo.setChildTax(verifyResVO.getRouting().getChildTax());
-        vo.setChildPrice(verifyResVO.getRouting().getChildPrice());
-
-        priceRuleRegulation.flightRegulation(exactSetting,currencySetting,vo);
+        priceRuleRegulation.flightRegulation(exactSetting,currencySetting,verifyResVO.getRouting());
     }
 
     /**
