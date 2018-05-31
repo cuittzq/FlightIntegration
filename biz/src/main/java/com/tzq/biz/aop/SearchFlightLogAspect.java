@@ -42,36 +42,13 @@ public class SearchFlightLogAspect {
     @Resource
     InterfaceRequestLogService interfaceRequestLogService;
 
-
-    @Pointcut("execution(public * com.tzq.biz.core.impl.OtaSearchFlightServiceImpl.*(..))")
-    public void interfacelog() {
-    }
-
-    @Before("interfacelog()")
-    public void deBefore(JoinPoint joinPoint) throws Throwable {
-    }
-
-    @AfterReturning(returning = "ret", pointcut = "interfacelog()")
-    public void doAfterReturning(Object ret) throws Throwable {
-    }
-
-    //后置异常通知
-    @AfterThrowing("interfacelog()")
-    public void throwss(JoinPoint jp) {
-    }
-
-    //后置最终通知,final增强，不管是抛出异常或者正常退出都会执行
-    @After("interfacelog()")
-    public void after(JoinPoint joinPoint) {
-    }
-
-    @AfterReturning(pointcut = "execution(* com.tzq.biz.core.impl.OtaSearchFlightServiceImpl.*.*(..))", returning = "returnValue")
+    @AfterReturning(pointcut = "execution(* com.tzq.biz.core.impl.OtaSearchFlightServiceImpl.*(..))", returning = "returnValue")
     public void log(JoinPoint point, Object returnValue) {
         try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
-            HttpServletResponse response = attributes.getResponse();
-            RouteContext<SearchVO> paramin = (RouteContext<SearchVO>) point.getArgs()[0];
+            ServletRequestAttributes    attributes    = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            HttpServletRequest          request       = attributes.getRequest();
+            HttpServletResponse         response      = attributes.getResponse();
+            RouteContext<SearchVO>      paramin       = (RouteContext<SearchVO>) point.getArgs()[0];
             SingleResult<FlightRouteVO> flightRouteVO = new SingleResult();
             if (returnValue != null) {
                 flightRouteVO = (SingleResult<FlightRouteVO>) returnValue;
@@ -101,22 +78,23 @@ public class SearchFlightLogAspect {
         interfaceRequestLog.setPurchaseplatform(1);
         interfaceRequestLog.setRequestdate(new Date());
         interfaceRequestLog.setRequesttype(MethodEnum.SEARCHFLIGHT.getCode());
-        interfaceRequestLog.setRequestresult(1);
-        interfaceRequestLog.setInterfaceresult(1);
+        interfaceRequestLog.setRequestresult(flightRouteVO.isSuccess() ? 1 : 0);
+        // 接口结果（接口返回结果）(0-成功 / 1-失败 / 2-CID错误 / 3-非法IP / 4-操作失败 / 5-请求参数错误 / 6-程序异常 / 7-航线管控 / 8-航司过滤 / 9-配置未找到 / 10-访问超时 / 11-访问频繁 / 12-不在销售时间范围内 / 13-不在工作时间范围内 / 14-价格变动 / 15-无座 / 16-不可预订)
+        interfaceRequestLog.setInterfaceresult(flightRouteVO.getData().getStatus());
         interfaceRequestLog.setOrderno("");
         interfaceRequestLog.setPnr("");
         // 0-单程，1-往返
-        interfaceRequestLog.setVoyagetype(0);
+        interfaceRequestLog.setVoyagetype(paramin.getT().getTripType().getCode() - 1);
         interfaceRequestLog.setSalesplatrequesttime(new Date());
         interfaceRequestLog.setSalesplatresponsetime(new Date());
         interfaceRequestLog.setPurchaseplatrequesttime(new Date());
         interfaceRequestLog.setPurchaseplatresponsetime(new Date());
         interfaceRequestLog.setSalesplatrequestip("192.168.10.10");
         interfaceRequestLog.setPurchaseplatrequestip(request.getRemoteAddr());
-        interfaceRequestLog.setSalesplatrequesttipmessage("");
+        interfaceRequestLog.setSalesplatrequesttipmessage(flightRouteVO.getErrorMessage());
         interfaceRequestLog.setPurchaseplatrequesttipmessage("");
-        interfaceRequestLog.setSalesplatlogdetail("");
-        interfaceRequestLog.setPurchaseplatlogdetail(JSON.toJSONString(flightRouteVO));
+        interfaceRequestLog.setSalesplatlogdetail(JSON.toJSONString(flightRouteVO));
+        interfaceRequestLog.setPurchaseplatlogdetail("");
         return interfaceRequestLog;
 
     }
