@@ -128,6 +128,9 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
                 response = new SingleResult<>(verifyResVO, false, CommonExcetpionConstant.SYSTEM_EXCEPTION_CODE, "无数据");
                 return response;
             }
+
+            //5.成功的落库
+            dbOperator(context, response.getData(), priceVerifyResVO);
             response = new SingleResult<>(verifyResVO, true, CommonExcetpionConstant.SUCCESS, "");
         } catch (Exception ex) {
             if (ex instanceof ServiceAbstractException) {
@@ -138,8 +141,7 @@ public class OtaCreateOrderServiceImpl implements OtaCreateOrderService {
 
             logger.error(ex.getMessage(), ex);
         } finally {
-            //4.落库
-            dbOperator(context, response.getData(), priceVerifyResVO);
+
         }
 
         return response;
