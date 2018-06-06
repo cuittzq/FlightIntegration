@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tzq.dal.mapper.rulesetting.RefundSettingMapper">
+  <resultMap id="BaseResultMap" type="com.tzq.dal.model.rulesetting.RefundSetting">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="SalesPlatform" jdbcType="VARCHAR" property="salesplatform" />
+    <result column="PurchasePlatform" jdbcType="VARCHAR" property="purchaseplatform" />
+    <result column="PassengerType" jdbcType="CHAR" property="passengertype" />
+    <result column="AllNotUseRefundMoney" jdbcType="DECIMAL" property="allnotuserefundmoney" />
+    <result column="PartNotUseRefundMoney" jdbcType="DECIMAL" property="partnotuserefundmoney" />
+    <result column="RefundNoShowTimeLimit" jdbcType="INTEGER" property="refundnoshowtimelimit" />
+    <result column="RefundNoShowMoney" jdbcType="DECIMAL" property="refundnoshowmoney" />
+    <result column="RefundCHDesc" jdbcType="VARCHAR" property="refundchdesc" />
+    <result column="RefundENDesc" jdbcType="VARCHAR" property="refundendesc" />
+    <result column="BeforeTakeOffChangeMoney" jdbcType="DECIMAL" property="beforetakeoffchangemoney" />
+    <result column="AfterTakOffChangeMoney" jdbcType="DECIMAL" property="aftertakoffchangemoney" />
+    <result column="ChangeNoShowTimeLimit" jdbcType="INTEGER" property="changenoshowtimelimit" />
+    <result column="ChangeNoSwhoMoney" jdbcType="DECIMAL" property="changenoswhomoney" />
+    <result column="ChangeCHDesc" jdbcType="VARCHAR" property="changechdesc" />
+    <result column="ChangeENDesc" jdbcType="VARCHAR" property="changeendesc" />
+    <result column="ApplyCarriers" jdbcType="VARCHAR" property="applycarriers" />
+    <result column="OwnPackageOnOff" jdbcType="INTEGER" property="ownpackageonoff" />
+    <result column="PackageValue" jdbcType="INTEGER" property="packagevalue" />
+    <result column="PackageType" jdbcType="CHAR" property="packagetype" />
+    <result column="PackageENDesc" jdbcType="VARCHAR" property="packageendesc" />
+    <result column="PackageCHDesc" jdbcType="VARCHAR" property="packagechdesc" />
+    <result column="OtherCHDesc" jdbcType="VARCHAR" property="otherchdesc" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, SalesPlatform, PurchasePlatform, PassengerType, AllNotUseRefundMoney, PartNotUseRefundMoney, 
+    RefundNoShowTimeLimit, RefundNoShowMoney, RefundCHDesc, RefundENDesc, BeforeTakeOffChangeMoney, 
+    AfterTakOffChangeMoney, ChangeNoShowTimeLimit, ChangeNoSwhoMoney, ChangeCHDesc, ChangeENDesc, 
+    ApplyCarriers, OwnPackageOnOff, PackageValue, PackageType, PackageENDesc, PackageCHDesc, 
+    OtherCHDesc, ModifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.tzq.dal.model.rulesetting.RefundSettingExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from refundsetting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0">
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from refundsetting
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from refundsetting
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tzq.dal.model.rulesetting.RefundSettingExample">
+    delete from refundsetting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tzq.dal.model.rulesetting.RefundSetting">
+    insert into refundsetting (ID, SalesPlatform, PurchasePlatform, 
+      PassengerType, AllNotUseRefundMoney, PartNotUseRefundMoney, 
+      RefundNoShowTimeLimit, RefundNoShowMoney, 
+      RefundCHDesc, RefundENDesc, BeforeTakeOffChangeMoney, 
+      AfterTakOffChangeMoney, ChangeNoShowTimeLimit, 
+      ChangeNoSwhoMoney, ChangeCHDesc, ChangeENDesc, 
+      ApplyCarriers, OwnPackageOnOff, PackageValue, 
+      PackageType, PackageENDesc, PackageCHDesc, 
+      OtherCHDesc, ModifyTime)
+    values (#{id,jdbcType=VARCHAR}, #{salesplatform,jdbcType=VARCHAR}, #{purchaseplatform,jdbcType=VARCHAR}, 
+      #{passengertype,jdbcType=CHAR}, #{allnotuserefundmoney,jdbcType=DECIMAL}, #{partnotuserefundmoney,jdbcType=DECIMAL}, 
+      #{refundnoshowtimelimit,jdbcType=INTEGER}, #{refundnoshowmoney,jdbcType=DECIMAL}, 
+      #{refundchdesc,jdbcType=VARCHAR}, #{refundendesc,jdbcType=VARCHAR}, #{beforetakeoffchangemoney,jdbcType=DECIMAL}, 
+      #{aftertakoffchangemoney,jdbcType=DECIMAL}, #{changenoshowtimelimit,jdbcType=INTEGER}, 
+      #{changenoswhomoney,jdbcType=DECIMAL}, #{changechdesc,jdbcType=VARCHAR}, #{changeendesc,jdbcType=VARCHAR}, 
+      #{applycarriers,jdbcType=VARCHAR}, #{ownpackageonoff,jdbcType=INTEGER}, #{packagevalue,jdbcType=INTEGER}, 
+      #{packagetype,jdbcType=CHAR}, #{packageendesc,jdbcType=VARCHAR}, #{packagechdesc,jdbcType=VARCHAR}, 
+      #{otherchdesc,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tzq.dal.model.rulesetting.RefundSetting">
+    insert into refundsetting
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="salesplatform != null">
+        SalesPlatform,
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform,
+      </if>
+      <if test="passengertype != null">
+        PassengerType,
+      </if>
+      <if test="allnotuserefundmoney != null">
+        AllNotUseRefundMoney,
+      </if>
+      <if test="partnotuserefundmoney != null">
+        PartNotUseRefundMoney,
+      </if>
+      <if test="refundnoshowtimelimit != null">
+        RefundNoShowTimeLimit,
+      </if>
+      <if test="refundnoshowmoney != null">
+        RefundNoShowMoney,
+      </if>
+      <if test="refundchdesc != null">
+        RefundCHDesc,
+      </if>
+      <if test="refundendesc != null">
+        RefundENDesc,
+      </if>
+      <if test="beforetakeoffchangemoney != null">
+        BeforeTakeOffChangeMoney,
+      </if>
+      <if test="aftertakoffchangemoney != null">
+        AfterTakOffChangeMoney,
+      </if>
+      <if test="changenoshowtimelimit != null">
+        ChangeNoShowTimeLimit,
+      </if>
+      <if test="changenoswhomoney != null">
+        ChangeNoSwhoMoney,
+      </if>
+      <if test="changechdesc != null">
+        ChangeCHDesc,
+      </if>
+      <if test="changeendesc != null">
+        ChangeENDesc,
+      </if>
+      <if test="applycarriers != null">
+        ApplyCarriers,
+      </if>
+      <if test="ownpackageonoff != null">
+        OwnPackageOnOff,
+      </if>
+      <if test="packagevalue != null">
+        PackageValue,
+      </if>
+      <if test="packagetype != null">
+        PackageType,
+      </if>
+      <if test="packageendesc != null">
+        PackageENDesc,
+      </if>
+      <if test="packagechdesc != null">
+        PackageCHDesc,
+      </if>
+      <if test="otherchdesc != null">
+        OtherCHDesc,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatform != null">
+        #{salesplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatform != null">
+        #{purchaseplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="passengertype != null">
+        #{passengertype,jdbcType=CHAR},
+      </if>
+      <if test="allnotuserefundmoney != null">
+        #{allnotuserefundmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="partnotuserefundmoney != null">
+        #{partnotuserefundmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="refundnoshowtimelimit != null">
+        #{refundnoshowtimelimit,jdbcType=INTEGER},
+      </if>
+      <if test="refundnoshowmoney != null">
+        #{refundnoshowmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="refundchdesc != null">
+        #{refundchdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="refundendesc != null">
+        #{refundendesc,jdbcType=VARCHAR},
+      </if>
+      <if test="beforetakeoffchangemoney != null">
+        #{beforetakeoffchangemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="aftertakoffchangemoney != null">
+        #{aftertakoffchangemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="changenoshowtimelimit != null">
+        #{changenoshowtimelimit,jdbcType=INTEGER},
+      </if>
+      <if test="changenoswhomoney != null">
+        #{changenoswhomoney,jdbcType=DECIMAL},
+      </if>
+      <if test="changechdesc != null">
+        #{changechdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="changeendesc != null">
+        #{changeendesc,jdbcType=VARCHAR},
+      </if>
+      <if test="applycarriers != null">
+        #{applycarriers,jdbcType=VARCHAR},
+      </if>
+      <if test="ownpackageonoff != null">
+        #{ownpackageonoff,jdbcType=INTEGER},
+      </if>
+      <if test="packagevalue != null">
+        #{packagevalue,jdbcType=INTEGER},
+      </if>
+      <if test="packagetype != null">
+        #{packagetype,jdbcType=CHAR},
+      </if>
+      <if test="packageendesc != null">
+        #{packageendesc,jdbcType=VARCHAR},
+      </if>
+      <if test="packagechdesc != null">
+        #{packagechdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="otherchdesc != null">
+        #{otherchdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tzq.dal.model.rulesetting.RefundSettingExample" resultType="java.lang.Long">
+    select count(*) from refundsetting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update refundsetting
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesplatform != null">
+        SalesPlatform = #{record.salesplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseplatform != null">
+        PurchasePlatform = #{record.purchaseplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passengertype != null">
+        PassengerType = #{record.passengertype,jdbcType=CHAR},
+      </if>
+      <if test="record.allnotuserefundmoney != null">
+        AllNotUseRefundMoney = #{record.allnotuserefundmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.partnotuserefundmoney != null">
+        PartNotUseRefundMoney = #{record.partnotuserefundmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundnoshowtimelimit != null">
+        RefundNoShowTimeLimit = #{record.refundnoshowtimelimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.refundnoshowmoney != null">
+        RefundNoShowMoney = #{record.refundnoshowmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundchdesc != null">
+        RefundCHDesc = #{record.refundchdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundendesc != null">
+        RefundENDesc = #{record.refundendesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.beforetakeoffchangemoney != null">
+        BeforeTakeOffChangeMoney = #{record.beforetakeoffchangemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.aftertakoffchangemoney != null">
+        AfterTakOffChangeMoney = #{record.aftertakoffchangemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.changenoshowtimelimit != null">
+        ChangeNoShowTimeLimit = #{record.changenoshowtimelimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.changenoswhomoney != null">
+        ChangeNoSwhoMoney = #{record.changenoswhomoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.changechdesc != null">
+        ChangeCHDesc = #{record.changechdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.changeendesc != null">
+        ChangeENDesc = #{record.changeendesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applycarriers != null">
+        ApplyCarriers = #{record.applycarriers,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ownpackageonoff != null">
+        OwnPackageOnOff = #{record.ownpackageonoff,jdbcType=INTEGER},
+      </if>
+      <if test="record.packagevalue != null">
+        PackageValue = #{record.packagevalue,jdbcType=INTEGER},
+      </if>
+      <if test="record.packagetype != null">
+        PackageType = #{record.packagetype,jdbcType=CHAR},
+      </if>
+      <if test="record.packageendesc != null">
+        PackageENDesc = #{record.packageendesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.packagechdesc != null">
+        PackageCHDesc = #{record.packagechdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherchdesc != null">
+        OtherCHDesc = #{record.otherchdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null">
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update refundsetting
+    set ID = #{record.id,jdbcType=VARCHAR},
+      SalesPlatform = #{record.salesplatform,jdbcType=VARCHAR},
+      PurchasePlatform = #{record.purchaseplatform,jdbcType=VARCHAR},
+      PassengerType = #{record.passengertype,jdbcType=CHAR},
+      AllNotUseRefundMoney = #{record.allnotuserefundmoney,jdbcType=DECIMAL},
+      PartNotUseRefundMoney = #{record.partnotuserefundmoney,jdbcType=DECIMAL},
+      RefundNoShowTimeLimit = #{record.refundnoshowtimelimit,jdbcType=INTEGER},
+      RefundNoShowMoney = #{record.refundnoshowmoney,jdbcType=DECIMAL},
+      RefundCHDesc = #{record.refundchdesc,jdbcType=VARCHAR},
+      RefundENDesc = #{record.refundendesc,jdbcType=VARCHAR},
+      BeforeTakeOffChangeMoney = #{record.beforetakeoffchangemoney,jdbcType=DECIMAL},
+      AfterTakOffChangeMoney = #{record.aftertakoffchangemoney,jdbcType=DECIMAL},
+      ChangeNoShowTimeLimit = #{record.changenoshowtimelimit,jdbcType=INTEGER},
+      ChangeNoSwhoMoney = #{record.changenoswhomoney,jdbcType=DECIMAL},
+      ChangeCHDesc = #{record.changechdesc,jdbcType=VARCHAR},
+      ChangeENDesc = #{record.changeendesc,jdbcType=VARCHAR},
+      ApplyCarriers = #{record.applycarriers,jdbcType=VARCHAR},
+      OwnPackageOnOff = #{record.ownpackageonoff,jdbcType=INTEGER},
+      PackageValue = #{record.packagevalue,jdbcType=INTEGER},
+      PackageType = #{record.packagetype,jdbcType=CHAR},
+      PackageENDesc = #{record.packageendesc,jdbcType=VARCHAR},
+      PackageCHDesc = #{record.packagechdesc,jdbcType=VARCHAR},
+      OtherCHDesc = #{record.otherchdesc,jdbcType=VARCHAR},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tzq.dal.model.rulesetting.RefundSetting">
+    update refundsetting
+    <set>
+      <if test="salesplatform != null">
+        SalesPlatform = #{salesplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform = #{purchaseplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="passengertype != null">
+        PassengerType = #{passengertype,jdbcType=CHAR},
+      </if>
+      <if test="allnotuserefundmoney != null">
+        AllNotUseRefundMoney = #{allnotuserefundmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="partnotuserefundmoney != null">
+        PartNotUseRefundMoney = #{partnotuserefundmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="refundnoshowtimelimit != null">
+        RefundNoShowTimeLimit = #{refundnoshowtimelimit,jdbcType=INTEGER},
+      </if>
+      <if test="refundnoshowmoney != null">
+        RefundNoShowMoney = #{refundnoshowmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="refundchdesc != null">
+        RefundCHDesc = #{refundchdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="refundendesc != null">
+        RefundENDesc = #{refundendesc,jdbcType=VARCHAR},
+      </if>
+      <if test="beforetakeoffchangemoney != null">
+        BeforeTakeOffChangeMoney = #{beforetakeoffchangemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="aftertakoffchangemoney != null">
+        AfterTakOffChangeMoney = #{aftertakoffchangemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="changenoshowtimelimit != null">
+        ChangeNoShowTimeLimit = #{changenoshowtimelimit,jdbcType=INTEGER},
+      </if>
+      <if test="changenoswhomoney != null">
+        ChangeNoSwhoMoney = #{changenoswhomoney,jdbcType=DECIMAL},
+      </if>
+      <if test="changechdesc != null">
+        ChangeCHDesc = #{changechdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="changeendesc != null">
+        ChangeENDesc = #{changeendesc,jdbcType=VARCHAR},
+      </if>
+      <if test="applycarriers != null">
+        ApplyCarriers = #{applycarriers,jdbcType=VARCHAR},
+      </if>
+      <if test="ownpackageonoff != null">
+        OwnPackageOnOff = #{ownpackageonoff,jdbcType=INTEGER},
+      </if>
+      <if test="packagevalue != null">
+        PackageValue = #{packagevalue,jdbcType=INTEGER},
+      </if>
+      <if test="packagetype != null">
+        PackageType = #{packagetype,jdbcType=CHAR},
+      </if>
+      <if test="packageendesc != null">
+        PackageENDesc = #{packageendesc,jdbcType=VARCHAR},
+      </if>
+      <if test="packagechdesc != null">
+        PackageCHDesc = #{packagechdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="otherchdesc != null">
+        OtherCHDesc = #{otherchdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tzq.dal.model.rulesetting.RefundSetting">
+    update refundsetting
+    set SalesPlatform = #{salesplatform,jdbcType=VARCHAR},
+      PurchasePlatform = #{purchaseplatform,jdbcType=VARCHAR},
+      PassengerType = #{passengertype,jdbcType=CHAR},
+      AllNotUseRefundMoney = #{allnotuserefundmoney,jdbcType=DECIMAL},
+      PartNotUseRefundMoney = #{partnotuserefundmoney,jdbcType=DECIMAL},
+      RefundNoShowTimeLimit = #{refundnoshowtimelimit,jdbcType=INTEGER},
+      RefundNoShowMoney = #{refundnoshowmoney,jdbcType=DECIMAL},
+      RefundCHDesc = #{refundchdesc,jdbcType=VARCHAR},
+      RefundENDesc = #{refundendesc,jdbcType=VARCHAR},
+      BeforeTakeOffChangeMoney = #{beforetakeoffchangemoney,jdbcType=DECIMAL},
+      AfterTakOffChangeMoney = #{aftertakoffchangemoney,jdbcType=DECIMAL},
+      ChangeNoShowTimeLimit = #{changenoshowtimelimit,jdbcType=INTEGER},
+      ChangeNoSwhoMoney = #{changenoswhomoney,jdbcType=DECIMAL},
+      ChangeCHDesc = #{changechdesc,jdbcType=VARCHAR},
+      ChangeENDesc = #{changeendesc,jdbcType=VARCHAR},
+      ApplyCarriers = #{applycarriers,jdbcType=VARCHAR},
+      OwnPackageOnOff = #{ownpackageonoff,jdbcType=INTEGER},
+      PackageValue = #{packagevalue,jdbcType=INTEGER},
+      PackageType = #{packagetype,jdbcType=CHAR},
+      PackageENDesc = #{packageendesc,jdbcType=VARCHAR},
+      PackageCHDesc = #{packagechdesc,jdbcType=VARCHAR},
+      OtherCHDesc = #{otherchdesc,jdbcType=VARCHAR},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

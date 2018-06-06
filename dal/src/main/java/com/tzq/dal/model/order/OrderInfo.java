@@ -4,71 +4,33 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class OrderInfo {
-    private Integer id;
+    private Long id;
 
     private Integer salesplatform;
 
     private Integer purchaseplatform;
 
-    private Date creattime;
-
-    private Date outtickettime;
+    private String pnr;
 
     private String orderno;
 
-    private String pnr;
+    private String salesorderno;
 
-    private String ticketno;
+    private String purchaseorderno;
 
-    private Byte orderstate;
+    private String depcity;
 
-    private String depcode;
+    private String arrcity;
 
-    private String arrcode;
-
-    private Date depdate;
-
-    private Date deptime;
-
-    private Date backdate;
-
-    private Date backtime;
-
-    private String cabin;
-
-    private String backcabin;
-
-    private String flightno;
-
-    private String backflightno;
-
-    private BigDecimal aduitsalesprice;
-
-    private BigDecimal aduitpurchasepirce;
-
-    private BigDecimal childsalesprice;
-
-    private BigDecimal childpurchasepirce;
-
-    private BigDecimal babysalesprice;
-
-    private BigDecimal babypurchasepirce;
-
-    private BigDecimal backaduitsalesprice;
-
-    private BigDecimal backaduitpurchasepirce;
-
-    private BigDecimal backchildsalesprice;
-
-    private BigDecimal backchildpurchasepirce;
-
-    private BigDecimal backbabysalesprice;
-
-    private BigDecimal backbabypurchasepirce;
+    private Integer voyagetype;
 
     private BigDecimal totalsalesprice;
 
+    private BigDecimal totalsalestax;
+
     private BigDecimal totalpurchaseprice;
+
+    private BigDecimal totalpurchasetax;
 
     private Integer auditcount;
 
@@ -80,6 +42,8 @@ public class OrderInfo {
 
     private String outticketcompany;
 
+    private String outticketremark;
+
     private String linkname;
 
     private String linkmobile;
@@ -90,15 +54,21 @@ public class OrderInfo {
 
     private String linkpostcode;
 
+    private Integer orderstate;
+
+    private Date createtime;
+
+    private Date outtickettime;
+
     private String extendvalue;
 
     private Date modifytime;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -118,20 +88,12 @@ public class OrderInfo {
         this.purchaseplatform = purchaseplatform;
     }
 
-    public Date getCreattime() {
-        return creattime;
+    public String getPnr() {
+        return pnr;
     }
 
-    public void setCreattime(Date creattime) {
-        this.creattime = creattime;
-    }
-
-    public Date getOuttickettime() {
-        return outtickettime;
-    }
-
-    public void setOuttickettime(Date outtickettime) {
-        this.outtickettime = outtickettime;
+    public void setPnr(String pnr) {
+        this.pnr = pnr == null ? null : pnr.trim();
     }
 
     public String getOrderno() {
@@ -142,204 +104,44 @@ public class OrderInfo {
         this.orderno = orderno == null ? null : orderno.trim();
     }
 
-    public String getPnr() {
-        return pnr;
+    public String getSalesorderno() {
+        return salesorderno;
     }
 
-    public void setPnr(String pnr) {
-        this.pnr = pnr == null ? null : pnr.trim();
+    public void setSalesorderno(String salesorderno) {
+        this.salesorderno = salesorderno == null ? null : salesorderno.trim();
     }
 
-    public String getTicketno() {
-        return ticketno;
+    public String getPurchaseorderno() {
+        return purchaseorderno;
     }
 
-    public void setTicketno(String ticketno) {
-        this.ticketno = ticketno == null ? null : ticketno.trim();
+    public void setPurchaseorderno(String purchaseorderno) {
+        this.purchaseorderno = purchaseorderno == null ? null : purchaseorderno.trim();
     }
 
-    public Byte getOrderstate() {
-        return orderstate;
+    public String getDepcity() {
+        return depcity;
     }
 
-    public void setOrderstate(Byte orderstate) {
-        this.orderstate = orderstate;
+    public void setDepcity(String depcity) {
+        this.depcity = depcity == null ? null : depcity.trim();
     }
 
-    public String getDepcode() {
-        return depcode;
+    public String getArrcity() {
+        return arrcity;
     }
 
-    public void setDepcode(String depcode) {
-        this.depcode = depcode == null ? null : depcode.trim();
+    public void setArrcity(String arrcity) {
+        this.arrcity = arrcity == null ? null : arrcity.trim();
     }
 
-    public String getArrcode() {
-        return arrcode;
+    public Integer getVoyagetype() {
+        return voyagetype;
     }
 
-    public void setArrcode(String arrcode) {
-        this.arrcode = arrcode == null ? null : arrcode.trim();
-    }
-
-    public Date getDepdate() {
-        return depdate;
-    }
-
-    public void setDepdate(Date depdate) {
-        this.depdate = depdate;
-    }
-
-    public Date getDeptime() {
-        return deptime;
-    }
-
-    public void setDeptime(Date deptime) {
-        this.deptime = deptime;
-    }
-
-    public Date getBackdate() {
-        return backdate;
-    }
-
-    public void setBackdate(Date backdate) {
-        this.backdate = backdate;
-    }
-
-    public Date getBacktime() {
-        return backtime;
-    }
-
-    public void setBacktime(Date backtime) {
-        this.backtime = backtime;
-    }
-
-    public String getCabin() {
-        return cabin;
-    }
-
-    public void setCabin(String cabin) {
-        this.cabin = cabin == null ? null : cabin.trim();
-    }
-
-    public String getBackcabin() {
-        return backcabin;
-    }
-
-    public void setBackcabin(String backcabin) {
-        this.backcabin = backcabin == null ? null : backcabin.trim();
-    }
-
-    public String getFlightno() {
-        return flightno;
-    }
-
-    public void setFlightno(String flightno) {
-        this.flightno = flightno == null ? null : flightno.trim();
-    }
-
-    public String getBackflightno() {
-        return backflightno;
-    }
-
-    public void setBackflightno(String backflightno) {
-        this.backflightno = backflightno == null ? null : backflightno.trim();
-    }
-
-    public BigDecimal getAduitsalesprice() {
-        return aduitsalesprice;
-    }
-
-    public void setAduitsalesprice(BigDecimal aduitsalesprice) {
-        this.aduitsalesprice = aduitsalesprice;
-    }
-
-    public BigDecimal getAduitpurchasepirce() {
-        return aduitpurchasepirce;
-    }
-
-    public void setAduitpurchasepirce(BigDecimal aduitpurchasepirce) {
-        this.aduitpurchasepirce = aduitpurchasepirce;
-    }
-
-    public BigDecimal getChildsalesprice() {
-        return childsalesprice;
-    }
-
-    public void setChildsalesprice(BigDecimal childsalesprice) {
-        this.childsalesprice = childsalesprice;
-    }
-
-    public BigDecimal getChildpurchasepirce() {
-        return childpurchasepirce;
-    }
-
-    public void setChildpurchasepirce(BigDecimal childpurchasepirce) {
-        this.childpurchasepirce = childpurchasepirce;
-    }
-
-    public BigDecimal getBabysalesprice() {
-        return babysalesprice;
-    }
-
-    public void setBabysalesprice(BigDecimal babysalesprice) {
-        this.babysalesprice = babysalesprice;
-    }
-
-    public BigDecimal getBabypurchasepirce() {
-        return babypurchasepirce;
-    }
-
-    public void setBabypurchasepirce(BigDecimal babypurchasepirce) {
-        this.babypurchasepirce = babypurchasepirce;
-    }
-
-    public BigDecimal getBackaduitsalesprice() {
-        return backaduitsalesprice;
-    }
-
-    public void setBackaduitsalesprice(BigDecimal backaduitsalesprice) {
-        this.backaduitsalesprice = backaduitsalesprice;
-    }
-
-    public BigDecimal getBackaduitpurchasepirce() {
-        return backaduitpurchasepirce;
-    }
-
-    public void setBackaduitpurchasepirce(BigDecimal backaduitpurchasepirce) {
-        this.backaduitpurchasepirce = backaduitpurchasepirce;
-    }
-
-    public BigDecimal getBackchildsalesprice() {
-        return backchildsalesprice;
-    }
-
-    public void setBackchildsalesprice(BigDecimal backchildsalesprice) {
-        this.backchildsalesprice = backchildsalesprice;
-    }
-
-    public BigDecimal getBackchildpurchasepirce() {
-        return backchildpurchasepirce;
-    }
-
-    public void setBackchildpurchasepirce(BigDecimal backchildpurchasepirce) {
-        this.backchildpurchasepirce = backchildpurchasepirce;
-    }
-
-    public BigDecimal getBackbabysalesprice() {
-        return backbabysalesprice;
-    }
-
-    public void setBackbabysalesprice(BigDecimal backbabysalesprice) {
-        this.backbabysalesprice = backbabysalesprice;
-    }
-
-    public BigDecimal getBackbabypurchasepirce() {
-        return backbabypurchasepirce;
-    }
-
-    public void setBackbabypurchasepirce(BigDecimal backbabypurchasepirce) {
-        this.backbabypurchasepirce = backbabypurchasepirce;
+    public void setVoyagetype(Integer voyagetype) {
+        this.voyagetype = voyagetype;
     }
 
     public BigDecimal getTotalsalesprice() {
@@ -350,12 +152,28 @@ public class OrderInfo {
         this.totalsalesprice = totalsalesprice;
     }
 
+    public BigDecimal getTotalsalestax() {
+        return totalsalestax;
+    }
+
+    public void setTotalsalestax(BigDecimal totalsalestax) {
+        this.totalsalestax = totalsalestax;
+    }
+
     public BigDecimal getTotalpurchaseprice() {
         return totalpurchaseprice;
     }
 
     public void setTotalpurchaseprice(BigDecimal totalpurchaseprice) {
         this.totalpurchaseprice = totalpurchaseprice;
+    }
+
+    public BigDecimal getTotalpurchasetax() {
+        return totalpurchasetax;
+    }
+
+    public void setTotalpurchasetax(BigDecimal totalpurchasetax) {
+        this.totalpurchasetax = totalpurchasetax;
     }
 
     public Integer getAuditcount() {
@@ -398,6 +216,14 @@ public class OrderInfo {
         this.outticketcompany = outticketcompany == null ? null : outticketcompany.trim();
     }
 
+    public String getOutticketremark() {
+        return outticketremark;
+    }
+
+    public void setOutticketremark(String outticketremark) {
+        this.outticketremark = outticketremark == null ? null : outticketremark.trim();
+    }
+
     public String getLinkname() {
         return linkname;
     }
@@ -436,6 +262,30 @@ public class OrderInfo {
 
     public void setLinkpostcode(String linkpostcode) {
         this.linkpostcode = linkpostcode == null ? null : linkpostcode.trim();
+    }
+
+    public Integer getOrderstate() {
+        return orderstate;
+    }
+
+    public void setOrderstate(Integer orderstate) {
+        this.orderstate = orderstate;
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
+
+    public Date getOuttickettime() {
+        return outtickettime;
+    }
+
+    public void setOuttickettime(Date outtickettime) {
+        this.outtickettime = outtickettime;
     }
 
     public String getExtendvalue() {

@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tzq.dal.mapper.rulesetting.CurrencySettingMapper">
+  <resultMap id="BaseResultMap" type="com.tzq.dal.model.rulesetting.CurrencySetting">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="SalesPlatform" jdbcType="VARCHAR" property="salesplatform" />
+    <result column="PurchasePlatform" jdbcType="VARCHAR" property="purchaseplatform" />
+    <result column="VoyageType" jdbcType="INTEGER" property="voyagetype" />
+    <result column="AduitLeaveMoney" jdbcType="DECIMAL" property="aduitleavemoney" />
+    <result column="AduitLeavePoint" jdbcType="DECIMAL" property="aduitleavepoint" />
+    <result column="AduitTaxAddMoeny" jdbcType="DECIMAL" property="aduittaxaddmoeny" />
+    <result column="ChildLeaveMoney" jdbcType="DECIMAL" property="childleavemoney" />
+    <result column="ChildLeavePoint" jdbcType="DECIMAL" property="childleavepoint" />
+    <result column="ChildTaxAddMoney" jdbcType="DECIMAL" property="childtaxaddmoney" />
+    <result column="AllowLossMoney" jdbcType="DECIMAL" property="allowlossmoney" />
+    <result column="ToDepStartDate" jdbcType="DATE" property="todepstartdate" />
+    <result column="ToDepEndDate" jdbcType="DATE" property="todependdate" />
+    <result column="BackDepStartDate" jdbcType="DATE" property="backdepstartdate" />
+    <result column="BackDepEndDate" jdbcType="DATE" property="backdependdate" />
+    <result column="StartWorkTime" jdbcType="TIME" property="startworktime" />
+    <result column="StopWorkTime" jdbcType="TIME" property="stopworktime" />
+    <result column="SalesStartDate" jdbcType="DATE" property="salesstartdate" />
+    <result column="SalesEndDate" jdbcType="DATE" property="salesenddate" />
+    <result column="SettingStatus" jdbcType="INTEGER" property="settingstatus" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, SalesPlatform, PurchasePlatform, VoyageType, AduitLeaveMoney, AduitLeavePoint, 
+    AduitTaxAddMoeny, ChildLeaveMoney, ChildLeavePoint, ChildTaxAddMoney, AllowLossMoney, 
+    ToDepStartDate, ToDepEndDate, BackDepStartDate, BackDepEndDate, StartWorkTime, StopWorkTime, 
+    SalesStartDate, SalesEndDate, SettingStatus, ModifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.tzq.dal.model.rulesetting.CurrencySettingExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from currencysetting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0">
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from currencysetting
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from currencysetting
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tzq.dal.model.rulesetting.CurrencySettingExample">
+    delete from currencysetting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tzq.dal.model.rulesetting.CurrencySetting">
+    insert into currencysetting (ID, SalesPlatform, PurchasePlatform, 
+      VoyageType, AduitLeaveMoney, AduitLeavePoint, 
+      AduitTaxAddMoeny, ChildLeaveMoney, ChildLeavePoint, 
+      ChildTaxAddMoney, AllowLossMoney, ToDepStartDate, 
+      ToDepEndDate, BackDepStartDate, BackDepEndDate, 
+      StartWorkTime, StopWorkTime, SalesStartDate, 
+      SalesEndDate, SettingStatus, ModifyTime
+      )
+    values (#{id,jdbcType=VARCHAR}, #{salesplatform,jdbcType=VARCHAR}, #{purchaseplatform,jdbcType=VARCHAR}, 
+      #{voyagetype,jdbcType=INTEGER}, #{aduitleavemoney,jdbcType=DECIMAL}, #{aduitleavepoint,jdbcType=DECIMAL}, 
+      #{aduittaxaddmoeny,jdbcType=DECIMAL}, #{childleavemoney,jdbcType=DECIMAL}, #{childleavepoint,jdbcType=DECIMAL}, 
+      #{childtaxaddmoney,jdbcType=DECIMAL}, #{allowlossmoney,jdbcType=DECIMAL}, #{todepstartdate,jdbcType=DATE}, 
+      #{todependdate,jdbcType=DATE}, #{backdepstartdate,jdbcType=DATE}, #{backdependdate,jdbcType=DATE}, 
+      #{startworktime,jdbcType=TIME}, #{stopworktime,jdbcType=TIME}, #{salesstartdate,jdbcType=DATE}, 
+      #{salesenddate,jdbcType=DATE}, #{settingstatus,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tzq.dal.model.rulesetting.CurrencySetting">
+    insert into currencysetting
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="salesplatform != null">
+        SalesPlatform,
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform,
+      </if>
+      <if test="voyagetype != null">
+        VoyageType,
+      </if>
+      <if test="aduitleavemoney != null">
+        AduitLeaveMoney,
+      </if>
+      <if test="aduitleavepoint != null">
+        AduitLeavePoint,
+      </if>
+      <if test="aduittaxaddmoeny != null">
+        AduitTaxAddMoeny,
+      </if>
+      <if test="childleavemoney != null">
+        ChildLeaveMoney,
+      </if>
+      <if test="childleavepoint != null">
+        ChildLeavePoint,
+      </if>
+      <if test="childtaxaddmoney != null">
+        ChildTaxAddMoney,
+      </if>
+      <if test="allowlossmoney != null">
+        AllowLossMoney,
+      </if>
+      <if test="todepstartdate != null">
+        ToDepStartDate,
+      </if>
+      <if test="todependdate != null">
+        ToDepEndDate,
+      </if>
+      <if test="backdepstartdate != null">
+        BackDepStartDate,
+      </if>
+      <if test="backdependdate != null">
+        BackDepEndDate,
+      </if>
+      <if test="startworktime != null">
+        StartWorkTime,
+      </if>
+      <if test="stopworktime != null">
+        StopWorkTime,
+      </if>
+      <if test="salesstartdate != null">
+        SalesStartDate,
+      </if>
+      <if test="salesenddate != null">
+        SalesEndDate,
+      </if>
+      <if test="settingstatus != null">
+        SettingStatus,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="salesplatform != null">
+        #{salesplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatform != null">
+        #{purchaseplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="voyagetype != null">
+        #{voyagetype,jdbcType=INTEGER},
+      </if>
+      <if test="aduitleavemoney != null">
+        #{aduitleavemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="aduitleavepoint != null">
+        #{aduitleavepoint,jdbcType=DECIMAL},
+      </if>
+      <if test="aduittaxaddmoeny != null">
+        #{aduittaxaddmoeny,jdbcType=DECIMAL},
+      </if>
+      <if test="childleavemoney != null">
+        #{childleavemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="childleavepoint != null">
+        #{childleavepoint,jdbcType=DECIMAL},
+      </if>
+      <if test="childtaxaddmoney != null">
+        #{childtaxaddmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="allowlossmoney != null">
+        #{allowlossmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="todepstartdate != null">
+        #{todepstartdate,jdbcType=DATE},
+      </if>
+      <if test="todependdate != null">
+        #{todependdate,jdbcType=DATE},
+      </if>
+      <if test="backdepstartdate != null">
+        #{backdepstartdate,jdbcType=DATE},
+      </if>
+      <if test="backdependdate != null">
+        #{backdependdate,jdbcType=DATE},
+      </if>
+      <if test="startworktime != null">
+        #{startworktime,jdbcType=TIME},
+      </if>
+      <if test="stopworktime != null">
+        #{stopworktime,jdbcType=TIME},
+      </if>
+      <if test="salesstartdate != null">
+        #{salesstartdate,jdbcType=DATE},
+      </if>
+      <if test="salesenddate != null">
+        #{salesenddate,jdbcType=DATE},
+      </if>
+      <if test="settingstatus != null">
+        #{settingstatus,jdbcType=INTEGER},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tzq.dal.model.rulesetting.CurrencySettingExample" resultType="java.lang.Long">
+    select count(*) from currencysetting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update currencysetting
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesplatform != null">
+        SalesPlatform = #{record.salesplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseplatform != null">
+        PurchasePlatform = #{record.purchaseplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="record.voyagetype != null">
+        VoyageType = #{record.voyagetype,jdbcType=INTEGER},
+      </if>
+      <if test="record.aduitleavemoney != null">
+        AduitLeaveMoney = #{record.aduitleavemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.aduitleavepoint != null">
+        AduitLeavePoint = #{record.aduitleavepoint,jdbcType=DECIMAL},
+      </if>
+      <if test="record.aduittaxaddmoeny != null">
+        AduitTaxAddMoeny = #{record.aduittaxaddmoeny,jdbcType=DECIMAL},
+      </if>
+      <if test="record.childleavemoney != null">
+        ChildLeaveMoney = #{record.childleavemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.childleavepoint != null">
+        ChildLeavePoint = #{record.childleavepoint,jdbcType=DECIMAL},
+      </if>
+      <if test="record.childtaxaddmoney != null">
+        ChildTaxAddMoney = #{record.childtaxaddmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.allowlossmoney != null">
+        AllowLossMoney = #{record.allowlossmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.todepstartdate != null">
+        ToDepStartDate = #{record.todepstartdate,jdbcType=DATE},
+      </if>
+      <if test="record.todependdate != null">
+        ToDepEndDate = #{record.todependdate,jdbcType=DATE},
+      </if>
+      <if test="record.backdepstartdate != null">
+        BackDepStartDate = #{record.backdepstartdate,jdbcType=DATE},
+      </if>
+      <if test="record.backdependdate != null">
+        BackDepEndDate = #{record.backdependdate,jdbcType=DATE},
+      </if>
+      <if test="record.startworktime != null">
+        StartWorkTime = #{record.startworktime,jdbcType=TIME},
+      </if>
+      <if test="record.stopworktime != null">
+        StopWorkTime = #{record.stopworktime,jdbcType=TIME},
+      </if>
+      <if test="record.salesstartdate != null">
+        SalesStartDate = #{record.salesstartdate,jdbcType=DATE},
+      </if>
+      <if test="record.salesenddate != null">
+        SalesEndDate = #{record.salesenddate,jdbcType=DATE},
+      </if>
+      <if test="record.settingstatus != null">
+        SettingStatus = #{record.settingstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.modifytime != null">
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update currencysetting
+    set ID = #{record.id,jdbcType=VARCHAR},
+      SalesPlatform = #{record.salesplatform,jdbcType=VARCHAR},
+      PurchasePlatform = #{record.purchaseplatform,jdbcType=VARCHAR},
+      VoyageType = #{record.voyagetype,jdbcType=INTEGER},
+      AduitLeaveMoney = #{record.aduitleavemoney,jdbcType=DECIMAL},
+      AduitLeavePoint = #{record.aduitleavepoint,jdbcType=DECIMAL},
+      AduitTaxAddMoeny = #{record.aduittaxaddmoeny,jdbcType=DECIMAL},
+      ChildLeaveMoney = #{record.childleavemoney,jdbcType=DECIMAL},
+      ChildLeavePoint = #{record.childleavepoint,jdbcType=DECIMAL},
+      ChildTaxAddMoney = #{record.childtaxaddmoney,jdbcType=DECIMAL},
+      AllowLossMoney = #{record.allowlossmoney,jdbcType=DECIMAL},
+      ToDepStartDate = #{record.todepstartdate,jdbcType=DATE},
+      ToDepEndDate = #{record.todependdate,jdbcType=DATE},
+      BackDepStartDate = #{record.backdepstartdate,jdbcType=DATE},
+      BackDepEndDate = #{record.backdependdate,jdbcType=DATE},
+      StartWorkTime = #{record.startworktime,jdbcType=TIME},
+      StopWorkTime = #{record.stopworktime,jdbcType=TIME},
+      SalesStartDate = #{record.salesstartdate,jdbcType=DATE},
+      SalesEndDate = #{record.salesenddate,jdbcType=DATE},
+      SettingStatus = #{record.settingstatus,jdbcType=INTEGER},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tzq.dal.model.rulesetting.CurrencySetting">
+    update currencysetting
+    <set>
+      <if test="salesplatform != null">
+        SalesPlatform = #{salesplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform = #{purchaseplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="voyagetype != null">
+        VoyageType = #{voyagetype,jdbcType=INTEGER},
+      </if>
+      <if test="aduitleavemoney != null">
+        AduitLeaveMoney = #{aduitleavemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="aduitleavepoint != null">
+        AduitLeavePoint = #{aduitleavepoint,jdbcType=DECIMAL},
+      </if>
+      <if test="aduittaxaddmoeny != null">
+        AduitTaxAddMoeny = #{aduittaxaddmoeny,jdbcType=DECIMAL},
+      </if>
+      <if test="childleavemoney != null">
+        ChildLeaveMoney = #{childleavemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="childleavepoint != null">
+        ChildLeavePoint = #{childleavepoint,jdbcType=DECIMAL},
+      </if>
+      <if test="childtaxaddmoney != null">
+        ChildTaxAddMoney = #{childtaxaddmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="allowlossmoney != null">
+        AllowLossMoney = #{allowlossmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="todepstartdate != null">
+        ToDepStartDate = #{todepstartdate,jdbcType=DATE},
+      </if>
+      <if test="todependdate != null">
+        ToDepEndDate = #{todependdate,jdbcType=DATE},
+      </if>
+      <if test="backdepstartdate != null">
+        BackDepStartDate = #{backdepstartdate,jdbcType=DATE},
+      </if>
+      <if test="backdependdate != null">
+        BackDepEndDate = #{backdependdate,jdbcType=DATE},
+      </if>
+      <if test="startworktime != null">
+        StartWorkTime = #{startworktime,jdbcType=TIME},
+      </if>
+      <if test="stopworktime != null">
+        StopWorkTime = #{stopworktime,jdbcType=TIME},
+      </if>
+      <if test="salesstartdate != null">
+        SalesStartDate = #{salesstartdate,jdbcType=DATE},
+      </if>
+      <if test="salesenddate != null">
+        SalesEndDate = #{salesenddate,jdbcType=DATE},
+      </if>
+      <if test="settingstatus != null">
+        SettingStatus = #{settingstatus,jdbcType=INTEGER},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tzq.dal.model.rulesetting.CurrencySetting">
+    update currencysetting
+    set SalesPlatform = #{salesplatform,jdbcType=VARCHAR},
+      PurchasePlatform = #{purchaseplatform,jdbcType=VARCHAR},
+      VoyageType = #{voyagetype,jdbcType=INTEGER},
+      AduitLeaveMoney = #{aduitleavemoney,jdbcType=DECIMAL},
+      AduitLeavePoint = #{aduitleavepoint,jdbcType=DECIMAL},
+      AduitTaxAddMoeny = #{aduittaxaddmoeny,jdbcType=DECIMAL},
+      ChildLeaveMoney = #{childleavemoney,jdbcType=DECIMAL},
+      ChildLeavePoint = #{childleavepoint,jdbcType=DECIMAL},
+      ChildTaxAddMoney = #{childtaxaddmoney,jdbcType=DECIMAL},
+      AllowLossMoney = #{allowlossmoney,jdbcType=DECIMAL},
+      ToDepStartDate = #{todepstartdate,jdbcType=DATE},
+      ToDepEndDate = #{todependdate,jdbcType=DATE},
+      BackDepStartDate = #{backdepstartdate,jdbcType=DATE},
+      BackDepEndDate = #{backdependdate,jdbcType=DATE},
+      StartWorkTime = #{startworktime,jdbcType=TIME},
+      StopWorkTime = #{stopworktime,jdbcType=TIME},
+      SalesStartDate = #{salesstartdate,jdbcType=DATE},
+      SalesEndDate = #{salesenddate,jdbcType=DATE},
+      SettingStatus = #{settingstatus,jdbcType=INTEGER},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -10,7 +10,7 @@ public interface RuleMatchingLogMapper {
 
     int deleteByExample(RuleMatchingLogExample example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(RuleMatchingLog record);
 
@@ -18,7 +18,7 @@ public interface RuleMatchingLogMapper {
 
     List<RuleMatchingLog> selectByExample(RuleMatchingLogExample example);
 
-    RuleMatchingLog selectByPrimaryKey(Integer id);
+    RuleMatchingLog selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") RuleMatchingLog record, @Param("example") RuleMatchingLogExample example);
 

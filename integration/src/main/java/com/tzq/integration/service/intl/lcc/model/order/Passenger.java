@@ -9,14 +9,41 @@ public class Passenger implements Serializable {
 
     private static final long serialVersionUID = 3097170825390550974L;
 
+    /**
+     * 英文名按"LastName/FirstName/MiddleName"，中文名按"姓/名"（中间名部分可省略）
+     */
     private String name;
-    private String ageType;
+    /**
+     * 乘客类型，0 成人/1 儿童
+     */
+    private int ageType;
+    /**
+     * 生日，格式：YYYYMMDD
+     */
     private String birthday;
+    /**
+     * 乘客性别，M 男 / F 女
+     */
     private String gender;
+    /**
+     * 证件类型：PP - 护照 / GA – 港澳通行证（仅内地与香港通航航段适用）
+     */
     private String cardType;
+    /**
+     * 证件号码，最大 15 个字符
+     */
     private String cardNum;
+    /**
+     * 证件有效时间，格式：YYYYMMDD
+     */
     private String cardExpired;
+    /**
+     * 证件发行国家，国家二字码
+     */
     private String cardIssuePlace;
+    /**
+     * 乘客国籍，国家二字码
+     */
     private String nationality;
 
     public String getName() {
@@ -27,11 +54,11 @@ public class Passenger implements Serializable {
         this.name = name;
     }
 
-    public String getAgeType() {
+    public int getAgeType() {
         return ageType;
     }
 
-    public void setAgeType(String ageType) {
+    public void setAgeType(int ageType) {
         this.ageType = ageType;
     }
 

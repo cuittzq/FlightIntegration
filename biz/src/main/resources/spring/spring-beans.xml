@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:sof="http://schema.ly.com/schema/sof"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:webflow="http://www.springframework.org/schema/webflow-config"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config.xsd">
+
+    <!-- 路由代理类 -->
+    <bean id="purchaseProxy"
+          class="com.tzq.biz.proxy.DefaultPurchaseProxy"
+          parent="abstractPurchaseProxy"></bean>
+
+    <!-- 路由代理抽象类 -->
+    <bean id="abstractPurchaseProxy"
+          class="com.tzq.biz.proxy.AbstractPurchaseProxy"
+          abstract="true">
+        <property name="routeProxyFactory" ref="routeProxyFactory"></property>
+    </bean>
+
+    <!-- 路由工厂类 -->
+    <bean id="routeProxyFactory"
+          class="com.tzq.biz.factory.DefaultRouteProxyFactory"></bean>
+
+</beans>

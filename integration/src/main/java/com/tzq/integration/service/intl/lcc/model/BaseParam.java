@@ -5,9 +5,9 @@ import java.io.Serializable;
 /**
  * 功能描述
  *
- * @Author tzq24955
+ * @Author TanZhiqiang
  * @Created on 2018/5/8
- * LY.com Inc.
+ * LTC.COM.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
 public class BaseParam implements Serializable {
@@ -19,7 +19,7 @@ public class BaseParam implements Serializable {
     /**
      * 行程类型: 1.单程 2.往返
      */
-    private String tripType;
+    private Integer tripType;
 
     private String sessionId;
 
@@ -32,11 +32,11 @@ public class BaseParam implements Serializable {
         this.sessionId = sessionId;
     }
 
-    public String getTripType() {
+    public Integer getTripType() {
         return tripType;
     }
 
-    public void setTripType(String tripType) {
+    public void setTripType(Integer tripType) {
         this.tripType = tripType;
     }
 

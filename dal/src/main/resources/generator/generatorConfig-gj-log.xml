@@ -33,7 +33,7 @@
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
         <!-- 生成映射文件的包名和位置-->
-        <sqlMapGenerator targetPackage="mapping" targetProject="src/main/resources">
+        <sqlMapGenerator targetPackage="mapping/log" targetProject="src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!-- 生成DAO的包名和位置-->
@@ -45,8 +45,7 @@
             <columnOverride column="SalesPlatLogDetail" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <columnOverride column="PurchasePlatLogDetail" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </table>
-        <table tableName="orderexlog" domainObjectName="OrderexLog">
-
+        <table tableName="orderlog" domainObjectName="OrderLog">
             <columnOverride column="FlightInfo" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <columnOverride column="LinkInfo" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <columnOverride column="PassengerInfo" javaType="java.lang.String" jdbcType="VARCHAR"/>

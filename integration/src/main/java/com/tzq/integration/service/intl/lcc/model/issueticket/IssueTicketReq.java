@@ -13,7 +13,8 @@ public class IssueTicketReq extends BaseParam implements Serializable {
     private static final long serialVersionUID = 5623220208054898876L;
     private String orderNo;
     private String pnrCode;
-    private OrderReq.OrderReqRouting reqRouting;
+
+    private FlightRoutings routing;
 
     public String getOrderNo() {
         return orderNo;
@@ -31,12 +32,12 @@ public class IssueTicketReq extends BaseParam implements Serializable {
         this.pnrCode = pnrCode;
     }
 
-    public OrderReq.OrderReqRouting getReqRouting() {
-        return reqRouting;
+    public FlightRoutings getRouting() {
+        return routing;
     }
 
-    public void setReqRouting(OrderReq.OrderReqRouting reqRouting) {
-        this.reqRouting = reqRouting;
+    public void setRouting(FlightRoutings routing) {
+        this.routing = routing;
     }
 
     @Override
@@ -44,7 +45,7 @@ public class IssueTicketReq extends BaseParam implements Serializable {
         final StringBuilder sb = new StringBuilder("{");
         sb.append("            \"orderNo\":\"").append(orderNo).append('\"');
         sb.append(",             \"pnrCode\":\"").append(pnrCode).append('\"');
-        sb.append(",             \"reqRouting\":").append(reqRouting);
+        sb.append(",             \"routing\":").append(routing);
         sb.append('}');
         sb.append(super.toString());
         return sb.toString();

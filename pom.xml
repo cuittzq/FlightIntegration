@@ -13,6 +13,7 @@
         <module>integration</module>
         <module>commons</module>
         <module>service</module>
+        <module>mapper</module>
 
     </modules>
     <packaging>pom</packaging>
@@ -39,10 +40,13 @@
         <commons.version>3.3.2</commons.version>
         <commons-codec.version>1.9</commons-codec.version>
         <cxf.version>3.1.10</cxf.version>
+        <ehcache.version>2.10.4</ehcache.version>
         <mybatis.generator.version>1.3.5</mybatis.generator.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
+        <org.mapstruct.version>1.2.0.CR1</org.mapstruct.version>
+        <snappy.version>1.1.2.6</snappy.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -95,6 +99,10 @@
                         <groupId>org.springframework</groupId>
                         <artifactId>spring-oxm</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <artifactId>org.mapstruct</artifactId>
+                        <groupId>mapstruct</groupId>
+                    </exclusion>
                 </exclusions>
                 <version>${swagger.version}</version>
             </dependency>
@@ -117,7 +125,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
@@ -160,7 +167,6 @@
                 <artifactId>spring-boot-configuration-processor</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context-support</artifactId>
@@ -172,7 +178,16 @@
                 <artifactId>snakeyaml</artifactId>
                 <version>${snakeyaml.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-cache</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>19.0</version>
+            </dependency>
             <!-- spring-boot -->
 
             <!--mybatis-->
@@ -387,6 +402,11 @@
             </dependency>
             <dependency>
                 <groupId>com.github.cuittzq</groupId>
+                <artifactId>mapper</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.cuittzq</groupId>
                 <artifactId>MysqlPaginationPlugin</artifactId>
                 <version>1.0.1</version>
             </dependency>
@@ -407,6 +427,23 @@
                 <groupId>net.jcip</groupId>
                 <artifactId>jcip-annotations</artifactId>
                 <version>1.0</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>2.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-jdk8</artifactId>
+                <version>${org.mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.xerial.snappy</groupId>
+                <artifactId>snappy-java</artifactId>
+                <version>${snappy.version}</version>
             </dependency>
 
         </dependencies>
@@ -467,16 +504,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
             </plugin>
-            <!-- 编码和编译 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
+
             <!-- mybatis generator 自动生成代码插件 -->
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
@@ -486,6 +514,22 @@
                     <configurationFile>${basedir}/src/main/resources/generator/generatorConfig.xml</configurationFile>
                     <overwrite>true</overwrite>
                     <verbose>true</verbose>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${org.mapstruct.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>

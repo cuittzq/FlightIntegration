@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
     <name>FlightIntegration-web</name>
     <description>FlightIntegration-web</description>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <artifactId>web</artifactId>
 
     <dependencies>
@@ -86,21 +86,18 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.github.cuittzq</groupId>
-            <artifactId>biz</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>com.github.cuittzq</groupId>
             <artifactId>dal</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.cuittzq</groupId>
-            <artifactId>integration</artifactId>
+            <artifactId>biz</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.cuittzq</groupId>
-            <artifactId>commons</artifactId>
+            <artifactId>service</artifactId>
         </dependency>
     </dependencies>
 
@@ -144,16 +141,16 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
-            </plugin>
-            <!-- 编码和编译 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <mainClass>com.tzq.web.Application</mainClass>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal><!--可以把依赖的包都打包到生成的Jar包中-->
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <resources>
@@ -171,6 +168,7 @@
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
                     <include>**/*.yml</include>
+                    <include>spring/*.xml</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>

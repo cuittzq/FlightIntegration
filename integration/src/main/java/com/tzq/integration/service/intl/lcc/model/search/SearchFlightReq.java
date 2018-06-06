@@ -5,16 +5,16 @@ import com.tzq.integration.service.intl.lcc.model.BaseParam;
 /**
  * 功能描述
  *
- * @Author tzq24955
+ * @Author TanZhiqiang
  * @Created on 2018/5/8
- * LY.com Inc.
+ * LTC.COM.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
 public class SearchFlightReq extends BaseParam {
     /**
      * 行程类型: 1.单程 2.往返
      */
-    private String tripType;
+    private Integer tripType;
     /**
      * 出发地城市或机场IATA三字码代码
      */
@@ -32,11 +32,12 @@ public class SearchFlightReq extends BaseParam {
      */
     private String retDate;
 
-    public String getTripType() {
+    @Override
+    public Integer getTripType() {
         return tripType;
     }
 
-    public void setTripType(String tripType) {
+    public void setTripType(Integer tripType) {
         this.tripType = tripType;
     }
 

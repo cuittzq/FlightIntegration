@@ -10,7 +10,7 @@ public interface PassengerInfoMapper {
 
     int deleteByExample(PassengerInfoExample example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(PassengerInfo record);
 
@@ -18,7 +18,7 @@ public interface PassengerInfoMapper {
 
     List<PassengerInfo> selectByExample(PassengerInfoExample example);
 
-    PassengerInfo selectByPrimaryKey(Integer id);
+    PassengerInfo selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") PassengerInfo record, @Param("example") PassengerInfoExample example);
 

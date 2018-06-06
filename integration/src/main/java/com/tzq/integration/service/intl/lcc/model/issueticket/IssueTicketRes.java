@@ -13,6 +13,8 @@ public class IssueTicketRes extends BaseRes implements Serializable {
 
     private String orderNo;
     private String pnrCode;
+    private Integer orderState;
+
     private FlightRoutings routings;
 
     public String getOrderNo() {
@@ -39,11 +41,20 @@ public class IssueTicketRes extends BaseRes implements Serializable {
         this.routings = routings;
     }
 
+    public Integer getOrderState() {
+        return orderState;
+    }
+
+    public void setOrderState(Integer orderState) {
+        this.orderState = orderState;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("{");
         sb.append("            \"orderNo\":\"").append(orderNo).append('\"');
         sb.append(",             \"pnrCode\":\"").append(pnrCode).append('\"');
+        sb.append(",             \"orderState\":").append(orderState);
         sb.append(",             \"routings\":").append(routings);
         sb.append('}');
         sb.append(super.toString());

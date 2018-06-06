@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tzq.dal.mapper.suppliersetting.SalesAirLineSettingMapper">
+  <resultMap id="BaseResultMap" type="com.tzq.dal.model.suppliersetting.SalesAirLineSetting">
+    <id column="ID" jdbcType="CHAR" property="id" />
+    <result column="PurchasePlatform" jdbcType="CHAR" property="purchaseplatform" />
+    <result column="Deps" jdbcType="VARCHAR" property="deps" />
+    <result column="Arrs" jdbcType="VARCHAR" property="arrs" />
+    <result column="Carriers" jdbcType="VARCHAR" property="carriers" />
+    <result column="CacheStatus" jdbcType="INTEGER" property="cachestatus" />
+    <result column="SettingStatus" jdbcType="INTEGER" property="settingstatus" />
+    <result column="ModifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, PurchasePlatform, Deps, Arrs, Carriers, CacheStatus, SettingStatus, ModifyTime
+  </sql>
+  <select id="selectByExample" parameterType="com.tzq.dal.model.suppliersetting.SalesAirLineSettingExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from salesairlinesetting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0">
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from salesairlinesetting
+    where ID = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from salesairlinesetting
+    where ID = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tzq.dal.model.suppliersetting.SalesAirLineSettingExample">
+    delete from salesairlinesetting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tzq.dal.model.suppliersetting.SalesAirLineSetting">
+    insert into salesairlinesetting (ID, PurchasePlatform, Deps, 
+      Arrs, Carriers, CacheStatus, 
+      SettingStatus, ModifyTime)
+    values (#{id,jdbcType=CHAR}, #{purchaseplatform,jdbcType=CHAR}, #{deps,jdbcType=VARCHAR}, 
+      #{arrs,jdbcType=VARCHAR}, #{carriers,jdbcType=VARCHAR}, #{cachestatus,jdbcType=INTEGER}, 
+      #{settingstatus,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tzq.dal.model.suppliersetting.SalesAirLineSetting">
+    insert into salesairlinesetting
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="purchaseplatform != null">
+        PurchasePlatform,
+      </if>
+      <if test="deps != null">
+        Deps,
+      </if>
+      <if test="arrs != null">
+        Arrs,
+      </if>
+      <if test="carriers != null">
+        Carriers,
+      </if>
+      <if test="cachestatus != null">
+        CacheStatus,
+      </if>
+      <if test="settingstatus != null">
+        SettingStatus,
+      </if>
+      <if test="modifytime != null">
+        ModifyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="purchaseplatform != null">
+        #{purchaseplatform,jdbcType=CHAR},
+      </if>
+      <if test="deps != null">
+        #{deps,jdbcType=VARCHAR},
+      </if>
+      <if test="arrs != null">
+        #{arrs,jdbcType=VARCHAR},
+      </if>
+      <if test="carriers != null">
+        #{carriers,jdbcType=VARCHAR},
+      </if>
+      <if test="cachestatus != null">
+        #{cachestatus,jdbcType=INTEGER},
+      </if>
+      <if test="settingstatus != null">
+        #{settingstatus,jdbcType=INTEGER},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tzq.dal.model.suppliersetting.SalesAirLineSettingExample" resultType="java.lang.Long">
+    select count(*) from salesairlinesetting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update salesairlinesetting
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=CHAR},
+      </if>
+      <if test="record.purchaseplatform != null">
+        PurchasePlatform = #{record.purchaseplatform,jdbcType=CHAR},
+      </if>
+      <if test="record.deps != null">
+        Deps = #{record.deps,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrs != null">
+        Arrs = #{record.arrs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carriers != null">
+        Carriers = #{record.carriers,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cachestatus != null">
+        CacheStatus = #{record.cachestatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.settingstatus != null">
+        SettingStatus = #{record.settingstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.modifytime != null">
+        ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update salesairlinesetting
+    set ID = #{record.id,jdbcType=CHAR},
+      PurchasePlatform = #{record.purchaseplatform,jdbcType=CHAR},
+      Deps = #{record.deps,jdbcType=VARCHAR},
+      Arrs = #{record.arrs,jdbcType=VARCHAR},
+      Carriers = #{record.carriers,jdbcType=VARCHAR},
+      CacheStatus = #{record.cachestatus,jdbcType=INTEGER},
+      SettingStatus = #{record.settingstatus,jdbcType=INTEGER},
+      ModifyTime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tzq.dal.model.suppliersetting.SalesAirLineSetting">
+    update salesairlinesetting
+    <set>
+      <if test="purchaseplatform != null">
+        PurchasePlatform = #{purchaseplatform,jdbcType=CHAR},
+      </if>
+      <if test="deps != null">
+        Deps = #{deps,jdbcType=VARCHAR},
+      </if>
+      <if test="arrs != null">
+        Arrs = #{arrs,jdbcType=VARCHAR},
+      </if>
+      <if test="carriers != null">
+        Carriers = #{carriers,jdbcType=VARCHAR},
+      </if>
+      <if test="cachestatus != null">
+        CacheStatus = #{cachestatus,jdbcType=INTEGER},
+      </if>
+      <if test="settingstatus != null">
+        SettingStatus = #{settingstatus,jdbcType=INTEGER},
+      </if>
+      <if test="modifytime != null">
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tzq.dal.model.suppliersetting.SalesAirLineSetting">
+    update salesairlinesetting
+    set PurchasePlatform = #{purchaseplatform,jdbcType=CHAR},
+      Deps = #{deps,jdbcType=VARCHAR},
+      Arrs = #{arrs,jdbcType=VARCHAR},
+      Carriers = #{carriers,jdbcType=VARCHAR},
+      CacheStatus = #{cachestatus,jdbcType=INTEGER},
+      SettingStatus = #{settingstatus,jdbcType=INTEGER},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

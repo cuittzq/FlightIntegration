@@ -3,13 +3,13 @@ package com.tzq.dal.model.order;
 import java.util.Date;
 
 public class PassengerInfo {
-    private Integer id;
+    private Long id;
 
     private String orderno;
 
     private String passengername;
 
-    private String passengernametype;
+    private String passengertype;
 
     private Date birtyday;
 
@@ -19,7 +19,7 @@ public class PassengerInfo {
 
     private String cardnum;
 
-    private Byte cardissueplace;
+    private Integer cardissueplace;
 
     private Date cardexpired;
 
@@ -31,11 +31,11 @@ public class PassengerInfo {
 
     private Date modifytime;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -55,12 +55,12 @@ public class PassengerInfo {
         this.passengername = passengername == null ? null : passengername.trim();
     }
 
-    public String getPassengernametype() {
-        return passengernametype;
+    public String getPassengertype() {
+        return passengertype;
     }
 
-    public void setPassengernametype(String passengernametype) {
-        this.passengernametype = passengernametype == null ? null : passengernametype.trim();
+    public void setPassengertype(String passengertype) {
+        this.passengertype = passengertype == null ? null : passengertype.trim();
     }
 
     public Date getBirtyday() {
@@ -95,11 +95,11 @@ public class PassengerInfo {
         this.cardnum = cardnum == null ? null : cardnum.trim();
     }
 
-    public Byte getCardissueplace() {
+    public Integer getCardissueplace() {
         return cardissueplace;
     }
 
-    public void setCardissueplace(Byte cardissueplace) {
+    public void setCardissueplace(Integer cardissueplace) {
         this.cardissueplace = cardissueplace;
     }
 

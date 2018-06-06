@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
 /**
  * 功能描述
  *
- * @Author tzq24955
+ * @Author TanZhiqiang
  * @Created on 2018/5/7
- * LY.com Inc.
+ * LTC.COM.
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
 @Component
@@ -26,18 +26,11 @@ public class UserAccessAspect {
 
     @Before("access()")
     public void deBefore(JoinPoint joinPoint) throws Throwable {
-        System.out.println("second before");
     }
 
     @Around("@annotation(userAccess)")
     public Object around(ProceedingJoinPoint pjp, UserAccess userAccess) {
         //获取注解里的值
-        System.out.println("second around:" + userAccess.desc());
-        try {
-            return pjp.proceed();
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-            return null;
-        }
+        return null;
     }
 }

@@ -6,6 +6,7 @@ import java.io.Serializable;
  * Created by cl24957 on 2018/5/12.
  */
 public class Contact implements Serializable {
+    private static final long serialVersionUID = 4865318183469856271L;
     private String name;
     private String address;
     private String postcode;

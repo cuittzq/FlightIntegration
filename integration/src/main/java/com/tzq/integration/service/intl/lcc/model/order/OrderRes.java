@@ -16,11 +16,7 @@ public class OrderRes extends BaseRes implements Serializable{
     private String orderNo;
     private String pnrCode;
     private Integer maxSeats;
-    private FlightRoutings routings;
-    private List<FlightSegment> fromSegments;
-    private List<FlightSegment> retSegments;
-    private String refData;
-    private String priceCurrency;
+    private FlightRoutings routing;
 
     public String getOrderNo() {
         return orderNo;
@@ -46,44 +42,12 @@ public class OrderRes extends BaseRes implements Serializable{
         this.maxSeats = maxSeats;
     }
 
-    public FlightRoutings getRoutings() {
-        return routings;
+    public FlightRoutings getRouting() {
+        return routing;
     }
 
-    public void setRoutings(FlightRoutings routings) {
-        this.routings = routings;
-    }
-
-    public List<FlightSegment> getFromSegments() {
-        return fromSegments;
-    }
-
-    public void setFromSegments(List<FlightSegment> fromSegments) {
-        this.fromSegments = fromSegments;
-    }
-
-    public List<FlightSegment> getRetSegments() {
-        return retSegments;
-    }
-
-    public void setRetSegments(List<FlightSegment> retSegments) {
-        this.retSegments = retSegments;
-    }
-
-    public String getRefData() {
-        return refData;
-    }
-
-    public void setRefData(String refData) {
-        this.refData = refData;
-    }
-
-    public String getPriceCurrency() {
-        return priceCurrency;
-    }
-
-    public void setPriceCurrency(String priceCurrency) {
-        this.priceCurrency = priceCurrency;
+    public void setRouting(FlightRoutings routing) {
+        this.routing = routing;
     }
 
     @Override
@@ -92,11 +56,7 @@ public class OrderRes extends BaseRes implements Serializable{
         sb.append("            \"orderNo\":\"").append(orderNo).append('\"');
         sb.append(",             \"pnrCode\":\"").append(pnrCode).append('\"');
         sb.append(",             \"maxSeats\":").append(maxSeats);
-        sb.append(",             \"routings\":").append(routings);
-        sb.append(",             \"fromSegments\":").append(fromSegments);
-        sb.append(",             \"retSegments\":").append(retSegments);
-        sb.append(",             \"refData\":\"").append(refData).append('\"');
-        sb.append(",             \"priceCurrency\":\"").append(priceCurrency).append('\"');
+        sb.append(",             \"routings\":").append(routing);
         sb.append('}');
         sb.append(super.toString());
         return sb.toString();
