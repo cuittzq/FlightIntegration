@@ -12,6 +12,6 @@ import org.springframework.context.annotation.ImportResource;
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
 @Configuration
-@ImportResource(locations = {"spring/*.xml"})
+@ImportResource(locations = {"classpath*:/META-INF/spring/*.xml"})
 public class ConfigClass {
 }
