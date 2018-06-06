@@ -1,6 +1,7 @@
 package com.tzq.biz.core;
 
 
+import com.tzq.commons.Exception.InnerInterfaceException;
 import com.tzq.commons.model.ctrip.search.FlightRouteVO;
 import com.tzq.commons.model.ctrip.search.SearchVO;
 import com.tzq.commons.model.context.RouteContext;
@@ -15,5 +16,5 @@ import com.tzq.commons.model.context.SingleResult;
  * Copyright (c) 2004-2017 All Rights Reserved.
  */
 public interface OtaSearchFlightService {
-    SingleResult<FlightRouteVO> searchFlight(RouteContext<SearchVO> context);
+    SingleResult<FlightRouteVO> searchFlight(RouteContext<SearchVO> context) throws InnerInterfaceException;
 }

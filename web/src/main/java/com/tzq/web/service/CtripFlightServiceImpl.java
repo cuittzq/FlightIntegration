@@ -5,6 +5,7 @@ import com.tzq.biz.core.OtaCreateOrderService;
 import com.tzq.biz.core.OtaIssueTicketService;
 import com.tzq.biz.core.OtaSearchFlightService;
 import com.tzq.biz.core.OtaVerifyFlightService;
+import com.tzq.commons.Exception.InnerInterfaceException;
 import com.tzq.commons.compress.GZipCompress;
 import com.tzq.commons.enums.*;
 import com.tzq.commons.mapper.ota.CtripOrderVOMapper;
@@ -109,7 +110,15 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         context.setArrDate(req.getRetDate());
         SearchFlightRes searchFlightRes = new SearchFlightRes();
         logger.info("调用LCC{}接口,入参{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(context));
-        SingleResult<FlightRouteVO> response = otaSearchFlightService.searchFlight(context);
+        SingleResult<FlightRouteVO> response = null;
+        try {
+            response = otaSearchFlightService.searchFlight(context);
+        } catch (InnerInterfaceException e) {
+            searchFlightRes.setMsg(e.getMessage());
+            searchFlightRes.setStatus(InnerException2StatusEnum(e.getError()).getCode());
+            return searchFlightRes;
+        }
+
         logger.info("调用LCC{}接口,返回{}", MethodEnum.SEARCHFLIGHT, JSON.toJSONString(response));
         if (!response.isSuccess()) {
             searchFlightRes.setMsg(response.getErrorMessage());
@@ -145,8 +154,7 @@ public class CtripFlightServiceImpl implements CtripFlightService {
     public CtripVerifyRes verifyFlight(CtripVerifyReq req) {
         RouteContext<CtripVerifyReqVO> context = new RouteContext();
         setDefaultCont(context);
-        CtripVerifyRes response = new CtripVerifyRes();
-
+        CtripVerifyRes   response    = new CtripVerifyRes();
         CtripVerifyReqVO verifyReqVO = new CtripVerifyReqVO();
         verifyReqVO.setAdultNumber(req.getAdultNumber());
         verifyReqVO.setChildNumber(req.getChildNumber());
@@ -158,10 +166,8 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         if (req.getRoutings() != null) {
             try {
                 req.getRoutings().setData(GZipCompress.rDataUnCompress(req.getRoutings().getData()));
-            } catch (IOException e) {
-                logger.error("data解压缩异常", e);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("data解压缩异常", e);
             }
         }
 
@@ -194,7 +200,6 @@ public class CtripFlightServiceImpl implements CtripFlightService {
             response.getRouting().setFromSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getFromSegments()));
             response.getRouting().setRetSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getRetSegments()));
         } catch (Exception ex) {
-            ex.printStackTrace();
             logger.error("调用验价接口异常", MethodEnum.CREATEORDER, ex);
         }
         return response;
@@ -314,5 +319,69 @@ public class CtripFlightServiceImpl implements CtripFlightService {
         Map<String, Object> datamap = JSON.parseObject(data, Map.class);
 
         return datamap;
+    }
+
+    /**
+     * @param interfaceErrorEnum
+     * @return
+     */
+    private StatusEnum InnerException2StatusEnum(InterfaceErrorEnum interfaceErrorEnum) {
+        if (interfaceErrorEnum == null) {
+            return StatusEnum.INNER_ERROR;
+        }
+        StatusEnum result = StatusEnum.SUCCEED;
+        switch (interfaceErrorEnum) {
+            // (0, "成功"),
+            case SUCCEED:
+                result = StatusEnum.SUCCEED;
+                break;
+            // (1, "失败"),
+            case FAIL:
+                result = StatusEnum.OTHERS;
+                break;
+            // (2, "CID错误"),
+            case CID:
+                // (5, "请求参数错误"),
+            case PARAM_ERROR:
+                // (3, "非法IP"),
+            case ILLEGAL_IP:
+                result = StatusEnum.PARAM_ERROR;
+                break;
+            // (4, "操作失败"),
+            case OPERATE_ERROR:
+                // (6, "程序异常"),
+            case INNER_ERROR:
+                result = StatusEnum.INNER_ERROR;
+                break;
+            // (10, "访问超时"),
+            case TIME_OUT:
+                // (11, "访问频繁"),
+            case FREQUENCY_LIMIT:
+                result = StatusEnum.NET_ERROR;
+                break;
+            // (7, "航线管控"),
+            case OD_ERROR:
+                // (8, "航司过滤"),
+            case AIRLINE_ERROR:
+                // (9, "配置未找到"),
+            case CONFIG_NOT_FIND:
+                // (12, "不在销售时间范围内"),
+            case OUT_OF_SALE_DATE:
+                // (13, "不在工作时间范围内"),
+            case OUT_OF_WORK_DATE:
+                // (16, "不可预订"),;
+            case UN_BOOKING:
+                result = StatusEnum.DATA_ERROR;
+                break;
+            // (14, "价格变动"),
+            case PRICE_CHANGED:
+                result = StatusEnum.DATA_ERROR;
+                break;
+            // (15, "无座"),
+            case NO_SEAT:
+                result = StatusEnum.NOT_ENOUGH;
+                break;
+        }
+        return result;
     }
 }
