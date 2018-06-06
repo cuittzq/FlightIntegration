@@ -168,6 +168,9 @@ public class CtripFlightServiceImpl implements CtripFlightService {
                 req.getRoutings().setData(GZipCompress.rDataUnCompress(req.getRoutings().getData()));
             } catch (Exception e) {
                 logger.error("data解压缩异常", e);
+                response.setMsg("data数据校验不过");
+                response.setStatus(StatusEnum.INNER_ERROR.getCode());
+                return response;
             }
         }
 
