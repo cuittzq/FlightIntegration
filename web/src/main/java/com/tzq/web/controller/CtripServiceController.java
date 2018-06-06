@@ -1,5 +1,9 @@
 package com.tzq.web.controller;
 
+import com.alibaba.druid.support.json.JSONUtils;
+import com.alibaba.fastjson.JSON;
+import com.tzq.biz.constant.OtaConstants;
+import com.tzq.commons.utils.AESUtil;
 import com.tzq.service.ctrip.CtripFlightService;
 import com.tzq.service.ctrip.models.enums.StatusEnum;
 import com.tzq.service.ctrip.models.order.CreateOrderReq;
@@ -12,6 +16,8 @@ import com.tzq.service.ctrip.models.verify.CtripVerifyReq;
 import com.tzq.service.ctrip.models.verify.CtripVerifyRes;
 import com.tzq.web.aop.UserAccess;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +32,10 @@ import java.util.List;
 @RequestMapping(value = "/ctrip")
 public class CtripServiceController {
 
+    /**
+     *
+     */
+    private Logger logger = LoggerFactory.getLogger(getClass());
     @Resource
     private CtripFlightService ctripFlightService;
 
@@ -48,7 +58,7 @@ public class CtripServiceController {
 
     @RequestMapping(value = "/verify", method = RequestMethod.POST)
 
-    public CtripVerifyRes Verify( @RequestBody CtripVerifyReq verifyReq, BindingResult bindingResult) {
+    public CtripVerifyRes Verify(@RequestBody CtripVerifyReq verifyReq, BindingResult bindingResult) {
 
         CtripVerifyRes verifyRes = new CtripVerifyRes();
         if (bindingResult.hasErrors()) {
@@ -82,46 +92,61 @@ public class CtripServiceController {
 
     @RequestMapping(value = "/createorder", method = RequestMethod.POST)
 
-    public CreateOrderRes CreateOrder(@Valid @RequestBody CreateOrderReq createOrderReq, BindingResult bindingResult) {
+    public String CreateOrder(@RequestBody String createOrderdata, BindingResult bindingResult) {
+        CreateOrderReq createOrderReq = null;
+        String         result         = "";
         CreateOrderRes createOrderRes = new CreateOrderRes();
+        if (StringUtils.isNotEmpty(createOrderdata)) {
+            try {
+                String decdata = AESUtil.Decrypt(createOrderdata, OtaConstants.AES_DECRYPT_KEY);
+                createOrderReq = JSON.parseObject(decdata, CreateOrderReq.class);
+            } catch (Exception e) {
+                createOrderRes.setStatus(StatusEnum.PARAM_ERROR.getCode());
+                createOrderRes.setMsg("请求参数不能为空");
+                result = encryptResponse(JSON.toJSONString(createOrderRes));
+                return result;
+            }
+        }
+
         if (bindingResult.hasErrors()) {
             createOrderRes.setStatus(StatusEnum.PARAM_ERROR.getCode());
             createOrderRes.setMsg(bindingResult.getFieldError().getDefaultMessage());
-            return createOrderRes;
+            result = encryptResponse(JSON.toJSONString(createOrderRes));
+            return result;
         }
 
         if (createOrderReq == null) {
             createOrderRes.setStatus(StatusEnum.PARAM_ERROR.getCode());
             createOrderRes.setMsg("请求参数不能为空");
-
-            return createOrderRes;
+            result = encryptResponse(JSON.toJSONString(createOrderRes));
+            return result;
         }
 
         if (createOrderReq.getTripType() == 0 || createOrderReq.getTripType() > 2) {
             createOrderRes.setStatus(StatusEnum.PARAM_ERROR.getCode());
             createOrderRes.setMsg("行程类型错误 1：单程2：往返");
-
-            return createOrderRes;
+            result = encryptResponse(JSON.toJSONString(createOrderRes));
+            return result;
         }
 
-        if((createOrderReq.getAdultNumber() + createOrderReq.getChildNumber() + createOrderReq.getInfantNumber()) ==0)
-        {
+        if ((createOrderReq.getAdultNumber() + createOrderReq.getChildNumber() + createOrderReq.getInfantNumber()) == 0) {
             createOrderRes.setStatus(StatusEnum.PARAM_ERROR.getCode());
             createOrderRes.setMsg("乘客数量非法");
-
-            return createOrderRes;
+            result = encryptResponse(JSON.toJSONString(createOrderRes));
+            return result;
         }
 
         String verifyResMsg = baseRoutingParamVerify(createOrderReq.getRoutings(), createOrderReq.getTripType());
         if (!StringUtils.isBlank(verifyResMsg)) {
             createOrderRes.setStatus(StatusEnum.PARAM_ERROR.getCode());
             createOrderRes.setMsg(verifyResMsg);
-
-            return createOrderRes;
+            result = encryptResponse(JSON.toJSONString(createOrderRes));
+            return result;
         }
 
         createOrderRes = ctripFlightService.createOrder(createOrderReq);
-        return createOrderRes;
+        result = encryptResponse(JSON.toJSONString(createOrderRes));
+        return result;
     }
 
     /**
@@ -183,5 +208,16 @@ public class CtripServiceController {
         }
 
         return StringUtils.EMPTY;
+    }
+
+
+    private String encryptResponse(String respones) {
+        String result = "";
+        try {
+            result = AESUtil.Encrypt(JSON.toJSONString(respones), OtaConstants.AES_DECRYPT_KEY);
+        } catch (Exception e1) {
+            logger.error("返回数据加密异常！");
+        }
+        return result;
     }
 }

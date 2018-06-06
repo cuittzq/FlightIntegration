@@ -13,4 +13,9 @@ public class OtaConstants {
     public static final String CURRENCY_SETTING = "CURRENCY_SETTING";
 
     public static final String ORDER_ROUTING = "ORDER_ROUTING";
+
+    /**
+     * AES解密KEY
+     */
+    public static final String AES_DECRYPT_KEY="985983275641320";
 }
