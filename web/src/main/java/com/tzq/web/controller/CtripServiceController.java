@@ -91,7 +91,6 @@ public class CtripServiceController {
     }
 
     @RequestMapping(value = "/createorder", method = RequestMethod.POST)
-
     public String CreateOrder(@RequestBody String createOrderdata, BindingResult bindingResult) {
         CreateOrderReq createOrderReq = null;
         String         result         = "";
