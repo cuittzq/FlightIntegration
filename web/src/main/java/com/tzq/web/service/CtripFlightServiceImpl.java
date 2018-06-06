@@ -204,6 +204,9 @@ public class CtripFlightServiceImpl implements CtripFlightService {
             response.getRouting().setRetSegments(ctripVerifyVOMapper.segmentVO2DTOs(singleResult.getData().getRouting().getRetSegments()));
         } catch (Exception ex) {
             logger.error("调用验价接口异常", MethodEnum.CREATEORDER, ex);
+            response.setMsg("供应商验价接口异常");
+            response.setStatus(StatusEnum.INNER_ERROR.getCode());
+            return response;
         }
         return response;
     }
