@@ -1,5 +1,7 @@
 package com.tzq.commons.enums;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * 功能描述
  *
@@ -58,6 +60,24 @@ public enum InterfaceErrorEnum {
         }
         for (InterfaceErrorEnum e : InterfaceErrorEnum.values()) {
             if (code.equals(e.getCode())) {
+                return e;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 获取枚举类型
+     *
+     * @param name
+     * @return
+     */
+    public static InterfaceErrorEnum getEnumByName(String name) {
+        if (StringUtils.isEmpty(name)) {
+            return null;
+        }
+        for (InterfaceErrorEnum e : InterfaceErrorEnum.values()) {
+            if (name.equals(e.name())) {
                 return e;
             }
         }

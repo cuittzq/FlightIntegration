@@ -7,6 +7,7 @@ import com.tzq.biz.constant.OtaConstants;
 import com.tzq.biz.core.OtaSearchFlightService;
 import com.tzq.biz.core.PriceRuleRegulation;
 import com.tzq.biz.proxy.PurchaseProxy;
+import com.tzq.commons.enums.InterfaceErrorEnum;
 import com.tzq.commons.enums.OTAEnum;
 import com.tzq.commons.enums.PurchaseEnum;
 import com.tzq.commons.enums.TripTypeEnum;
@@ -62,7 +63,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
         // 根据OTA配置的销售策略决定调用供应商接口数据(查询平台规则)
         List<MatchingSetting> matchingSettings = platSetCache.getPlatRules(String.valueOf(OTAEnum.CTRIP.getId()));
         if (CollectionUtils.isEmpty(matchingSettings)) {
-            response = new SingleResult<>(null, false, "0001", "没有配置平台规则规则");
+            response = new SingleResult<>(null, false, InterfaceErrorEnum.CONFIG_NOT_FIND.name(), "没有配置平台规则规则");
             return response;
         }
         // 筛选适合的规则
@@ -70,7 +71,7 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
         List<PurchaseEnum>    ota2Purchases  = getPurchases(matchedSetting);
         if (CollectionUtils.isEmpty(ota2Purchases)) {
             // 如果没有配置规则直接返回空
-            response = new SingleResult<>(null, false, "0001", "没有配置采购规则");
+            response = new SingleResult<>(null, false, InterfaceErrorEnum.CONFIG_NOT_FIND.name(), "没有配置采购规则");
             return response;
         }
 
@@ -109,13 +110,13 @@ public class OtaSearchFlightServiceImpl implements OtaSearchFlightService {
             // 数据汇总
             FlightRouteVO flightRouteVO = flightRouteVOList.get(0);
             if (flightRouteVO == null) {
-                response = new SingleResult<>(flightRouteVO, false, "0001", "无数据");
+                response = new SingleResult<>(flightRouteVO, false, InterfaceErrorEnum.CONFIG_NOT_FIND.name(), "无数据");
                 return response;
             }
             // 返回OTA查询数据
             response = new SingleResult<>(flightRouteVO, true, "", "");
         } catch (Exception ex) {
-            response = new SingleResult<>(null, false, "0001", ex.getMessage());
+            response = new SingleResult<>(null, false, InterfaceErrorEnum.INNER_ERROR.name(), ex.getMessage());
             return response;
         }
         return response;

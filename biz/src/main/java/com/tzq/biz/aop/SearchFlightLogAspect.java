@@ -1,6 +1,7 @@
 package com.tzq.biz.aop;
 
 import com.alibaba.fastjson.JSON;
+import com.tzq.commons.enums.InterfaceErrorEnum;
 import com.tzq.commons.enums.MethodEnum;
 import com.tzq.commons.model.context.RouteContext;
 import com.tzq.commons.model.context.SingleResult;
@@ -78,9 +79,9 @@ public class SearchFlightLogAspect {
         interfaceRequestLog.setPurchaseplatform(1);
         interfaceRequestLog.setRequestdate(new Date());
         interfaceRequestLog.setRequesttype(MethodEnum.SEARCHFLIGHT.getCode());
-        interfaceRequestLog.setRequestresult(flightRouteVO.isSuccess() ? 1 : 0);
+        interfaceRequestLog.setRequestresult(flightRouteVO == null ? 0 : flightRouteVO.isSuccess() ? 1 : 0);
         // 接口结果（接口返回结果）(0-成功 / 1-失败 / 2-CID错误 / 3-非法IP / 4-操作失败 / 5-请求参数错误 / 6-程序异常 / 7-航线管控 / 8-航司过滤 / 9-配置未找到 / 10-访问超时 / 11-访问频繁 / 12-不在销售时间范围内 / 13-不在工作时间范围内 / 14-价格变动 / 15-无座 / 16-不可预订)
-        interfaceRequestLog.setInterfaceresult(flightRouteVO.getData().getStatus());
+        interfaceRequestLog.setInterfaceresult(InterfaceErrorEnum.getEnumByName( flightRouteVO.getErrorCode()).getCode());
         interfaceRequestLog.setOrderno("");
         interfaceRequestLog.setPnr("");
         // 0-单程，1-往返
@@ -98,4 +99,5 @@ public class SearchFlightLogAspect {
         return interfaceRequestLog;
 
     }
+
 }
